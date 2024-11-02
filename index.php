@@ -15,6 +15,7 @@
             integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
             crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <script src="LogOut.js"></script>
 </head>
 <body>
 <!--
@@ -84,14 +85,34 @@ https://getbootstrap.com/docs/5.3/components/navbar/
     <div class="dropdown">
         <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
             <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
-            <strong>mdo</strong>
+            <strong>Account</strong>
         </a>
+        <?php
+        session_start();
+        if(isset($_SESSION['email'])){
+            $_SESSION['action'] = "kijelentkezes";
+            echo '<ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
+            <li><a class="dropdown-item" href="#">New project...</a></li>
+            <li><a class="dropdown-item" href="#">Settings</a></li>
+            <li><a class="dropdown-item" href="#">Profile</a></li>
+            <li><hr class="dropdown-divider"></li>
+           <li><a  class="dropdown-item" href="functions.php" onclick="confirmLogout(event)">
+                             <i class="bi bi-door-open fa-2x justify-content-end"></i> Log out</a></li></ul>';
+        }
+        else{
+            echo '  <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
+           
+            <li><a class="dropdown-item" href="logIn.php">Log in</a></li>
+              <li><a class="dropdown-item" href="registration.php">Register</a></li>
+        </ul>';
+        }
+        ?>
         <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
             <li><a class="dropdown-item" href="#">New project...</a></li>
             <li><a class="dropdown-item" href="#">Settings</a></li>
             <li><a class="dropdown-item" href="#">Profile</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Sign out</a></li>
+            <li><a class="dropdown-item" href="logIn.php">Log in</a></li>
         </ul>
     </div>
 </div>
