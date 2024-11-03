@@ -1,4 +1,6 @@
 <?php
+
+session_start();
 ?>
 
 
@@ -16,6 +18,7 @@
             crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <script src="LogOut.js"></script>
+    <script src="indexJS.js"></script>
 </head>
 <body>
 <!--
@@ -83,90 +86,134 @@ https://getbootstrap.com/docs/5.3/components/navbar/
     </ul>
     <hr>
     <div class="dropdown">
-        <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-            <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
-            <strong>Account</strong>
-        </a>
-        <?php
-        session_start();
-        if(isset($_SESSION['email'])){
-            $_SESSION['action'] = "kijelentkezes";
-            echo '<ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
-            <li><a class="dropdown-item" href="#">New project...</a></li>
-            <li><a class="dropdown-item" href="#">Settings</a></li>
-            <li><a class="dropdown-item" href="#">Profile</a></li>
-            <li><hr class="dropdown-divider"></li>
-           <li><a  class="dropdown-item" href="functions.php" onclick="confirmLogout(event)">
-                             <i class="bi bi-door-open fa-2x justify-content-end"></i> Log out</a></li></ul>';
-        }
-        else{
-            echo '  <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
-           
-            <li><a class="dropdown-item" href="logIn.php">Log in</a></li>
-              <li><a class="dropdown-item" href="registration.php">Register</a></li>
-        </ul>';
-        }
-        ?>
-        <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
-            <li><a class="dropdown-item" href="#">New project...</a></li>
-            <li><a class="dropdown-item" href="#">Settings</a></li>
-            <li><a class="dropdown-item" href="#">Profile</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="logIn.php">Log in</a></li>
-        </ul>
+            <?php
+            echo '<div class="d-none d-lg-block d-md-block dropdown">';
+            if (isset($_SESSION['email'])) {
+                $_SESSION['action'] = "kijelentkezes";
+
+// Combined profile picture, text, and dropdown toggle in a single line
+                echo '<a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false" style="color: white;">';
+                echo '<img src="/Humanz2.0/pictures/' . $_SESSION['profilePic'] . '" alt="img" width="32" height="32" class="rounded-circle me-2" onclick="activateProfilePicture()" style="cursor: pointer;">';
+                echo '<strong>' . (isset($_SESSION['name']) ? $_SESSION['name'] : "Account") . '</strong>';
+                echo '</a>';
+
+                // Dropdown menu
+                echo '<ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">';
+                echo '<li><a class="dropdown-item" href="#">New project...</a></li>';
+                echo '<li><a class="dropdown-item" href="#">Settings</a></li>';
+                echo '<li><a class="dropdown-item" href="modify.php">Profile</a></li>';
+                echo '<li><hr class="dropdown-divider"></li>';
+                echo '<li><a class="dropdown-item" href="functions.php" onclick="confirmLogout(event)">';
+                echo '<i class="bi bi-door-open fa-2x justify-content-end"></i> Log out</a></li>';
+                echo '</ul>';
+
+                // Hidden form for file upload
+                echo "<form method='post' action='functions.php' enctype='multipart/form-data' style='display: none;'>";
+                $_SESSION['backPic'] = "index.php";
+                echo "<input class='dropdown-item' type='file' name='picture' id='pictureInput' style='display: none;' onchange='activateSubmit()'>";
+                echo "<input type='submit' name='action' id='submitButton' value='picture' style='display: none;'>";
+                echo '</form>';
+
+                echo '</div>';
+            } else {
+                // If not logged in, show a default profile picture and dropdown for login/register
+
+                echo '<a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">';
+                echo '<img src="/Humanz2.0/pictures/logInPic.png" alt="img" width="32" height="32" class="rounded-circle me-2">';
+                echo '<strong>Account</strong>';
+                echo '</a>';
+                echo '<ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">';
+                echo '<li><a class="dropdown-item" href="logIn.php">Log in</a></li>';
+                echo '<li><a class="dropdown-item" href="registration.php">Register</a></li>';
+                echo '</ul>';
+                echo '</div>';
+            }
+            ?>
+
+
     </div>
 </div>
-<div class="d-flex flex-column flex-shrink-0 bg-light d-block d-md-none" style="width: 4.5rem; min-height: 100vh;">
-    <div class="d-flex flex-column flex-shrink-0 bg-light " style="width: 4.5rem;">
-        <a href="/" class="d-flex align-items-center justify-content-center p-3 link-dark text-decoration-none" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
+<div class="d-flex flex-column flex-shrink-0 bg-dark d-block d-md-none" style="width: 4.5rem; min-height: 100vh;">
+    <div class="d-flex flex-column flex-shrink-0 bg-dark " style="width: 4.5rem;">
+        <a href="/" class="d-flex align-items-center justify-content-center p-3 link-light text-decoration-none" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
             <i class="bi bi-house-door" style="font-size: 24px;"></i>
             <span class="visually-hidden">Home</span>
         </a>
 
         <ul class="nav nav-pills nav-flush flex-column mb-auto text-center">
             <li class="nav-item">
-                <a href="/" class="d-flex align-items-center justify-content-center p-3 link-dark text-decoration-none" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
+                <a href="/" class="d-flex align-items-center justify-content-center p-3 link-light text-decoration-none" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
                     <i class="bi bi-house-door" style="font-size: 24px;"></i>
                     <span class="visually-hidden">Home</span>
                 </a>
             </li>
             <li>
-                <a href="/" class="d-flex align-items-center justify-content-center p-3 link-dark text-decoration-none" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
+                <a href="/" class="d-flex align-items-center justify-content-center p-3 link-light text-decoration-none" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
                     <i class="bi bi-house-door" style="font-size: 24px;"></i>
                     <span class="visually-hidden">Home</span>
                 </a>
             </li>
             <li>
-                <a href="/" class="d-flex align-items-center justify-content-center p-3 link-dark text-decoration-none" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
+                <a href="/" class="d-flex align-items-center justify-content-center p-3 link-light text-decoration-none" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
                     <i class="bi bi-house-door" style="font-size: 24px;"></i>
                     <span class="visually-hidden">Home</span>
                 </a>
             </li>
             <li>
-                <a href="/" class="d-flex align-items-center justify-content-center p-3 link-dark text-decoration-none" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
+                <a href="/" class="d-flex align-items-center justify-content-center p-3 link-light text-decoration-none" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
                     <i class="bi bi-house-door" style="font-size: 24px;"></i>
                     <span class="visually-hidden">Home</span>
                 </a>
             </li>
             <li>
-                <a href="/" class="d-flex align-items-center justify-content-center p-3 link-dark text-decoration-none" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
+                <a href="/" class="d-flex align-items-center justify-content-center p-3 link-light text-decoration-none" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
                     <i class="bi bi-house-door" style="font-size: 24px;"></i>
                     <span class="visually-hidden">Home</span>
                 </a>
             </li>
         </ul>
-        <div class="dropdown border-top">
-            <a href="#" class="d-flex align-items-center justify-content-center p-3 link-dark text-decoration-none dropdown-toggle" id="dropdownUser3" data-bs-toggle="dropdown" aria-expanded="false">
-                <img src="https://github.com/mdo.png" alt="mdo" width="24" height="24" class="rounded-circle">
-            </a>
-            <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser3">
-                <li><a class="dropdown-item" href="#">New project...</a></li>
-                <li><a class="dropdown-item" href="#">Settings</a></li>
-                <li><a class="dropdown-item" href="#">Profile</a></li>
-                <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item" href="#">Sign out</a></li>
-            </ul>
-        </div>
+        <?php
+echo '<div class="dropdown border-top ">';
+        if(isset($_SESSION['email'])){
+            $_SESSION['action'] = "kijelentkezes";
+            echo '<a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false" style="color: white;">';
+            echo '<img src="/Humanz2.0/pictures/' . $_SESSION['profilePic'] . '" alt="img" width="32" height="32" class="rounded-circle me-2" onclick="activateProfilePicture()" style="cursor: pointer;">';
+
+            echo '</a>';
+
+            // Dropdown menu
+            echo '<ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">';
+            echo '<li><a class="dropdown-item" href="#">New project...</a></li>';
+            echo '<li><a class="dropdown-item" href="#">Settings</a></li>';
+            echo '<li><a class="dropdown-item" href="modify.php">Profile</a></li>';
+            echo '<li><hr class="dropdown-divider"></li>';
+            echo '<li><a class="dropdown-item" href="functions.php" onclick="confirmLogout(event)">';
+            echo '<i class="bi bi-door-open fa-2x justify-content-end"></i> Log out</a></li>';
+            echo '</ul>';
+
+            // Hidden form for file upload
+            echo "<form method='post' action='functions.php' enctype='multipart/form-data' style='display: none;'>";
+            $_SESSION['backPic'] = "index.php";
+            echo "<input class='dropdown-item' type='file' name='picture' id='pictureInput' style='display: none;' onchange='activateSubmit()'>";
+            echo "<input type='submit' name='action' id='submitButton' value='picture' style='display: none;'>";
+            echo '</form>';
+
+            echo '</div>';
+        }
+        else{
+            echo '<div class="d-flex justify-content-center">'; // Center the entire block
+            echo '  <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">';
+            echo '    <img src="/Humanz2.0/pictures/logInPic.png" alt="img" width="32" height="32" class="rounded-circle me-2">';
+            echo '  </a>';
+            echo '  <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">';
+            echo '    <li><a class="dropdown-item" href="logIn.php">Log in</a></li>';
+            echo '    <li><a class="dropdown-item" href="registration.php">Register</a></li>';
+            echo '  </ul>';
+            echo '</div>';
+
+        }
+        ?>
+    </div>
     </div>
 </div>
 </body>

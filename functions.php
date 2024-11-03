@@ -258,15 +258,31 @@ class Functions
 
                     // Insert user data into the database
                     $sql = "INSERT INTO user (firstName, lastName, phoneNumber, userMail, userPassword,
-                  verification_code,verify,profilePic,
-                 privilage,registrationTime	,verification_time,banned,banned_time,passwordValidation,passwordValidationTime) 
-VALUES (?,?,?,?, ?,? ,?, ?,?, ?,?,?,?,?,?)";
+                  verification_code, verify, profilePic,
+                  privilage, registrationTime, verification_time, banned, banned_time, passwordValidation, passwordValidationTime) 
+        VALUES (:firstName, :lastName, :phoneNumber, :userMail, :userPassword, 
+                :verification_code, :verify, :profilePic, :privilage, :registrationTime, 
+                :verification_time, :banned, :banned_time, :passwordValidation, :passwordValidationTime)";
+
                     $stmt = $this->connection->prepare($sql);
-                    $verrification = 0; // Placeholder for verification_code
-                    $stmt->bind_param("ssissiissssisss", $fname, $lname, $tel, $mail, $pass,
-                        $verification_code,
-                        $verrification, $kep, $privilage, $currentTime, $verification_time,
-                        $banned, $banned_time, $verification_code_pass, $verification_code_expire);
+
+                    $verification = 0; // Placeholder for verify column
+
+                    $stmt->bindParam(':firstName', $fname, PDO::PARAM_STR);
+                    $stmt->bindParam(':lastName', $lname, PDO::PARAM_STR);
+                    $stmt->bindParam(':phoneNumber', $tel, PDO::PARAM_STR);
+                    $stmt->bindParam(':userMail', $mail, PDO::PARAM_STR);
+                    $stmt->bindParam(':userPassword', $pass, PDO::PARAM_STR);
+                    $stmt->bindParam(':verification_code', $verification_code, PDO::PARAM_INT);
+                    $stmt->bindParam(':verify', $verification, PDO::PARAM_INT);
+                    $stmt->bindParam(':profilePic', $kep, PDO::PARAM_STR);
+                    $stmt->bindParam(':privilage', $privilage, PDO::PARAM_STR);
+                    $stmt->bindParam(':registrationTime', $currentTime, PDO::PARAM_STR);
+                    $stmt->bindParam(':verification_time', $verification_time, PDO::PARAM_STR);
+                    $stmt->bindParam(':banned', $banned, PDO::PARAM_INT);
+                    $stmt->bindParam(':banned_time', $banned_time, PDO::PARAM_STR);
+                    $stmt->bindParam(':passwordValidation', $verification_code_pass, PDO::PARAM_STR);
+                    $stmt->bindParam(':passwordValidationTime', $verification_code_expire, PDO::PARAM_STR);
 
                     if ($stmt->execute()) {
                         $_SESSION['message'] = "We sent an email to you!";
@@ -291,6 +307,199 @@ VALUES (?,?,?,?, ?,? ,?, ?,?, ?,?,?,?,?,?)";
         }
 
     }
+    public function userModifyData($fname, $lname, $tel2, $location) {
+
+        if (preg_match("/[0-9]+/", $fname)) {
+            $_SESSION['message'] = "The <b>First Name</b> filled contains <b>Numbers</b>.";
+            header('Location: ' . $location);
+            exit();
+        }
+        if (preg_match("/\s/", $fname)) {
+            $_SESSION['message'] = "The <b>First Name</b> filled contains <b>Spaces</b>";
+            header('Location: ' . $location);
+            exit();
+        }
+        if (preg_match("/[0-9]+/", $lname)) {
+            $_SESSION['message'] = "The <b>Last Name</b> filled contains <b>Numbers</b>";
+            header('Location: ' . $location);
+            exit();
+        }
+        if (preg_match("/\s/", $lname)) {
+            $_SESSION['message'] = "The <b>Last Name</b> filled contains <b>Spaces</b>";
+            header('Location: ' . $location);
+            exit();
+        }
+        if ($tel2 != "") {
+            if (strlen($tel2) != 7) {
+                $_SESSION['message'] = "The <b>Phone Number</b> does not exist!";
+                header('Location: ' . $location);
+                exit();
+            }
+        }
+
+
+    }
+    public function modifyUser() {
+        $count = 0;
+        $phoneNumber = $_POST['tel1'] . $_POST['tel2'];
+
+        // Prepare the initial query to retrieve existing user details
+        $sql = $this->connection->prepare("SELECT firstName, lastName, phoneNumber FROM user WHERE userMail = ?");
+        $sql->execute([$_SESSION['email']]);
+        $result = $sql->fetch(PDO::FETCH_ASSOC);
+
+        // Calling userModifyData function with posted data
+        $this->userModifyData($_POST['firstName'], $_POST['lastName'], $_POST['tel2'], "modify.php");
+
+        // Check if user data was found and update if necessary
+        if ($result) {
+            // Update first name if provided
+            if (!empty($_POST['firstName'])) {
+                $sql = $this->connection->prepare("UPDATE user SET firstName = ? WHERE userMail = ?");
+                $sql->execute([$_POST['firstName'], $_SESSION['email']]);
+                $_SESSION['name'] = $_POST['firstName'];
+                $_SESSION['message'] = "First name is modified";
+                $count++;
+            } else {
+                $_SESSION['name'] = $result['firstName'];
+            }
+
+            // Update last name if provided
+            if (!empty($_POST['lastName'])) {
+                $sql = $this->connection->prepare("UPDATE user SET lastName = ? WHERE userMail = ?");
+                $sql->execute([$_POST['lastName'], $_SESSION['email']]);
+                $_SESSION['name'] .= " " . $_POST['lastName'];
+                $_SESSION['message'] = "Last name is modified";
+                $count++;
+            } else {
+                $_SESSION['name'] .= " " . $result['lastName'];
+            }
+
+            // Update phone number if provided
+            if (!empty($_POST['tel1']) && !empty($_POST['tel2'])) {
+                $sql = $this->connection->prepare("UPDATE user SET phoneNumber = ? WHERE userMail = ?");
+                $sql->execute([$phoneNumber, $_SESSION['email']]);
+                $_SESSION['message'] = "Phone number is modified";
+                $count++;
+            }
+        }
+
+        // Set session message based on whether any changes were made
+        $_SESSION['message'] = $count > 0 ? "We made changes to your profile" : "There are no changes made to your profile";
+
+        // Redirect to index.php
+        header('Location: index.php');
+        exit();
+    }
+
+    public function picture($target = " ") {
+
+        if (isset($_FILES['picture'])) {
+            $target_dir = "pictures/";  // Local directory for storing uploaded files
+            $target_file = $target_dir . basename($_FILES["picture"]["name"]);
+            $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+
+            $kep = pathinfo($target_file, PATHINFO_FILENAME);
+            $kep_dir = $imageFileType;
+            $kep = $kep . "." . $kep_dir;
+
+            if ($_FILES['picture']["error"] > 0) {
+                return $_FILES["picture"]["error"];
+            } else {
+                if (is_uploaded_file($_FILES['picture']['tmp_name'])) {
+
+                    $file_name = $_FILES['picture']["name"];
+                    $file_temp = $_FILES["picture"]["tmp_name"];
+                    $file_size = $_FILES["picture"]["size"];
+                    $file_type = $_FILES["picture"]["type"];
+                    $file_error = $_FILES['picture']["error"];
+
+                    if (!exif_imagetype($file_temp)) {
+                        $_SESSION['message'] = "File is not a picture!";
+                        $logType = "Picture";
+                        $logText = "The file is not in correct format";
+                        $logMessage = $_SESSION['message'];
+
+                        $this->errorLogInsert($_SESSION['email'], $logText, $logType, $logMessage);
+                        header('location: ' . $target);
+                        exit();
+                    }
+                    $file_size = $file_size / 1024;
+                    if ($file_size > 200) {
+                        $_SESSION['message'] = "File is too big!";
+                        $logType = "Picture";
+                        $logText = "The file is bigger than 200KB";
+                        $logMessage = $_SESSION['message'];
+
+                        $this->errorLogInsert($_SESSION['email'], $logText, $logType, $logMessage);
+                        header('location: ' . $target);
+                        exit();
+                    }
+
+                    $ext_temp = explode(".", $file_name);
+                    $extension = end($ext_temp);
+
+                    if (isset($_POST['alias'])) {
+                        $alias = $_POST['alias'];
+                    } else {
+                        $alias = "";
+                    }
+
+                    $new_file_name = Date("YmdHis") . "$alias.$extension";
+                    $upload = "$target_dir$new_file_name";
+
+                    if (!is_dir($target_dir)) {
+                        mkdir($target_dir, 0777, true); // Create the directory if it doesn't exist
+                    }
+
+                    if (!file_exists($upload)) {
+                        if (move_uploaded_file($file_temp, $upload)) {
+                            $size = getimagesize($upload);
+                            var_dump($size);
+                            foreach ($size as $key => $value)
+                                echo "$key = $value<br>";
+
+                            echo "<img src=\"$upload\" $size[3] alt=\"$file_name\">";
+                        } else {
+                            echo "<p><b>Error!</b> Failed to move uploaded file.</p>";
+                        }
+                    } else {
+                        echo "<p><b>Error!</b> File with this name already exists!</p>";
+                    }
+                } else {
+                    echo "<p><b>Error!</b> Possible file upload attack!</p>";
+                }
+
+                if ($target != "addTable.php" && $target != "modifyMenu.php" && $target != "modifyTable.php" && $target != "addMenu.php") {
+                    if ($target == "index.php" || $target == "users.php" || $target == "workers.php" || $target == "tables.php"
+                        || $target == "reports.php" || $target == "menu.php" || $target == "coupon.php") {
+
+                        $query = $this->connection->prepare("UPDATE user SET profilePic = :profilePic WHERE userMail = :userMail");
+                        $query->bindValue(":profilePic", $new_file_name, PDO::PARAM_STR);
+                        $query->bindValue(":userMail", $_SESSION['email'], PDO::PARAM_STR);
+                        $query->execute();
+
+                        $_SESSION['profilePic'] = $new_file_name;
+                        // Redirect to login page after successful upload
+                        header('Location: ' . $_SESSION['backPic']);
+                        exit(); // Exit after redirection
+                    } else {
+                        $mail = 'Unknown';
+                        $logType = "file Upload";
+                        $logText = "Someone tried to upload a picture from a not valid page";
+                        $logMessage = "You can't upload a picture from another page!";
+
+                        $this->errorLogInsert($mail, $logText, $logType, $logMessage);
+                        $_SESSION['message'] = "You can't upload a picture from another page!";
+                        header('Location: ' . $_SESSION['backPic']);
+                        exit();
+                    }
+                }
+            }
+        }
+        return $new_file_name;
+    }
+
     public function logOut()
     {
         $_SESSION = [];
