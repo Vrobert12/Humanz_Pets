@@ -2,7 +2,7 @@
 
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
-    $lang = $_GET['lang'] ?? 'en';
+    $lang = $_GET['lang'] ?? $_SESSION['lang'] ?? 'en';
     if(isset($_GET['lang'])){
         $_SESSION['lang'] = $_GET['lang'];
     }
@@ -122,12 +122,19 @@ https://getbootstrap.com/docs/5.3/components/navbar/
                 Home
             </a>
         </li>
-        <li>
-            <a href="#" class="nav-link text-white">
-                <svg class="bi me-2" width="16" height="16"><use xlink:href="#speedometer2"/></svg>
-                Dashboard
-            </a>
-        </li>
+        <?php
+        if(isset($_SESSION['email']))
+        echo '<li>
+        <a href="pet.php?email=' . urlencode($_SESSION['email']) . '" class="nav-link text-white">
+            <svg class="bi me-2" width="16" height="16">
+                <use xlink:href="pet.php?email=' . urlencode($_SESSION['email']) . '" />
+            </svg>
+            My Pet
+        </a>
+    </li>';
+        ?>
+
+
         <li>
             <a href="#" class="nav-link text-white">
                 <svg class="bi me-2" width="16" height="16"><use xlink:href="#table"/></svg>
