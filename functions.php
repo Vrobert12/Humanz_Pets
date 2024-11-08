@@ -2,8 +2,8 @@
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
-$_SESSION['message'] = "Error occurred during registration!";
-$function=new Functions();
+include "config.php";
+$function = new Functions();
 
 class Functions
 {
@@ -11,14 +11,33 @@ class Functions
 
     public function __construct()
     {
-        include "config.php";
+        global $dsn, $pdoOptions;
 
-        $this->connection = $this->connect($dsn, $pdoOptions);
+        // Access the constant PARAMS directly
+        $user = PARAMS['USER'];
+        $password = PARAMS['PASSWORD'];
+
+        $this->connection = $this->connect($dsn, $user, $password, $pdoOptions);
+
         if (isset($_SESSION['message'])) {
             echo $_SESSION['message'];
         }
-        $this->run();
+
+        if (!isset($_GET['email'])) {
+            $this->run();
+        }
     }
+
+    // Connect to the database
+    public function connect($dsn, $user, $password, $pdoOptions)
+    {
+        try {
+            return new PDO($dsn, $user, $password, $pdoOptions);
+        } catch (PDOException $e) {
+            die("Database connection failed: " . $e->getMessage());
+        }
+    }
+
 
     public function run()
     {
@@ -79,15 +98,6 @@ class Functions
         }
     }
 
-    private function connect($dsn, $pdoOptions)
-    {
-        try {
-            $pdo = new PDO($dsn, PARAMS['USER'], PARAMS['PASSWORD'], $pdoOptions);
-        } catch (PDOException $e) {
-            throw new PDOException($e->getMessage());
-        }
-        return $pdo;
-    }
     public function passwordCheck($password, $password2, $location) {
         if ($password == '') {
             $_SESSION['message'] = "The <b>Password</b> is not filled out";
