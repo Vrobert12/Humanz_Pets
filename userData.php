@@ -10,6 +10,12 @@
 <?php
 session_start();
 
+$lang = $_GET['lang'] ?? $_SESSION['lang']  ??'en';
+if(isset($_GET['lang'])){
+    $_SESSION['lang'] = $_GET['lang'];
+}
+include_once "lang_$lang.php";
+
 include "functions.php";
 if(isset($_SESSION['message'])){
     echo $_SESSION['message'];
@@ -47,11 +53,11 @@ if (isset($_SESSION['email']) && isset($_GET['email'])) {
         </td></tr>";
 
         // Add user details
-        echo "<tr><td>Name: $firstName $lastName</td></tr>";
-        echo "<tr><td>Phone Number: $phoneNumber</td></tr>";
-        echo "<tr><td>Email: $userMail</td></tr>";
-        echo "<tr><td>Privilege: $privilage</td></tr>";
-        echo "<tr><td>Registration Time: $registrationTime</td></tr>";
+        echo '<tr><td>' . NAME . ': ' . $firstName . ' ' . $lastName . '</td></tr>';
+        echo '<tr><td>'.PHONE.': ' . $phoneNumber . '</td></tr>';
+        echo '<tr><td>Email: ' . $userMail . '</td></tr>';
+        echo '<tr><td>'.PRIVILEGE.': ' . $privilage . '</td></tr>';
+        echo '<tr><td>'.REGTIME.': ' . $registrationTime . '</td></tr>';
     }
 
     echo "</table>";
@@ -61,7 +67,7 @@ if (isset($_SESSION['email']) && isset($_GET['email'])) {
 }
 ?>
 
-<a href="index.php" class="nextPage">Back to index page</a>
+<a href="index.php" class="nextPage"><?php echo BACK?></a>
 </div>
 </body>
 </html>

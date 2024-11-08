@@ -1,4 +1,7 @@
 <?php
+define('REGTIME','Registration date');
+define('SAVE','Save');
+define('SETTINGS','Settings');
 define('NUMBER','Number');
 define('LOGOUT', 'Log out');
 define('PHONE','Phone number');

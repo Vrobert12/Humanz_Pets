@@ -2,7 +2,7 @@
 
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
-    $lang = $_GET['lang'] ?? 'en';
+    $lang = $_GET['lang'] ?? $_SESSION['lang'] ?? 'en';
     if(isset($_GET['lang'])){
         $_SESSION['lang'] = $_GET['lang'];
     }
@@ -122,12 +122,19 @@ https://getbootstrap.com/docs/5.3/components/navbar/
                 Home
             </a>
         </li>
-        <li>
-            <a href="#" class="nav-link text-white">
-                <svg class="bi me-2" width="16" height="16"><use xlink:href="#speedometer2"/></svg>
-                Dashboard
-            </a>
-        </li>
+        <?php
+        if(isset($_SESSION['email']))
+        echo '<li>
+        <a href="pet.php?email=' . urlencode($_SESSION['email']) . '" class="nav-link text-white">
+            <svg class="bi me-2" width="16" height="16">
+                <use xlink:href="pet.php?email=' . urlencode($_SESSION['email']) . '" />
+            </svg>
+            My Pet
+        </a>
+    </li>';
+        ?>
+
+
         <li>
             <a href="#" class="nav-link text-white">
                 <svg class="bi me-2" width="16" height="16"><use xlink:href="#table"/></svg>
@@ -163,11 +170,11 @@ https://getbootstrap.com/docs/5.3/components/navbar/
                 // Dropdown menu
                 echo '<ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">';
                 echo '<li><a class="dropdown-item" href="#">New project...</a></li>';
-                echo '<li><a class="dropdown-item" href="modify.php">Settings</a></li>';
-                echo '<li><a class="dropdown-item" href="userData.php?email='.$_SESSION['email'].'">Profile</a></li>';
+                echo '<li><a class="dropdown-item" href="modify.php">'.SETTINGS.'</a></li>';
+                echo '<li><a class="dropdown-item" href="userData.php?email='.$_SESSION['email'].'">'.ACCOUNT.'</a></li>';
                 echo '<li><hr class="dropdown-divider"></li>';
                 echo '<li><a class="dropdown-item" href="functions.php" onclick="confirmLogout(event)">';
-                echo '<i class="bi bi-door-open fa-2x justify-content-end"></i> Log out</a></li>';
+                echo '<i class="bi bi-door-open fa-2x justify-content-end"></i>'.LOGOUT.'</a></li>';
                 echo '</ul>';
 
                 // Hidden form for file upload
