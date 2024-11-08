@@ -3,12 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title>Modify Profile</title>
-    <link rel="stylesheet" href="SideStyle.css">
+    <link rel="stylesheet" href="style.css">
 
 </head>
 <body>
 <form method="post" action="functions.php" class="mainForm">
     <a class="nextPage" href="index.php">Back</a><br><br>
+    <h1 >Modify User</h1>
     <input type="hidden" placeholder="Emailcím" name="mail" class="inputok" id="mail" value="<?php
     if(isset($_SESSION['email'])){echo $_SESSION['email'];}
     ?>">

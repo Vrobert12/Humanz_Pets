@@ -5,24 +5,70 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 ?>
 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Task 2</title>
+    <title>Main Page</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
             crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <script src="LogOut.js"></script>
     <script src="indexJS.js"></script>
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Add custom CSS for the popup with animation -->
+    <style>
+
+    </style>
+
 </head>
 <body>
+
+<!-- Show popup message if session message is set -->
+<?php if (isset($_SESSION['message'])): ?>
+    <div class="popup-message" id="popupMessage">
+        <?php echo $_SESSION['message']; ?>
+    </div>
+    <?php unset($_SESSION['message']); // Clear message after it's displayed ?>
+<?php endif; ?>
+
+<script>
+    // Show the popup message
+    window.onload = function () {
+        var popupMessage = document.getElementById('popupMessage');
+        if (popupMessage) {
+            popupMessage.style.display = 'block';  // Show the popup
+        }
+    };
+</script>
+
+<!-- Show popup message if session message is set -->
+<?php if (isset($_SESSION['message'])): ?>
+    <div class="popup-message" id="popupMessage">
+        <?php echo $_SESSION['message']; ?>
+    </div>
+    <?php unset($_SESSION['message']); // Clear message after it's displayed ?>
+<?php endif; ?>
+
+<script>
+    // Show the popup message and hide it after 5 seconds
+    window.onload = function () {
+        var popupMessage = document.getElementById('popupMessage');
+        if (popupMessage) {
+            popupMessage.style.display = 'block';  // Show the popup
+
+            // Hide the popup after 5 seconds
+            setTimeout(function () {
+                popupMessage.style.display = 'none';
+            }, 5000);
+        }
+    };
+</script>
 <!--
 https://getbootstrap.com/docs/5.3/components/navbar/
 -->

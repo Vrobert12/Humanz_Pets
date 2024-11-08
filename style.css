@@ -1,0 +1,329 @@
+/* Custom styles for the page */
+
+/* Table styling for user profile data */
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table td {
+    padding: 10px;
+    border: 1px solid #ddd;
+}
+
+table img {
+    border-radius: 50%;
+}
+
+/* Sidebar styles */
+.d-flex.flex-column.flex-shrink-0 {
+    background-color: #343a40;
+    color: white;
+    width: 280px;
+    min-height: 100vh;
+}
+
+.d-flex.flex-column.flex-shrink-0 ul.nav-pills {
+    margin-top: 20px;
+}
+
+.d-flex.flex-column.flex-shrink-0 ul.nav-pills li a {
+    color: white;
+    padding: 12px;
+}
+
+.d-flex.flex-column.flex-shrink-0 ul.nav-pills li a:hover {
+    background-color: #495057;
+}
+
+.d-flex.flex-column.flex-shrink-0 ul.nav-pills li a.active {
+    background-color: #007bff;
+}
+
+/* Navbar styling */
+.navbar {
+    background-color: #343a40;
+}
+
+.navbar-nav .nav-link {
+    color: white;
+}
+
+.navbar-nav .nav-link:hover {
+    color: #007bff;
+}
+
+/* Dropdown menu in sidebar */
+.dropdown-menu {
+    background-color: #343a40;
+    border: none;
+}
+
+.dropdown-item {
+    color: white;
+}
+
+.dropdown-item:hover {
+    background-color: #495057;
+}
+
+.dropdown-item:active {
+    background-color: #007bff;
+}
+
+/* Profile picture in the dropdown */
+.dropdown-toggle img {
+    border-radius: 50%;
+}
+
+.dropdown-menu .dropdown-divider {
+    border-color: #495057;
+}
+
+/* Mobile sidebar */
+.d-md-none {
+    display: none;
+}
+
+@media (max-width: 991px) {
+    .d-md-none {
+        display: block;
+        width: 4.5rem;
+        min-height: 100vh;
+    }
+
+    .d-md-none .nav-pills {
+        margin-top: 20px;
+    }
+
+    .d-md-none .nav-pills li a {
+        color: white;
+        padding: 12px;
+    }
+}
+
+/* Responsive settings */
+@media (max-width: 768px) {
+    .navbar-nav {
+        display: flex;
+        justify-content: center;
+    }
+}
+
+/* Profile Table */
+.profile-table td {
+    padding: 12px;
+    text-align: left;
+    vertical-align: middle;
+}
+
+.profile-table img {
+    max-width: 100%;
+    border-radius: 50%;
+}
+
+.profile-table td img {
+    margin-right: 10px;
+}
+/* General Styles */
+body {
+    font-family: Arial;
+    background-color: #f8f9fa;
+    margin: 0;
+    padding: 0;
+}
+
+.mainForm {
+    background-color: white;
+    padding: 20px;
+    max-width: 600px;
+    margin: 40px auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.mainForm input,
+.mainForm select {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+}
+.mainForm input {
+     width: 95%;
+
+ }
+
+.mainForm label {
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.mainForm .nextPage {
+    display: inline-block;
+    margin-bottom: 15px;
+    font-size: 16px;
+    color: #007bff;
+    text-decoration: none;
+}
+
+.mainForm .nextPage:hover {
+    text-decoration: underline;
+}
+
+/* Error/Message */
+.warning {
+    color: #dc3545;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 20px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .mainForm {
+        width: 90%;
+    }
+}
+
+/* General Link Styling */
+a {
+    text-decoration: none;
+    color: #007bff; /* Default color */
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+a:hover,
+a:focus {
+    color: #0056b3; /* Hover color */
+
+}
+
+/* For Buttons styled as links */
+a.btn-link {
+    color: #007bff;
+    font-weight: 600;
+    font-size: 16px;
+    text-transform: uppercase;
+    padding: 8px 15px;
+    border-radius: 5px;
+    background-color: transparent;
+    border: 2px solid #007bff;
+    transition: all 0.3s ease;
+}
+
+a.btn-link:hover,
+a.btn-link:focus {
+    color: white;
+    background-color: #007bff;
+    border-color: #007bff;
+    text-decoration: none;
+}
+
+/* Back to previous page link styling */
+a.nextPage {
+    color: #007bff;
+    font-size: 16px;
+    display: inline-block;
+    margin-top: 20px;
+    text-align: center;
+    transition: color 0.3s ease, text-decoration 0.3s ease;
+}
+
+a.nextPage:hover {
+    color: #0056b3;
+    text-decoration: underline;
+}
+h1{
+    text-align: center;
+}
+/* General styling for input fields */
+.inputok {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    background-color: #f8f9fa;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Input focus styling */
+.inputok:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.2);
+    outline: none;
+}
+
+/* Styling for select fields */
+.inputok[type="select-one"] {
+    padding: 12px;
+    background-color: #f8f9fa;
+}
+
+/* Styling for placeholder text */
+.inputok::placeholder {
+    color: #6c757d;
+    font-size: 14px;
+}
+
+/* Add error styles for invalid inputs */
+.inputok:invalid {
+    border-color: #dc3545;
+    background-color: #f8d7da;
+}
+
+.inputok:invalid:focus {
+    border-color: #dc3545;
+    box-shadow: 0 0 8px rgba(220, 53, 69, 0.2);
+}
+
+/* Add error message styling */
+.warning {
+    color: #dc3545;
+    font-size: 14px;
+    font-weight: bold;
+    margin-top: 5px;
+}
+.popup-message {
+    display: none;
+    position: fixed;
+    top: 100px; /* Initially off-screen */
+    left: 50%;
+    transform: translateX(-50%); /* Center horizontally */
+    background-color: #212529;
+    color: white;
+    text-align: center;
+    padding: 15px;
+    font-size: 16px;
+    z-index: 9999;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    width: auto;
+    max-width: 80%;
+    min-width: 300px;
+    animation: slideInOut 10s ease-in-out;
+}
+
+/* Animation to slide the message down, stay for 5 seconds, and then back up */
+@keyframes slideInOut {
+    0% {
+        top: 100px; /* Start from above the screen */
+    }
+    20% {
+        top: 100px; /* Slide down to the center of the page */
+    }
+    50% {
+        top: 100px; /* Stay in the center for 5 seconds */
+    }
+    100% {
+        top: -80px; /* Slide back up */
+    }
+}
+
+
