@@ -100,8 +100,8 @@ https://getbootstrap.com/docs/5.3/components/navbar/
                 // Dropdown menu
                 echo '<ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">';
                 echo '<li><a class="dropdown-item" href="#">New project...</a></li>';
-                echo '<li><a class="dropdown-item" href="#">Settings</a></li>';
-                echo '<li><a class="dropdown-item" href="modify.php">Profile</a></li>';
+                echo '<li><a class="dropdown-item" href="modify.php">Settings</a></li>';
+                echo '<li><a class="dropdown-item" href="userData.php">Profile</a></li>';
                 echo '<li><hr class="dropdown-divider"></li>';
                 echo '<li><a class="dropdown-item" href="functions.php" onclick="confirmLogout(event)">';
                 echo '<i class="bi bi-door-open fa-2x justify-content-end"></i> Log out</a></li>';
