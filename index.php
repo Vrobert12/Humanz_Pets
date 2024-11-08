@@ -2,6 +2,11 @@
 
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
+    $lang = $_GET['lang'] ?? 'en';
+    if(isset($_GET['lang'])){
+        $_SESSION['lang'] = $_GET['lang'];
+    }
+    include "lang_$lang.php";
 }
 ?>
 
@@ -92,6 +97,16 @@ https://getbootstrap.com/docs/5.3/components/navbar/
 
             </ul>
         </div>
+        <div class="dropdown align-self-end">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <?php echo LG?>
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" href="?lang=en"><?php echo LANGUAGE_en?></a>
+                <a class="dropdown-item" href="?lang=hu"><?php echo LANGUAGE_hu?></a>
+                <a class="dropdown-item" href="?lang=sr"><?php echo LANGUAGE_sr?></a>
+            </div>
+        </div>
     </div>
 </nav>
 <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark d-none d-md-inline-block" style="position: fixed; top: 0; bottom: 0; width: 280px;">
@@ -142,7 +157,7 @@ https://getbootstrap.com/docs/5.3/components/navbar/
 // Combined profile picture, text, and dropdown toggle in a single line
                 echo '<a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false" style="color: white;">';
                 echo '<img src="/Humanz2.0/pictures/' . $_SESSION['profilePic'] . '" alt="img" width="32" height="32" class="rounded-circle me-2" onclick="activateProfilePicture()" style="cursor: pointer;">';
-                echo '<strong>' . (isset($_SESSION['name']) ? $_SESSION['name'] : "Account") . '</strong>';
+                echo '<strong>' . (isset($_SESSION['name']) ? $_SESSION['name'] : ACCOUNT) . '</strong>';
                 echo '</a>';
 
                 // Dropdown menu
@@ -168,11 +183,11 @@ https://getbootstrap.com/docs/5.3/components/navbar/
 
                 echo '<a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">';
                 echo '<img src="/Humanz2.0/pictures/logInPic.png" alt="img" width="32" height="32" class="rounded-circle me-2">';
-                echo '<strong>Account</strong>';
+                echo '<strong>'.ACCOUNT.'</strong>';
                 echo '</a>';
                 echo '<ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">';
-                echo '<li><a class="dropdown-item" href="logIn.php">Log in</a></li>';
-                echo '<li><a class="dropdown-item" href="registration.php">Register</a></li>';
+                echo '<li><a class="dropdown-item" href="logIn.php">'.LOGIN.'</a></li>';
+                echo '<li><a class="dropdown-item" href="registration.php">'.REGISTER.'</a></li>';
                 echo '</ul>';
                 echo '</div>';
             }

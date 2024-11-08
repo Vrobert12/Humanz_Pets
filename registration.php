@@ -1,3 +1,11 @@
+<?php
+session_start();
+$lang = $_GET['lang'] ?? 'en';
+if(isset($_GET['lang'])){
+    $_SESSION['lang'] = $_GET['lang'];
+}else{ $lang = $_SESSION['lang']; }
+include_once "lang_$lang.php";
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -43,14 +51,14 @@ if (isset($_SESSION['title'])) {
 ?>
 <form method="post" action="functions.php" class="mainForm">
     <a class="nextPage" href="logIn.php">Back</a><br><br>
-    <label for="fname">First Name:</label><br>
-    <input type="text" class="inputok" placeholder="First Name" name="fname" id="fname" ><br>
-    <label for="lname">Last Name:</label><br>
-    <input type="text" class="inputok" placeholder="Last Name" name="lname" id="lname" ><br>
+    <label for="fname"><?php echo NAME?>:</label><br>
+    <input type="text" class="inputok" placeholder="<?php echo NAME?>" name="fname" id="fname" ><br>
+    <label for="lname"><?php echo LASTNAME?>:</label><br>
+    <input type="text" class="inputok" placeholder="<?php echo LASTNAME?>" name="lname" id="lname" ><br>
 
-    <label for="tel1">Phone Number:</label><br>
+    <label for="tel1"><?php echo PHONE?>:</label><br>
     <select name="tel1" class="inputok" id="tel1">
-        <option hidden="hidden" value="Number">Number</option>
+        <option hidden="hidden" value="Number"><?php echo NUMBER?></option>
         <?php
         for ($i=10; $i<=39; $i++){
             echo "<option value=\"0".$i."\">0".$i."</option>";
@@ -65,13 +73,13 @@ if (isset($_SESSION['title'])) {
     </select>
     <input type="text" placeholder="Phone Number" name="tel2" class="inputok" id="tel2" ><br>
     <label for="mail">E-mail:</label><br>
-    <input type="email" class="inputok" placeholder="Email Address" name="mail" id="mail" ><br>
+    <input type="email" class="inputok" placeholder="Email" name="mail" id="mail" ><br>
     <?php
     if (!isset($_GET['token']) || !isset($_SESSION['token'])) {
         $_SESSION['token'] = substr(number_format(time() * rand(), 0, '', ''), 0, 6);
-        echo '<label for="pass">Password:</label><br>
+        echo '<label for="pass">'.PASSWORD.':</label><br>
         <input type="password" class="inputok" placeholder="********" name="pass" id="pass" ><br>
-        <label for="pass2">Confirm Password:</label><br>
+        <label for="pass2">'.CONFPASS.':</label><br>
         <input type="password" class="inputok" placeholder="********" name="pass2" id="pass2" ><br>
         <input type="submit" class="inputok" name="action" value="registration">';
     } else {

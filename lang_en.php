@@ -1,0 +1,32 @@
+<?php
+define('NUMBER','Number');
+define('LOGOUT', 'Log out');
+define('PHONE','Phone number');
+define('REGHERE','Register here!');
+define('NOACC','Dont have an account?');
+define('CONFPASS','Confirm password');
+define('PASSWORD','Password');
+define('REGISTER','Register');
+define('LOGIN','Log in');
+define('ACCOUNT','Account');
+define('BACK','Back');
+define('LG','Language');
+define('LANGUAGE_sr', 'Serbian');
+define('LANGUAGE_hu', 'Hungarian');
+define('LANGUAGE_en', 'English');
+define('HOME','Home');
+define('WELCOME_MESSAGE','Welcome to the website!');
+define('ABOUT_US_TITLE', 'About us');
+define('JOBS_TITLE', 'Looking for jobs');
+define('NAME', 'Name');
+define('LASTNAME', 'Lastname');
+define('BIRTH_DATE', 'Date of Birth');
+define('RESUME', 'Resume');
+define('SKILLS', 'Skills');
+define('EMAIL', 'E-mail address');
+define('SUBMIT', 'Send');
+define('RESET', 'Reset');
+define('SUCCESS_MESSAGE', 'You have successfully registered!.');
+define('BACK_TO_JOBS', 'Back to jobs');
+define('ERROR_MESSAGE', 'Error, please fill all the fields.');
+?>
