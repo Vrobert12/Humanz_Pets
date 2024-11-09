@@ -1,4 +1,8 @@
 <?php
+define('REGTIME','Regisztrálás dátuma');
+define('PRIVILEGE','Jog');
+define('SAVE','Mentés');
+define('SETTINGS','Beállítások');
 define('NUMBER','Szám');
 define('LOGOUT', 'Kijelentkezés');
 define('PHONE','Telefonszám');

@@ -1,4 +1,8 @@
 <?php
+define('REGTIME','Datum registracije');
+define('PRIVILEGE','Privilegija');
+define('SAVE','Sačuvaj');
+define('SETTINGS','Podešavanja');
 define('NUMBER','Broj');
 define('LOGOUT', 'Izjavljivanje');
 define('PHONE','Broj telefona');

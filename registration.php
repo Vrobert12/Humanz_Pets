@@ -3,7 +3,7 @@ session_start();
 $lang = $_GET['lang'] ?? 'en';
 if(isset($_GET['lang'])){
     $_SESSION['lang'] = $_GET['lang'];
-}else{ $lang = $_SESSION['lang']; }
+}
 include_once "lang_$lang.php";
 ?>
 <!DOCTYPE html>
@@ -11,7 +11,7 @@ include_once "lang_$lang.php";
 <head>
     <meta charset="UTF-8">
     <title>Registration</title>
-    <link rel="stylesheet" href="SideStyle.css">
+    <link rel="stylesheet" href="style.css">
     <?php include "config.php"; ?>
     <style>
         .warning {
@@ -90,5 +90,6 @@ if (isset($_SESSION['title'])) {
     echo "<p class='warning'>" . $message . "</p>";
     ?>
 </form>
+
 </body>
 </html>

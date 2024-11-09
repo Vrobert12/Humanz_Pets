@@ -41,12 +41,14 @@ include_once "lang_$lang.php";
     <label for="pass"><?php echo PASSWORD?></label><br>
     <input type="password" placeholder="********" name="pass" class="inputok" id="pass"><br>
 
-    <input type="submit" name="action" value="Log in" class="inputok"><br><br>
+    <input type="submit" name="submit" value="<?php echo LOGIN?>" class="inputok"><br><br>
+    <input type="hidden" name="action" value="Log in" class="inputok">
 
     <label for="mail"><?php echo NOACC?></label><br><br>
     <a href="registration.php"><?php echo REGHERE?></a><br>
 
 
 </form>
+
 </body>
 </html>

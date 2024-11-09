@@ -1,8 +1,12 @@
 <?php
+
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
+
 include "config.php";
+require 'phpqrcode/qrlib.php';
+require "vendor/autoload.php";
 $function = new Functions();
 
 class Functions
@@ -86,6 +90,9 @@ class Functions
                 case 'AddTable':
                     $this->addTable();
                     break;
+                case "registerAnimal":
+                    $this->registerAnimal();
+                    break;
                 default:
                     $_SESSION['message'] = "Something went wrong in switch";
                     header('Location:index.php');
@@ -98,7 +105,126 @@ class Functions
         }
     }
 
-    public function passwordCheck($password, $password2, $location) {
+    /**
+     * @param string $name
+     * @param string $petName
+     * @param string $bred
+     * @param string $specie
+     * @param string $petPicture
+     * @param string $email
+     * @param string $phone
+     * @return string
+     */
+    public function createQrCode(string $name, string $petName, string $bred, string $specie,
+                                 string $email, string $phone): string
+    {
+        $saveDir = 'QRcodes/';
+        if (!is_dir($saveDir)) {
+            mkdir($saveDir, 0777, true);
+        }
+
+        // Constructing the vCard data
+        $vCardData = "BEGIN:VCARD\r\n";
+        $vCardData .= "VERSION:3.0\r\n";
+        $vCardData .= "FN:$name\r\n";
+        $vCardData .= "ORG:Pet Info\r\n";
+        $vCardData .= "TITLE:Pet Owner\r\n";
+        $vCardData .= "NOTE:Pet's Name: $petName, Breed: $bred, Specie: $specie\r\n";
+        $vCardData .= "TEL;TYPE=WORK,VOICE:$phone\r\n";
+        $vCardData .= "EMAIL:$email\r\n";
+        $vCardData .= "END:VCARD";
+
+        // Generating a unique filename for the QR code
+        $fileName = 'qrcode_' . uniqid() . '.png';
+        $filePath = $saveDir . $fileName;
+
+        // Generate the QR code with error correction level H (highest) and charset 8
+        QRcode::png($vCardData, $filePath, QR_ECLEVEL_H, 8); // Charset 8 with higher error correction
+        $_SESSION['petPicture']=$this->picture($_SESSION['backPic']);
+        // If a pet picture is provided, overlay it on the QR code
+        if (!empty( $_SESSION['petPicture'])) {
+            // Check if the pet picture exists
+            if (file_exists( $_SESSION['petPicture'])) {
+                // Get the QR code and pet picture image resources
+                $qrCodeImage = imagecreatefrompng($filePath);
+                $petImage = imagecreatefromstring(file_get_contents( $_SESSION['petPicture']));
+
+                // Resize the pet picture to fit inside the QR code (e.g., 100x100 pixels)
+                list($petWidth, $petHeight) = getimagesize( $_SESSION['petPicture']);
+                $newPetWidth = 100;
+                $newPetHeight = 100;
+                $resizedPetImage = imagecreatetruecolor($newPetWidth, $newPetHeight);
+                imagecopyresampled($resizedPetImage, $petImage, 0, 0, 0, 0, $newPetWidth, $newPetHeight, $petWidth, $petHeight);
+
+                // Calculate the position to overlay the pet image on the QR code
+                $qrWidth = imagesx($qrCodeImage);
+                $qrHeight = imagesy($qrCodeImage);
+                $overlayX = ($qrWidth - $newPetWidth) / 2;
+                $overlayY = ($qrHeight - $newPetHeight) / 2;
+
+                // Merge the images: Overlay the pet picture onto the QR code
+                imagecopy($qrCodeImage, $resizedPetImage, $overlayX, $overlayY, 0, 0, $newPetWidth, $newPetHeight);
+
+                // Save the final image with the overlay
+                imagepng($qrCodeImage, $filePath);
+                imagedestroy($qrCodeImage);
+                imagedestroy($petImage);
+                imagedestroy($resizedPetImage);
+            }
+        }
+
+        return $filePath;
+    }
+
+
+    public function registerAnimal()
+    {
+        if (isset($_POST["petName"]) && !empty($_POST["petName"]) && isset($_POST["bred"]) && !empty($_POST["bred"])
+            && isset($_POST["specie"]) && !empty($_POST["specie"]) && isset($_FILES["picture"]) && !empty($_FILES["picture"])) {
+            $qrCodeFileName = $this->createQrCode($_SESSION['name'], $_POST["petName"], $_POST["bred"], $_POST["specie"]
+                , $_SESSION['email'], $_SESSION["phone"]);
+
+
+
+
+            $qrStmt = "insert into qr_code (qrCodeName) values (:qrCodeFile)";
+            $stmt = $this->connection->prepare($qrStmt);
+            $stmt->bindParam(':qrCodeFile', $qrCodeFileName);
+            $stmt->execute();
+            $qrCodeId = "select qr_code_id from qr_code where qrCodeName=:qrCodeFileName";
+            $stmt = $this->connection->prepare($qrCodeId);
+            $stmt->bindParam(':qrCodeFileName', $qrCodeFileName);
+            $stmt->execute();
+            $petName=ucfirst(strtolower($_POST["petName"]));
+            $bred=ucfirst(strtolower($_POST["bred"]));
+            $specie=ucfirst(strtolower($_POST["specie"]));
+
+            if ($stmt->execute())
+                $qrCodeId = $stmt->fetchColumn();
+            $stmt = "insert into pet (petName,bred,petSpecies,qr_code_id,petPicture,userId) 
+values (:petName,:typeOfAnimal,:petSpecies,:qr_code_id,:petPicture,:userId)";
+            $stmt = $this->connection->prepare($stmt);
+            $stmt->bindParam(":petName", $petName, PDO::PARAM_STR);
+            $stmt->bindParam(":typeOfAnimal", $bred, PDO::PARAM_STR);
+            $stmt->bindParam(":petSpecies", $specie, PDO::PARAM_STR);
+            $stmt->bindParam(":qr_code_id", $qrCodeId, PDO::PARAM_STR);
+            $stmt->bindParam(":petPicture", $_SESSION['petPicture'], PDO::PARAM_STR);
+            $stmt->bindParam(":userId", $_SESSION["userID"], PDO::PARAM_STR);
+            $stmt->execute();
+            $_SESSION['message'] = "You registered your animal";
+
+
+            header("Location:index.php");
+            exit();
+        } else {
+            $_SESSION['message'] = "Fill al the fields";
+            header("Location:registerAnimal.php");
+            exit();
+        }
+    }
+
+    public function passwordCheck($password, $password2, $location)
+    {
         if ($password == '') {
             $_SESSION['message'] = "The <b>Password</b> is not filled out";
             header('Location: ' . $location);
@@ -138,7 +264,8 @@ class Functions
 
     }
 
-    public function userCheck1($fname, $lname, $email, $tel2, $location) {
+    public function userCheck1($fname, $lname, $email, $tel2, $location)
+    {
         if ($fname == '') {
             $_SESSION['message'] = "The <b>First Name</b> is not filled out";
             header('Location: ' . $location);
@@ -192,7 +319,9 @@ class Functions
         }
 
     }
-    public function registration() {
+
+    public function registration()
+    {
         if (isset($_POST['fname']) && isset($_POST['lname']) && isset($_POST['tel1']) && isset($_POST['tel2']) && isset($_POST['mail']) && isset($_POST['pass']) && isset($_POST['pass2'])) {
 
 
@@ -222,7 +351,7 @@ class Functions
                 $sql = "SELECT userMail,verify,verification_time FROM user";
                 $stmtTeszt = $this->connection->query($sql);
 
-                if ($stmtTeszt->rowCount()> 0) {
+                if ($stmtTeszt->rowCount() > 0) {
                     while ($rows = $stmtTeszt->fetch(PDO::FETCH_ASSOC)) {
 
 
@@ -302,7 +431,7 @@ class Functions
                         header('Location: mail.php');
                         exit(); // Exit script after redirection
                     } else {
-                        $_SESSION['message'] = "Error occurred during registration: " .$this->connection->error;
+                        $_SESSION['message'] = "Error occurred during registration: " . $this->connection->error;
                         header('Location: registration.php');
                         exit();
                     }
@@ -311,13 +440,14 @@ class Functions
             } catch (Exception $e) {
                 $_SESSION['message'] = "An error occurred: " . $e->getMessage();
             }
-        }
-        else{
+        } else {
             $_SESSION['message'] = "Error occurred during registration!";
         }
 
     }
-    public function userModifyData($fname, $lname, $tel2, $location) {
+
+    public function userModifyData($fname, $lname, $tel2, $location)
+    {
 
         if (preg_match("/[0-9]+/", $fname)) {
             $_SESSION['message'] = "The <b>First Name</b> filled contains <b>Numbers</b>.";
@@ -349,7 +479,9 @@ class Functions
 
 
     }
-    public function modifyUser() {
+
+    public function modifyUser()
+    {
         $count = 0;
         $phoneNumber = $_POST['tel1'] . $_POST['tel2'];
 
@@ -402,7 +534,8 @@ class Functions
         exit();
     }
 
-    public function picture($target = " ") {
+    public function picture($target = " ")
+    {
 
         if (isset($_FILES['picture'])) {
             $target_dir = "pictures/";  // Local directory for storing uploaded files
@@ -414,7 +547,8 @@ class Functions
             $kep = $kep . "." . $kep_dir;
 
             if ($_FILES['picture']["error"] > 0) {
-                return $_FILES["picture"]["error"];
+                $_SESSION['message'] = $_FILES["picture"]["error"];
+                return $_SESSION['message'] ;
             } else {
                 if (is_uploaded_file($_FILES['picture']['tmp_name'])) {
 
@@ -435,10 +569,10 @@ class Functions
                         exit();
                     }
                     $file_size = $file_size / 1024;
-                    if ($file_size > 200) {
+                    if ($file_size > 300) {
                         $_SESSION['message'] = "File is too big!";
                         $logType = "Picture";
-                        $logText = "The file is bigger than 200KB";
+                        $logText = "The file is bigger than 300KB";
                         $logMessage = $_SESSION['message'];
 
                         $this->errorLogInsert($_SESSION['email'], $logText, $logType, $logMessage);
@@ -493,7 +627,11 @@ class Functions
                         // Redirect to login page after successful upload
                         header('Location: ' . $_SESSION['backPic']);
                         exit(); // Exit after redirection
-                    } else {
+                    }
+                    elseif($target=='registerAnimal.php'){
+                        return $new_file_name;
+                    }
+                    else {
                         $mail = 'Unknown';
                         $logType = "file Upload";
                         $logText = "Someone tried to upload a picture from a not valid page";
@@ -506,6 +644,9 @@ class Functions
                     }
                 }
             }
+        }
+        else{
+            $_SESSION['message'] = "File not found!";
         }
         return $new_file_name;
     }
@@ -522,14 +663,15 @@ class Functions
     }
 
     public function login()
-    { if (isset($_POST['mail'], $_POST['pass'])) {
-        echo 'Login triggered<br>';
-        $mail = $_POST['mail'];
-        $password = $_POST['pass'];
+    {
+        if (isset($_POST['mail'], $_POST['pass'])) {
+            echo 'Login triggered<br>';
+            $mail = $_POST['mail'];
+            $password = $_POST['pass'];
 
-        // Check if values are captured
-        echo "Email: $mail, Password: $password<br>";
-    }
+            // Check if values are captured
+            echo "Email: $mail, Password: $password<br>";
+        }
         if (isset($_POST['mail'], $_POST['pass'])) {
             $mail = $_POST['mail'];
             $password = $_POST['pass'];
@@ -553,6 +695,7 @@ class Functions
                             $_SESSION['name'] = $result['firstName'] . " " . $result['lastName'];
                             $_SESSION['profilePic'] = $result['profilePic'];
                             $_SESSION['userID'] = $result['userId'];
+                            $_SESSION['phone'] = $result['phoneNumber'];
                             header('Location: index.php');
                             exit();
                         }
