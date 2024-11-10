@@ -123,7 +123,7 @@ https://getbootstrap.com/docs/5.3/components/navbar/
             </a>
         </li>
         <?php
-        if(isset($_SESSION['email']))
+        if(isset($_SESSION['email'])){
         echo '<li>
         <a href="pet.php?email=' . urlencode($_SESSION['email']) . '" class="nav-link text-white">
             <svg class="bi me-2" width="16" height="16">
@@ -132,15 +132,17 @@ https://getbootstrap.com/docs/5.3/components/navbar/
             My Pet
         </a>
     </li>';
+
+        echo '<li>
+        <a href="registerAnimal.php" class="nav-link text-white">
+            <svg class="bi me-2" width="16" height="16">
+                <use xlink:href="registerAnimal.php" />
+            </svg>
+            Add Pet
+        </a>
+    </li>';
+        }
         ?>
-
-
-        <li>
-            <a href="#" class="nav-link text-white">
-                <svg class="bi me-2" width="16" height="16"><use xlink:href="#table"/></svg>
-                Orders
-            </a>
-        </li>
         <li>
             <a href="#" class="nav-link text-white">
                 <svg class="bi me-2" width="16" height="16"><use xlink:href="#grid"/></svg>
@@ -180,7 +182,7 @@ https://getbootstrap.com/docs/5.3/components/navbar/
                 // Hidden form for file upload
                 echo "<form method='post' action='functions.php' enctype='multipart/form-data' style='display: none;'>";
                 $_SESSION['backPic'] = "index.php";
-                echo "<input class='dropdown-item' type='file' name='picture' id='pictureInput' style='display: none;' onchange='activateSubmit()'>";
+                echo "<input class='dropdown-item' type='file' name='picture' id='pictureInput' style='display: none;' accept='image/*' onchange='activateSubmit()'>";
                 echo "<input type='submit' name='action' id='submitButton' value='picture' style='display: none;'>";
                 echo '</form>';
 
@@ -264,7 +266,7 @@ echo '<div class="dropdown border-top ">';
             // Hidden form for file upload
             echo "<form method='post' action='functions.php' enctype='multipart/form-data' style='display: none;'>";
             $_SESSION['backPic'] = "index.php";
-            echo "<input class='dropdown-item' type='file' name='picture' id='pictureInput' style='display: none;' onchange='activateSubmit()'>";
+            echo "<input class='dropdown-item' type='file' name='picture' id='pictureInput' style='display: none;' accept='image/*' onchange='activateSubmit()'>";
             echo "<input type='submit' name='action' id='submitButton' value='picture' style='display: none;'>";
             echo '</form>';
 
@@ -286,5 +288,6 @@ echo '<div class="dropdown border-top ">';
     </div>
     </div>
 </div>
+
 </body>
 </html>
