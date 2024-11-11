@@ -1,4 +1,13 @@
 <?php
+define('ADDPET','Register a pet');
+define('MYPETS','My pets');
+define('DOG','Dog');
+define('CAT','Cat');
+define('BUNNY','Bunny');
+define('PARROT','Parrot');
+define('PIG','Pig');
+define('SPECIES','Species');
+define('BREED','Breed');
 define('REGTIME','Registration date');
 define('SAVE','Save');
 define('SETTINGS','Settings');

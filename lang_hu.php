@@ -1,4 +1,13 @@
 <?php
+define('ADDPET','Házikedvenc regisztrálása');
+define('MYPETS','Házi kedvenceim');
+define('DOG','Kutya');
+define('CAT','Macska');
+define('BUNNY','Nyúl');
+define('PARROT','Papagáj');
+define('PIG','Malac');
+define('SPECIES','Faj');
+define('BREED','Fajta');
 define('REGTIME','Regisztrálás dátuma');
 define('PRIVILEGE','Jog');
 define('SAVE','Mentés');

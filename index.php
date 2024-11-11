@@ -129,7 +129,7 @@ https://getbootstrap.com/docs/5.3/components/navbar/
             <svg class="bi me-2" width="16" height="16">
                 <use xlink:href="pet.php?email=' . urlencode($_SESSION['email']) . '" />
             </svg>
-            My Pet
+            '.MYPETS.'
         </a>
     </li>';
 
@@ -138,7 +138,7 @@ https://getbootstrap.com/docs/5.3/components/navbar/
             <svg class="bi me-2" width="16" height="16">
                 <use xlink:href="registerAnimal.php" />
             </svg>
-            Add Pet
+            '.ADDPET.'
         </a>
     </li>';
         }

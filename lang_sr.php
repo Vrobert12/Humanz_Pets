@@ -1,4 +1,13 @@
 <?php
+define('ADDPET','registrovanje ljubimca');
+define('MYPETS','Moji ljubimci');
+define('DOG','Pas');
+define('CAT','Mačka');
+define('BUNNY','Zec');
+define('PARROT','Papagaj');
+define('PIG','Prase');
+define('SPECIES','Vrsta');
+define('BREED','Rasa');
 define('REGTIME','Datum registracije');
 define('PRIVILEGE','Privilegija');
 define('SAVE','Sačuvaj');

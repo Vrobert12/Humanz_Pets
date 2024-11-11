@@ -1,9 +1,6 @@
 <?php
 session_start();
-$lang = $_GET['lang'] ?? 'en';
-if(isset($_GET['lang'])){
-    $_SESSION['lang'] = $_GET['lang'];
-}
+$lang = $_GET['lang'] ?? $_SESSION['lang'] ?? 'en';
 include_once "lang_$lang.php";
 ?>
 <!DOCTYPE html>
@@ -53,26 +50,27 @@ if (isset($_SESSION['title'])) {
 $_SESSION['backPic']='registerAnimal.php';
 ?>
 
-    <a class="nextPage" href="index.php">Back</a><br><br>
-    <label for="petName"><?php echo NAME?>:</label><br>
-    <input type="text" class="inputok" placeholder="<?php echo NAME?>" name="petName" id="petName" ><br>
-    <label for="bred"><?php echo LASTNAME?>:</label><br>
-    <input type="text" class="inputok" placeholder="<?php echo LASTNAME?>" name="bred" id="bred" ><br>
+<a class="nextPage" href="index.php"><?php echo BACK?></a><br><br>
+<label for="petName"><?php echo NAME?>:</label><br>
+<input type="text" class="inputok" placeholder="<?php echo NAME?>" name="petName" id="petName" ><br>
+<label for="bred"><?php echo BREED?>:</label><br>
+<input type="text" class="inputok" placeholder="<?php echo BREED?>" name="bred" id="bred" ><br>
 
-    <label for="specie"><?php echo PHONE?>:</label><br>
-    <select name="specie" class="inputok" id="specie">
-        <option hidden="hidden" value="specie"><?php echo NUMBER?></option>
-        <option value="dog">dog</option>
-        <option value="cat">cat</option>
-        <option value="parrot">parrot</option>
-        <option value="bunny">bunny</option>
-        <option value="pig">pig</option>
-    </select>
+<label for="specie"><?php echo SPECIES?>:</label><br>
+<select name="specie" class="inputok" id="specie">
+    <option hidden="hidden" value="specie"><?php echo SPECIES?></option>
+    <option value="dog"><?php echo DOG?></option>
+    <option value="cat"><?php echo CAT?></option>
+    <option value="parrot"><?php echo PARROT?></option>
+    <option value="bunny"><?php echo BUNNY?></option>
+    <option value="pig"><?php echo PIG?></option>
+</select>
 
-    <img src="/Humanz2.0/pictures/logInPic.png" alt="img" width="32" height="32" onclick="activateProfilePicture()" style="cursor: pointer;">
-    <input  type='file' name='picture' id='pictureInput' style='display: none;' accept='image/*'>
-    <input type='submit' class="inputok"  name='submit' id='submitButton' value='Register' >
-    <input type="hidden" name="action" value="registerAnimal"><br>
+<img src="/Humanz2.0/pictures/logInPic.png" alt="img" width="32" height="32" onclick="activateProfilePicture()" style="cursor: pointer;">
+<input  type='file' name='picture' id='pictureInput' style='display: none;' accept='image/*'>
+<input type='submit' class="inputok"  name='submit' id='submitButton' value='<?php echo REGISTER?>' >
+<input type='hidden' class="inputok"  name='Action' id='submitButton2' value='Register' >
+<input type="hidden" name="action" value="registerAnimal"><br>
 <?php
 if(isset($_SESSION['message'])) {
     echo $_SESSION['message'];
