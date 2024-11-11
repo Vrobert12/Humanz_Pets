@@ -142,46 +142,87 @@ class Functions
 
     public function registerAnimal()
     {
-        if (isset($_POST["petName"]) && !empty($_POST["petName"]) && isset($_POST["bred"]) && !empty($_POST["bred"])
-            && isset($_POST["specie"]) && !empty($_POST["specie"]) && isset($_FILES["picture"]) && !empty($_FILES["picture"])) {
-            $qrCodeFileName = $this->createQrCode($_SESSION['name'],$_SESSION["phone"]);
+        if (isset($_POST["petName"]) && !empty($_POST["petName"]) &&
+            isset($_POST["bred"]) && !empty($_POST["bred"]) &&
+            isset($_POST["specie"]) && !empty($_POST["specie"]) &&
+            isset($_FILES["picture"]) && !empty($_FILES["picture"])) {
 
-            $_SESSION['petPicture']=$this->picture($_SESSION['backPic']);
+            try {
+                // Check if the user already has an existing QR code
+                $stmt = "SELECT qr.qr_code_id, qr.qrCodeName FROM qr_code qr
+                 LEFT JOIN pet p ON p.qr_code_id = qr.qr_code_id
+                 WHERE userId = :userId";
+                $query = $this->connection->prepare($stmt);
+                $userId = $_SESSION['userId'];
+                $query->bindParam(':userId', $userId, PDO::PARAM_INT);
 
-            $qrStmt = "insert into qr_code (qrCodeName) values (:qrCodeFile)";
-            $stmt = $this->connection->prepare($qrStmt);
-            $stmt->bindParam(':qrCodeFile', $qrCodeFileName);
-            $stmt->execute();
-            $qrCodeId = "select qr_code_id from qr_code where qrCodeName=:qrCodeFileName";
-            $stmt = $this->connection->prepare($qrCodeId);
-            $stmt->bindParam(':qrCodeFileName', $qrCodeFileName);
-            $stmt->execute();
-            $petName=ucfirst(strtolower($_POST["petName"]));
-            $bred=ucfirst(strtolower($_POST["bred"]));
-            $specie=ucfirst(strtolower($_POST["specie"]));
+                $qrCodeId = null;
+                $qrCodeFileName = null;
 
-            if ($stmt->execute())
-                $qrCodeId = $stmt->fetchColumn();
-            $stmt = "insert into pet (petName,bred,petSpecies,qr_code_id,petPicture,userId) 
-values (:petName,:typeOfAnimal,:petSpecies,:qr_code_id,:petPicture,:userId)";
-            $stmt = $this->connection->prepare($stmt);
-            $stmt->bindParam(":petName", $petName, PDO::PARAM_STR);
-            $stmt->bindParam(":typeOfAnimal", $bred, PDO::PARAM_STR);
-            $stmt->bindParam(":petSpecies", $specie, PDO::PARAM_STR);
-            $stmt->bindParam(":qr_code_id", $qrCodeId, PDO::PARAM_STR);
-            $stmt->bindParam(":petPicture", $_SESSION['petPicture'], PDO::PARAM_STR);
-            $stmt->bindParam(":userId", $_SESSION["userID"], PDO::PARAM_STR);
-            $stmt->execute();
-            $_SESSION['message'] = "You registered your animal";
+                // Execute the query to check for an existing QR code
+                if ($query->execute() && $query->rowCount() > 0) {
+                    // Reuse the existing QR code
+                    $result = $query->fetch(PDO::FETCH_ASSOC);
+                    $qrCodeId = $result['qr_code_id'];
+                    $qrCodeFileName = $result['qrCodeName'];
+                } else {
+                    // Generate a new QR code if one doesn't exist
+                    $qrCodeFileName = $this->createQrCode($_SESSION['name'], $_SESSION["phone"]);
 
+                    // Insert the new QR code into the database
+                    $insertQrStmt = "INSERT INTO qr_code (qrCodeName) VALUES (:qrCodeFile)";
+                    $insertQuery = $this->connection->prepare($insertQrStmt);
+                    $insertQuery->bindParam(':qrCodeFile', $qrCodeFileName, PDO::PARAM_STR);
 
-            header("Location:index.php");
-            exit();
+                    if ($insertQuery->execute()) {
+                        // Retrieve the new QR code ID
+                        $qrCodeIdStmt = "SELECT qr_code_id FROM qr_code WHERE qrCodeName = :qrCodeFileName";
+                        $qrCodeQuery = $this->connection->prepare($qrCodeIdStmt);
+                        $qrCodeQuery->bindParam(':qrCodeFileName', $qrCodeFileName, PDO::PARAM_STR);
+                        $qrCodeQuery->execute();
+                        $qrCodeId = $qrCodeQuery->fetchColumn();
+                    } else {
+                        throw new Exception("Failed to insert the new QR code.");
+                    }
+                }
+
+                // Prepare and sanitize the pet data
+                $petName = ucfirst(strtolower(trim($_POST["petName"])));
+                $bred = ucfirst(strtolower(trim($_POST["bred"])));
+                $specie = ucfirst(strtolower(trim($_POST["specie"])));
+                $_SESSION['petPicture'] = $this->picture($_SESSION['backPic']);
+
+                // Insert the pet data into the database
+                $petStmt = "INSERT INTO pet (petName, bred, petSpecies, qr_code_id, petPicture, userId)
+                    VALUES (:petName, :bred, :specie, :qr_code_id, :petPicture, :userId)";
+                $petQuery = $this->connection->prepare($petStmt);
+                $petQuery->bindParam(':petName', $petName, PDO::PARAM_STR);
+                $petQuery->bindParam(':bred', $bred, PDO::PARAM_STR);
+                $petQuery->bindParam(':specie', $specie, PDO::PARAM_STR);
+                $petQuery->bindParam(':qr_code_id', $qrCodeId, PDO::PARAM_INT);
+                $petQuery->bindParam(':petPicture', $_SESSION['petPicture'], PDO::PARAM_STR);
+                $petQuery->bindParam(':userId', $userId , PDO::PARAM_INT);
+
+                if ($petQuery->execute()) {
+                    $_SESSION['message'] = "You registered your animal successfully.";
+                    header("Location: index.php");
+                    exit();
+                } else {
+                    throw new Exception("Failed to register the pet.");
+                }
+
+            } catch (Exception $e) {
+                $_SESSION['message'] = "Error: " . $e->getMessage();
+                header("Location: registerAnimal.php");
+                exit();
+            }
         } else {
-            $_SESSION['message'] = "Fill al the fields";
-            header("Location:registerAnimal.php");
+            $_SESSION['message'] = "Please fill in all the fields.";
+            header("Location: registerAnimal.php");
             exit();
         }
+
+
     }
 
     public function passwordCheck($password, $password2, $location)
@@ -655,7 +696,7 @@ values (:petName,:typeOfAnimal,:petSpecies,:qr_code_id,:petPicture,:userId)";
                             $_SESSION['email'] = $result['userMail'];
                             $_SESSION['name'] = $result['firstName'] . " " . $result['lastName'];
                             $_SESSION['profilePic'] = $result['profilePic'];
-                            $_SESSION['userID'] = $result['userId'];
+                            $_SESSION['userId'] = $result['userId'];
                             $_SESSION['phone'] = $result['phoneNumber'];
                             header('Location: index.php');
                             exit();
