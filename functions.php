@@ -115,77 +115,38 @@ class Functions
      * @param string $phone
      * @return string
      */
-    public function createQrCode(string $name, string $petName, string $bred, string $specie,
-                                 string $email, string $phone): string
+    public function createQrCode(string $name, string $phone): string
     {
         $saveDir = 'QRcodes/';
         if (!is_dir($saveDir)) {
             mkdir($saveDir, 0777, true);
         }
 
-        // Constructing the vCard data
         $vCardData = "BEGIN:VCARD\r\n";
         $vCardData .= "VERSION:3.0\r\n";
         $vCardData .= "FN:$name\r\n";
-        $vCardData .= "ORG:Pet Info\r\n";
-        $vCardData .= "TITLE:Pet Owner\r\n";
-        $vCardData .= "NOTE:Pet's Name: $petName, Breed: $bred, Specie: $specie\r\n";
-        $vCardData .= "TEL;TYPE=WORK,VOICE:$phone\r\n";
-        $vCardData .= "EMAIL:$email\r\n";
+        $vCardData .= "TEL:$phone\r\n";
         $vCardData .= "END:VCARD";
 
-        // Generating a unique filename for the QR code
+        $vCardData = iconv('ISO-8859-1', 'UTF-8//IGNORE', $vCardData);
+
         $fileName = 'qrcode_' . uniqid() . '.png';
         $filePath = $saveDir . $fileName;
 
-        // Generate the QR code with error correction level H (highest) and charset 8
-        QRcode::png($vCardData, $filePath, QR_ECLEVEL_H, 8); // Charset 8 with higher error correction
-        $_SESSION['petPicture']=$this->picture($_SESSION['backPic']);
-        // If a pet picture is provided, overlay it on the QR code
-        if (!empty( $_SESSION['petPicture'])) {
-            // Check if the pet picture exists
-            if (file_exists( $_SESSION['petPicture'])) {
-                // Get the QR code and pet picture image resources
-                $qrCodeImage = imagecreatefrompng($filePath);
-                $petImage = imagecreatefromstring(file_get_contents( $_SESSION['petPicture']));
-
-                // Resize the pet picture to fit inside the QR code (e.g., 100x100 pixels)
-                list($petWidth, $petHeight) = getimagesize( $_SESSION['petPicture']);
-                $newPetWidth = 100;
-                $newPetHeight = 100;
-                $resizedPetImage = imagecreatetruecolor($newPetWidth, $newPetHeight);
-                imagecopyresampled($resizedPetImage, $petImage, 0, 0, 0, 0, $newPetWidth, $newPetHeight, $petWidth, $petHeight);
-
-                // Calculate the position to overlay the pet image on the QR code
-                $qrWidth = imagesx($qrCodeImage);
-                $qrHeight = imagesy($qrCodeImage);
-                $overlayX = ($qrWidth - $newPetWidth) / 2;
-                $overlayY = ($qrHeight - $newPetHeight) / 2;
-
-                // Merge the images: Overlay the pet picture onto the QR code
-                imagecopy($qrCodeImage, $resizedPetImage, $overlayX, $overlayY, 0, 0, $newPetWidth, $newPetHeight);
-
-                // Save the final image with the overlay
-                imagepng($qrCodeImage, $filePath);
-                imagedestroy($qrCodeImage);
-                imagedestroy($petImage);
-                imagedestroy($resizedPetImage);
-            }
-        }
+        QRcode::png($vCardData, $filePath, QR_ECLEVEL_L, 4);
 
         return $filePath;
     }
+
 
 
     public function registerAnimal()
     {
         if (isset($_POST["petName"]) && !empty($_POST["petName"]) && isset($_POST["bred"]) && !empty($_POST["bred"])
             && isset($_POST["specie"]) && !empty($_POST["specie"]) && isset($_FILES["picture"]) && !empty($_FILES["picture"])) {
-            $qrCodeFileName = $this->createQrCode($_SESSION['name'], $_POST["petName"], $_POST["bred"], $_POST["specie"]
-                , $_SESSION['email'], $_SESSION["phone"]);
+            $qrCodeFileName = $this->createQrCode($_SESSION['name'],$_SESSION["phone"]);
 
-
-
+            $_SESSION['petPicture']=$this->picture($_SESSION['backPic']);
 
             $qrStmt = "insert into qr_code (qrCodeName) values (:qrCodeFile)";
             $stmt = $this->connection->prepare($qrStmt);
