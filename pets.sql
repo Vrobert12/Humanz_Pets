@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2024. Nov 11. 14:29
+-- Létrehozás ideje: 2024. Nov 11. 20:09
 -- Kiszolgáló verziója: 10.4.32-MariaDB
 -- PHP verzió: 8.2.12
 
@@ -137,7 +137,8 @@ INSERT INTO `errorlog` (`errorLogId`, `errorType`, `errorMail`, `errorText`, `er
 (95, 'Picture', 'robertvarro12@gmail.com', 'The file is bigger than 200KB', '2024-11-09 20:16:28.000000'),
 (96, 'Picture', 'robertvarro12@gmail.com', 'The file is bigger than 300KB', '2024-11-09 21:43:05.000000'),
 (97, 'file Upload', 'Unknown', 'Someone tried to upload a picture from a not valid page', '2024-11-09 22:24:05.000000'),
-(98, 'Picture', 'robertvarro12@gmail.com', 'The file is bigger than 300KB', '2024-11-11 14:26:41.000000');
+(98, 'Picture', 'robertvarro12@gmail.com', 'The file is bigger than 300KB', '2024-11-11 14:26:41.000000'),
+(99, 'Log in', 'robertvarro12@gmail.com', 'The password was not valid!', '2024-11-11 19:04:43.000000');
 
 -- --------------------------------------------------------
 
@@ -196,7 +197,8 @@ CREATE TABLE `pet` (
 --
 
 INSERT INTO `pet` (`petId`, `petName`, `bred`, `petSpecies`, `petPicture`, `userId`, `qr_code_id`) VALUES
-(9, 'Buksi', 'Mixed', 'Dog', '20241111142232.png', 19, 10);
+(1, 'Buksi', 'Mixed', 'Dog', '20241111154218.png', 19, 1),
+(2, 'Tigrincs', 'Mixed', 'Cat', '20241111193857.png', 19, 1);
 
 -- --------------------------------------------------------
 
@@ -220,8 +222,8 @@ CREATE TABLE `product` (
 CREATE TABLE `qr_code` (
   `qr_code_id` int(11) NOT NULL,
   `qrCodeName` varchar(100) NOT NULL,
-  `generated_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NULL DEFAULT current_timestamp()
+  `generated_at` datetime NOT NULL,
+  `updated_at` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -229,7 +231,7 @@ CREATE TABLE `qr_code` (
 --
 
 INSERT INTO `qr_code` (`qr_code_id`, `qrCodeName`, `generated_at`, `updated_at`) VALUES
-(10, 'QRcodes/qrcode_6732051848098.png', '2024-11-11 13:22:32', '2024-11-11 13:22:32');
+(1, 'QRcodes/qrcode_673252fcea043.png', '2024-11-11 19:47:18', '2024-11-11 18:54:53');
 
 -- --------------------------------------------------------
 
@@ -290,7 +292,7 @@ CREATE TABLE `user` (
 INSERT INTO `user` (`userId`, `firstName`, `lastName`, `phoneNumber`, `userMail`, `userPassword`, `profilePic`, `privilage`, `registrationTime`, `verification_code`, `verify`, `verification_time`, `banned`, `banned_time`, `passwordValidation`, `passwordValidationTime`) VALUES
 (6, 'Nikoletta', 'Varro', '0', 'nikolettavarro12@gmail.com', '$2y$10$ZJtAXGLi1y8Y7VlLzE4Ru.nH.SbV5pbDRtoQTlOv88WgemWiSIrB2', 'logInPic.png', 'Guest', '0000-00-00 00:00:00', 401081, 0, '2024-04-29 22:00:00', 0, '0000-00-00 00:00:00', 0, '2024-04-23 09:54:10'),
 (7, 'Nikoletta', 'Varro', '0', 'nikolettavarro@gmail.com', '$2y$10$GZ9eslD9.lWIwuBi0by.sunJYqe1s8Jn8K2eX4CefmMN/LOnyRNua', 'logInPic.png', 'Guest', '0000-00-00 00:00:00', 102107, 0, '2024-04-29 22:00:00', 0, '0000-00-00 00:00:00', 0, '2024-04-23 09:54:10'),
-(19, 'Róbert', 'Hupko', '0649420637', 'robertvarro12@gmail.com', '$2y$10$cPLcJMsanfIKcT/RSF3rgO1zc/9JEbFgnD9YuEMZoFbNstohYDBha', '20241111140434.png', 'Admin', '0000-00-00 00:00:00', 229527, 1, '2024-04-29 22:00:00', 0, '0000-00-00 00:00:00', 136415, '2024-06-15 11:28:52'),
+(19, 'Róbert', 'Varró', '0649420637', 'robertvarro12@gmail.com', '$2y$10$cPLcJMsanfIKcT/RSF3rgO1zc/9JEbFgnD9YuEMZoFbNstohYDBha', '20241111140434.png', 'Admin', '0000-00-00 00:00:00', 229527, 1, '2024-04-29 22:00:00', 0, '0000-00-00 00:00:00', 136415, '2024-06-15 11:28:52'),
 (25, 'Dominik', 'Hupko', '628277140', 'hupkodominik143@gmail.com', '$2y$10$2GtJU92kqTP4FioPdkS0WuXGDZMTqQwpEuDToq9suKr3T7XP37EEm', 'logInPic.png', 'Guest', '2024-06-03 12:23:54', 2047970, 1, '2024-06-03 12:33:54', 0, '0000-00-00 00:00:00', NULL, '2024-06-03 12:23:54'),
 (26, 'Robert', 'Hupko', '649420637', 'varorobert03@gmail.com', '$2y$10$vVRKD1BHdxuVyK2Q1yAFiutrZafKmdOPO5HD1GhEctq8BgxUuQoa.', 'logInPic.png', 'Guest', '2024-06-12 16:21:21', 3652391, 1, '2024-06-12 16:31:21', 0, '2024-06-12 16:21:22', NULL, '2024-06-12 16:21:22'),
 (27, 'Robert', 'Varro', '649420637', 'vaorobert03@gmail.com', '$2y$10$WLNUBEgiMnWyRdJYBqrQXOUu3kKCaJlkirZYbg.u4.UNkFMavtedi', '20240615204340.avif', 'Worker', '2024-06-15 11:30:27', 9844306, 1, '2024-06-15 11:40:27', 0, '0000-00-00 00:00:00', NULL, '2024-06-15 11:30:27'),
@@ -474,7 +476,7 @@ ALTER TABLE `work_address`
 -- AUTO_INCREMENT a táblához `errorlog`
 --
 ALTER TABLE `errorlog`
-  MODIFY `errorLogId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=99;
+  MODIFY `errorLogId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=100;
 
 --
 -- AUTO_INCREMENT a táblához `log`
@@ -486,7 +488,7 @@ ALTER TABLE `log`
 -- AUTO_INCREMENT a táblához `pet`
 --
 ALTER TABLE `pet`
-  MODIFY `petId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `petId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT a táblához `product`
@@ -498,7 +500,7 @@ ALTER TABLE `product`
 -- AUTO_INCREMENT a táblához `qr_code`
 --
 ALTER TABLE `qr_code`
-  MODIFY `qr_code_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `qr_code_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT a táblához `reservation`
@@ -550,7 +552,6 @@ ALTER TABLE `work_address`
 -- Megkötések a táblához `pet`
 --
 ALTER TABLE `pet`
-  ADD CONSTRAINT `pet_ibfk_1` FOREIGN KEY (`qr_code_id`) REFERENCES `qr_code` (`qr_code_id`),
   ADD CONSTRAINT `pet_ibfk_2` FOREIGN KEY (`userId`) REFERENCES `user` (`userId`);
 
 --

@@ -24,7 +24,7 @@ if(isset($_SESSION['message'])){
 $functions = new Functions();
 
 if (isset($_SESSION['email']) && isset($_GET['email'])) {
-    $userID = $_SESSION['userID'];
+    $userID = $_SESSION['userId'];
 
     // Use the connect method from the Functions class
     $connection = $functions->connect($GLOBALS['dsn'], PARAMS['USER'], PARAMS['PASSWORD'], $GLOBALS['pdoOptions']);

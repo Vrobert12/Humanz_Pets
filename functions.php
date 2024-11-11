@@ -170,9 +170,11 @@ class Functions
                     $qrCodeFileName = $this->createQrCode($_SESSION['name'], $_SESSION["phone"]);
 
                     // Insert the new QR code into the database
-                    $insertQrStmt = "INSERT INTO qr_code (qrCodeName) VALUES (:qrCodeFile)";
+                    $insertQrStmt = "INSERT INTO qr_code (qrCodeName,generated_at) VALUES (:qrCodeFile,:generated_at)";
                     $insertQuery = $this->connection->prepare($insertQrStmt);
                     $insertQuery->bindParam(':qrCodeFile', $qrCodeFileName, PDO::PARAM_STR);
+                    $date=date('Y-m-d H:i:s');
+                    $insertQuery->bindParam(':generated_at',$date , PDO::PARAM_STR);
 
                     if ($insertQuery->execute()) {
                         // Retrieve the new QR code ID
@@ -530,6 +532,25 @@ class Functions
 
         // Set session message based on whether any changes were made
         $_SESSION['message'] = $count > 0 ? "We made changes to your profile" : "There are no changes made to your profile";
+$stmt="Select firstName,lastName,phoneNumber from user WHERE userId = :userId";
+    $stmt=$this->connection->prepare($stmt);
+    $stmt->bindParam(':userId', $_SESSION['userId']);
+    $stmt->execute();
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        $_SESSION['qrCodeFile']=$this->createQrCode($row['firstName'].' '.$row['lastName'], $row['phoneNumber']);
+
+    }
+    $stmt="UPDATE qr_code qr
+INNER JOIN pet p ON qr.qr_code_id = p.qr_code_id
+SET qr.qrCodeName = :qrCodeName
+WHERE p.userId = :userId;
+";
+    $stmt=$this->connection->prepare($stmt);
+    $stmt->bindParam(':userId', $_SESSION['userId']);
+    $stmt->bindParam(':qrCodeName', $_SESSION['qrCodeFile']);
+    $stmt->execute();
+
+   
 
         // Redirect to index.php
         header('Location: index.php');
