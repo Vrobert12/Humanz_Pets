@@ -9,6 +9,7 @@ define('PIG','Pig');
 define('SPECIES','Species');
 define('BREED','Breed');
 define('REGTIME','Registration date');
+define('PRIVILEGE', 'Privilage');
 define('SAVE','Save');
 define('SETTINGS','Settings');
 define('NUMBER','Number');

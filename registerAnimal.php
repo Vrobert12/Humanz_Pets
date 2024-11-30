@@ -1,7 +1,10 @@
 <?php
-session_start();
+include "functions.php";
+$autoload=new Functions();
+$autoload->checkAutoLogin();
 $lang = $_GET['lang'] ?? $_SESSION['lang'] ?? 'en';
 include_once "lang_$lang.php";
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -10,7 +13,6 @@ include_once "lang_$lang.php";
     <title>Registration</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="style.css">
-    <?php include "config.php"; ?>
     <script src="indexJS.js"></script>
     <style>
         .warning {

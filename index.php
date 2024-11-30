@@ -8,6 +8,9 @@ if (session_status() === PHP_SESSION_NONE) {
     }
     include "lang_$lang.php";
 }
+include "functions.php";
+$autoload=new Functions();
+$autoload->checkAutoLogin();
 ?>
 
 <!DOCTYPE html>
@@ -175,7 +178,7 @@ https://getbootstrap.com/docs/5.3/components/navbar/
                 echo '<li><a class="dropdown-item" href="modify.php">'.SETTINGS.'</a></li>';
                 echo '<li><a class="dropdown-item" href="userData.php?email='.$_SESSION['email'].'">'.ACCOUNT.'</a></li>';
                 echo '<li><hr class="dropdown-divider"></li>';
-                echo '<li><a class="dropdown-item" href="functions.php" onclick="confirmLogout(event)">';
+                echo '<li><a class="dropdown-item" href="functions.php?action=logOut" onclick="confirmLogout(event)">';
                 echo '<i class="bi bi-door-open fa-2x justify-content-end"></i>'.LOGOUT.'</a></li>';
                 echo '</ul>';
 

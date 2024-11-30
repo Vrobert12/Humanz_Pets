@@ -9,7 +9,9 @@
 <div class="mainForm">
     <a href="index.php" class="nextPage">Back to index page</a>
     <?php
-    include 'functions.php';
+    include "functions.php";
+    $autoload=new Functions();
+    $autoload->checkAutoLogin();
     if (isset($_SESSION['email']) && isset($_GET['email'])) {
         $userID = $_SESSION['userId'];
         $functions = new Functions();

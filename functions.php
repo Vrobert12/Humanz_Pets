@@ -98,8 +98,8 @@ class Functions
                     header('Location:index.php');
                     exit();
             }
-        } elseif (isset($_SESSION['action'])) {
-            if ($_SESSION['action'] === 'kijelentkezes') {
+        } elseif (isset($_GET['action'])) {
+            if ($_GET['action'] === 'logOut') {
                 $this->logOut();
             }
         }
@@ -139,7 +139,6 @@ class Functions
     }
 
 
-
     public function registerAnimal()
     {
         if (isset($_POST["petName"]) && !empty($_POST["petName"]) &&
@@ -173,8 +172,8 @@ class Functions
                     $insertQrStmt = "INSERT INTO qr_code (qrCodeName,generated_at) VALUES (:qrCodeFile,:generated_at)";
                     $insertQuery = $this->connection->prepare($insertQrStmt);
                     $insertQuery->bindParam(':qrCodeFile', $qrCodeFileName, PDO::PARAM_STR);
-                    $date=date('Y-m-d H:i:s');
-                    $insertQuery->bindParam(':generated_at',$date , PDO::PARAM_STR);
+                    $date = date('Y-m-d H:i:s');
+                    $insertQuery->bindParam(':generated_at', $date, PDO::PARAM_STR);
 
                     if ($insertQuery->execute()) {
                         // Retrieve the new QR code ID
@@ -203,7 +202,7 @@ class Functions
                 $petQuery->bindParam(':specie', $specie, PDO::PARAM_STR);
                 $petQuery->bindParam(':qr_code_id', $qrCodeId, PDO::PARAM_INT);
                 $petQuery->bindParam(':petPicture', $_SESSION['petPicture'], PDO::PARAM_STR);
-                $petQuery->bindParam(':userId', $userId , PDO::PARAM_INT);
+                $petQuery->bindParam(':userId', $userId, PDO::PARAM_INT);
 
                 if ($petQuery->execute()) {
                     $_SESSION['message'] = "You registered your animal successfully.";
@@ -532,25 +531,24 @@ class Functions
 
         // Set session message based on whether any changes were made
         $_SESSION['message'] = $count > 0 ? "We made changes to your profile" : "There are no changes made to your profile";
-$stmt="Select firstName,lastName,phoneNumber from user WHERE userId = :userId";
-    $stmt=$this->connection->prepare($stmt);
-    $stmt->bindParam(':userId', $_SESSION['userId']);
-    $stmt->execute();
-    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-        $_SESSION['qrCodeFile']=$this->createQrCode($row['firstName'].' '.$row['lastName'], $row['phoneNumber']);
+        $stmt = "Select firstName,lastName,phoneNumber from user WHERE userId = :userId";
+        $stmt = $this->connection->prepare($stmt);
+        $stmt->bindParam(':userId', $_SESSION['userId']);
+        $stmt->execute();
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $_SESSION['qrCodeFile'] = $this->createQrCode($row['firstName'] . ' ' . $row['lastName'], $row['phoneNumber']);
 
-    }
-    $stmt="UPDATE qr_code qr
+        }
+        $stmt = "UPDATE qr_code qr
 INNER JOIN pet p ON qr.qr_code_id = p.qr_code_id
 SET qr.qrCodeName = :qrCodeName
 WHERE p.userId = :userId;
 ";
-    $stmt=$this->connection->prepare($stmt);
-    $stmt->bindParam(':userId', $_SESSION['userId']);
-    $stmt->bindParam(':qrCodeName', $_SESSION['qrCodeFile']);
-    $stmt->execute();
+        $stmt = $this->connection->prepare($stmt);
+        $stmt->bindParam(':userId', $_SESSION['userId']);
+        $stmt->bindParam(':qrCodeName', $_SESSION['qrCodeFile']);
+        $stmt->execute();
 
-   
 
         // Redirect to index.php
         header('Location: index.php');
@@ -571,7 +569,7 @@ WHERE p.userId = :userId;
 
             if ($_FILES['picture']["error"] > 0) {
                 $_SESSION['message'] = $_FILES["picture"]["error"];
-                return $_SESSION['message'] ;
+                return $_SESSION['message'];
             } else {
                 if (is_uploaded_file($_FILES['picture']['tmp_name'])) {
 
@@ -650,11 +648,9 @@ WHERE p.userId = :userId;
                         // Redirect to login page after successful upload
                         header('Location: ' . $_SESSION['backPic']);
                         exit(); // Exit after redirection
-                    }
-                    elseif($target=='registerAnimal.php'){
+                    } elseif ($target == 'registerAnimal.php') {
                         return $new_file_name;
-                    }
-                    else {
+                    } else {
                         $mail = 'Unknown';
                         $logType = "file Upload";
                         $logText = "Someone tried to upload a picture from a not valid page";
@@ -667,8 +663,7 @@ WHERE p.userId = :userId;
                     }
                 }
             }
-        }
-        else{
+        } else {
             $_SESSION['message'] = "File not found!";
         }
         return $new_file_name;
@@ -679,7 +674,7 @@ WHERE p.userId = :userId;
         $_SESSION = [];
         session_unset();
         session_destroy();
-
+        unset($_COOKIE['last_activity']);
         // Redirect to login page
         header('Location: index.php');
         exit();
@@ -719,6 +714,7 @@ WHERE p.userId = :userId;
                             $_SESSION['profilePic'] = $result['profilePic'];
                             $_SESSION['userId'] = $result['userId'];
                             $_SESSION['phone'] = $result['phoneNumber'];
+                            setcookie("last_activity", time(), time() + 10*60, "/");
                             header('Location: index.php');
                             exit();
                         }
@@ -737,6 +733,35 @@ WHERE p.userId = :userId;
 
         header('Location: logIn.php');
         exit();
+    }
+
+    public function checkAutoLogin()
+    {
+        // Check if cookies exist
+
+        if (isset($_COOKIE['last_activity']) && isset($_SESSION['email'])) {
+
+            $mail = $_SESSION['email'];
+
+            // Fetch user details from the database
+            $sql = "SELECT * FROM user WHERE userMail = :mail";
+            $stmt = $this->connection->prepare($sql);
+            $stmt->bindValue(":mail", $mail);
+            $stmt->execute();
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            // Check if the user is inactive for more than 15 minutes
+            $lastActivity = $_COOKIE['last_activity'];
+            $inactiveTime = time() - $lastActivity;  // Time in seconds since last activity
+
+            unset($_COOKIE['last_activity']);
+            setcookie("last_activity", time(), time() + 10*60, "/");
+        } elseif (isset($_SESSION['email'])) {
+            session_destroy();
+            header('Location: logIn.php');
+            exit();
+            // No valid cookies or session
+        }
     }
 
     private function errorLogInsert($mail, $errorText, $logType, $logMessage)
