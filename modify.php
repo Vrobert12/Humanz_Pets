@@ -1,5 +1,7 @@
 <?php
-session_start();
+include "functions.php";
+$autoload=new Functions();
+$autoload->checkAutoLogin();
 $lang = $_GET['lang'] ?? $_SESSION['lang'] ?? 'en';
 if(isset($_GET['lang'])){
     $_SESSION['lang'] = $_GET['lang'];
@@ -53,7 +55,6 @@ include "lang_$lang.php";
     <input type="hidden" name="action" value="ModifyUser" class="inputok">
 
     <?php
-    include "config.php";
     global $conn;
 
     $message=isset($_SESSION['message']) ? $_SESSION['message']:'';
