@@ -18,9 +18,23 @@
         // Use the connect method from the Functions class
         $connection = $functions->connect($GLOBALS['dsn'], PARAMS['USER'], PARAMS['PASSWORD'], $GLOBALS['pdoOptions']);
 
-        $sql = "SELECT q.qrCodeName,p.petName, p.bred, p.petSpecies, u.userMail, p.petPicture FROM qr_code q
-    inner join pet p on q.qr_code_id=p.qr_code_id inner join user u 
-    on p.userId=u.userId  where u.userId= :userId";
+
+        $sql = "SELECT qrCodeName FROM qr_code  where userId= :userId";
+        $stmt = $connection->prepare($sql);
+        $stmt->bindParam(":userId", $userID, PDO::PARAM_INT);
+        if($stmt->execute())
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $qrPicture = htmlspecialchars($row['qrCodeName']);
+                echo "<table class='profile-table'>";
+                echo "<tr><td rowspan='4' ><img alt='Profile Picture' style='border-radius: 0'width='200' height='200' src='$qrPicture'></td></tr>";
+
+                echo "<tr><td>Your contac informations if are in the QrCode,<br> you can use it to put on your pets collar.</td></tr>";
+
+                echo "</table>";
+            }
+
+        $sql = "SELECT p.petName, p.bred, p.petSpecies, u.userMail, p.petPicture FROM  user u 
+    inner join pet p on u.userId =p.userId where u.userId= :userId";
 
         $stmt = $connection->prepare($sql);
         $stmt->bindParam(":userId", $userID, PDO::PARAM_INT);
@@ -32,20 +46,16 @@
                 $petSpecies = htmlspecialchars($row['petSpecies']);
                 $userMail = htmlspecialchars($row['userMail']);
                 $petPicture = htmlspecialchars($row['petPicture']);
-                $qrPicture = htmlspecialchars($row['qrCodeName']);
 
-
-                // Profile picture and name in the first row
-                echo "<tr><td rowspan='7' style='padding: 20px; text-align: center;'>
+                echo "<tr><td rowspan='6' style='padding: 20px; text-align: center;'>
             <img alt='Profile Picture' width='400' height='300' src='pictures/$petPicture'>
         </td></tr>";
 
-                // Add user details
+
                 echo "<tr><td>Pet Name: $petName</td></tr>";
                 echo "<tr><td>Brad: $typeOfAnimal</td></tr>";
                 echo "<tr><td>Species: $petSpecies</td></tr>";
                 echo "<tr><td>Email: $userMail</td></tr>";
-                echo "<tr><td rowspan='2' ><img alt='Profile Picture' style='border-radius: 0'width='200' height='200' src='$qrPicture'></td></tr>";
 
                 echo "</table>";
             }

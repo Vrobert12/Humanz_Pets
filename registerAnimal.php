@@ -1,10 +1,11 @@
 <?php
+session_start();
 include "functions.php";
 $autoload=new Functions();
-$autoload->checkAutoLogin();
+$autoload->checkAutoLogin('registerAnimal.php');
 $lang = $_GET['lang'] ?? $_SESSION['lang'] ?? 'en';
 include_once "lang_$lang.php";
-
+$_SESSION['backPic'] = "registerAnimal.php";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -76,6 +77,7 @@ $_SESSION['backPic']='registerAnimal.php';
 <?php
 if(isset($_SESSION['message'])) {
     echo $_SESSION['message'];
+    unset($_SESSION['message']);
 }
 ?>
 </form>

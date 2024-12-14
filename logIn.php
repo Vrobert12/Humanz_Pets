@@ -24,10 +24,6 @@
 
 <?php
 session_start();
-if(isset($_SESSION['message'])){
-    echo $_SESSION['message'];
-    unset($_SESSION['message']);
-}
 $lang = $_GET['lang'] ?? $_SESSION['lang']  ??'en';
 if(isset($_GET['lang'])){
     $_SESSION['lang'] = $_GET['lang'];
@@ -47,7 +43,12 @@ include_once "lang_$lang.php";
     <label for="mail"><?php echo NOACC?></label><br><br>
     <a href="registration.php"><?php echo REGHERE?></a><br>
 
-
+<?php
+if(isset($_SESSION['message'])){
+    echo $_SESSION['message'];
+    unset($_SESSION['message']);
+}
+?>
 </form>
 
 </body>

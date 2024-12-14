@@ -94,7 +94,7 @@ if (isset($_POST['verify_email']) && isset($_SESSION['email'])) {
 
                     if ($stmt->execute()) {
                         sleep(2);
-                        $_SESSION['message'] = "Now you may log in";
+                        $_SESSION['message'] = "Log in and finish setting up your account";
                         header('Location: logIn.php');
                         exit();
                     } else {
