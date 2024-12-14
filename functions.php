@@ -774,27 +774,20 @@ WHERE p.userId = :userId;
         if (isset($_COOKIE['last_activity']) && isset($_SESSION['email'])) {
 
             $mail = $_SESSION['email'];
-//            $sql="select petId from pet where userId=:userId and veterinarId is NULL";
-//            $stmt = $this->connection->prepare($sql);
-//            $stmt->bindParam(":userId", $_SESSION["userId"]);
-//            $stmt->execute();
-//            if ($stmt->rowCount() == 1)
-//            {
-//                $_SESSION['message']='You have to choose a veterinarian for your animal,<br> before you can go further<br><br><a href="functions.php?action=logOut">Log out</a> ';
-//                if ($currentPage != 'selectVeterinarian.php'){
-//                    header("Location:selectVeterinarian.php");
-//                    exit();}
-//            }
-            // Fetch user details from the database
-            $sql = "SELECT * FROM user WHERE userMail = :mail";
+            $sql="select petId from pet where userId=:userId and veterinarId is NULL";
             $stmt = $this->connection->prepare($sql);
-            $stmt->bindValue(":mail", $mail);
+            $stmt->bindParam(":userId", $_SESSION["userId"]);
             $stmt->execute();
-            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            if ($stmt->rowCount() == 1)
+            {
+                $_SESSION['message']='You have to choose a veterinarian for your animal,<br> before you can go further<br><br><a href="functions.php?action=logOut">Log out</a> ';
+                if ($currentPage != 'selectVeterinarian.php'){
+                    header("Location:selectVeterinarian.php");
+                    exit();}
+            }
 
             // Check if the user is inactive for more than 15 minutes
             $lastActivity = $_COOKIE['last_activity'];
-            $inactiveTime = time() - $lastActivity;  // Time in seconds since last activity
 
             unset($_COOKIE['last_activity']);
             setcookie("last_activity", time(), time() + 10 * 60, "/");
