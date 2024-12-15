@@ -154,21 +154,20 @@ https://getbootstrap.com/docs/5.3/components/navbar/
             '.ADDPET.'
         </a>
     </li>';
-        }
-        ?>
-        <li>
+
+      echo'  <li>
             <a href="products.php" class="nav-link text-white">
                 <svg class="bi me-2" width="16" height="16"><use xlink:href="#grid"/></svg>
-                <?php echo PRODUCT?>
+              '.PRODUCT.'
             </a>
         </li>
         <li>
             <a href="veterinarians.php" class="nav-link text-white">
                 <svg class="bi me-2" width="16" height="16"><use xlink:href="#grid"/></svg>
-                <?php echo VETS?>
+                '.VETS.'
             </a>
-        </li>
-        <?php if ($_SESSION['privilage'] == 'Admin') {
+        </li>';
+         if ($_SESSION['privilage'] == 'Admin') {
         echo'<li>
             <a href="users.php" class="nav-link text-white">
                 <svg class="bi me-2" width="16" height="16"><use xlink:href="#people-circle"/></svg>
@@ -176,6 +175,8 @@ https://getbootstrap.com/docs/5.3/components/navbar/
             </a>
         </li>';
         }
+          }
+
         ?>
     </ul>
     <hr>
