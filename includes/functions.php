@@ -57,13 +57,53 @@ function getUsers(): array{
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         $data[] = [
             $number,
-            $row['firstName'],
-            $row['lastName'],
+            $row['firstName']." ".$row['lastName'],
             $row['phoneNumber'],
             $row['userMail'],
         ];
         $number++;
     }
 return $data;
+
+}
+function getVeterinarians(): array{
+
+    $sql = "SELECT firstName,lastName,phoneNumber,veterinarianMail FROM  veterinarian ";
+
+    $stmt = $GLOBALS['pdo']->prepare($sql);
+    $stmt->execute();
+
+    $number = 1;
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        $data[] = [
+            $number,
+            $row['firstName']." ".$row['lastName'],
+            $row['phoneNumber'],
+            $row['veterinarianMail'],
+        ];
+        $number++;
+    }
+    return $data;
+
+}
+function getProducts(): array{
+
+    $sql = "SELECT productName,productCost,productRelease FROM  product ";
+
+    $stmt = $GLOBALS['pdo']->prepare($sql);
+    $stmt->execute();
+
+    $number = 1;
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        $data[] = [
+            $number,
+            $row['productName'],
+            $row['productCost'],
+            $row['productRelease'],
+
+        ];
+        $number++;
+    }
+    return $data;
 
 }

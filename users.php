@@ -1,7 +1,24 @@
+<?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+    $lang = $_GET['lang'] ?? $_SESSION['lang'] ?? 'en';
+    if(isset($_GET['lang'])){
+        $_SESSION['lang'] = $_GET['lang'];
+    }
+    include "lang_$lang.php";
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Datatables test</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Makes it responsive -->
+    <title>User Data</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Optional: Custom Styles -->
+    <link rel="stylesheet" href="style.css">
+
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css">
@@ -10,14 +27,24 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/themes/base/jquery-ui.min.css"/>
     <link rel="stylesheet" href="css/style.css">
+</head>
 <body class="bg-light ">
+
+    <title>Datatables test</title>
+
 <div class="container mt-5">
+    <a class="btn btn-secondary" href="index.php"><?php echo BACK?></a>
+    <select id="tableSelect" class="form-select" style="width: 200px; display: inline-block;">
+        <option selected hidden="hidden">--Choose Data--</option>
+        <option value="users">Users</option>
+        <option value="products">Products</option>
+        <option value="veterinarians">Veterinarians</option>
+    </select><br><br>
     <table id="users" class="table table-striped table-bordered table-hover display" style="width:100%">
         <thead>
         <tr>
             <th>No</th>
-            <th>First Name</th>
-            <th>Last Name</th>
+            <th>Name</th>
             <th>Phone Number</th>
             <th>Email Address</th>
         </tr>
@@ -25,8 +52,7 @@
         <tfoot>
         <tr>
             <th>No</th>
-            <th>First Name</th>
-            <th>Last Name</th>
+            <th>Name</th>
             <th>Phone Number</th>
             <th>Email Address</th>
 
@@ -47,6 +73,7 @@
 <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.print.min.js"></script>
 <script src="js/script.js"></script>
+
 </body>
 </html>
 <?php

@@ -236,7 +236,7 @@ https://getbootstrap.com/docs/5.3/components/navbar/
 
         <ul class="nav nav-pills nav-flush flex-column text-center">
             <li class="nav-item">
-                <a href="/" class="d-flex align-items-center justify-content-center p-3 link-light text-decoration-none" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
+                <a href="pet.php" class="d-flex align-items-center justify-content-center p-3 link-light text-decoration-none" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
                     <i class="fas fa-dog" style="font-size: 24px;"></i>
                     <span class="visually-hidden">Home</span>
                 </a>
@@ -281,10 +281,10 @@ echo '<div class="dropdown border-top">';
 
             // Dropdown menu
             echo '<ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">';
-            echo '<li><a class="dropdown-item" href="#"><i class="fas fa-gear"></i>&nbspSettings</a></li>';
-            echo '<li><a class="dropdown-item" href="modify.php"><i class="fas fa-circle-info"></i>&nbspProfile</a></li>';
+            echo '<li><a class="dropdown-item" href="modify.php"><i class="fas fa-gear"></i>&nbspSettings</a></li>';
+            echo '<li><a class="dropdown-item" href="userData.php?email='.$_SESSION['email'].'"><i class="fas fa-circle-info"></i>&nbspProfile</a></li>';
             echo '<li><hr class="dropdown-divider"></li>';
-            echo '<li><a class="dropdown-item" href="functions.php" onclick="confirmLogout(event)">';
+            echo '<li><a class="dropdown-item" href="functions.php?action=logOut" onclick="confirmLogout(event)">';
             echo '<i class="bi bi-door-open fa-2x justify-content-end"></i> Log out</a></li>';
             echo '</ul>';
 

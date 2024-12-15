@@ -367,8 +367,8 @@ class Functions
                             } else {
 
                                 $verification_code = substr(number_format(time() * rand(), 0, '', ''), 0, 6);
-                                $query =  "UPDATE user SET verification_code = ? ,verification_time =? WHERE userMail = ?";
-                                $query=$this->connection->prepare($query);
+                                $query = "UPDATE user SET verification_code = ? ,verification_time =? WHERE userMail = ?";
+                                $query = $this->connection->prepare($query);
                                 $query->execute([$verification_code, $verification_time, $mail]);
                                 $_SESSION['message'] = "If you think the<b>E-mail</b> address is registered try again.";
                                 $_SESSION['verification_code'] = $verification_code;
@@ -412,63 +412,63 @@ class Functions
                         }
                     }
                 }
-                    $kep = "logInPic.png";
+                $kep = "logInPic.png";
 
 
-                    // Send email
+                // Send email
 
-                    // Hash the password
-                    $pass = password_hash($pass, PASSWORD_BCRYPT);
-                    $verification_code = substr(number_format(time() * rand(), 0, '',
-                        ''), 0, 7);
-                    $banned = 0;
-                    $privilage = "Guest";
-                    if ($_POST['rank'])
-                        $privilage = "Worker";
-                    $banned_time = null;
-                    $verification_code_expire = null;
-                    $verification_code_pass = null;
+                // Hash the password
+                $pass = password_hash($pass, PASSWORD_BCRYPT);
+                $verification_code = substr(number_format(time() * rand(), 0, '',
+                    ''), 0, 7);
+                $banned = 0;
+                $privilage = "Guest";
+                if ($_POST['rank'])
+                    $privilage = "Worker";
+                $banned_time = null;
+                $verification_code_expire = null;
+                $verification_code_pass = null;
 
-                    // Insert user data into the database
-                    $sql = "INSERT INTO user (firstName, lastName, phoneNumber, userMail, userPassword,
+                // Insert user data into the database
+                $sql = "INSERT INTO user (firstName, lastName, phoneNumber, userMail, userPassword,
                   verification_code, verify, profilePic,
                   privilage, registrationTime, verification_time, banned, banned_time, passwordValidation, passwordValidationTime) 
         VALUES (:firstName, :lastName, :phoneNumber, :userMail, :userPassword, 
                 :verification_code, :verify, :profilePic, :privilage, :registrationTime, 
                 :verification_time, :banned, :banned_time, :passwordValidation, :passwordValidationTime)";
 
-                    $stmt = $this->connection->prepare($sql);
+                $stmt = $this->connection->prepare($sql);
 
-                    $verification = 0; // Placeholder for verify column
+                $verification = 0; // Placeholder for verify column
 
-                    $stmt->bindParam(':firstName', $fname, PDO::PARAM_STR);
-                    $stmt->bindParam(':lastName', $lname, PDO::PARAM_STR);
-                    $stmt->bindParam(':phoneNumber', $tel, PDO::PARAM_STR);
-                    $stmt->bindParam(':userMail', $mail, PDO::PARAM_STR);
-                    $stmt->bindParam(':userPassword', $pass, PDO::PARAM_STR);
-                    $stmt->bindParam(':verification_code', $verification_code, PDO::PARAM_INT);
-                    $stmt->bindParam(':verify', $verification, PDO::PARAM_INT);
-                    $stmt->bindParam(':profilePic', $kep, PDO::PARAM_STR);
-                    $stmt->bindParam(':privilage', $privilage, PDO::PARAM_STR);
-                    $stmt->bindParam(':registrationTime', $currentTime, PDO::PARAM_STR);
-                    $stmt->bindParam(':verification_time', $verification_time, PDO::PARAM_STR);
-                    $stmt->bindParam(':banned', $banned, PDO::PARAM_INT);
-                    $stmt->bindParam(':banned_time', $banned_time, PDO::PARAM_STR);
-                    $stmt->bindParam(':passwordValidation', $verification_code_pass, PDO::PARAM_STR);
-                    $stmt->bindParam(':passwordValidationTime', $verification_code_expire, PDO::PARAM_STR);
+                $stmt->bindParam(':firstName', $fname, PDO::PARAM_STR);
+                $stmt->bindParam(':lastName', $lname, PDO::PARAM_STR);
+                $stmt->bindParam(':phoneNumber', $tel, PDO::PARAM_STR);
+                $stmt->bindParam(':userMail', $mail, PDO::PARAM_STR);
+                $stmt->bindParam(':userPassword', $pass, PDO::PARAM_STR);
+                $stmt->bindParam(':verification_code', $verification_code, PDO::PARAM_INT);
+                $stmt->bindParam(':verify', $verification, PDO::PARAM_INT);
+                $stmt->bindParam(':profilePic', $kep, PDO::PARAM_STR);
+                $stmt->bindParam(':privilage', $privilage, PDO::PARAM_STR);
+                $stmt->bindParam(':registrationTime', $currentTime, PDO::PARAM_STR);
+                $stmt->bindParam(':verification_time', $verification_time, PDO::PARAM_STR);
+                $stmt->bindParam(':banned', $banned, PDO::PARAM_INT);
+                $stmt->bindParam(':banned_time', $banned_time, PDO::PARAM_STR);
+                $stmt->bindParam(':passwordValidation', $verification_code_pass, PDO::PARAM_STR);
+                $stmt->bindParam(':passwordValidationTime', $verification_code_expire, PDO::PARAM_STR);
 
-                    if ($stmt->execute()) {
-                        $_SESSION['message'] = "We sent an email to you!";
-                        $_SESSION['text'] = "<h2>Registration</h2>";
-                        $_SESSION['verification_code'] = $verification_code;
-                        $_SESSION['mail'] = $mail;
-                        header('Location: mail.php');
-                        exit(); // Exit script after redirection
-                    } else {
-                        $_SESSION['message'] = "Error occurred during registration: " . $this->connection->error;
-                        header('Location: registration.php');
-                        exit();
-                    }
+                if ($stmt->execute()) {
+                    $_SESSION['message'] = "We sent an email to you!";
+                    $_SESSION['text'] = "<h2>Registration</h2>";
+                    $_SESSION['verification_code'] = $verification_code;
+                    $_SESSION['mail'] = $mail;
+                    header('Location: mail.php');
+                    exit(); // Exit script after redirection
+                } else {
+                    $_SESSION['message'] = "Error occurred during registration: " . $this->connection->error;
+                    header('Location: registration.php');
+                    exit();
+                }
 
 
             } catch (Exception $e) {
@@ -705,7 +705,16 @@ WHERE p.userId = :userId;
         $_SESSION = [];
         session_unset();
         session_destroy();
-        unset($_COOKIE['last_activity']);
+        if (isset($_SERVER['HTTP_COOKIE'])) {
+            $cookies = explode(';', $_SERVER['HTTP_COOKIE']);
+            foreach ($cookies as $cookie) {
+                $parts = explode('=', $cookie);
+                $name = trim($parts[0]);
+                setcookie($name, '', time() - 3600, '/');
+                unset($_COOKIE[$name]);
+            }
+        }
+
         // Redirect to login page
         header('Location: index.php');
         exit();
@@ -745,7 +754,15 @@ WHERE p.userId = :userId;
                             $_SESSION['profilePic'] = $result['profilePic'];
                             $_SESSION['userId'] = $result['userId'];
                             $_SESSION['phone'] = $result['phoneNumber'];
-                            $_SESSION['privilage']=$result['privilage'];
+                            $_SESSION['privilage'] = $result['privilage'];
+
+                            setcookie("email", $result['userMail'], time() + time() + 10 * 60, "/");
+                            setcookie("name", $result['firstName'] . " " . $result['lastName'], time() + time() + 10 * 60, "/");
+                            setcookie("profilePic", $result['profilePic'], time() + time() + 10 * 60, "/");
+                            setcookie("userId", $result['userId'], time() + time() + 10 * 60, "/");
+                            setcookie("phone", $result['phoneNumber'], time() + time() + 10 * 60, "/");
+                            setcookie("privilage", $result['privilage'], time() + time() + 10 * 60, "/");
+
                             setcookie("last_activity", time(), time() + 10 * 60, "/");
                             header('Location: index.php');
                             exit();
@@ -769,61 +786,112 @@ WHERE p.userId = :userId;
 
     public function checkAutoLogin(string $currentPage = null)
     {
-        // Check if cookies exist
+        if (!isset($_GET['action'])) {
+            if (isset($_COOKIE['last_activity']) && isset($_SESSION['email'])) {
 
-        if (isset($_COOKIE['last_activity']) && isset($_SESSION['email'])) {
-
-            $mail = $_SESSION['email'];
-            $sql="select petId from pet where userId=:userId and veterinarId is NULL";
-            $stmt = $this->connection->prepare($sql);
-            $stmt->bindParam(":userId", $_SESSION["userId"]);
-            $stmt->execute();
-            if ($stmt->rowCount() == 1)
-            {
-                $_SESSION['message']='You have to choose a veterinarian for your animal,<br> before you can go further<br><br><a href="functions.php?action=logOut">Log out</a> ';
-                if ($currentPage != 'selectVeterinarian.php'){
-                    header("Location:selectVeterinarian.php");
-                    exit();}
-            }
-
-            // Check if the user is inactive for more than 15 minutes
-            $lastActivity = $_COOKIE['last_activity'];
-
-            unset($_COOKIE['last_activity']);
-            setcookie("last_activity", time(), time() + 10 * 60, "/");
-            $sql = "SELECT p.petId FROM  pet p  inner join user u   on p.userId=u.userId  where u.userMail = :mail";
-            $stmt = $this->connection->prepare($sql);
-            $stmt->bindValue(":mail", $mail);
-            $stmt->execute();
-            $result = $stmt->fetch(PDO::FETCH_ASSOC);
-            if ($result == 0) {
-                $_SESSION['message'] = '<br>You need to register an animal, without it you <b>can not</b> use the account.<br><br><a href="functions.php?action=logOut">Log out</a>';
-                if ($currentPage != 'registerAnimal.php') {
-                    header('Location: registerAnimal.php');
-                    exit();
+                $mail = $_SESSION['email'];
+                $sql = "select petId from pet where userId=:userId and veterinarId is NULL";
+                $stmt = $this->connection->prepare($sql);
+                $stmt->bindParam(":userId", $_SESSION["userId"]);
+                $stmt->execute();
+                if ($stmt->rowCount() == 1) {
+                    $_SESSION['message'] = 'You have to choose a veterinarian for your animal,<br> before you can go further<br><br><a href="functions.php?action=logOut">Log out</a> ';
+                    if ($currentPage != 'selectVeterinarian.php') {
+                        header("Location:selectVeterinarian.php");
+                        exit();
+                    }
                 }
-            }
-            else {
-                $sql = "SELECT v.veterinarianID FROM veterinarian v inner join pet p on
- p.veterinarId=v.veterinarianID inner join user u on u.userId=p.userId where userMail=:mail";
+
+
+                unset($_COOKIE['last_activity']);
+                unset($_COOKIE['email']);
+                setcookie("email", $mail, time() + time() + 10 * 60, "/");
+                setcookie("last_activity", time(), time() + 10 * 60, "/");
+                $sql = "SELECT p.petId FROM  pet p  inner join user u   on p.userId=u.userId  where u.userMail = :mail";
                 $stmt = $this->connection->prepare($sql);
                 $stmt->bindValue(":mail", $mail);
                 $stmt->execute();
                 $result = $stmt->fetch(PDO::FETCH_ASSOC);
-                if ($result == 0 && $_SESSION['privilage'] != 'admin') {
-                    $_SESSION['message'] = '<br>You have to <b>chose a veterinarian</b> to use this account further!<br><br><a href="functions.php?action=logOut">Log out</a>';
-                    if ($currentPage != 'selectVeterinarian.php' && $currentPage != 'registerAnimal.php') {
-                        header('Location: selectVeterinarian.php');
+                if ($result == 0) {
+                    $_SESSION['message'] = '<br>You need to register an animal, without it you <b>can not</b> use the account.<br><br><a href="functions.php?action=logOut">Log out</a>';
+                    if ($currentPage != 'registerAnimal.php') {
+                        header('Location: registerAnimal.php');
                         exit();
                     }
                 }
-            }
+            } elseif (isset($_COOKIE['email'])) {
+                $_SESSION['email'] = $_COOKIE['email'];
+                $_SESSION['name'] = $_COOKIE['name'];
+                $_SESSION['profilePic'] = $_COOKIE['profilePic'];
+                $_SESSION['userId'] = $_COOKIE['userId'];
+                $_SESSION['phone'] = $_COOKIE['phone'];
+                $_SESSION['privilage'] = $_COOKIE['privilage'];
+                $mail = $_SESSION['email'];
+                $sql = "select petId from pet where userId=:userId and veterinarId is NULL";
+                $stmt = $this->connection->prepare($sql);
+                $stmt->bindParam(":userId", $_SESSION["userId"]);
+                $stmt->execute();
+                if ($stmt->rowCount() == 1) {
+                    $_SESSION['message'] = 'You have to choose a veterinarian for your animal,<br> before you can go further<br><br><a href="functions.php?action=logOut">Log out</a> ';
+                    if ($currentPage != 'selectVeterinarian.php') {
+                        header("Location:selectVeterinarian.php");
+                        exit();
+                    }
+                }
 
-         } elseif (isset($_SESSION['email'])) {
-            session_destroy();
-            header('Location: logIn.php');
-            exit();
-            // No valid cookies or session
+                unset($_COOKIE['last_activity']);
+
+                unset($_COOKIE['email']);
+                unset($_COOKIE['name']);
+                unset($_COOKIE['profilePic']);
+                unset($_COOKIE['userId']);
+                unset($_COOKIE['phone']);
+                unset($_COOKIE['privilage']);
+
+                setcookie("email", $_SESSION['email'], time() + time() + 10 * 60, "/");
+                setcookie("name", $_SESSION['name'], time() + time() + 10 * 60, "/");
+                setcookie("profilePic", $_SESSION['profilePic'], time() + time() + 10 * 60, "/");
+                setcookie("userId", $_SESSION['userId'], time() + time() + 10 * 60, "/");
+                setcookie("phone", $_SESSION['phone'], time() + time() + 10 * 60, "/");
+                setcookie("privilage", $_SESSION['privilage'], time() + time() + 10 * 60, "/");
+
+                setcookie("last_activity", time(), time() + 10 * 60, "/");
+                $sql = "SELECT p.petId FROM  pet p  inner join user u   on p.userId=u.userId  where u.userMail = :mail";
+                $stmt = $this->connection->prepare($sql);
+                $stmt->bindValue(":mail", $mail);
+                $stmt->execute();
+                $result = $stmt->fetch(PDO::FETCH_ASSOC);
+                if ($result == 0) {
+                    $_SESSION['message'] = '<br>You need to register an animal, without it you <b>can not</b> use the account.<br><br><a href="functions.php?action=logOut">Log out</a>';
+                    if ($currentPage != 'registerAnimal.php') {
+                        header('Location: registerAnimal.php');
+                        exit();
+                    }
+
+                } else {
+                    $sql = "SELECT v.veterinarianID FROM veterinarian v inner join pet p on
+ p.veterinarId=v.veterinarianID inner join user u on u.userId=p.userId where userMail=:mail";
+                    $stmt = $this->connection->prepare($sql);
+                    $stmt->bindValue(":mail", $mail);
+                    $stmt->execute();
+                    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+                    if ($result == 0 && $_SESSION['privilage'] != 'admin') {
+                        $_SESSION['message'] = '<br>You have to <b>chose a veterinarian</b> to use this account further!<br><br><a href="functions.php?action=logOut">Log out</a>';
+                        if ($currentPage != 'selectVeterinarian.php' && $currentPage != 'registerAnimal.php') {
+                            header('Location: selectVeterinarian.php');
+                            exit();
+                        }
+                    }
+                }
+                header('Location: index.php');
+                exit();
+
+            } elseif (isset($_SESSION['email'])) {
+                session_destroy();
+                header('Location: logIn.php');
+                exit();
+                // No valid cookies or session
+            }
         }
     }
 
@@ -846,14 +914,15 @@ WHERE p.userId = :userId;
             $_SESSION['message'] = "Failed to log error.";
         }
     }
+
     private function choseVeterinarian()
     {
         $sql = "UPDATE pet SET veterinarId=:veterinarianId WHERE petId=:petId";
         $stmt = $this->connection->prepare($sql);
-       $stmt->bindValue(':veterinarianId', $_SESSION['veterinarianId']);
-       $stmt->bindValue(':petId', $_SESSION['petId']);
-       $stmt->execute();
-       header('Location: index.php');
-       exit();
+        $stmt->bindValue(':veterinarianId', $_SESSION['veterinarianId']);
+        $stmt->bindValue(':petId', $_SESSION['petId']);
+        $stmt->execute();
+        header('Location: index.php');
+        exit();
     }
 }
