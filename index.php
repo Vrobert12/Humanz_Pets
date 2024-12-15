@@ -147,13 +147,19 @@ https://getbootstrap.com/docs/5.3/components/navbar/
         }
         ?>
         <li>
-            <a href="#" class="nav-link text-white">
+            <a href="products.php" class="nav-link text-white">
                 <svg class="bi me-2" width="16" height="16"><use xlink:href="#grid"/></svg>
                 Products
             </a>
         </li>
         <li>
-            <a href="#" class="nav-link text-white">
+            <a href="veterinarians.php" class="nav-link text-white">
+                <svg class="bi me-2" width="16" height="16"><use xlink:href="#grid"/></svg>
+                Veterinarians
+            </a>
+        </li>
+        <li>
+            <a href="users.php" class="nav-link text-white">
                 <svg class="bi me-2" width="16" height="16"><use xlink:href="#people-circle"/></svg>
                 Customers
             </a>
