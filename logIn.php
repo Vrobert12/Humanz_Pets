@@ -23,21 +23,23 @@
 <body>
 
 <?php
-session_start();
-$lang = $_GET['lang'] ?? $_SESSION['lang']  ??'en';
-if(isset($_GET['lang'])){
-    $_SESSION['lang'] = $_GET['lang'];
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+    $lang = $_GET['lang'] ?? $_SESSION['lang'] ?? 'en';
+    if(isset($_GET['lang'])){
+        $_SESSION['lang'] = $_GET['lang'];
+    }
+    include "lang_$lang.php";
 }
-include_once "lang_$lang.php";
 ?>
 <form method="post" action="functions.php" class="mainForm">
-    <a class="nextPage" href="index.php"><?php echo BACK?></a><br><br>
+    <a class="btn btn-secondary" href="index.php"><?php echo BACK?></a><br><br>
     <label for="mail">E-mail</label><br>
     <input type="email" placeholder="Email" name="mail" class="inputok" id="mail"><br>
     <label for="pass"><?php echo PASSWORD?></label><br>
     <input type="password" placeholder="********" name="pass" class="inputok" id="pass"><br>
 
-    <input type="submit" name="submit" value="<?php echo LOGIN?>" class="inputok"><br><br>
+    <input type="submit" name="submit" value="<?php echo LOGIN?>" class="btn btn-primary"><br><br>
     <input type="hidden" name="action" value="Log in" class="inputok">
 
     <label for="mail"><?php echo NOACC?></label><br><br>

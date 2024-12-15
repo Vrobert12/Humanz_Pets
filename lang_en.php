@@ -1,4 +1,8 @@
 <?php
+define('NOPET','You do not have any pets registered to your account.');
+define('INFO','Your contact information is stored in the QR Code. You may attach it to your pet\'s collar.');
+define('VETS', 'Veterinarians');
+define('PRODUCT', 'Products');
 define('ADDPET','Register a pet');
 define('MYPETS','My pets');
 define('DOG','Dog');

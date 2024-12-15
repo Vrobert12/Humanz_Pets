@@ -1,4 +1,8 @@
 <?php
+define('NOPET','Nincs regisztrálva házi kedvenc a fiókján.');
+define('INFO', 'Elérhetőségét a QR-kód tárolja. Rögzítheti kedvence nyakörvére.');
+define('VETS', 'Állatorvosok');
+define('PRODUCT', 'Termékek');
 define('ADDPET','Házikedvenc regisztrálása');
 define('MYPETS','Házi kedvenceim');
 define('DOG','Kutya');

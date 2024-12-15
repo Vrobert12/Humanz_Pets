@@ -25,6 +25,10 @@ $autoload->checkAutoLogin();
             integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
             crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    <script>
+        const lang = '<?php echo $lang; ?>';
+    </script>
     <script src="LogOut.js"></script>
     <script src="indexJS.js"></script>
     <link rel="stylesheet" href="style.css">
@@ -80,16 +84,20 @@ $autoload->checkAutoLogin();
 <!--
 https://getbootstrap.com/docs/5.3/components/navbar/
 -->
-<nav class="navbar navbar-expand-sm bg-dark navbar-dark justify-content-center">
-    <div class="navbar-nav ">
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+    <div class="container-fluid">
+        <!-- Logo -->
         <a class="navbar-brand" href="#">Logo</a>
+        <!-- Toggler for mobile view -->
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
             <span class="navbar-toggler-icon"></span>
         </button>
+        <!-- Navbar Content -->
         <div class="collapse navbar-collapse" id="collapsibleNavbar">
-            <ul class="navbar-nav">
+            <!-- Centered Navigation Links -->
+            <ul class="navbar-nav mx-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="contacts.php">Contats</a>
+                    <a class="nav-link" href="contacts.php">Contacts</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Link</a>
@@ -97,21 +105,23 @@ https://getbootstrap.com/docs/5.3/components/navbar/
                 <li class="nav-item">
                     <a class="nav-link" href="#">Link</a>
                 </li>
-
             </ul>
-        </div>
-        <div class="dropdown align-self-end">
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <?php echo LG?>
-            </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item" href="?lang=en"><?php echo LANGUAGE_en?></a>
-                <a class="dropdown-item" href="?lang=hu"><?php echo LANGUAGE_hu?></a>
-                <a class="dropdown-item" href="?lang=sr"><?php echo LANGUAGE_sr?></a>
+            <!-- Language Dropdown (Aligned Right) -->
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <?php echo LG ?>
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="?lang=en"><?php echo LANGUAGE_en ?></a>
+                    <a class="dropdown-item" href="?lang=hu"><?php echo LANGUAGE_hu ?></a>
+                    <a class="dropdown-item" href="?lang=sr"><?php echo LANGUAGE_sr ?></a>
+                </div>
             </div>
         </div>
     </div>
 </nav>
+
+
 <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark d-none d-md-inline-block" style="position: fixed; top: 0; bottom: 0; width: 280px;">
     <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
         <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"/></svg>
@@ -149,21 +159,24 @@ https://getbootstrap.com/docs/5.3/components/navbar/
         <li>
             <a href="products.php" class="nav-link text-white">
                 <svg class="bi me-2" width="16" height="16"><use xlink:href="#grid"/></svg>
-                Products
+                <?php echo PRODUCT?>
             </a>
         </li>
         <li>
             <a href="veterinarians.php" class="nav-link text-white">
                 <svg class="bi me-2" width="16" height="16"><use xlink:href="#grid"/></svg>
-                Veterinarians
+                <?php echo VETS?>
             </a>
         </li>
-        <li>
+        <?php if ($_SESSION['privilage'] == 'Admin') {
+        echo'<li>
             <a href="users.php" class="nav-link text-white">
                 <svg class="bi me-2" width="16" height="16"><use xlink:href="#people-circle"/></svg>
                 Customers
             </a>
-        </li>
+        </li>';
+        }
+        ?>
     </ul>
     <hr>
     <div class="dropdown">
@@ -180,9 +193,8 @@ https://getbootstrap.com/docs/5.3/components/navbar/
 
                 // Dropdown menu
                 echo '<ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">';
-                echo '<li><a class="dropdown-item" href="#">New project...</a></li>';
-                echo '<li><a class="dropdown-item" href="modify.php">'.SETTINGS.'</a></li>';
-                echo '<li><a class="dropdown-item" href="userData.php?email='.$_SESSION['email'].'">'.ACCOUNT.'</a></li>';
+                echo '<li><a class="dropdown-item" href="modify.php"><i class="fas fa-gear"></i>&nbsp'.SETTINGS.'</a></li>';
+                echo '<li><a class="dropdown-item" href="userData.php?email='.$_SESSION['email'].'"><i class="fas fa-circle-info"></i>&nbsp'.ACCOUNT.'</a></li>';
                 echo '<li><hr class="dropdown-divider"></li>';
                 echo '<li><a class="dropdown-item" href="functions.php?action=logOut" onclick="confirmLogout(event)">';
                 echo '<i class="bi bi-door-open fa-2x justify-content-end"></i>'.LOGOUT.'</a></li>';
@@ -216,45 +228,49 @@ https://getbootstrap.com/docs/5.3/components/navbar/
 </div>
 <div class="d-flex flex-column flex-shrink-0 bg-dark d-block d-md-none" style="width: 4.5rem; min-height: 100vh;">
     <div class="d-flex flex-column flex-shrink-0 bg-dark " style="width: 4.5rem;">
-        <a href="/" class="d-flex align-items-center justify-content-center p-3 link-light text-decoration-none" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
+        <a href="/" class="d-flex align-items-center justify-content-center p-3 link-light text-decoration-none" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home" style="background: #007bff">
             <i class="bi bi-house-door" style="font-size: 24px;"></i>
             <span class="visually-hidden">Home</span>
         </a>
 
-        <ul class="nav nav-pills nav-flush flex-column mb-auto text-center">
+        <ul class="nav nav-pills nav-flush flex-column text-center">
             <li class="nav-item">
                 <a href="/" class="d-flex align-items-center justify-content-center p-3 link-light text-decoration-none" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
-                    <i class="bi bi-house-door" style="font-size: 24px;"></i>
+                    <i class="fas fa-dog" style="font-size: 24px;"></i>
                     <span class="visually-hidden">Home</span>
                 </a>
             </li>
             <li>
                 <a href="/" class="d-flex align-items-center justify-content-center p-3 link-light text-decoration-none" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
-                    <i class="bi bi-house-door" style="font-size: 24px;"></i>
+                    <i class="fas fa-clipboard" style="font-size: 24px;"></i>
                     <span class="visually-hidden">Home</span>
                 </a>
             </li>
             <li>
                 <a href="/" class="d-flex align-items-center justify-content-center p-3 link-light text-decoration-none" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
-                    <i class="bi bi-house-door" style="font-size: 24px;"></i>
+                    <i class="fas fa-dolly" style="font-size: 24px;"></i>
                     <span class="visually-hidden">Home</span>
                 </a>
             </li>
             <li>
                 <a href="/" class="d-flex align-items-center justify-content-center p-3 link-light text-decoration-none" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
-                    <i class="bi bi-house-door" style="font-size: 24px;"></i>
+                    <i class="fas fa-stethoscope" style="font-size: 24px;"></i>
                     <span class="visually-hidden">Home</span>
                 </a>
             </li>
-            <li>
+
+            <?php if ($_SESSION['privilage'] == 'Admin') {
+                echo'<li>
                 <a href="/" class="d-flex align-items-center justify-content-center p-3 link-light text-decoration-none" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
-                    <i class="bi bi-house-door" style="font-size: 24px;"></i>
+                    <i class="fas fa-users" style="font-size: 24px;"></i>
                     <span class="visually-hidden">Home</span>
                 </a>
-            </li>
+            </li>';
+            }
+            ?>
         </ul>
         <?php
-echo '<div class="dropdown border-top ">';
+echo '<div class="dropdown border-top">';
         if(isset($_SESSION['email'])){
             $_SESSION['action'] = "kijelentkezes";
             echo '<a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false" style="color: white;">';
@@ -264,9 +280,8 @@ echo '<div class="dropdown border-top ">';
 
             // Dropdown menu
             echo '<ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">';
-            echo '<li><a class="dropdown-item" href="#">New project...</a></li>';
-            echo '<li><a class="dropdown-item" href="#">Settings</a></li>';
-            echo '<li><a class="dropdown-item" href="modify.php">Profile</a></li>';
+            echo '<li><a class="dropdown-item" href="#"><i class="fas fa-gear"></i>&nbspSettings</a></li>';
+            echo '<li><a class="dropdown-item" href="modify.php"><i class="fas fa-circle-info"></i>&nbspProfile</a></li>';
             echo '<li><hr class="dropdown-divider"></li>';
             echo '<li><a class="dropdown-item" href="functions.php" onclick="confirmLogout(event)">';
             echo '<i class="bi bi-door-open fa-2x justify-content-end"></i> Log out</a></li>';

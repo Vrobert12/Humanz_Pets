@@ -1,15 +1,19 @@
 <?php
-session_start();
-$lang = $_GET['lang'] ?? 'en';
-if(isset($_GET['lang'])){
-    $_SESSION['lang'] = $_GET['lang'];
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+    $lang = $_GET['lang'] ?? $_SESSION['lang'] ?? 'en';
+    if(isset($_GET['lang'])){
+        $_SESSION['lang'] = $_GET['lang'];
+    }
+    include "lang_$lang.php";
 }
-include_once "lang_$lang.php";
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <title>Registration</title>
     <link rel="stylesheet" href="style.css">
     <?php include "config.php"; ?>
@@ -50,7 +54,7 @@ if (isset($_SESSION['title'])) {
 }
 ?>
 <form method="post" action="functions.php" class="mainForm">
-    <a class="nextPage" href="logIn.php">Back</a><br><br>
+    <a class="btn btn-secondary" href="logIn.php">Back</a><br><br>
     <label for="fname"><?php echo NAME?>:</label><br>
     <input type="text" class="inputok" placeholder="<?php echo NAME?>" name="fname" id="fname" ><br>
     <label for="lname"><?php echo LASTNAME?>:</label><br>
@@ -81,9 +85,9 @@ if (isset($_SESSION['title'])) {
         <input type="password" class="inputok" placeholder="********" name="pass" id="pass" ><br>
         <label for="pass2">'.CONFPASS.':</label><br>
         <input type="password" class="inputok" placeholder="********" name="pass2" id="pass2" ><br>
-        <input type="submit" class="inputok" name="action" value="registration">';
+        <input type="submit" class="btn btn-primary" name="action" value="registration">';
     } else {
-        echo '<input type="submit" class="inputok" name="action" value="AddWorker">';
+        echo '<input type="submit" class="btn btn-primary" name="action" value="AddWorker">';
     }
 
     $message = isset($_SESSION['message']) ? $_SESSION['message'] : '';
