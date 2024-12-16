@@ -1,4 +1,7 @@
 <?php
+define('ADDPRODUCT','Dodaj novi proizvod');
+define('ADD','Dodaj');
+define('PRICE', 'Cena');
 define('NOPET','Nemate nijednog kućnog ljubimca registrovanog na vašem nalogu.');
 define('INFO', 'Vaše kontakt informacije se čuvaju u KR kodu. Možete ga pričvrstiti na ogrlicu vašeg ljubimca.');
 define('VETS', 'Veterinari');

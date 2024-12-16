@@ -1,4 +1,7 @@
 <?php
+define('ADDPRODUCT','Add product');
+define('ADD','Add');
+define('PRICE','Price');
 define('NOPET','You do not have any pets registered to your account.');
 define('INFO','Your contact information is stored in the QR Code. You may attach it to your pet\'s collar.');
 define('VETS', 'Veterinarians');

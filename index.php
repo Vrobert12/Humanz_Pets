@@ -97,13 +97,13 @@ https://getbootstrap.com/docs/5.3/components/navbar/
             <!-- Centered Navigation Links -->
             <ul class="navbar-nav mx-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="contacts.php">Contacts</a>
+                    <a class="nav-link" href="contacts.php"></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Link</a>
+                    <a class="nav-link" href="#"></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Link</a>
+                    <a class="nav-link" href="#"></a>
                 </li>
             </ul>
             <!-- Language Dropdown (Aligned Right) -->

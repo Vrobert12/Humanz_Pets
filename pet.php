@@ -41,7 +41,7 @@ if (session_status() === PHP_SESSION_NONE) {
                 echo "<table class='profile-table'>";
                 echo "<tr><td rowspan='4' ><img alt='Profile Picture' style='border-radius: 0'width='200' height='200' src='$qrPicture'></td></tr>";
 
-                echo "<tr><td>Your contac informations if are in the QrCode,<br> you can use it to put on your pets collar.</td></tr>";
+                echo '<tr><td>'.INFO.'</td></tr>';
 
                 echo "</table>";
             }
@@ -65,15 +65,15 @@ if (session_status() === PHP_SESSION_NONE) {
         </td></tr>";
 
 
-                echo "<tr><td>Pet Name: $petName</td></tr>";
-                echo "<tr><td>Brad: $typeOfAnimal</td></tr>";
-                echo "<tr><td>Species: $petSpecies</td></tr>";
-                echo "<tr><td>Email: $userMail</td></tr>";
+                echo '<tr><td>'.NAME.':' .$petName.'</td></tr>';
+                echo '<tr><td>'.BREED.':'.$typeOfAnimal.'</td></tr>';
+                echo '<tr><td>'.SPECIES.':' .$petSpecies.'</td></tr>';
+                echo '<tr><td>'.EMAIL.':'.$userMail.'</td></tr>';
 
                 echo "</table>";
             }
         else
-            echo "<p>You do not have access pets registered to your account</p>";
+            echo '<p>'.NOPET.'</p>';
 
 
 

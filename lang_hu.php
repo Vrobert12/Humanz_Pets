@@ -1,4 +1,7 @@
 <?php
+define('ADDPRODUCT','Termék hozzáadása');
+define('ADD','Hozzáadás');
+define('PRICE', 'Ár');
 define('NOPET','Nincs regisztrálva házi kedvenc a fiókján.');
 define('INFO', 'Elérhetőségét a QR-kód tárolja. Rögzítheti kedvence nyakörvére.');
 define('VETS', 'Állatorvosok');

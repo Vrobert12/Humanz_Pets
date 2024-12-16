@@ -90,6 +90,9 @@ class Functions
                 case "registerAnimal":
                     $this->registerAnimal();
                     break;
+                case "addProduct":
+                    $this->addProduct();
+                    break;
                 case "veterinarianChose":
                     $this->choseVeterinarian();
                     break;
@@ -205,7 +208,7 @@ class Functions
                 $petQuery->bindParam(':userId', $userId, PDO::PARAM_INT);
 
                 if ($petQuery->execute()) {
-                    $_SESSION['message'] = "You registered your animal successfully. Now <b>chose the veterinarian</b><br>
+                    $_SESSION['message'] = "You registered your animal successfully. Now <b>choose the veterinarian</b><br>
  that will examine your pet";
                     header("Location: selectVeterinarian.php");
                     exit();
@@ -226,6 +229,34 @@ class Functions
 
 
     }
+
+    public function addProduct()
+    {
+
+        try {
+            $productName = ucfirst(strtolower(trim($_POST["productName"])));
+            $price = ucfirst(strtolower(trim($_POST["price"])));
+
+            // Insert the pet data into the database
+            $stmt = "INSERT INTO product (productName, productCost,productRelease)
+                    VALUES (:productName, :price, NOW())";
+            $query = $this->connection->prepare($stmt);
+            $query->bindParam(':productName', $productName, PDO::PARAM_STR);
+            $query->bindParam(':price', $price, PDO::PARAM_STR);
+
+            if ($query->execute()) {
+                header("Location: products.php");
+                exit();
+            } else {
+                throw new Exception("Failed to register the pet.");
+            }
+        } catch (Exception $e) {
+            $_SESSION['message'] = "Error: " . $e->getMessage();
+            header("Location: addProduct.php");
+            exit();
+        }
+    }
+
 
     public function passwordCheck($password, $password2, $location)
     {
