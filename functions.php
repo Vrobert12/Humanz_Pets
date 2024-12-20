@@ -781,18 +781,20 @@ WHERE p.userId = :userId;
                             $_SESSION['message'] = "You have been banned from our website!";
                         } else {
                             $_SESSION['email'] = $result['userMail'];
+                            $_SESSION['firstName'] = $result['firstName'];
+                            $_SESSION['lastName'] = $result['lastName'];
                             $_SESSION['name'] = $result['firstName'] . " " . $result['lastName'];
                             $_SESSION['profilePic'] = $result['profilePic'];
                             $_SESSION['userId'] = $result['userId'];
                             $_SESSION['phone'] = $result['phoneNumber'];
                             $_SESSION['privilage'] = $result['privilage'];
 
-                            setcookie("email", $result['userMail'], time() + time() + 10 * 60, "/");
-                            setcookie("name", $result['firstName'] . " " . $result['lastName'], time() + time() + 10 * 60, "/");
-                            setcookie("profilePic", $result['profilePic'], time() + time() + 10 * 60, "/");
-                            setcookie("userId", $result['userId'], time() + time() + 10 * 60, "/");
-                            setcookie("phone", $result['phoneNumber'], time() + time() + 10 * 60, "/");
-                            setcookie("privilage", $result['privilage'], time() + time() + 10 * 60, "/");
+                            setcookie("email", $result['userMail'], time() + 10 * 60, "/");
+                            setcookie("name", $result['firstName'] . " " . $result['lastName'], time() + 10 * 60, "/");
+                            setcookie("profilePic", $result['profilePic'], time() + 10 * 60, "/");
+                            setcookie("userId", $result['userId'], time() + 10 * 60, "/");
+                            setcookie("phone", $result['phoneNumber'],  time() + 10 * 60, "/");
+                            setcookie("privilage", $result['privilage'],  time() + 10 * 60, "/");
 
                             setcookie("last_activity", time(), time() + 10 * 60, "/");
                             header('Location: index.php');
@@ -836,7 +838,7 @@ WHERE p.userId = :userId;
 
                 unset($_COOKIE['last_activity']);
                 unset($_COOKIE['email']);
-                setcookie("email", $mail, time() + time() + 10 * 60, "/");
+                setcookie("email", $mail, time() + 10 * 60, "/");
                 setcookie("last_activity", time(), time() + 10 * 60, "/");
                 $sql = "SELECT p.petId FROM  pet p  inner join user u   on p.userId=u.userId  where u.userMail = :mail";
                 $stmt = $this->connection->prepare($sql);
@@ -879,14 +881,16 @@ WHERE p.userId = :userId;
                 unset($_COOKIE['phone']);
                 unset($_COOKIE['privilage']);
 
-                setcookie("email", $_SESSION['email'], time() + time() + 10 * 60, "/");
-                setcookie("name", $_SESSION['name'], time() + time() + 10 * 60, "/");
-                setcookie("profilePic", $_SESSION['profilePic'], time() + time() + 10 * 60, "/");
-                setcookie("userId", $_SESSION['userId'], time() + time() + 10 * 60, "/");
-                setcookie("phone", $_SESSION['phone'], time() + time() + 10 * 60, "/");
-                setcookie("privilage", $_SESSION['privilage'], time() + time() + 10 * 60, "/");
+                setcookie("email", $_SESSION['email'], time() + 10 * 60, "/");
+                setcookie("name", $_SESSION['name'], time() +  10 * 60, "/");
+                setcookie("profilePic", $_SESSION['profilePic'], time() + 10 * 60, "/");
+                setcookie("userId", $_SESSION['userId'], time() +  10 * 60, "/");
+                setcookie("phone", $_SESSION['phone'], time() +  10 * 60, "/");
+                setcookie("privilage", $_SESSION['privilage'], time() +  10 * 60, "/");
+                setcookie("last_activity", time(), time() +  10 * 60, "/");
 
-                setcookie("last_activity", time(), time() + 10 * 60, "/");
+
+
                 $sql = "SELECT p.petId FROM  pet p  inner join user u   on p.userId=u.userId  where u.userMail = :mail";
                 $stmt = $this->connection->prepare($sql);
                 $stmt->bindValue(":mail", $mail);

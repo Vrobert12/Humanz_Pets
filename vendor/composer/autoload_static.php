@@ -11,6 +11,10 @@ class ComposerStaticInitd14d53cc4f21951ca0ae413b319e7dcb
         array (
             'PHPMailer\\PHPMailer\\' => 20,
         ),
+        'F' => 
+        array (
+            'Fpdf\\' => 5,
+        ),
     );
 
     public static $prefixDirsPsr4 = array (
@@ -18,10 +22,15 @@ class ComposerStaticInitd14d53cc4f21951ca0ae413b319e7dcb
         array (
             0 => __DIR__ . '/..' . '/phpmailer/phpmailer/src',
         ),
+        'Fpdf\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/fpdf/fpdf/src/Fpdf',
+        ),
     );
 
     public static $classMap = array (
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
+        'FPDF' => __DIR__ . '/..' . '/setasign/fpdf/fpdf.php',
     );
 
     public static function getInitializer(ClassLoader $loader)

@@ -2,7 +2,7 @@
 session_start();
 include "functions.php";
 $autoload=new Functions();
-$autoload->checkAutoLogin('addProduct.php');
+$autoload->checkAutoLogin();
 $lang = $_GET['lang'] ?? $_SESSION['lang'] ?? 'en';
 include_once "lang_$lang.php";
 $_SESSION['backPic'] = "addProduct.php";
