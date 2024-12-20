@@ -7,6 +7,7 @@ if (session_status() === PHP_SESSION_NONE) {
     }
     include "lang_$lang.php";
 }
+$message = $_SESSION['message'] ?? '';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -30,8 +31,7 @@ if (session_status() === PHP_SESSION_NONE) {
 </head>
 <body class="bg-light ">
 
-    <title>Datatables test</title>
-
+<title>Datatables test</title>
 <div class="container mt-5">
     <a class="btn btn-secondary" href="index.php"><?php echo BACK?></a>
     <select id="tableSelect" class="form-select" style="width: 200px; display: inline-block;">
@@ -39,27 +39,29 @@ if (session_status() === PHP_SESSION_NONE) {
         <option value="users">Users</option>
         <option value="products">Products</option>
         <option value="veterinarians">Veterinarians</option>
-    </select><br><br>
-    <table id="users" class="table table-striped table-bordered table-hover display" style="width:100%">
+    </select>
+    <?php echo $message?><br><br>
+    <table id="products" class="table table-striped table-bordered table-hover display" style="width:100%">
         <thead>
         <tr>
             <th>No</th>
-            <th>Name</th>
-            <th>Phone Number</th>
-            <th>Email Address</th>
+            <th>Product Name</th>
+            <th>Product Cost</th>
+            <th>Product Release</th>
         </tr>
         </thead>
-        <tfoot>
-        <tr>
-            <th>No</th>
-            <th>Name</th>
-            <th>Phone Number</th>
-            <th>Email Address</th>
-
-        </tr>
-        </tfoot>
+<!--        <tfoot>-->
+<!--        <tr>-->
+<!--            <th>No</th>-->
+<!--            <th>Product Name</th>-->
+<!--            <th>Product Cost</th>-->
+<!--            <th>Product Release</th>-->
+<!--        </tr>-->
+<!--        </tfoot>-->
     </table>
+    <a href="addProduct.php" class="btn btn-primary" style="margin-left: 20px;"><?php echo ADDPRODUCT?></a>
 </div>
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
@@ -73,7 +75,6 @@ if (session_status() === PHP_SESSION_NONE) {
 <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.print.min.js"></script>
 <script src="js/script.js"></script>
-
 </body>
 </html>
 <?php

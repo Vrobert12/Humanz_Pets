@@ -236,13 +236,14 @@ class Functions
         try {
             $productName = ucfirst(strtolower(trim($_POST["productName"])));
             $price = ucfirst(strtolower(trim($_POST["price"])));
+            $description = ucfirst(strtolower(trim($_POST["description"])));
 
-            // Insert the pet data into the database
-            $stmt = "INSERT INTO product (productName, productCost,productRelease)
-                    VALUES (:productName, :price, NOW())";
+            $stmt = "INSERT INTO product (productName, description, productCost,productRelease)
+                    VALUES (:productName, :description, :price, NOW())";
             $query = $this->connection->prepare($stmt);
             $query->bindParam(':productName', $productName, PDO::PARAM_STR);
             $query->bindParam(':price', $price, PDO::PARAM_STR);
+            $query->bindParam(':description', $description, PDO::PARAM_STR);
 
             if ($query->execute()) {
                 header("Location: products.php");

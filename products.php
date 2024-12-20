@@ -1,86 +1,68 @@
 <?php
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-    $lang = $_GET['lang'] ?? $_SESSION['lang'] ?? 'en';
-    if(isset($_GET['lang'])){
-        $_SESSION['lang'] = $_GET['lang'];
-    }
-    include "lang_$lang.php";
-}
+include 'functions.php';
+
+$lang = $_GET['lang'] ?? $_SESSION['lang'] ?? 'en';
+include_once "lang_$lang.php";
 $message = $_SESSION['message'] ?? '';
+$functions = new Functions();
+$functions->checkAutoLogin();
+$pdo = $functions->connect($GLOBALS['dsn'], PARAMS['USER'], PARAMS['PASSWORD'], $GLOBALS['pdoOptions']);
+$products = $pdo->query("SELECT productId, productName, productPicture, productCost FROM product")->fetchAll(PDO::FETCH_ASSOC);
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Makes it responsive -->
-    <title>User Data</title>
-    <!-- Bootstrap CSS -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Optional: Custom Styles -->
-    <link rel="stylesheet" href="style.css">
-
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/datetime/1.1.0/css/dataTables.dateTime.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/themes/base/jquery-ui.min.css"/>
-    <link rel="stylesheet" href="css/style.css">
+    <title>Product Page</title>
+    <style>
+        .product {
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin: 15px;
+            display: inline-block;
+            width: 200px;
+            text-align: center;
+        }
+        .product img {
+            width: 100%;
+            height: auto;
+        }
+        .cart {
+            margin: 20px;
+        }
+    </style>
 </head>
-<body class="bg-light ">
-
-<title>Datatables test</title>
-<div class="container mt-5">
-    <a class="btn btn-secondary" href="index.php"><?php echo BACK?></a>
-    <select id="tableSelect" class="form-select" style="width: 200px; display: inline-block;">
-        <option selected hidden="hidden">--Choose Data--</option>
-        <option value="users">Users</option>
-        <option value="products">Products</option>
-        <option value="veterinarians">Veterinarians</option>
-    </select>
-    <?php echo $message?><br><br>
-    <table id="products" class="table table-striped table-bordered table-hover display" style="width:100%">
-        <thead>
-        <tr>
-            <th>No</th>
-            <th>Product Name</th>
-            <th>Product Cost</th>
-            <th>Product Release</th>
-        </tr>
-        </thead>
-        <tfoot>
-        <tr>
-            <th>No</th>
-            <th>Product Name</th>
-            <th>Product Cost</th>
-            <th>Product Release</th>
-        </tr>
-        </tfoot>
-    </table>
-    <a href="addProduct.php" class="btn btn-primary" style="margin-left: 20px;"><?php echo ADDPRODUCT?></a>
+<body>
+<h1><?php echo PRODUCT?></h1>
+<a class="btn btn-secondary" href="index.php"><?php echo BACK?></a>
+<div>
+    <?php
+    $products = $pdo->query("SELECT productId, productName, productPicture, productCost FROM product")->fetchAll(PDO::FETCH_ASSOC);
+    foreach ($products as $product): ?>
+        <div class="product">
+            <img src="pictures/<?php echo htmlspecialchars($product['productPicture']); ?>" alt="<?php echo htmlspecialchars($product['productName']); ?>">
+            <h2><?php echo htmlspecialchars($product['productName']); ?></h2>
+            <p><?php echo PRICE?>: $<?php echo number_format($product['productCost'], 2); ?></p>
+            <a href="details.php?id=<?php echo $product['productId']; ?>">Details</a>
+        </div>
+    <?php endforeach; ?>
 </div>
+<div class="cart">
+    <h2><?php echo CART?></h2>
+    <ul id="cart-list">
+        <!-- Cart items will be dynamically added here -->
+    </ul>
+</div>
+<script>
+    const cartList = document.getElementById('cart-list');
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
-<script src="https://cdn.datatables.net/datetime/1.1.0/js/dataTables.dateTime.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
-<script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.print.min.js"></script>
-<script src="js/script.js"></script>
+    function addToCart(productId, productName) {
+        const listItem = document.createElement('li');
+        listItem.textContent = productName;
+        cartList.appendChild(listItem);
+    }
+</script>
 </body>
 </html>
-<?php
-
-include 'functions.php';
-$autoload=new Functions();
-$autoload->checkAutoLogin();
-
-?>

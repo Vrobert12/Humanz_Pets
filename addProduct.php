@@ -57,6 +57,10 @@ $_SESSION['backPic']='addProduct.php';
 <a class="btn btn-secondary" href="index.php"><?php echo BACK?></a><br><br>
 <label for="petName"><?php echo NAME?>:</label><br>
 <input type="text" class="inputok" placeholder="<?php echo NAME?>" name="productName" id="productName" ><br>
+
+<label for="description"><?php echo DESC?>:</label><br>
+<textarea class="inputok" placeholder="<?php echo DESC?>" name="description" id="description" rows="4"></textarea><br>
+
 <label for="bred"><?php echo PRICE?>(€):</label><br>
 <input type="text" class="inputok" placeholder="<?php echo PRICE?>" name="price" id="price" ><br>
 

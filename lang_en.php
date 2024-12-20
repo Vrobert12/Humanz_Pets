@@ -1,4 +1,9 @@
 <?php
+define('GENPDF','Generate PDF');
+define('QR','QR code');
+define('ADDCART','Add to cart');
+define('DESC','Description');
+define('CART','Cart');
 define('ADDPRODUCT','Add product');
 define('ADD','Add');
 define('PRICE','Price');

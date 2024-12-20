@@ -1,4 +1,9 @@
 <?php
+define('GENPDF','PDF generálás');
+define('QR','QR kód');
+define('ADDCART','Hozzáadás a kosárhoz');
+define('DESC','Leírás');
+define('CART','Kosár');
 define('ADDPRODUCT','Termék hozzáadása');
 define('ADD','Hozzáadás');
 define('PRICE', 'Ár');

@@ -4,7 +4,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2367ab9a-341c-4300-a7ed-72f717181f7d" name="Changes" comment="Responsivity" />
+    <list default="true" id="2367ab9a-341c-4300-a7ed-72f717181f7d" name="Changes" comment="Add products page">
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/addProduct.php" beforeDir="false" afterPath="$PROJECT_DIR$/addProduct.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/functions.php" beforeDir="false" afterPath="$PROJECT_DIR$/functions.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lang_en.php" beforeDir="false" afterPath="$PROJECT_DIR$/lang_en.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lang_hu.php" beforeDir="false" afterPath="$PROJECT_DIR$/lang_hu.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lang_sr.php" beforeDir="false" afterPath="$PROJECT_DIR$/lang_sr.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pet.php" beforeDir="false" afterPath="$PROJECT_DIR$/pet.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/products.php" beforeDir="false" afterPath="$PROJECT_DIR$/products.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/users.php" beforeDir="false" afterPath="$PROJECT_DIR$/users.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/veterinarians.php" beforeDir="false" afterPath="$PROJECT_DIR$/veterinarians.php" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -29,6 +41,8 @@
       <path value="$PROJECT_DIR$/vendor/phpmailer/phpmailer" />
       <path value="$PROJECT_DIR$/vendor/twbs/bootstrap-icons" />
       <path value="$PROJECT_DIR$/vendor/composer" />
+      <path value="$PROJECT_DIR$/vendor/fpdf/fpdf" />
+      <path value="$PROJECT_DIR$/vendor/setasign/fpdf" />
     </include_path>
   </component>
   <component name="ProjectColorInfo">{
@@ -80,7 +94,9 @@
       <workItem from="1731395195944" duration="48000" />
       <workItem from="1734274987645" duration="12762000" />
       <workItem from="1734291796324" duration="388000" />
-      <workItem from="1734365872517" duration="4612000" />
+      <workItem from="1734365122596" duration="1793000" />
+      <workItem from="1734706226934" duration="8358000" />
+      <workItem from="1734717957007" duration="359000" />
     </task>
     <task id="LOCAL-00001" summary="Responsivity">
       <option name="closed" value="true" />
@@ -90,14 +106,34 @@
       <option name="project" value="LOCAL" />
       <updated>1734291927626</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Add products page">
+      <option name="closed" value="true" />
+      <created>1734370684709</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1734370684709</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Responsivity" />
-    <option name="LAST_COMMIT_MESSAGE" value="Responsivity" />
+    <MESSAGE value="Add products page" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add products page" />
   </component>
 </project>

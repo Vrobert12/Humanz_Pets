@@ -1,4 +1,9 @@
 <?php
+define('GENPDF','Generiši PDF');
+define('QR','QR kod');
+define('ADDCART','Dodaj u korpu');
+define('DESC','Opis');
+define('CART','Korpa');
 define('ADDPRODUCT','Dodaj novi proizvod');
 define('ADD','Dodaj');
 define('PRICE', 'Cena');
