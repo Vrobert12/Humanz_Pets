@@ -7,6 +7,10 @@ if (session_status() === PHP_SESSION_NONE) {
     }
     include "lang_$lang.php";
 }
+if(isset($_SESSION['email'])){
+    header('Location: index.php');
+    exit();
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -60,22 +64,9 @@ if (isset($_SESSION['title'])) {
     <label for="lname"><?php echo LASTNAME?>:</label><br>
     <input type="text" class="inputok" placeholder="<?php echo LASTNAME?>" name="lname" id="lname" ><br>
 
-    <label for="tel1"><?php echo PHONE?>:</label><br>
-    <select name="tel1" class="inputok" id="tel1">
-        <option hidden="hidden" value="Number"><?php echo NUMBER?></option>
-        <?php
-        for ($i=10; $i<=39; $i++){
-            echo "<option value=\"0".$i."\">0".$i."</option>";
-            if($i==23 || $i==28 ||$i==29 || $i==39){
-                echo "<option value=\"0".$i."0\">0".$i."0</option>";
-            }
-        }
-        for ($i=60; $i<=69; $i++){
-            echo "<option value=\"0".$i."\">0".$i."</option>";
-        }
-        ?>
-    </select>
-    <input type="text" placeholder="Phone Number" name="tel2" class="inputok" id="tel2" ><br>
+    <label for="tel"><?php echo PHONE?>:</label><br>
+
+    <input type="text" placeholder="Phone Number" name="tel" class="inputok" id="tel" ><br>
     <label for="mail">E-mail:</label><br>
     <input type="email" class="inputok" placeholder="Email" name="mail" id="mail" ><br>
     <?php

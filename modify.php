@@ -36,35 +36,21 @@ include "lang_$lang.php";
         <!-- First Name -->
         <div class="mb-3">
             <label for="knev" class="form-label"><?php echo NAME ?>:</label>
-            <input type="text" class="form-control" placeholder="<?php echo NAME ?>" name="firstName" id="knev">
+            <input type="text" class="form-control" placeholder="<?php echo NAME ?>" value="<?php echo $_SESSION['firstName'] ?>" name="firstName" id="knev">
         </div>
 
         <!-- Last Name -->
         <div class="mb-3">
             <label for="vnev" class="form-label"><?php echo LASTNAME ?>:</label>
-            <input type="text" class="form-control" placeholder="<?php echo LASTNAME ?>" name="lastName" id="vnev">
+            <input type="text" class="form-control" placeholder="<?php echo LASTNAME ?>" value="<?php echo $_SESSION['lastName'] ?>" name="lastName" id="vnev">
         </div>
 
         <!-- Phone Number -->
         <div class="mb-3">
-            <label for="tel2" class="form-label"><?php echo PHONE ?>:</label>
+            <label for="tel" class="form-label"><?php echo PHONE ?>:</label>
             <div class="input-group">
-                <!-- Dropdown for Country Code -->
-                <select name="tel1" class="form-select">
-                    <?php
-                    for ($i = 10; $i <= 39; $i++) {
-                        echo "<option value=\"0".$i."\">0".$i."</option>";
-                        if ($i == 23 || $i == 28 || $i == 29 || $i == 39) {
-                            echo "<option value=\"0".$i."0\">0".$i."0</option>";
-                        }
-                    }
-                    for ($i = 60; $i <= 69; $i++) {
-                        echo "<option value=\"0".$i."\">0".$i."</option>";
-                    }
-                    ?>
-                </select>
-                <!-- Phone Number Input -->
-                <input type="text" class="form-control" placeholder="<?php echo PHONE ?>" name="tel2" id="tel2">
+
+                <input type="text" class="form-control" placeholder="<?php echo PHONE ?>" value="<?php echo $_SESSION['phone'] ?>" name="tel" id="tel2">
             </div>
         </div>
 

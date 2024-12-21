@@ -96,6 +96,12 @@ class Functions
                 case "veterinarianChose":
                     $this->choseVeterinarian();
                     break;
+                case "buyProduct":
+                    $this->buyProduct();
+                    break;
+                case "updateProduct":
+                    $this->updateProduct();
+                    break;
                 default:
                     $_SESSION['message'] = "Something went wrong in switch";
                     header('Location:index.php');
@@ -141,6 +147,27 @@ class Functions
         return $filePath;
     }
 
+    public function buyProduct()
+    {
+        if (!empty($_POST['productId']) && !empty($_POST['quantity'])) {
+            $productId = $_POST['productId'] ?? null;
+            $userId = $_SESSION['userId'] ?? null;
+            $sum = $_POST['quantity'] ?? null;
+
+            $sql = "INSERT INTO user_product_relation( userId, productId,sum) VALUES (:userId,:productId,:sum)";
+            $stmt = $this->connection->prepare($sql);
+            $stmt->bindParam(':userId', $userId);
+            $stmt->bindParam(':productId', $productId);
+            $stmt->bindParam(':sum', $sum);
+            $stmt->execute();
+
+
+        } else {
+            $_SESSION['message'] = "Something is missing in the product parameters";
+        }
+        header('Location:products.php');
+        exit();
+    }
 
     public function registerAnimal()
     {
@@ -230,20 +257,69 @@ class Functions
 
     }
 
+    public function updateProduct()
+    {
+
+        try {
+            $productId = ucfirst(strtolower(trim($_POST["productId"])));
+            $productName = ucfirst(strtolower(trim($_POST["productName"])));
+            $price = ucfirst(strtolower(trim($_POST["price"])));
+
+            $picture = $this->picture($_SESSION['backPic']);
+            if ($picture==4)
+            {
+                $picture=$_SESSION['updateProductPicture'];
+            }
+            $description = ucfirst(strtolower(trim($_POST["productDescription"])));
+
+            // Insert the pet data into the database
+            $stmt = "UPDATE product 
+SET productName = :productName, 
+    productCost = :price, 
+    productPicture = :productPicture, 
+    description = :productDescription, 
+    productRelease = NOW() 
+WHERE productId = :productId;
+";
+            $query = $this->connection->prepare($stmt);
+            $query->bindParam(':productId', $productId, PDO::PARAM_STR);
+            $query->bindParam(':productName', $productName, PDO::PARAM_STR);
+            $query->bindParam(':price', $price, PDO::PARAM_STR);
+            $query->bindParam(':productPicture', $picture, PDO::PARAM_STR);
+            $query->bindParam(':productDescription', $description, PDO::PARAM_STR);
+
+
+            if ($query->execute()) {
+                header("Location: products.php");
+                exit();
+            } else {
+                throw new Exception("Failed to register the pet.");
+            }
+        } catch (Exception $e) {
+            $_SESSION['message'] = "Error: " . $e->getMessage();
+            header("Location: addProduct.php");
+            exit();
+        }
+    }
+
     public function addProduct()
     {
 
         try {
             $productName = ucfirst(strtolower(trim($_POST["productName"])));
             $price = ucfirst(strtolower(trim($_POST["price"])));
-            $description = ucfirst(strtolower(trim($_POST["description"])));
+            $picture = $this->picture($_SESSION['backPic']);
+            $description = ucfirst(strtolower(trim($_POST["productDescription"])));
 
-            $stmt = "INSERT INTO product (productName, description, productCost,productRelease)
-                    VALUES (:productName, :description, :price, NOW())";
+            // Insert the pet data into the database
+            $stmt = "INSERT INTO product (productName, productCost, productPicture, description, productRelease)
+                    VALUES (:productName, :price,:productPicture,:productDescription, NOW())";
             $query = $this->connection->prepare($stmt);
             $query->bindParam(':productName', $productName, PDO::PARAM_STR);
             $query->bindParam(':price', $price, PDO::PARAM_STR);
-            $query->bindParam(':description', $description, PDO::PARAM_STR);
+            $query->bindParam(':productPicture', $picture, PDO::PARAM_STR);
+            $query->bindParam(':productDescription', $description, PDO::PARAM_STR);
+
 
             if ($query->execute()) {
                 header("Location: products.php");
@@ -300,7 +376,7 @@ class Functions
 
     }
 
-    public function userCheck1($fname, $lname, $email, $tel2, $location)
+    public function userCheck1($fname, $lname, $email, $tel, $location)
     {
         if ($fname == '') {
             $_SESSION['message'] = "The <b>First Name</b> is not filled out";
@@ -342,8 +418,8 @@ class Functions
             header('Location: ' . $location);
             exit();
         }
-        if ($tel2 != "") {
-            if (strlen($tel2) != 7) {
+        if ($tel != "") {
+            if (strlen($tel) != 10 && strlen($tel) != 11) {
                 $_SESSION['message'] = "The <b>Phone Number</b> does not exist!";
                 header('Location: ' . $location);
                 exit();
@@ -358,22 +434,20 @@ class Functions
 
     public function registration()
     {
-        if (isset($_POST['fname']) && isset($_POST['lname']) && isset($_POST['tel1']) && isset($_POST['tel2']) && isset($_POST['mail']) && isset($_POST['pass']) && isset($_POST['pass2'])) {
+        if (isset($_POST['fname']) && isset($_POST['lname']) && isset($_POST['tel']) && isset($_POST['mail']) && isset($_POST['pass']) && isset($_POST['pass2'])) {
 
 
             $fname = $_POST['fname'];
             $lname = $_POST['lname'];
-            $tel1 = $_POST['tel1'];
+            $tel = $_POST['tel'];
 
-            $tel2 = $_POST['tel2'];
-            $tel = $tel1 . "" . $tel2;
 
             $mail = $_POST['mail'];
             $_SESSION["email"] = $mail;
             $pass = $_POST['pass'];
             $pass2 = $_POST['pass2'];
 
-            $this->userCheck1($fname, $lname, $mail, $tel2, "registration.php");
+            $this->userCheck1($fname, $lname, $mail, $tel, "registration.php");
 
             $this->passwordCheck($pass, $pass2, "registration.php");
 
@@ -505,14 +579,16 @@ class Functions
 
             } catch (Exception $e) {
                 $_SESSION['message'] = "An error occurred: " . $e->getMessage();
+                exit();
             }
         } else {
             $_SESSION['message'] = "Error occurred during registration!";
+            exit();
         }
 
     }
 
-    public function userModifyData($fname, $lname, $tel2, $location)
+    public function userModifyData($fname, $lname, $tel, $location)
     {
 
         if (preg_match("/[0-9]+/", $fname)) {
@@ -535,8 +611,8 @@ class Functions
             header('Location: ' . $location);
             exit();
         }
-        if ($tel2 != "") {
-            if (strlen($tel2) != 7) {
+        if ($tel != "") {
+            if (strlen($tel) != 10 && strlen($tel) != 11) {
                 $_SESSION['message'] = "The <b>Phone Number</b> does not exist!";
                 header('Location: ' . $location);
                 exit();
@@ -549,7 +625,7 @@ class Functions
     public function modifyUser()
     {
         $count = 0;
-        $phoneNumber = $_POST['tel1'] . $_POST['tel2'];
+        $phoneNumber = $_POST['tel'];
 
         // Prepare the initial query to retrieve existing user details
         $sql = $this->connection->prepare("SELECT firstName, lastName, phoneNumber FROM user WHERE userMail = ?");
@@ -557,7 +633,7 @@ class Functions
         $result = $sql->fetch(PDO::FETCH_ASSOC);
 
         // Calling userModifyData function with posted data
-        $this->userModifyData($_POST['firstName'], $_POST['lastName'], $_POST['tel2'], "modify.php");
+        $this->userModifyData($_POST['firstName'], $_POST['lastName'], $_POST['tel'], "modify.php");
 
         // Check if user data was found and update if necessary
         if ($result) {
@@ -566,6 +642,7 @@ class Functions
                 $sql = $this->connection->prepare("UPDATE user SET firstName = ? WHERE userMail = ?");
                 $sql->execute([$_POST['firstName'], $_SESSION['email']]);
                 $_SESSION['name'] = $_POST['firstName'];
+                $_SESSION['firstName'] = $_POST['firstName'];
                 $_SESSION['message'] = "First name is modified";
                 $count++;
             } else {
@@ -577,6 +654,7 @@ class Functions
                 $sql = $this->connection->prepare("UPDATE user SET lastName = ? WHERE userMail = ?");
                 $sql->execute([$_POST['lastName'], $_SESSION['email']]);
                 $_SESSION['name'] .= " " . $_POST['lastName'];
+                $_SESSION['lastName'] = $_POST['lastName'];
                 $_SESSION['message'] = "Last name is modified";
                 $count++;
             } else {
@@ -584,10 +662,11 @@ class Functions
             }
 
             // Update phone number if provided
-            if (!empty($_POST['tel1']) && !empty($_POST['tel2'])) {
+            if (!empty($_POST['tel'])) {
                 $sql = $this->connection->prepare("UPDATE user SET phoneNumber = ? WHERE userMail = ?");
                 $sql->execute([$phoneNumber, $_SESSION['email']]);
                 $_SESSION['message'] = "Phone number is modified";
+                $_SESSION['phone'] = $phoneNumber;
                 $count++;
             }
         }
@@ -603,9 +682,9 @@ class Functions
 
         }
         $stmt = "UPDATE qr_code qr
-INNER JOIN pet p ON qr.qr_code_id = p.qr_code_id
+INNER JOIN user u ON qr.userId = u.userId
 SET qr.qrCodeName = :qrCodeName
-WHERE p.userId = :userId;
+WHERE u.userId = :userId;
 ";
         $stmt = $this->connection->prepare($stmt);
         $stmt->bindParam(':userId', $_SESSION['userId']);
@@ -654,7 +733,7 @@ WHERE p.userId = :userId;
                     }
                     $file_size = $file_size / 1024;
                     if ($file_size > 300) {
-                        $_SESSION['message'] = "File is too big!";
+                        $_SESSION['message'] = "File is too big! Is has to be smaller than 300KB!";
                         $logType = "Picture";
                         $logText = "The file is bigger than 300KB";
                         $logMessage = $_SESSION['message'];
@@ -711,7 +790,7 @@ WHERE p.userId = :userId;
                         // Redirect to login page after successful upload
                         header('Location: ' . $_SESSION['backPic']);
                         exit(); // Exit after redirection
-                    } elseif ($target == 'registerAnimal.php') {
+                    } elseif ($target == 'registerAnimal.php' || $target == "addProduct.php") {
                         return $new_file_name;
                     } else {
                         $mail = 'Unknown';
@@ -794,8 +873,8 @@ WHERE p.userId = :userId;
                             setcookie("name", $result['firstName'] . " " . $result['lastName'], time() + 10 * 60, "/");
                             setcookie("profilePic", $result['profilePic'], time() + 10 * 60, "/");
                             setcookie("userId", $result['userId'], time() + 10 * 60, "/");
-                            setcookie("phone", $result['phoneNumber'],  time() + 10 * 60, "/");
-                            setcookie("privilage", $result['privilage'],  time() + 10 * 60, "/");
+                            setcookie("phone", $result['phoneNumber'], time() + 10 * 60, "/");
+                            setcookie("privilage", $result['privilage'], time() + 10 * 60, "/");
 
                             setcookie("last_activity", time(), time() + 10 * 60, "/");
                             header('Location: index.php');
@@ -883,13 +962,12 @@ WHERE p.userId = :userId;
                 unset($_COOKIE['privilage']);
 
                 setcookie("email", $_SESSION['email'], time() + 10 * 60, "/");
-                setcookie("name", $_SESSION['name'], time() +  10 * 60, "/");
+                setcookie("name", $_SESSION['name'], time() + 10 * 60, "/");
                 setcookie("profilePic", $_SESSION['profilePic'], time() + 10 * 60, "/");
-                setcookie("userId", $_SESSION['userId'], time() +  10 * 60, "/");
-                setcookie("phone", $_SESSION['phone'], time() +  10 * 60, "/");
-                setcookie("privilage", $_SESSION['privilage'], time() +  10 * 60, "/");
-                setcookie("last_activity", time(), time() +  10 * 60, "/");
-
+                setcookie("userId", $_SESSION['userId'], time() + 10 * 60, "/");
+                setcookie("phone", $_SESSION['phone'], time() + 10 * 60, "/");
+                setcookie("privilage", $_SESSION['privilage'], time() + 10 * 60, "/");
+                setcookie("last_activity", time(), time() + 10 * 60, "/");
 
 
                 $sql = "SELECT p.petId FROM  pet p  inner join user u   on p.userId=u.userId  where u.userMail = :mail";

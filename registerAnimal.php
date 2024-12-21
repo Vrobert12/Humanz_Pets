@@ -1,12 +1,13 @@
 <?php
 session_start();
 include "functions.php";
-$autoload=new Functions();
+$autoload = new Functions();
 $autoload->checkAutoLogin('registerAnimal.php');
 $lang = $_GET['lang'] ?? $_SESSION['lang'] ?? 'en';
 include_once "lang_$lang.php";
 $_SESSION['backPic'] = "registerAnimal.php";
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -31,7 +32,6 @@ $_SESSION['backPic'] = "registerAnimal.php";
             border-color: red;
         }
     </style>
-
 </head>
 <body>
 
@@ -51,7 +51,7 @@ if (isset($_SESSION['token']) && isset($_GET['token'])) {
 if (isset($_SESSION['title'])) {
     echo "<h2 style='color: #2a7e2a'>" . $_SESSION['title'] . "</h2>";
 }
-$_SESSION['backPic']='registerAnimal.php';
+$_SESSION['backPic'] = 'registerAnimal.php';
 ?>
 
 <a class="btn btn-secondary" href="index.php"><?php echo BACK?></a><br><br>
@@ -70,17 +70,28 @@ $_SESSION['backPic']='registerAnimal.php';
     <option value="pig"><?php echo PIG?></option>
 </select>
 
-<img src="/Humanz2.0/pictures/logInPic.png" alt="img" width="32" height="32" onclick="activateProfilePicture()" style="cursor: pointer;">
-<input  type='file' name='picture' id='pictureInput' style='display: none;' accept='image/*'>
-<input type='submit' class="btn btn-primary"  name='submit' id='submitButton' value='<?php echo REGISTER?>' >
-<input type='hidden' class="inputok"  name='Action' id='submitButton2' value='Register' >
+<!-- Displaying the existing profile picture -->
+<img id="productImage" src="/Humanz2.0/pictures/logInPic.png" alt="Profile Image" width="100" height="100" onclick="activateProfilePicture()"
+     style="cursor: pointer; opacity: 0.7; transition: opacity 0.3s;"
+     onmouseover="this.style.opacity=1;" onmouseout="this.style.opacity=0.7;">
+
+<!-- Hidden file input to allow updating the profile picture -->
+<input type="file" name="picture" id="pictureInput" style="display: none;" accept="image/*" onchange="updateImagePreview(event)">
+
+<!-- Submit Button -->
+<input type="submit" class="btn btn-primary" name="submit" id="submitButton" value="<?php echo REGISTER?>" disabled>
+
+<!-- Hidden fields -->
+<input type="hidden" class="inputok" name="Action" value="Register">
 <input type="hidden" name="action" value="registerAnimal"><br>
+
 <?php
-if(isset($_SESSION['message'])) {
+if (isset($_SESSION['message'])) {
     echo $_SESSION['message'];
     unset($_SESSION['message']);
 }
 ?>
+
 </form>
 
 </body>

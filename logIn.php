@@ -14,15 +14,12 @@
     <script src="indexJS.js"></script>
     <link rel="stylesheet" href="style.css">
 
-    <!-- Add custom CSS for the popup with animation -->
-    <style>
-
-    </style>
 
 </head>
 <body>
 
 <?php
+
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
     $lang = $_GET['lang'] ?? $_SESSION['lang'] ?? 'en';
@@ -30,6 +27,10 @@ if (session_status() === PHP_SESSION_NONE) {
         $_SESSION['lang'] = $_GET['lang'];
     }
     include "lang_$lang.php";
+}
+if(isset($_SESSION['email'])){
+    header('Location: index.php');
+    exit();
 }
 ?>
 <form method="post" action="functions.php" class="mainForm">

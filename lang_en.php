@@ -54,4 +54,5 @@ define('RESET', 'Reset');
 define('SUCCESS_MESSAGE', 'You have successfully registered!.');
 define('BACK_TO_JOBS', 'Back to jobs');
 define('ERROR_MESSAGE', 'Error, please fill all the fields.');
+define('PRODUCTDESCRIPTION','Product description');
 ?>

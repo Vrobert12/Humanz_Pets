@@ -36,7 +36,7 @@ $_SESSION['backPic'] = "addProduct.php";
 <body>
 
 <?php
-
+$_SESSION['backPic']='addProduct.php';
 if (isset($_SESSION['token']) && isset($_GET['token'])) {
     if ($_SESSION['token'] != $_GET['token']) {
         header('location:' . $_SESSION['previousPage']);
@@ -54,18 +54,25 @@ if (isset($_SESSION['title'])) {
 $_SESSION['backPic']='addProduct.php';
 ?>
 
-<a class="btn btn-secondary" href="index.php"><?php echo BACK?></a><br><br>
+<a class="btn btn-secondary" href="products.php"><?php echo BACK?></a><br><br>
 <label for="petName"><?php echo NAME?>:</label><br>
 <input type="text" class="inputok" placeholder="<?php echo NAME?>" name="productName" id="productName" ><br>
-
-<label for="description"><?php echo DESC?>:</label><br>
-<textarea class="inputok" placeholder="<?php echo DESC?>" name="description" id="description" rows="4"></textarea><br>
-
 <label for="bred"><?php echo PRICE?>(€):</label><br>
 <input type="text" class="inputok" placeholder="<?php echo PRICE?>" name="price" id="price" ><br>
+<label for="bred"><?php echo PRODUCTDESCRIPTION?>:</label><br>
+<input type='text' class="inputok"placeholder="<?php echo PRODUCTDESCRIPTION?>"  name='productDescription' id='productDescription'><br>
+<img id="productImage" src="/Humanz2.0/pictures/logInPic.png"
+     alt="img" width="32" height="32" onclick="activateProfilePicture()" style="cursor: pointer;">
+
+<input type="file" name="picture" id="pictureInput"
+       style="display: none;" accept="image/*" onchange="updateImagePreview(this)"><br>
+
 
 <input type='submit' class="btn btn-primary"  name='submit' id='submitButton' value='<?php echo ADD?>' >
-<input type='hidden' class="inputok"  name='Action' id='submitButton2' value='Register' >
+
+
+
+
 <input type="hidden" name="action" value="addProduct"><br>
 <?php
 if(isset($_SESSION['message'])) {

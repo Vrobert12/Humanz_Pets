@@ -18,6 +18,12 @@ $product = $product->fetch(PDO::FETCH_ASSOC);
 if (!$product) {
     die('Product not found.');
 }
+
+// Assuming userId is stored in the session after login
+$userId = $_SESSION['userId'] ?? null;
+if (!$userId) {
+    die('User not logged in.');
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -36,6 +42,16 @@ if (!$product) {
         .details-content {
             margin-left: 40px;
         }
+
+        .quantity-selector {
+            width: 60px;
+            text-align: center;
+        }
+
+        .total-price {
+            font-weight: bold;
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
@@ -45,19 +61,43 @@ if (!$product) {
          alt="<?php echo htmlspecialchars($product['productName']); ?>">
     <div class="details-content">
         <h1><?php echo htmlspecialchars($product['productName']); ?></h1>
-        <p><?php echo PRICE?>: €<?php echo number_format($product['productCost'], 2); ?></p>
-        <p><?php echo REGTIME?>: <?php echo htmlspecialchars($product['productRelease']); ?></p>
+        <p><?php echo PRICE ?>: €<?php echo number_format($product['productCost'], 2); ?></p>
+        <p><?php echo REGTIME ?>: <?php echo htmlspecialchars($product['productRelease']); ?></p>
         <p><?php echo nl2br(htmlspecialchars($product['description'] ?? 'No description available.')); ?></p>
-        <button class="btn btn-primary"
-                onclick="addToCart(<?php echo $product['productId']; ?>, '<?php echo htmlspecialchars($product['productName']); ?>')">
-            <?php echo ADDCART?>
-        </button>
+
+        <!-- Quantity selection and price update -->
+        <div>
+            <label for="quantity">Quantity:</label>
+            <input type="number" id="quantity" class="quantity-selector" value="1" min="1" max="99" onchange="updatePrice()">
+        </div>
+        <div class="total-price">
+            <p>Total Price: €<span id="total-price"><?php echo number_format($product['productCost'], 2); ?></span></p>
+        </div>
+
+        <!-- Form to submit purchase -->
+        <form action="functions.php" method="POST">
+            <input type="hidden" name="action" value="buyProduct">
+            <input type="hidden" name="productId" value="<?php echo $product['productId']; ?>">
+            <input type="hidden" name="userId" value="<?php echo htmlspecialchars($userId); ?>">
+            <input type="hidden" name="quantity" id="hidden-quantity" value="1">
+            <button type="submit" class="btn btn-primary">
+                <?php echo ADDCART ?>
+            </button>
+        </form>
     </div>
 </div>
-</body>
+
 <script>
-    function addToCart(productId, productName) {
-        alert(productName + ' added to cart!');
+    function updatePrice() {
+        const quantity = document.getElementById('quantity').value;
+        const pricePerUnit = <?php echo $product['productCost']; ?>;
+        const totalPrice = quantity * pricePerUnit;
+
+        // Update displayed total price
+        document.getElementById('total-price').textContent = totalPrice.toFixed(2);
+
+        // Update the hidden quantity input field in the form
+        document.getElementById('hidden-quantity').value = quantity;
     }
 </script>
 </body>

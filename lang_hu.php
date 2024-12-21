@@ -54,4 +54,5 @@ define('RESET', 'Visszaállítás');
 define('SUCCESS_MESSAGE', 'Sikeresen jelentkezett az álláshirdetésre.');
 define('BACK_TO_JOBS', 'Visszatérés az álláshirdetéshez');
 define('ERROR_MESSAGE', 'Kérjük, töltse ki az összes mezőt helyesen.');
+define('PRODUCTDESCRIPTION','Termék leírás');
 ?>

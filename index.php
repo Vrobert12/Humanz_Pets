@@ -8,6 +8,7 @@ if (session_status() === PHP_SESSION_NONE) {
     }
     include "lang_$lang.php";
 }
+
 include "functions.php";
 $autoload=new Functions();
 $autoload->checkAutoLogin();
@@ -18,7 +19,7 @@ $autoload->checkAutoLogin();
 <head>
     <title>Main Page</title>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=yes">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
@@ -33,10 +34,6 @@ $autoload->checkAutoLogin();
     <script src="indexJS.js"></script>
     <link rel="stylesheet" href="style.css">
 
-    <!-- Add custom CSS for the popup with animation -->
-    <style>
-
-    </style>
 
 </head>
 <body>
@@ -122,7 +119,7 @@ https://getbootstrap.com/docs/5.3/components/navbar/
 </nav>
 
 
-<div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark d-none d-md-inline-block" style="position: fixed; top: 0; bottom: 0; width: 280px;">
+<div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark d-none d-md-inline-block" style=" top: 0; bottom: 0; width: 280px;">
     <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
         <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"/></svg>
         <span class="fs-4">Sidebar</span>
@@ -160,14 +157,15 @@ https://getbootstrap.com/docs/5.3/components/navbar/
                 <svg class="bi me-2" width="16" height="16"><use xlink:href="#grid"/></svg>
               '.PRODUCT.'
             </a>
-        </li>
-        <li>
+        </li>';
+            if ($_SESSION['privilage'] == 'Admin') {
+      echo'  <li>
             <a href="veterinarians.php" class="nav-link text-white">
                 <svg class="bi me-2" width="16" height="16"><use xlink:href="#grid"/></svg>
                 '.VETS.'
             </a>
         </li>';
-         if ($_SESSION['privilage'] == 'Admin') {
+
         echo'<li>
             <a href="users.php" class="nav-link text-white">
                 <svg class="bi me-2" width="16" height="16"><use xlink:href="#people-circle"/></svg>
@@ -234,45 +232,45 @@ https://getbootstrap.com/docs/5.3/components/navbar/
             <span class="visually-hidden">Home</span>
         </a>
 
+        </ul>
+        <?php
+echo '<div class="dropdown border-top">';
+        if(isset($_SESSION['email'])){
+            echo '
         <ul class="nav nav-pills nav-flush flex-column text-center">
             <li class="nav-item">
-                <a href="pet.php" class="d-flex align-items-center justify-content-center p-3 link-light text-decoration-none" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
+                <a href="pet.php?email=' . urlencode($_SESSION['email']) . '" class="d-flex align-items-center justify-content-center p-3 link-light text-decoration-none" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
                     <i class="fas fa-dog" style="font-size: 24px;"></i>
                     <span class="visually-hidden">Home</span>
                 </a>
             </li>
             <li>
-                <a href="/" class="d-flex align-items-center justify-content-center p-3 link-light text-decoration-none" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
+                <a href="registerAnimal.php" class="d-flex align-items-center justify-content-center p-3 link-light text-decoration-none" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
                     <i class="fas fa-clipboard" style="font-size: 24px;"></i>
                     <span class="visually-hidden">Home</span>
                 </a>
-            </li>
+            </li>';
+            if($_SESSION['privilage'] == 'Admin') {
+            echo'
             <li>
-                <a href="/" class="d-flex align-items-center justify-content-center p-3 link-light text-decoration-none" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
+                <a href="products.php" class="d-flex align-items-center justify-content-center p-3 link-light text-decoration-none" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
                     <i class="fas fa-dolly" style="font-size: 24px;"></i>
                     <span class="visually-hidden">Home</span>
                 </a>
             </li>
             <li>
-                <a href="/" class="d-flex align-items-center justify-content-center p-3 link-light text-decoration-none" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
+                <a href="veterinarians.php" class="d-flex align-items-center justify-content-center p-3 link-light text-decoration-none" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
                     <i class="fas fa-stethoscope" style="font-size: 24px;"></i>
                     <span class="visually-hidden">Home</span>
                 </a>
             </li>
-
-            <?php if ($_SESSION['privilage'] == 'Admin') {
-                echo'<li>
-                <a href="/" class="d-flex align-items-center justify-content-center p-3 link-light text-decoration-none" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
-                    <i class="fas fa-users" style="font-size: 24px;"></i>
+             <li>
+                <a href="users.php" class="d-flex align-items-center justify-content-center p-3 link-light text-decoration-none" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
+                    <i class="bi bi-people-fill" style="font-size: 24px;"></i>
                     <span class="visually-hidden">Home</span>
                 </a>
-            </li>';
-            }
-            ?>
-        </ul>
-        <?php
-echo '<div class="dropdown border-top">';
-        if(isset($_SESSION['email'])){
+            </li>';}
+            echo '</ul>';
             $_SESSION['action'] = "kijelentkezes";
             echo '<a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false" style="color: white;">';
             echo '<img src="/Humanz2.0/pictures/' . $_SESSION['profilePic'] . '" alt="img" width="32" height="32" class="rounded-circle me-2" onclick="activateProfilePicture()" style="cursor: pointer;">';
