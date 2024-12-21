@@ -55,5 +55,6 @@ define('SUCCESS_MESSAGE', 'Uspešno ste se prijavili na oglas za posao.');
 define('BACK_TO_JOBS', 'Vratite se na oglas za posao');
 define('ERROR_MESSAGE', 'Molimo Vas da ispravno popunite sva polja.');
 define('PRODUCTDESCRIPTION','Informacija o proizvodu');
+define('USERS','Korisnici');
 ?>
 

@@ -100,7 +100,7 @@ https://getbootstrap.com/docs/5.3/components/navbar/
                     <a class="nav-link" href="#"></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#"></a>
+                    <a class="nav-link" href="book_apointment.php"><i class="bi bi-book-fill fs-3"></i></a>
                 </li>
             </ul>
             <!-- Language Dropdown (Aligned Right) -->
@@ -169,7 +169,7 @@ https://getbootstrap.com/docs/5.3/components/navbar/
         echo'<li>
             <a href="users.php" class="nav-link text-white">
                 <svg class="bi me-2" width="16" height="16"><use xlink:href="#people-circle"/></svg>
-                Customers
+                '.USERS.'
             </a>
         </li>';
         }
