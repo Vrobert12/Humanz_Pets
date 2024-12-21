@@ -7,7 +7,7 @@ $lang = $_GET['lang'] ?? $_SESSION['lang'] ?? 'en';
 include_once "lang_$lang.php";
 $_SESSION['backPic'] = "selectVeterinarian.php";
 $functions = new Functions();
-$connection = $functions->connect($GLOBALS['dsn'], PARAMS['USER'], PARAMS['PASSWORD'], $GLOBALS['pdoOptions']);
+$connection = $functions->connect($dsn, $_ENV['DB_USER'], $_ENV['DB_PASSWORD'], $pdoOptions);
 ?>
 <!DOCTYPE html>
 <html lang="en">

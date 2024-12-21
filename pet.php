@@ -42,7 +42,7 @@ $functions->checkAutoLogin();
 
     if (isset($_SESSION['email']) && isset($_GET['email'])) {
         $userID = $_SESSION['userId'];
-        $connection = $functions->connect($GLOBALS['dsn'], PARAMS['USER'], PARAMS['PASSWORD'], $GLOBALS['pdoOptions']);
+        $connection = $functions->connect($dsn, $_ENV['DB_USER'], $_ENV['DB_PASSWORD'], $pdoOptions);
 
         echo '<div class="row flex-column-reverse flex-lg-row">';
 

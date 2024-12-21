@@ -17,11 +17,7 @@ class Functions
     {
         global $dsn, $pdoOptions;
 
-        // Access the constant PARAMS directly
-        $user = PARAMS['USER'];
-        $password = PARAMS['PASSWORD'];
-
-        $this->connection = $this->connect($dsn, $user, $password, $pdoOptions);
+        $this->connection = $this->connect($dsn, $_ENV['DB_USER'], $_ENV['DB_PASSWORD'], $pdoOptions);
 
 
         if (!isset($_GET['email'])) {

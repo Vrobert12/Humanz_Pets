@@ -6,7 +6,7 @@ include_once "lang_$lang.php";
 $message = $_SESSION['message'] ?? '';
 $functions = new Functions();
 $functions->checkAutoLogin();
-$pdo = $functions->connect($GLOBALS['dsn'], PARAMS['USER'], PARAMS['PASSWORD'], $GLOBALS['pdoOptions']);
+$pdo = $functions->connect($dsn, $_ENV['DB_USER'], $_ENV['DB_PASSWORD'], $pdoOptions);
 $products = $pdo->query("SELECT productId, productName, productPicture,description, productCost FROM product")->fetchAll(PDO::FETCH_ASSOC);
 ?>
 

@@ -3,7 +3,7 @@ include 'config.php';
  function connect($dsn, $pdoOptions): PDO
  {
         try {
-            $pdo = new PDO($dsn, PARAMS['USER'], PARAMS['PASSWORD'], $pdoOptions);
+            $pdo = new PDO($dsn, $_ENV['DB_USER'], $_ENV['DB_PASSWORD'], $pdoOptions);
         } catch (PDOException $e) {
             throw new PDOException($e->getMessage());
         }

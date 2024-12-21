@@ -33,7 +33,7 @@
         $userID = $_SESSION['userId'];
 
         // Use the connect method from the Functions class
-        $connection = $functions->connect($GLOBALS['dsn'], PARAMS['USER'], PARAMS['PASSWORD'], $GLOBALS['pdoOptions']);
+        $connection = $functions->connect($dsn, $_ENV['DB_USER'], $_ENV['DB_PASSWORD'], $pdoOptions);
 
         $sql = "SELECT FirstName, LastName, phoneNumber, userMail, profilePic, privilage, registrationTime 
                 FROM `user` WHERE userID = :userId";

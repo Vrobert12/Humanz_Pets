@@ -10,7 +10,7 @@ include_once "lang_$lang.php";
 $product_id = (int)$_GET['id'];
 $functions = new Functions();
 $functions->checkAutoLogin();
-$pdo = $functions->connect($GLOBALS['dsn'], PARAMS['USER'], PARAMS['PASSWORD'], $GLOBALS['pdoOptions']);
+$pdo = $functions->connect($GLOBALS['dsn'], $_ENV['DB_USER'], $_ENV['DB_PASSWORD'], $GLOBALS['pdoOptions']);
 $product = $pdo->prepare("SELECT * FROM product WHERE productId = ?");
 $product->execute([$product_id]);
 $product = $product->fetch(PDO::FETCH_ASSOC);
