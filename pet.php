@@ -45,21 +45,28 @@ $functions->checkAutoLogin();
         $connection = $functions->connect($dsn, $_ENV['DB_USER'], $_ENV['DB_PASSWORD'], $pdoOptions);
 
         echo '<div class="row flex-column-reverse flex-lg-row">';
-
+$_SESSION['backPic']="pet.php";
         // Fetch pet details
         echo '<div class="col-lg-8 order-lg-2 profile-section">';
-        $sql = "SELECT p.petName, p.bred, p.petSpecies, u.userMail, p.petPicture FROM user u 
+        $sql = "SELECT p.petId,p.petName, p.bred, p.petSpecies, u.userMail, p.petPicture FROM user u 
                 INNER JOIN pet p ON u.userId = p.userId WHERE u.userId = :userId";
         $stmt = $connection->prepare($sql);
         $stmt->bindParam(":userId", $userID, PDO::PARAM_INT);
         if ($stmt->execute()) {
             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                echo "<form action='updateAnimal.php'class='mainForm' method='get'>";
+                echo "<input type='hidden' name='petName' value='" . $row['petName'] . "'>
+                <input type='hidden' name='petId' value='" . $row['petId'] . "'>
+<input type='hidden' name='bred' value='" . $row['bred'] . "'>
+<input type='hidden' name='petSpecies' value='" . $row['petSpecies'] . "'>
+<input type='hidden' name='petPicture' value='" . $row['petPicture'] . "'>
+<input type='hidden' name='petUpdate' value='update'>";
                 $petName = htmlspecialchars($row['petName']);
                 $typeOfAnimal = htmlspecialchars($row['bred']);
                 $petSpecies = htmlspecialchars($row['petSpecies']);
                 $userMail = htmlspecialchars($row['userMail']);
                 $petPicture = htmlspecialchars($row['petPicture']);
-
+                $_SESSION['petId'] = $row['petId'];
                 echo '<div class="row mb-4">';
                 echo '<div class="col-md-4 text-center"><img class="profile-image" alt="Pet Picture" src="pictures/' . $petPicture . '"></div>';
                 echo '<div class="col-md-8">';
@@ -67,6 +74,17 @@ $functions->checkAutoLogin();
                 echo '<p><strong>' . BREED . ':</strong> ' . $typeOfAnimal . '</p>';
                 echo '<p><strong>' . SPECIES . ':</strong> ' . $petSpecies . '</p>';
                 echo '<p><strong>' . EMAIL . ':</strong> ' . $userMail . '</p>';
+                echo "<form action='pet.php' method='post' style='display: inline-block; margin-right: 10px;'>
+            <input type='hidden' name='action' value='updatePet'>
+            <input type='submit' class='btn btn-primary' value='".UPDATE_PET."'>
+        </form>";
+
+                echo "<form action='pet.php' method='post' style='display: inline-block;'>
+            <input type='hidden' name='action' value='deletePet'>
+            <input type='hidden' name='petUpdate' value='update'>
+            <input type='submit' class='btn btn-primary' value='".DELETE_PET."'>
+        </form>";
+
                 echo '</div>';
                 echo '</div>';
             }

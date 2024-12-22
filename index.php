@@ -135,7 +135,7 @@ https://getbootstrap.com/docs/5.3/components/navbar/
         <?php
         if(isset($_SESSION['email'])){
         echo '<li>
-        <a href="pet.php?email=' . urlencode($_SESSION['email']) . '" class="nav-link text-white">
+        <a href="pet.php?email=' . $_SESSION['email'] . '" class="nav-link text-white">
             <svg class="bi me-2" width="16" height="16">
                 <use xlink:href="pet.php?email=' . urlencode($_SESSION['email']) . '" />
             </svg>

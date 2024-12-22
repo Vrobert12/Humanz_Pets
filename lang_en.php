@@ -56,4 +56,7 @@ define('BACK_TO_JOBS', 'Back to jobs');
 define('ERROR_MESSAGE', 'Error, please fill all the fields.');
 define('PRODUCTDESCRIPTION','Product description');
 define('USERS','Users');
+define('UPDATE','Update');
+define('UPDATE_PET','Update Pet');
+define('DELETE_PET','Delete Pet');
 ?>

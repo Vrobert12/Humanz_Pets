@@ -56,4 +56,7 @@ define('BACK_TO_JOBS', 'Visszatérés az álláshirdetéshez');
 define('ERROR_MESSAGE', 'Kérjük, töltse ki az összes mezőt helyesen.');
 define('PRODUCTDESCRIPTION','Termék leírás');
 define('USERS','Felhaszálók');
+define('UPDATE','Frissítés');
+define('UPDATE_PET','Házikedvenc módosítása');
+define('DELETE_PET','Házikedvenc törlése');
 ?>

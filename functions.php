@@ -98,6 +98,12 @@ class Functions
                 case "updateProduct":
                     $this->updateProduct();
                     break;
+                case "updatePet":
+                    $this->updatePet();
+                    break;
+                case "deletePet":
+                    $this->deletePet();
+                    break;
                 default:
                     $_SESSION['message'] = "Something went wrong in switch";
                     header('Location:index.php');
@@ -141,6 +147,48 @@ class Functions
         QRcode::png($vCardData, $filePath, QR_ECLEVEL_L, 4);
 
         return $filePath;
+    }
+
+    public function updatePet()
+    {
+        if (empty($_FILES['picture']))
+            $petPicture = $_SESSION['petPicture'];
+        else {
+            $petPicture = $this->picture($_SESSION['backPic']);
+            if($petPicture==4) {
+                $petPicture = $_SESSION['petPicture'];
+                unset($_SESSION['message']);
+            }
+        }
+        $petName=ucfirst(strtolower($_POST['petName']));
+        $bred=ucfirst(strtolower($_POST['bred']));
+        $specie=ucfirst(strtolower($_POST['specie']));
+        $sql = 'Update pet set petName=:petName,bred=:bred,petSpecies=:petSpecies,petPicture=:petPicture where petId="' . $_SESSION['petId'] . '"';
+        $stmt = $this->connection->prepare($sql);
+        $stmt->bindParam(':petName', $petName);
+        $stmt->bindParam(':bred', $bred);
+        $stmt->bindParam(':petSpecies', $specie);
+        $stmt->bindParam(':petPicture', $petPicture);
+        $stmt->execute();
+
+        if (isset($_POST['petUpdate']))
+            header('Location:pet.php?email='.$_SESSION['email']);
+        else
+        header('Location:registerAnimal.php');
+        exit();
+    }
+
+    public function deletePet()
+    {
+        $sql = 'delete from pet where petId=:petId';
+        $stmt = $this->connection->prepare($sql);
+        $stmt->bindValue(':petId', $_SESSION['petId']);
+        $stmt->execute();
+        if (isset($_POST['petUpdate']))
+            header('Location:pet.php?email='.$_SESSION['email']);
+        else
+            header('Location:registerAnimal.php');
+        exit();
     }
 
     public function buyProduct()
@@ -219,7 +267,16 @@ class Functions
                 $bred = ucfirst(strtolower(trim($_POST["bred"])));
                 $specie = ucfirst(strtolower(trim($_POST["specie"])));
                 $_SESSION['petPicture'] = $this->picture($_SESSION['backPic']);
-
+if($specie=="Specie"){
+    $_SESSION['message']="Select a Specie.";
+    header('location:registerAnimal.php');
+    exit();
+}
+if($_SESSION['petPicture']==4){
+    $_SESSION['message']="Select a image for your pet.";
+    header('location:registerAnimal.php');
+    exit();
+}
                 // Insert the pet data into the database
                 $petStmt = "INSERT INTO pet (petName, bred, petSpecies, petPicture, userId)
                     VALUES (:petName, :bred, :specie, :petPicture, :userId)";
@@ -262,9 +319,8 @@ class Functions
             $price = ucfirst(strtolower(trim($_POST["price"])));
 
             $picture = $this->picture($_SESSION['backPic']);
-            if ($picture==4)
-            {
-                $picture=$_SESSION['updateProductPicture'];
+            if ($picture == 4) {
+                $picture = $_SESSION['updateProductPicture'];
             }
             $description = ucfirst(strtolower(trim($_POST["productDescription"])));
 
@@ -897,13 +953,14 @@ WHERE u.userId = :userId;
     {
         if (!isset($_GET['action'])) {
             if (isset($_COOKIE['last_activity']) && isset($_SESSION['email'])) {
-
+                if (isset($_SESSION['backPic']))
+                    $backPage = $_SESSION['backPic'];
                 $mail = $_SESSION['email'];
                 $sql = "select petId from pet where userId=:userId and veterinarId is NULL";
                 $stmt = $this->connection->prepare($sql);
                 $stmt->bindParam(":userId", $_SESSION["userId"]);
                 $stmt->execute();
-                if ($stmt->rowCount() == 1) {
+                if ($stmt->rowCount() == 1 && $backPage != "updateAnimal.php") {
                     $_SESSION['message'] = 'You have to choose a veterinarian for your animal,<br> before you can go further<br><br><a href="functions.php?action=logOut">Log out</a> ';
                     if ($currentPage != 'selectVeterinarian.php') {
                         header("Location:selectVeterinarian.php");

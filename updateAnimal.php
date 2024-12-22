@@ -2,10 +2,11 @@
 session_start();
 include "functions.php";
 $autoload = new Functions();
-$autoload->checkAutoLogin('registerAnimal.php');
+$_SESSION['backPic']="updateAnimal.php";
+$autoload->checkAutoLogin('updateAnimal.php');
 $lang = $_GET['lang'] ?? $_SESSION['lang'] ?? 'en';
 include_once "lang_$lang.php";
-$_SESSION['backPic'] = "registerAnimal.php";
+
 ?>
 
 <!DOCTYPE html>
@@ -52,17 +53,26 @@ if (isset($_SESSION['title'])) {
     echo "<h2 style='color: #2a7e2a'>" . $_SESSION['title'] . "</h2>";
 }
 $_SESSION['backPic'] = 'registerAnimal.php';
+
+
+if (isset($_GET['petUpdate'])){
+    echo '<input type="hidden"  name="petUpdate" id="petName" value="'. $_GET['petUpdate'].'"><br>';
+    $_SESSION['petId'] = $_GET['petId'];
+    $_SESSION['petPicture'] = $_GET['petPicture'];
+    echo '<a class="btn btn-secondary" href="pet.php?email='.$_SESSION['email'].'"> '.BACK.'</a><br><br>';
+}
+else
+    echo '<a class="btn btn-secondary" href="index.php"> '.BACK.'</a><br><br>';
 ?>
 
-<a class="btn btn-secondary" href="index.php"><?php echo BACK?></a><br><br>
 <label for="petName"><?php echo NAME?>:</label><br>
-<input type="text" class="inputok" placeholder="<?php echo NAME?>" name="petName" id="petName" ><br>
+<input type="text" class="inputok" placeholder="<?php echo NAME?>" name="petName" id="petName" value="<?php echo $_GET['petName']?>"><br>
 <label for="bred"><?php echo BREED?>:</label><br>
-<input type="text" class="inputok" placeholder="<?php echo BREED?>" name="bred" id="bred" ><br>
+<input type="text" class="inputok" placeholder="<?php echo BREED?>" name="bred" id="bred" value="<?php echo $_GET['bred']?>"><br>
 
 <label for="specie"><?php echo SPECIES?>:</label><br>
 <select name="specie" class="inputok" id="specie">
-    <option hidden="hidden" value="specie"><?php echo SPECIES?></option>
+    <option hidden="hidden" value="<?php echo $_GET['petSpecies']?> " selected><?php echo $_GET['petSpecies']?></option>
     <option value="dog"><?php echo DOG?></option>
     <option value="cat"><?php echo CAT?></option>
     <option value="parrot"><?php echo PARROT?></option>
@@ -71,7 +81,7 @@ $_SESSION['backPic'] = 'registerAnimal.php';
 </select>
 
 <!-- Displaying the existing profile picture -->
-<img id="productImage" src="/Humanz2.0/pictures/logInPic.png" alt="Profile Image" width="100" height="100" onclick="activateProfilePicture()"
+<img id="productImage" src="/Humanz2.0/pictures/<?php echo $_GET['petPicture']?>" alt="Profile Image" width="100" height="100" onclick="activateProfilePicture()"
      style="cursor: pointer; opacity: 0.7; transition: opacity 0.3s;"
      onmouseover="this.style.opacity=1;" onmouseout="this.style.opacity=0.7;">
 
@@ -79,11 +89,10 @@ $_SESSION['backPic'] = 'registerAnimal.php';
 <input type="file" name="picture" id="pictureInput" style="display: none;" accept="image/*" onchange="updateImagePreview(event)">
 
 <!-- Submit Button -->
-<input type="submit" class="btn btn-primary" name="submit" id="submitButton" value="<?php echo REGISTER?>">
+<input type="submit" class="btn btn-primary" name="submit" id="submitButton" value="<?php echo UPDATE?>">
 
 <!-- Hidden fields -->
-<input type="hidden" class="inputok" name="Action" value="Register">
-<input type="hidden" name="action" value="registerAnimal"><br>
+<input type="hidden" name="action" value="updatePet"><br>
 
 <?php
 if (isset($_SESSION['message'])) {
