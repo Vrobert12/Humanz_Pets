@@ -47,13 +47,7 @@ $autoload->checkAutoLogin();
 <?php endif; ?>
 
 <script>
-    // Show the popup message
-    window.onload = function () {
-        var popupMessage = document.getElementById('popupMessage');
-        if (popupMessage) {
-            popupMessage.style.display = 'block';  // Show the popup
-        }
-    };
+
 </script>
 
 <!-- Show popup message if session message is set -->
@@ -202,7 +196,7 @@ https://getbootstrap.com/docs/5.3/components/navbar/
                 // Hidden form for file upload
                 echo "<form method='post' action='functions.php' enctype='multipart/form-data' style='display: none;'>";
                 $_SESSION['backPic'] = "index.php";
-                echo "<input class='dropdown-item' type='file' name='picture' id='pictureInput' style='display: none;' accept='image/*' onchange='activateSubmit()'>";
+                echo "<input class='dropdown-item' type='file' name='picture' id='pictureInput' style='display: none;' accept='image/*' onchange='activateSubmitUser()'>";
                 echo "<input type='submit' name='action' id='submitButton' value='picture' style='display: none;'>";
                 echo '</form>';
 
@@ -289,7 +283,7 @@ echo '<div class="dropdown border-top">';
             // Hidden form for file upload
             echo "<form method='post' action='functions.php' enctype='multipart/form-data' style='display: none;'>";
             $_SESSION['backPic'] = "index.php";
-            echo "<input class='dropdown-item' type='file' name='picture' id='pictureInput' style='display: none;' accept='image/*' onchange='activateSubmit()'>";
+            echo "<input class='dropdown-item' type='file' name='picture' id='pictureInput' style='display: none;' accept='image/*' onchange='activateSubmitUser()'>";
             echo "<input type='submit' name='action' id='submitButton' value='picture' style='display: none;'>";
             echo '</form>';
 

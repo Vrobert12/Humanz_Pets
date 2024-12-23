@@ -1,10 +1,17 @@
+// Show the popup message
+window.onload = function () {
+    var popupMessage = document.getElementById('popupMessage');
+    if (popupMessage) {
+        popupMessage.style.display = 'block';  // Show the popup
+    }
+};
 function activateProfilePicture() {
     // Trigger click event on the file input element
     document.getElementById('pictureInput').click();
 }
 
 
-function activateSubmit() {
+function activateSubmitUser() {
     // Activate the submit button when a file is selected
     document.getElementById('submitButton').click();
 }

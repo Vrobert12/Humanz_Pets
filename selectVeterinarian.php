@@ -85,9 +85,9 @@ $stmt->execute();
         echo "<tr><td rowspan='4' style='padding: 20px; text-align: center;'>
             <img alt='Profile Picture' width='200' height='200' src='pictures/" . $row['petPicture'] . "'>
         </td></tr>";
-        echo "<tr><td>Pet Name: " . $row['petName'] . "</td></tr>";
-        echo "<tr><td>Brad:" . $row['bred'] . "</td></tr>";
-        echo "<tr><td>Species: " . $row['petSpecies'] . "</td></tr>";
+        echo "<tr><td>".NAME.": " . $row['petName'] . "</td></tr>";
+        echo "<tr><td>".BREED.": " . $row['bred'] . "</td></tr>";
+        echo "<tr><td>".BREED.": " . $row['petSpecies'] . "</td></tr>";
 $_SESSION['petPicture']=$row['petPicture'];
         echo "<td colspan='2'> <input type='submit' value='Update Pet'></td></tr></form>";
 
