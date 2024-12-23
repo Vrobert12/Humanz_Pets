@@ -58,7 +58,7 @@ if (isset($_SESSION['title'])) {
     echo "<h2 style='color: #2a7e2a'>" . $_SESSION['title'] . "</h2>";
 }
 $_SESSION['backPic']='selectVeterinarian.php';
-echo "<form action='updateAnimal.php'class='mainForm' method='post'>";
+echo "<form action='updateAnimal.php'class='mainForm' method='get'>";
 if(isset($_SESSION['message'])) {
     echo "<p class='warning'>" .$_SESSION['message']."</p>";
     unset($_SESSION['message']);
