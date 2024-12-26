@@ -94,7 +94,10 @@ https://getbootstrap.com/docs/5.3/components/navbar/
                     <a class="nav-link" href="#"></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="book_apointment.php"><i class="bi bi-book-fill fs-3"></i></a>
+                    <?php
+                    $sql = "SELECT * FROM user";
+                    ?>
+                    <a class="nav-link" href="book_veterinarian.php"><i class="bi bi-book-fill fs-3"></i></a>
                 </li>
             </ul>
             <!-- Language Dropdown (Aligned Right) -->

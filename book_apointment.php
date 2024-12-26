@@ -60,8 +60,20 @@
 <?php
 include 'functions.php';
 $functions = new Functions();
-
 $pdo = $functions->connect($GLOBALS['dsn'], $_ENV['DB_USER'], $_ENV['DB_PASSWORD'], $GLOBALS['pdoOptions']);
+
+$sqlTable = $pdo->prepare("SELECT MAX(veterinarianId) AS max_veterinarianId FROM veterinarian");
+$sqlTable->execute();
+
+// Fetch the result
+$result = $sqlTable->fetch(PDO::FETCH_ASSOC);
+
+if ($result && $sqlTable->rowCount() > 0) {
+    $_SESSION['maxVeterinarianId'] = $result['max_veterinarianId'];
+} else {
+    $_SESSION['maxVeterinarianId'] = null; // Handle the case where no rows are returned
+}
+
 
 $today = date("Y-m-d");
 $todayHour = date("H:i:s");
@@ -108,6 +120,11 @@ if ($result>0) {
 }
 
 ?>
+<form method="post"
+      action="book_apointment.php?veterinarian=<?php if (isset($_GET['veterinarian']) && $_GET['veterinarian'] > 0 && $_GET['veterinarian'] <= $_SESSION['maxVeterinarianId']) echo $_GET['veterinarian']; else {
+          header('location:book_veterinarian.php');
+          exit();
+      }?>" class="reservationForm">
 <form class="menuForm" method="post">
     <h2>Menu</h2>
     <label class="bold">Type:
@@ -156,58 +173,35 @@ if ($result>0) {
             }
         }
 
-        // Fetch menu items
-        $command = "SELECT * FROM menu";
-        $stmt = $pdo->prepare($command);
-        $stmt->execute();
-        $result = $stmt->fetchAll();
 
-
-        // Initialize coupon discount session variable
-
-
-        // Check if there are menu items to display
-        if ($result->num_rows > 0) {
-            while ($row = $result->fetch_assoc()) {
-                $sum=$row['dishPrice'] * $_SESSION['couponDiscount'];
-                // Display menu items with applied discount
-                echo '<div class="row align-items-start">';
-                echo '<div class="col"><img src="' . htmlspecialchars($row['dishPicture']) . '" alt="img" width="140px" height="120px"/></div>';
-                echo "<div class='col'><div class='row align-items-start'><label>Name: " . $row['dishName'] . " (" . htmlspecialchars($row['dishType']) . ")</label></div>";
-                echo "<div class='row align-items-start'><label>Price: " . $sum . "€</label></div>";
-                echo '</div></div>';
-            }
-        } else {
-            echo '<p>No menu items found.</p>';
-        }
         ?>
 
     </div>
-</form>
-<form method="post"
-      action="reservation.php?table=<?php if (isset($_GET['table']) && $_GET['table'] > 0 && $_GET['table'] <= $_SESSION['maxTableId']) echo $_GET['table']; else {
-          header('location:tables.php');
-          exit();
-      }?>" class="reservationForm">
-    <a class="nextPage" href="tables.php">Back</a>
-    <?php if ($_GET['table'] > 1) echo "<a class=\"nextPage\" href=\"reservation.php?table=" . ($_GET['table'] - 1) . "\">Previous table</a>"; ?>
-    <?php if ($_GET['table'] < $_SESSION['maxTableId']) echo "<a class=\"nextPage\" href=\"reservation.php?table=" . ($_GET['table'] + 1) . "\">Next table</a>";
+
+    <a class="nextPage" href="index.php">Back</a>
+    <?php if ($_GET['veterinarian'] > 1) echo "<a class=\"nextPage\" href=\"book_apointment.php?veterinarian=" . ($_GET['veterinarian'] - 1) . "\">Previous table</a>"; ?>
+    <?php if ($_GET['veterinarian'] < $_SESSION['maxVeterinarianId']) echo "<a class=\"nextPage\" href=\"book_apointment.php?veterinarian=" . ($_GET['veterinarian'] + 1) . "\">Next table</a>";
 
 
-    echo "<br><br><h2>Reservation for table " . $_GET['table'] . "</h2>";
+    echo "<br><br><h2>Reservation for table " . $_GET['veterinarian'] . "</h2>";
 
 
     $today = date("Y-m-d");
-    $sql = $conn->prepare("SELECT reservation.* FROM user
-        INNER JOIN reservation ON user.userId = reservation.userId
-        WHERE reservation.reservationDay >= ? AND user.userId = ?
+    $sql = $pdo->prepare("SELECT reservation.* FROM pet
+        INNER JOIN reservation ON pet.petId = reservation.petId
+        WHERE reservation.reservationDay >= :today AND pet.petId = :petId
         ORDER BY reservation.reservationDay ASC;");
-    $sql->bind_param('si', $today, $_SESSION['userID']);
+     $sql->bindValue(':today', $today, PDO::PARAM_STR);
+    $sql->bindValue(':petId', $petID, PDO::PARAM_INT);
+
+    // Execute the query
     $sql->execute();
-    $result = $sql->get_result();
+    $result = $sql->fetchAll(PDO::FETCH_ASSOC);
 
+    // Check the number of rows returned
+    if (count($result) < 5) {
+        // Fewer than 5 reservations
 
-    if ($result->num_rows >= 0 && $result->num_rows < 5) {
         if (isset($_POST['action']) && $_POST['action'] == "Reserve" && $_SESSION['reservationTime'] != " " && $_POST['reservationTimeEnd'] != "Select Time") {
             // Prepare and execute the first query
 
@@ -264,8 +258,8 @@ if ($result>0) {
 
         echo "<input type='submit' name='action' id='submitButton' value='day' style='display: none;'><br>";
 
-        if (!isset($_GET['table'])) {
-            header('location:tables.php');
+        if (!isset($_GET['veterinarian'])) {
+            header('location:book_veterinarian.php');
             exit();
         }
 
@@ -457,7 +451,7 @@ if ($result>0) {
             echo '<th style="padding: 10px; border: 1px solid #ddd;">' . $row['reservationTime'] . ' - ' . $row['period'] . '</th>';
             echo '<th style="padding: 10px; border: 1px solid #ddd;">' . $row['reservationCode'] . '</th>';
             echo '<th style="padding: 10px; border: 1px solid #ddd;">
-    <form method="post" action="reservation.php?table=' . $_GET['table'] . '" >
+    <form method="post" action="book_apointment.php?veterinarian=' . $_GET['veterinarian'].'" >
     <input type="submit" name="delete" value="delete" class="inputok" onclick="confirmDeletion();">
     <input type="hidden" name="reservation" value="' . $row['reservationId'] . '">
     </form>
