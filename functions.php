@@ -61,8 +61,8 @@ class Functions
                 case 'Send':
                     $this->mailAddAndPasswordChange();
                     break;
-                case 'AddWorker':
-                    $this->addWorker();
+                case 'AddVet':
+                    $this->addVet();
                     break;
                 case 'ModifyTable':
                     $this->modifyTable();
@@ -155,14 +155,14 @@ class Functions
             $petPicture = $_SESSION['petPicture'];
         else {
             $petPicture = $this->picture($_SESSION['backPic']);
-            if($petPicture==4) {
+            if ($petPicture == 4) {
                 $petPicture = $_SESSION['petPicture'];
                 unset($_SESSION['message']);
             }
         }
-        $petName=ucfirst(strtolower($_POST['petName']));
-        $bred=ucfirst(strtolower($_POST['bred']));
-        $specie=ucfirst(strtolower($_POST['specie']));
+        $petName = ucfirst(strtolower($_POST['petName']));
+        $bred = ucfirst(strtolower($_POST['bred']));
+        $specie = ucfirst(strtolower($_POST['specie']));
         $sql = 'Update pet set petName=:petName,bred=:bred,petSpecies=:petSpecies,petPicture=:petPicture where petId="' . $_SESSION['petId'] . '"';
         $stmt = $this->connection->prepare($sql);
         $stmt->bindParam(':petName', $petName);
@@ -172,9 +172,9 @@ class Functions
         $stmt->execute();
 
         if (isset($_POST['petUpdate']))
-            header('Location:pet.php?email='.$_SESSION['email']);
+            header('Location:pet.php?email=' . $_SESSION['email']);
         else
-        header('Location:registerAnimal.php');
+            header('Location:registerAnimal.php');
         exit();
     }
 
@@ -185,7 +185,7 @@ class Functions
         $stmt->bindValue(':petId', $_SESSION['petId']);
         $stmt->execute();
         if (isset($_POST['petUpdate']))
-            header('Location:pet.php?email='.$_SESSION['email']);
+            header('Location:pet.php?email=' . $_SESSION['email']);
         else
             header('Location:registerAnimal.php');
         exit();
@@ -212,6 +212,79 @@ class Functions
         header('Location:products.php');
         exit();
     }
+
+    public function addVet()
+    {
+        if (isset($_POST['fname']) && isset($_POST['lname']) && isset($_POST['tel'])
+             && isset($_POST['mail'])) {
+
+            global $pdo;
+
+            $fname = $_POST['fname'];
+            $lname = $_POST['lname'];
+            $tel = $_POST['tel'];
+            $mail = $_POST['mail'];
+            $pass = $_POST['pass'];
+            $pass2 = $_POST['pass2'];
+            $_SESSION['vetPicture'] = $this->picture($_SESSION['backPic']);
+
+            $_SESSION["workerEmail"] = $mail;
+
+            try {
+                $time2 = time();
+                $time3 = date("Y-m-d H:i:s", $time2);
+                $time = time() + 60 * 10;
+                $verification_time = date("Y-m-d H:i:s", $time);
+
+                // Check if user already exists
+                $sql = "SELECT veterinarianMail, verify, verification_time FROM veterinarian WHERE veterinatianMail = ?";
+                $stmt = $pdo->prepare($sql);
+                $stmt->execute([$mail]);
+
+                if ($stmt->rowCount() > 0) {
+//                    $logType = "Adding a Worker";
+//                    $logText = "The worker is already registered";
+//                    $logMessage = "Worker is in Database!";
+//                    $this->errorLogInsert($_SESSION['email'], $logText, $logType, $logMessage);
+                    header('Location: workers.php');
+                    exit();
+                }
+                $this->passwordCheck($pass, $pass2, 'addVet.php');
+                $kep = "logInPic.png";
+                $pass = $_SESSION['pass']; // Placeholder for hashed password
+                $verification_code = substr(number_format(time() * rand(), 0, '', ''), 0, 7);
+
+                $pass_vali = null;
+                $verrification = 0;
+                $banned_time = null;
+                $verification_code_expire = null;
+                $verification_code_pass = null;
+
+                // Insert user data into the database
+                $sql = "INSERT INTO veterinarian (firstName, lastName, phoneNumber, veterinarianMail, veterinarianPassword, profilePic, registrationTime, verification_code, verify, verification_time, passwordValidation, passwordValidationTime) 
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                $stmt = $pdo->prepare($sql);
+
+                if ($stmt->execute([$fname, $lname, $tel, $mail, $pass, $kep, $time3, $verification_code, $verification_time, $pass, $verification_code_expire])) {
+                    $_SESSION['workerLink'] = "http://192.168.1.10/Restaurant/resetPassword-mail.php";
+                    $_SESSION['message'] = "Worker added Successfully!";
+                    $_SESSION['text'] = "<h2>Registration</h2>";
+                    $_SESSION['verification_code'] = $verification_code;
+                    $_SESSION['workerEmail'] = $mail;
+                    header('Location: mail.php');
+                    exit();
+                } else {
+                    $_SESSION['message'] = "Error occurred during registration.";
+                    header('Location: registration.php?token=' . $_SESSION['token']);
+                    exit();
+                }
+
+            } catch (PDOException $e) {
+                $_SESSION['message'] = "An error occurred: " . $e->getMessage();
+            }
+        }
+    }
+
 
     public function registerAnimal()
     {
@@ -267,16 +340,16 @@ class Functions
                 $bred = ucfirst(strtolower(trim($_POST["bred"])));
                 $specie = ucfirst(strtolower(trim($_POST["specie"])));
                 $_SESSION['petPicture'] = $this->picture($_SESSION['backPic']);
-if($specie=="Specie"){
-    $_SESSION['message']="Select a Specie.";
-    header('location:registerAnimal.php');
-    exit();
-}
-if($_SESSION['petPicture']==4){
-    $_SESSION['message']="Select a image for your pet.";
-    header('location:registerAnimal.php');
-    exit();
-}
+                if ($specie == "Specie") {
+                    $_SESSION['message'] = "Select a Specie.";
+                    header('location:registerAnimal.php');
+                    exit();
+                }
+                if ($_SESSION['petPicture'] == 4) {
+                    $_SESSION['message'] = "Select a image for your pet.";
+                    header('location:registerAnimal.php');
+                    exit();
+                }
                 // Insert the pet data into the database
                 $petStmt = "INSERT INTO pet (petName, bred, petSpecies, petPicture, userId)
                     VALUES (:petName, :bred, :specie, :petPicture, :userId)";

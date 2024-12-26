@@ -169,6 +169,12 @@ https://getbootstrap.com/docs/5.3/components/navbar/
                 '.USERS.'
             </a>
         </li>';
+        echo'<li>
+            <a href="addVet.php" class="nav-link text-white">
+                <svg class="bi me-2" width="16" height="16"><use xlink:href="#people-circle"/></svg>
+                Add veterinarian
+            </a>
+        </li>';
         }
           }
 
