@@ -81,7 +81,7 @@ else
 </select>
 
 <!-- Displaying the existing profile picture -->
-<img id="productImage" src="/Humanz2.0/pictures/<?php echo $_GET['petPicture']?>" alt="Profile Image" width="100" height="100" onclick="activateProfilePicture()"
+<img id="productImage" src="pictures/<?php echo $_GET['petPicture']?>" alt="Profile Image" width="100" height="100" onclick="activateProfilePicture()"
      style="cursor: pointer; opacity: 0.7; transition: opacity 0.3s;"
      onmouseover="this.style.opacity=1;" onmouseout="this.style.opacity=0.7;">
 

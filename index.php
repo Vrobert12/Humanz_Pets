@@ -180,7 +180,7 @@ https://getbootstrap.com/docs/5.3/components/navbar/
 
 // Combined profile picture, text, and dropdown toggle in a single line
                 echo '<a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false" style="color: white;">';
-                echo '<img src="/Humanz2.0/pictures/' . $_SESSION['profilePic'] . '" alt="img" width="32" height="32" class="rounded-circle me-2" onclick="activateProfilePicture()" style="cursor: pointer;">';
+                echo '<img src="pictures/' . $_SESSION['profilePic'] . '" alt="img" width="32" height="32" class="rounded-circle me-2" onclick="activateProfilePicture()" style="cursor: pointer;">';
                 echo '<strong>' . (isset($_SESSION['name']) ? $_SESSION['name'] : ACCOUNT) . '</strong>';
                 echo '</a>';
 
@@ -205,7 +205,7 @@ https://getbootstrap.com/docs/5.3/components/navbar/
                 // If not logged in, show a default profile picture and dropdown for login/register
 
                 echo '<a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">';
-                echo '<img src="/Humanz2.0/pictures/logInPic.png" alt="img" width="32" height="32" class="rounded-circle me-2">';
+                echo '<img src="pictures/logInPic.png" alt="img" width="32" height="32" class="rounded-circle me-2">';
                 echo '<strong>'.ACCOUNT.'</strong>';
                 echo '</a>';
                 echo '<ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">';
@@ -267,7 +267,7 @@ echo '<div class="dropdown border-top">';
             echo '</ul>';
             $_SESSION['action'] = "kijelentkezes";
             echo '<a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false" style="color: white;">';
-            echo '<img src="/Humanz2.0/pictures/' . $_SESSION['profilePic'] . '" alt="img" width="32" height="32" class="rounded-circle me-2" onclick="activateProfilePicture()" style="cursor: pointer;">';
+            echo '<img src="pictures/' . $_SESSION['profilePic'] . '" alt="img" width="32" height="32" class="rounded-circle me-2" onclick="activateProfilePicture()" style="cursor: pointer;">';
 
             echo '</a>';
 
@@ -292,7 +292,7 @@ echo '<div class="dropdown border-top">';
         else{
             echo '<div class="d-flex justify-content-center">'; // Center the entire block
             echo '  <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">';
-            echo '    <img src="/Humanz2.0/pictures/logInPic.png" alt="img" width="32" height="32" class="rounded-circle me-2">';
+            echo '    <img src="pictures/logInPic.png" alt="img" width="32" height="32" class="rounded-circle me-2">';
             echo '  </a>';
             echo '  <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">';
             echo '    <li><a class="dropdown-item" href="logIn.php">Log in</a></li>';

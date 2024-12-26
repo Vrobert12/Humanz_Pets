@@ -61,7 +61,7 @@ $_SESSION['backPic']='addProduct.php';
 <input type="text" class="inputok" placeholder="<?php echo PRICE?>" name="price" id="price" ><br>
 <label for="bred"><?php echo PRODUCTDESCRIPTION?>:</label><br>
 <input type='text' class="inputok"placeholder="<?php echo PRODUCTDESCRIPTION?>"  name='productDescription' id='productDescription'><br>
-<img id="productImage" src="/Humanz2.0/pictures/logInPic.png"
+<img id="productImage" src="pictures/logInPic.png"
      alt="img" width="32" height="32" onclick="activateProfilePicture()" style="cursor: pointer;">
 
 <input type="file" name="picture" id="pictureInput"

@@ -99,7 +99,7 @@ $_SESSION['backPic']="pet.php";
         $stmt = $connection->prepare($sql);
         $stmt->bindParam(":userId", $userID, PDO::PARAM_INT);
         if ($stmt->execute()) {
-            echo '<h5 class="text-center">QR Codes</h5>';
+            echo '<h5 class="text-center"> '.QR.'</h5>';
             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                 $qrPicture = htmlspecialchars($row['qrCodeName']);
                 echo '<div class="mb-4 text-center">';
@@ -108,7 +108,7 @@ $_SESSION['backPic']="pet.php";
                 echo ' <form action="generate_pdf.php" method="POST">
         <input type="hidden" name="qrImage" value="'.$qrPicture.'">
 
-        <button type="submit" class="btn btn-primary">Generate PDF</button>
+        <button type="submit" class="btn btn-primary">'.GENPDF.'</button>
     </form>
 </div>';
                 echo '</div>';

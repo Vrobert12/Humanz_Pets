@@ -67,7 +67,7 @@ $_SESSION['backPic'] = 'addProduct.php';
 
 <!-- Image Preview -->
 <?php $_SESSION['updateProductPicture']=$_POST['productPicture']?>
-<img id="productImage" src="/Humanz2.0/pictures/<?php echo $_POST['productPicture'];?>"
+<img id="productImage" src="pictures/<?php echo $_POST['productPicture'];?>"
      alt="Product Image" width="150" height="150" onclick="document.getElementById('pictureInput').click();"
      style="cursor: pointer; opacity: 0.7; transition: opacity 0.3s;"
      onmouseover="this.style.opacity=1;" onmouseout="this.style.opacity=0.7;">
