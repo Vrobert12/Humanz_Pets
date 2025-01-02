@@ -54,7 +54,7 @@ try {
         unset($_SESSION['resetCode']);
         header('Location:email-verification.php');
     }
-    if (isset($_SESSION["workerEmail"])) {
+    if (isset($_SESSION["veterinarianEmail"])) {
 
         $mail->addAddress($_SESSION["workerEmail"], $_SESSION['name']);
         $mail->addReplyTo('info@example.com', 'Information');
@@ -66,24 +66,24 @@ try {
         $mail->Body = "<h2>You are hired :)</h2> Set up your profile <a href=" . $_SESSION['workerLink'] . ">here</a>";
         $mail->AltBody = "<h2>You are hired :)</h2> Set up your profile <a href=" . $_SESSION['workerLink'] . ">here</a>";
         unset($_SESSION['workerEmail']);
-        header('Location:workers.php');
+        header('Location:addVet.php');
     }
-    if (isset($_SESSION["reservation"])) {
-
-        $mail->addAddress($_SESSION["email"], $_SESSION['name']);
-        $mail->addReplyTo('info@example.com', 'Information');
-        $mail->addCC('cc@example.com');
-        $mail->addBCC('bcc@example.com');
-        $mail->Subject = "R&D";
-
-        $_SESSION['message'] = "<b>You have reserved table " . $_SESSION['reservationTable'] . "</b>";
-        $mail->Body = "<h2>You have reserved our table </h2>  Reservation is on day <b>" . $_SESSION['day'] . "</b> from <b>"
-            . $_SESSION['reservationTime'] . "</b> to <b>" . $_SESSION['reservationTimeEnd'] . ". Your reservation code is: " . $_SESSION['reservationCode'] . "</b>";
-        $mail->AltBody = "<h2>You have reserved our table </h2>  Reservation is on day <b>" . $_SESSION['day'] . "</b> from <b>"
-            . $_SESSION['reservationTime'] . "</b> to <b>" . $_SESSION['reservationTimeEnd'] . ". Your reservation code is: " . $_SESSION['reservationCode'] . "</b>";
-        unset($_SESSION['workerEmail']);
-        header('Location:reservation.php?table=' . $_SESSION['reservationTable']);
-    }
+//    if (isset($_SESSION["reservation"])) {
+//
+//        $mail->addAddress($_SESSION["email"], $_SESSION['name']);
+//        $mail->addReplyTo('info@example.com', 'Information');
+//        $mail->addCC('cc@example.com');
+//        $mail->addBCC('bcc@example.com');
+//        $mail->Subject = "R&D";
+//
+//        $_SESSION['message'] = "<b>You have reserved table " . $_SESSION['reservationTable'] . "</b>";
+//        $mail->Body = "<h2>You have reserved our table </h2>  Reservation is on day <b>" . $_SESSION['day'] . "</b> from <b>"
+//            . $_SESSION['reservationTime'] . "</b> to <b>" . $_SESSION['reservationTimeEnd'] . ". Your reservation code is: " . $_SESSION['reservationCode'] . "</b>";
+//        $mail->AltBody = "<h2>You have reserved our table </h2>  Reservation is on day <b>" . $_SESSION['day'] . "</b> from <b>"
+//            . $_SESSION['reservationTime'] . "</b> to <b>" . $_SESSION['reservationTimeEnd'] . ". Your reservation code is: " . $_SESSION['reservationCode'] . "</b>";
+//        unset($_SESSION['workerEmail']);
+//        header('Location:reservation.php?table=' . $_SESSION['reservationTable']);
+//    }
     $mail->send();
     if (isset($_POST['mail']))
         $_POST['mail'] = $_SESSION['email'];

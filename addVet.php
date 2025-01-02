@@ -1,4 +1,5 @@
 <?php
+
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
     $lang = $_GET['lang'] ?? $_SESSION['lang'] ?? 'en';
@@ -7,6 +8,10 @@ if (session_status() === PHP_SESSION_NONE) {
     }
     include "lang_$lang.php";
 }
+
+include "functions.php";
+$autoload=new Functions();
+$autoload->checkAutoLogin();
 $_SESSION['backPic']='addVet.php';
 ?>
 <!DOCTYPE html>
@@ -68,23 +73,10 @@ if (isset($_SESSION['title'])) {
     <label for="mail">E-mail:</label><br>
     <input type="email" class="inputok" placeholder="Email" name="mail" id="mail" ><br>
     <?php
-    if (!isset($_GET['token']) || !isset($_SESSION['token'])) {
-        $_SESSION['token'] = substr(number_format(time() * rand(), 0, '', ''), 0, 6);
-        echo '<label for="pass">'.PASSWORD.':</label><br>
-        <input type="password" class="inputok" placeholder="********" name="pass" id="pass" ><br>
-        <label for="pass2">'.CONFPASS.':</label><br>
-        <input type="password" class="inputok" placeholder="********" name="pass2" id="pass2" ><br>
-        
-        <img id="productImage" src="pictures/logInPic.png"
-     alt="img" width="32" height="32" onclick="activateProfilePicture()" style="cursor: pointer;">
+    $_SESSION['backPic']='addVet.php';
+    $_SESSION['token'] = substr(number_format(time() * rand(), 0, '', ''), 0, 6);
+    echo '<input type="submit" class="btn btn-primary" name="action" value="AddVet">';
 
-<input type="file" name="picture" id="pictureInput"
-       style="display: none;" accept="image/*" onchange="updateImagePreview(this)"><br>
-        
-        <input type="submit" class="btn btn-primary" name="action" value="registration">';
-    } else {
-        echo '<input type="submit" class="btn btn-primary" name="action" value="AddVet">';
-    }
 
     $message = isset($_SESSION['message']) ? $_SESSION['message'] : '';
     echo "<p class='warning'>" . $message . "</p>";

@@ -52,7 +52,7 @@ class Functions
                 case 'picture':
                     $this->picture($_SESSION['backPic']);
                     break;
-                case 'ResetPass':
+                case 'resetPass':
                     $this->resetPassword();
                     break;
                 case 'ModifyUser':
@@ -115,6 +115,102 @@ class Functions
             }
         }
     }
+
+    public function resetPassword()
+    {
+        if (isset($_POST['mail'], $_POST['resetPassword'], $_POST['confirmPassword'])) {
+            $mail = $_POST['mail'];
+            $pass = $_POST['resetPassword'];
+            $pass2 = $_POST['confirmPassword'];
+
+            // Validate passwords
+            if ($pass === '') {
+                $_SESSION['message'] = "The <b>Password</b> is not filled out.";
+                header('Location: '.$_SESSION['backPic']);
+                exit();
+            }
+            if ($pass2 === '') {
+                $_SESSION['message'] = "The <b>Confirmation Password</b> is not filled out.";
+                header('Location: '.$_SESSION['backPic']);
+                exit();
+            }
+            if ($pass !== $pass2) {
+                $_SESSION['message'] = "The Passwords do not match.";
+                header('Location: '.$_SESSION['backPic']);
+                exit();
+            }
+            if (!preg_match("/[a-z]/", $pass)) {
+                $_SESSION['message'] = "The <b>Password</b> does not contain <b>Lower case</b> letters.";
+                header('Location: '.$_SESSION['backPic']);
+                exit();
+            }
+            if (!preg_match("/[A-Z]/", $pass)) {
+                $_SESSION['message'] = "The <b>Password</b> does not contain <b>Upper case</b> letters.";
+                header('Location: '.$_SESSION['backPic']);
+                exit();
+            }
+            if (!preg_match("/[0-9]/", $pass)) {
+                $_SESSION['message'] = "The <b>Password</b> does not contain <b>Numbers</b>.";
+                header('Location: '.$_SESSION['backPic']);
+                exit();
+            }
+            if (strlen($pass) < 8) {
+                $_SESSION['message'] = "The <b>Password</b> must be at least <b>8 characters long</b>.";
+                header('Location: '.$_SESSION['backPic']);
+                exit();
+            }
+
+            // Hash the new password
+            $newPassword = password_hash($pass, PASSWORD_BCRYPT);
+
+            // Check which table the email exists in
+            try {
+                $sql = "SELECT 'user' AS userType FROM user WHERE userMail = :email1
+                    UNION
+                    SELECT 'vet' AS userType FROM veterinarian WHERE veterinarianMail = :email2";
+                $stmt = $this->connection->prepare($sql);
+                $stmt->bindParam(':email1', $mail, PDO::PARAM_STR);
+                $stmt->bindParam(':email2', $mail, PDO::PARAM_STR);
+                $stmt->execute();
+                $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+                if ($result) {
+                    $userType = $result['userType'];
+                    $table = ($userType === 'user') ? 'user' : 'veterinarian';
+                    $column = ($userType === 'user') ? 'userPassword' : 'veterinarianPassword';
+                    $emailColumn = ($userType === 'user') ? 'userMail' : 'veterinarianMail';
+
+                    // Update password
+                    $updateSql = "UPDATE $table SET $column = :newPassword WHERE $emailColumn = :email";
+                    $updateStmt = $this->connection->prepare($updateSql);
+                    $updateStmt->bindParam(':newPassword', $newPassword, PDO::PARAM_STR);
+                    $updateStmt->bindParam(':email', $mail, PDO::PARAM_STR);
+                    if ($updateStmt->execute()) {
+                        $_SESSION['message'] = "Password updated successfully. You can now log in.";
+                        header('Location: logIn.php');
+                        exit();
+                    } else {
+                        $_SESSION['message'] = "Failed to update the password. Please try again.";
+                        header('Location: '.$_SESSION['backPic']);
+                        exit();
+                    }
+                } else {
+                    $_SESSION['message'] = "Email not found in our records." . $mail;
+                    header('Location: '.$_SESSION['backPic']);
+                    exit();
+                }
+            } catch (PDOException $e) {
+                $_SESSION['message'] = "An error occurred: " . $e->getMessage();
+                header('Location: '.$_SESSION['backPic']);
+                exit();
+            }
+        } else {
+            $_SESSION['message'] = "Required data is missing.";
+            header('Location: '.$_SESSION['backPic']);
+            exit();
+        }
+    }
+
 
     /**
      * @param string $name
@@ -215,18 +311,13 @@ class Functions
 
     public function addVet()
     {
-        if (isset($_POST['fname']) && isset($_POST['lname']) && isset($_POST['tel'])
-             && isset($_POST['mail'])) {
-
-            global $pdo;
+        if (isset($_POST['fname']) && isset($_POST['lname']) && isset($_POST['tel']) && isset($_POST['mail'])) {
 
             $fname = $_POST['fname'];
             $lname = $_POST['lname'];
             $tel = $_POST['tel'];
             $mail = $_POST['mail'];
-            $pass = $_POST['pass'];
-            $pass2 = $_POST['pass2'];
-            $_SESSION['vetPicture'] = $this->picture($_SESSION['backPic']);
+
 
             $_SESSION["workerEmail"] = $mail;
 
@@ -237,40 +328,52 @@ class Functions
                 $verification_time = date("Y-m-d H:i:s", $time);
 
                 // Check if user already exists
-                $sql = "SELECT veterinarianMail, verify, verification_time FROM veterinarian WHERE veterinatianMail = ?";
-                $stmt = $pdo->prepare($sql);
-                $stmt->execute([$mail]);
+                $sql = "SELECT veterinarianMail, verify, verification_time FROM veterinarian WHERE veterinarianMail = :mail";
+                $stmt = $this->connection->prepare($sql);
+                $stmt->bindParam(':mail', $mail, PDO::PARAM_STR);
+                $stmt->execute();
 
                 if ($stmt->rowCount() > 0) {
-//                    $logType = "Adding a Worker";
-//                    $logText = "The worker is already registered";
-//                    $logMessage = "Worker is in Database!";
-//                    $this->errorLogInsert($_SESSION['email'], $logText, $logType, $logMessage);
-                    header('Location: workers.php');
+                    $_SESSION['message'] = "mail already exists";
+                    header('Location: addVet.php');
                     exit();
                 }
-                $this->passwordCheck($pass, $pass2, 'addVet.php');
-                $kep = "logInPic.png";
-                $pass = $_SESSION['pass']; // Placeholder for hashed password
-                $verification_code = substr(number_format(time() * rand(), 0, '', ''), 0, 7);
 
+                $kep = "logInPic.png";
+
+                $verification_code = substr(number_format(time() * rand(), 0, '', ''), 0, 7);
+                $pass = null;
                 $pass_vali = null;
-                $verrification = 0;
+                $verification = 0;
                 $banned_time = null;
+                $picture="logInPic.png";
                 $verification_code_expire = null;
-                $verification_code_pass = null;
 
                 // Insert user data into the database
-                $sql = "INSERT INTO veterinarian (firstName, lastName, phoneNumber, veterinarianMail, veterinarianPassword, profilePic, registrationTime, verification_code, verify, verification_time, passwordValidation, passwordValidationTime) 
-                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-                $stmt = $pdo->prepare($sql);
+                $sql = "INSERT INTO veterinarian 
+                    (firstName, lastName, phoneNumber, veterinarianMail, veterinarianPassword, registrationTime,profilePic, verification_code, verify, verification_time, passwordValidation, passwordValidationTime) 
+                    VALUES (:fname, :lname, :tel, :mail, :pass, :reg_time,:profilePic, :verification_code, :verify, :verification_time, :pass_vali, :banned_time)";
+                $stmt = $this->connection->prepare($sql);
 
-                if ($stmt->execute([$fname, $lname, $tel, $mail, $pass, $kep, $time3, $verification_code, $verification_time, $pass, $verification_code_expire])) {
-                    $_SESSION['workerLink'] = "http://192.168.1.10/Restaurant/resetPassword-mail.php";
+                $stmt->bindParam(':fname', $fname, PDO::PARAM_STR);
+                $stmt->bindParam(':lname', $lname, PDO::PARAM_STR);
+                $stmt->bindParam(':tel', $tel, PDO::PARAM_STR);
+                $stmt->bindParam(':mail', $mail, PDO::PARAM_STR);
+                $stmt->bindParam(':pass', $pass, PDO::PARAM_STR);
+                $stmt->bindParam(':reg_time', $time3, PDO::PARAM_STR);
+                $stmt->bindParam(':profilePic', $picture, PDO::PARAM_STR);
+                $stmt->bindParam(':verification_code', $verification_code, PDO::PARAM_STR);
+                $stmt->bindParam(':verify', $verification, PDO::PARAM_INT);
+                $stmt->bindParam(':verification_time', $verification_time, PDO::PARAM_STR);
+                $stmt->bindParam(':pass_vali', $pass_vali, PDO::PARAM_NULL);
+                $stmt->bindParam(':banned_time', $banned_time, PDO::PARAM_NULL);
+
+                if ($stmt->execute()) {
+                    $_SESSION['workerLink'] = "http://localhost/Humanz_Pets/resetPassword.php?mail=" . $mail . "&token=" . $verification_code;
                     $_SESSION['message'] = "Worker added Successfully!";
                     $_SESSION['text'] = "<h2>Registration</h2>";
                     $_SESSION['verification_code'] = $verification_code;
-                    $_SESSION['workerEmail'] = $mail;
+                    $_SESSION['veterinarianEmail'] = $mail;
                     header('Location: mail.php');
                     exit();
                 } else {
@@ -915,6 +1018,15 @@ WHERE u.userId = :userId;
                         // Redirect to login page after successful upload
                         header('Location: ' . $_SESSION['backPic']);
                         exit(); // Exit after redirection
+                    } elseif ($target == "addVet.php") {
+
+                        $query = $this->connection->prepare("UPDATE veterinarian SET profilePic = :profilePic
+                    WHERE veterinarianMail = :veterinarianMail");
+                        $query->bindValue(":profilePic", $new_file_name, PDO::PARAM_STR);
+                        $query->bindValue(":veterinarianMail", $_POST['email'], PDO::PARAM_STR);
+                        $query->execute();
+
+                        return $new_file_name;
                     } elseif ($target == 'registerAnimal.php' || $target == "addProduct.php") {
                         return $new_file_name;
                     } else {
@@ -929,6 +1041,8 @@ WHERE u.userId = :userId;
                         exit();
                     }
                 }
+
+
             }
         } else {
             $_SESSION['message'] = "File not found!";
@@ -956,50 +1070,86 @@ WHERE u.userId = :userId;
         exit();
     }
 
-    public function login()
+    public function fetchUserByEmail($email)
     {
-        if (isset($_POST['mail'], $_POST['pass'])) {
-            echo 'Login triggered<br>';
-            $mail = $_POST['mail'];
-            $password = $_POST['pass'];
+        try {
+            // Check the `user` table first
+            $sql = "SELECT 'user' AS userType, userMail AS mail, userPassword AS password, banned AS banned,
+                       firstName, lastName, profilePic, userId, phoneNumber, privilage
+                FROM user
+                WHERE userMail = :email";
 
-            // Check if values are captured
-            echo "Email: $mail, Password: $password<br>";
-        }
-        if (isset($_POST['mail'], $_POST['pass'])) {
-            $mail = $_POST['mail'];
-            $password = $_POST['pass'];
-
-            $sql = "SELECT * FROM user WHERE userMail = :mail";
             $stmt = $this->connection->prepare($sql);
-            $stmt->bindValue(":mail", $mail);
+            $stmt->bindValue(':email', $email, PDO::PARAM_STR);
             $stmt->execute();
             $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
+            // If a result is found, return it
             if ($result) {
-                sleep(2);
-                if (empty($result['userPassword'])) {
-                    $_SESSION['message'] = "The worker did not set up a password!";
+                return $result;
+            }
+
+            // Otherwise, check the `veterinarian` table
+            $sql = "SELECT 'vet' AS userType, veterinarianMail AS mail, veterinarianPassword AS password,
+         firstName, lastName, profilePic, veterinarianId, phoneNumber
+                FROM veterinarian
+                WHERE veterinarianMail = :email";
+
+            $stmt = $this->connection->prepare($sql);
+            $stmt->bindValue(':email', $email, PDO::PARAM_STR);
+            $stmt->execute();
+            $vetResult = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            // Debugging statement
+            if (!$vetResult) {
+                error_log("No data found for veterinarian email: $email");
+            }
+
+            return $vetResult;
+        } catch (PDOException $e) {
+            // Log the error and return null
+            error_log("Database error: " . $e->getMessage());
+            $this->errorLogInsert($email, "Database error: " . $e->getMessage(), "Fetch User/Vet", "Error during query");
+            return null;
+        }
+    }
+
+
+    public function login()
+    {
+        if (isset($_POST['mail'], $_POST['pass'])) {
+            $mail = $_POST['mail'];
+            $password = $_POST['pass'];
+
+            // Fetch user or veterinarian details
+            $result = $this->fetchUserByEmail($mail);
+
+            if ($result) {
+                error_log("Fetched result: " . print_r($result, true)); // Debugging
+                sleep(2); // Delay for security reasons
+                if (empty($result['password'])) {
+                    $_SESSION['message'] = "The account did not set up a password!";
                 } else {
-                    if (password_verify($password, $result['userPassword'])) {
+                    if (password_verify($password, $result['password'])) {
                         if ($result['banned']) {
                             $_SESSION['message'] = "You have been banned from our website!";
                         } else {
-                            $_SESSION['email'] = $result['userMail'];
-                            $_SESSION['firstName'] = $result['firstName'];
-                            $_SESSION['lastName'] = $result['lastName'];
-                            $_SESSION['name'] = $result['firstName'] . " " . $result['lastName'];
-                            $_SESSION['profilePic'] = $result['profilePic'];
-                            $_SESSION['userId'] = $result['userId'];
-                            $_SESSION['phone'] = $result['phoneNumber'];
-                            $_SESSION['privilage'] = $result['privilage'];
+                            $_SESSION['email'] = $result['mail'];
+                            $_SESSION['firstName'] = $result['firstName'] ?? ''; // Default if missing
+                            $_SESSION['lastName'] = $result['lastName'] ?? ''; // Default if missing
+                            $_SESSION['name'] = $_SESSION['firstName'] . " " . $_SESSION['lastName'];
+                            $_SESSION['profilePic'] = $result['profilePic'] ?? ''; // Default if missing
+                            $_SESSION['phone'] = $result['phoneNumber'] ?? ''; // Default if missing
+                            // Veterinarian-specific session and cookies
+                            if ($result['userType'] === 'vet') {
 
-                            setcookie("email", $result['userMail'], time() + 10 * 60, "/");
-                            setcookie("name", $result['firstName'] . " " . $result['lastName'], time() + 10 * 60, "/");
-                            setcookie("profilePic", $result['profilePic'], time() + 10 * 60, "/");
-                            setcookie("userId", $result['userId'], time() + 10 * 60, "/");
-                            setcookie("phone", $result['phoneNumber'], time() + 10 * 60, "/");
-                            setcookie("privilage", $result['privilage'], time() + 10 * 60, "/");
+                                $_SESSION['userId'] = $result['veterinarianId'] ?? ''; // Default if missing
+                                $_SESSION['privilage'] = 'veterinarian';
+                            } else {
+                                // User-specific session and cookies
+                                $_SESSION['userId'] = $result['userId'] ?? ''; // Default if missing
+                                $_SESSION['privilage'] = $result['privilage'] ?? ''; // Default if missing
+                            }
 
                             setcookie("last_activity", time(), time() + 10 * 60, "/");
                             header('Location: index.php');
@@ -1011,7 +1161,7 @@ WHERE u.userId = :userId;
                     }
                 }
             } else {
-                $_SESSION['message'] = "Something went wrong, maybe the mail is not registered!";
+                $_SESSION['message'] = "Something went wrong, maybe the email is not registered!";
                 $this->errorLogInsert($mail, "The E-mail is not in our database", "Log in", $_SESSION['message']);
             }
         } else {
@@ -1022,6 +1172,7 @@ WHERE u.userId = :userId;
         exit();
     }
 
+
     public function checkAutoLogin(string $currentPage = null)
     {
         if (!isset($_GET['action'])) {
@@ -1029,35 +1180,39 @@ WHERE u.userId = :userId;
                 if (isset($_SESSION['backPic']))
                     $backPage = $_SESSION['backPic'];
                 $mail = $_SESSION['email'];
-                $sql = "select petId from pet where userId=:userId and veterinarId is NULL";
-                $stmt = $this->connection->prepare($sql);
-                $stmt->bindParam(":userId", $_SESSION["userId"]);
-                $stmt->execute();
-                if ($stmt->rowCount() == 1 && $backPage != "updateAnimal.php") {
-                    $_SESSION['message'] = 'You have to choose a veterinarian for your animal,<br> before you can go further<br><br><a href="functions.php?action=logOut">Log out</a> ';
-                    if ($currentPage != 'selectVeterinarian.php') {
-                        header("Location:selectVeterinarian.php");
-                        exit();
+                if ($_SESSION['privilage'] == 'user') {
+                    $sql = "select petId from pet where userId=:userId and veterinarId is NULL";
+                    $stmt = $this->connection->prepare($sql);
+                    $stmt->bindParam(":userId", $_SESSION["userId"]);
+                    $stmt->execute();
+                    if ($stmt->rowCount() == 1 && $backPage != "updateAnimal.php") {
+                        $_SESSION['message'] = 'You have to choose a veterinarian for your animal,<br> before you can go further<br><br><a href="functions.php?action=logOut">Log out</a> ';
+                        if ($currentPage != 'selectVeterinarian.php') {
+                            header("Location:selectVeterinarian.php");
+                            exit();
+                        }
                     }
                 }
-
 
                 unset($_COOKIE['last_activity']);
                 unset($_COOKIE['email']);
                 setcookie("email", $mail, time() + 10 * 60, "/");
                 setcookie("last_activity", time(), time() + 10 * 60, "/");
-                $sql = "SELECT p.petId FROM  pet p  inner join user u   on p.userId=u.userId  where u.userMail = :mail";
-                $stmt = $this->connection->prepare($sql);
-                $stmt->bindValue(":mail", $mail);
-                $stmt->execute();
-                $result = $stmt->fetch(PDO::FETCH_ASSOC);
-                if ($result == 0) {
-                    $_SESSION['message'] = '<br>You need to register an animal, without it you <b>can not</b> use the account.<br><br><a href="functions.php?action=logOut">Log out</a>';
-                    if ($currentPage != 'registerAnimal.php') {
-                        header('Location: registerAnimal.php');
-                        exit();
+                if ($_SESSION['privilage'] == 'user') {
+                    $sql = "SELECT p.petId FROM  pet p  inner join user u   on p.userId=u.userId  where u.userMail = :mail";
+                    $stmt = $this->connection->prepare($sql);
+                    $stmt->bindValue(":mail", $mail);
+                    $stmt->execute();
+                    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+                    if ($result == 0) {
+                        $_SESSION['message'] = '<br>You need to register an animal, without it you <b>can not</b> use the account.<br><br><a href="functions.php?action=logOut">Log out</a>';
+                        if ($currentPage != 'registerAnimal.php') {
+                            header('Location: registerAnimal.php');
+                            exit();
+                        }
                     }
                 }
+
             } elseif (isset($_COOKIE['email'])) {
                 $_SESSION['email'] = $_COOKIE['email'];
                 $_SESSION['name'] = $_COOKIE['name'];

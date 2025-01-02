@@ -169,12 +169,14 @@ https://getbootstrap.com/docs/5.3/components/navbar/
                 '.USERS.'
             </a>
         </li>';
-        echo'<li>
+
+                echo'<li>
             <a href="addVet.php" class="nav-link text-white">
                 <svg class="bi me-2" width="16" height="16"><use xlink:href="#people-circle"/></svg>
                 Add veterinarian
             </a>
         </li>';
+
         }
           }
 
@@ -197,6 +199,7 @@ https://getbootstrap.com/docs/5.3/components/navbar/
                 echo '<ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">';
                 echo '<li><a class="dropdown-item" href="modify.php"><i class="fas fa-gear"></i>&nbsp'.SETTINGS.'</a></li>';
                 echo '<li><a class="dropdown-item" href="userData.php?email='.$_SESSION['email'].'"><i class="fas fa-circle-info"></i>&nbsp'.ACCOUNT.'</a></li>';
+                echo'<li><a href="resetPassword.php?mail='.$_SESSION['email'].'" class="nav-link text-white">Change password </a></li>';
                 echo '<li><hr class="dropdown-divider"></li>';
                 echo '<li><a class="dropdown-item" href="functions.php?action=logOut" onclick="confirmLogout(event)">';
                 echo '<i class="bi bi-door-open fa-2x justify-content-end"></i>'.LOGOUT.'</a></li>';
