@@ -43,8 +43,13 @@ if(isset($_SESSION['email'])){
     <input type="submit" name="submit" value="<?php echo LOGIN?>" class="btn btn-primary"><br><br>
     <input type="hidden" name="action" value="Log in" class="inputok">
 
-    <label for="mail"><?php echo NOACC?></label><br><br>
-    <a href="registration.php"><?php echo REGHERE?></a><br>
+    <label for="mail"><?php echo NOACC?></label><br>
+    <a href="registration.php"><?php echo REGHERE?></a><br><br>
+
+    <?php
+    $_SESSION['token'] = $verification_token = substr(number_format(time() * rand(), 0, '', ''), 0, 6);
+    $_SESSION['previousPage']="logIn.php";
+    echo'  <a href="resetPassword-mail.php?logToken='. $_SESSION['token'].'">Forgot your password? </a><br><br>'; ?>
 
 <?php
 if(isset($_SESSION['message'])){

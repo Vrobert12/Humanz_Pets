@@ -47,7 +47,6 @@ try {
         $mail->addCC('cc@example.com');
         $mail->addBCC('bcc@example.com');
         $mail->Subject = "R&D";
-        $_SESSION['email'] = $_SESSION['mailReset'];
         $_SESSION['message'] = "<b>Check your mail for password verification</b>";
         $mail->Body = "<h2>Reset password</h2> Your code:<br><h3>" . $_SESSION['resetCode'] . "</h3>";
         $mail->AltBody = "Your code:<br><h3>" . $_SESSION['resetCode'] . "</h3>";

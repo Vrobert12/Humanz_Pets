@@ -11,44 +11,57 @@ include 'config.php';
     }
     $connection = connect($dsn, $pdoOptions);
 if (isset($_POST['verify_email']) && isset($_SESSION['mailReset'])) {
-    $sql = "SELECT passwordValidation, passwordValidationTime FROM user WHERE userMail = :email";
-    $stmtTeszt = $GLOBALS['connection']->prepare($sql);
-    $stmtTeszt->bindParam(':email', $_SESSION['email'], PDO::PARAM_STR);
-    $stmtTeszt->execute();
-    $result = $stmtTeszt->fetchAll(PDO::FETCH_ASSOC);
-    $time = time();
-    $check_time = date("Y-m-d H:i:s", $time);
+    $email = $_SESSION['mailReset'];
+    $verificationCode = $_POST['verification_code'];
+    $currentTime = date("Y-m-d H:i:s");
 
-    if (count($result) > 0) {
-        foreach ($result as $rows) {
-            if ($rows['passwordValidationTime'] <= $check_time) {
-                $mail = $_SESSION['email'];
-                $time = time() + 60 * 10;
-                $verification_time = date("Y-m-d H:i:s", $time);
-                $verification_code = substr(number_format(time() * rand(), 0, '', ''), 0, 6);
-                $query = $GLOBALS['connection']->prepare("UPDATE user SET passwordValidation = :code, passwordValidationTime = :v_time WHERE userMail = :mail");
-                $query->bindParam(':code', $verification_code, PDO::PARAM_STR);
-                $query->bindParam(':v_time', $verification_time, PDO::PARAM_STR);
-                $query->bindParam(':mail', $mail, PDO::PARAM_STR);
-                $query->execute();
+    // Fetch validation details from both tables
+    $result = getValidationDetails($email, 'user');
+    if (!$result) {
+        $result = getValidationDetails($email, 'veterinarian');
+    }
 
-                $_SESSION['message'] = "Validation time has expired.";
-                header('Location: mail.php');
-                exit();
-            } else {
-                if ($rows['passwordValidation'] == $_POST['verification_code']) {
-                    $_SESSION['message'] = "Now you can change the password.";
-                    header('Location: resetPassword.php');
-                    exit();
-                } else {
-                    $_SESSION['message'] = "This code is not valid on our page.";
-                }
-            }
+    if ($result) {
+        error_log("Verification Details: " . print_r($result, true));
+        if ($result['passwordValidationTime'] <= $currentTime) {
+            $_SESSION['message'] = "Validation time has expired. Please request a new code.";
+            header('Location: mail.php');
+            exit();
         }
+
+        if ($result['passwordValidation'] == $verificationCode) {
+            $_SESSION['message'] = "Now you can change the password.";
+            header("Location: resetPassword.php?mail=$email&passwordValidation={$result['passwordValidation']}");
+            exit();
+        } else {
+            $_SESSION['message'] = "This code is not valid on our page ".$result['passwordValidation']." ".$verificationCode;
+        }
+    } else {
+        error_log("Email not registered: $email");
+        $_SESSION['message'] = "This email is not registered.";
+    }
+
+    header('Location: logIn.php');
+    exit();
+}
+
+function getValidationDetails($email, $table)
+{
+    try {
+        $sql = "SELECT passwordValidation, passwordValidationTime FROM $table WHERE {$table}Mail = :email";
+        $stmt = $GLOBALS['connection']->prepare($sql);
+        $stmt->bindParam(':email', $email, PDO::PARAM_STR);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+        error_log("Database error: " . $e->getMessage());
+        return false;
     }
 }
 
-if (isset($_POST['verify_email']) && isset($_SESSION['email'])) {
+
+
+if (isset($_POST['verify_email']) && isset($_SESSION['email'])) {echo $_SESSION['mailReset'] ." ". $verification_code;
     $sql = "SELECT verification_time, verification_code FROM user WHERE userMail = :email";
     $stmtTeszt = $GLOBALS['connection']->prepare($sql);
     $stmtTeszt->bindParam(':email', $_SESSION['email'], PDO::PARAM_STR);
@@ -179,8 +192,10 @@ function errorLogInsert($logType, $mail, $errorText, $logMessage)
     $message = isset($_SESSION['message']) ? $_SESSION['message'] : '';
     if (isset($_SESSION['message'])) {
         echo "<p class='success'>" . $message . "</p>";
-
-echo $_SESSION['mail'];
+    if (isset($_SESSION['mailReset']))
+echo $_SESSION['mailReset'];
+        if (isset($_SESSION['email']))
+            echo $_SESSION['email'];
     } ?>
 
 

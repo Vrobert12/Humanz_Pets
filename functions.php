@@ -115,6 +115,64 @@ class Functions
             }
         }
     }
+    public function mailAddAndPasswordChange()
+    {
+        if (!isset($_POST['mailReset'])) {
+            $_SESSION['message'] = "This Email address doesn't exist!";
+            header('Location: logIn.php');
+            exit();
+        }
+
+        $mail = $_POST['mailReset'];
+        $result = $this->getEmailDetails($mail, 'user');
+        $resultVet = $this->getEmailDetails($mail, 'veterinarian');
+
+        if ($result || $resultVet) {
+            $verification_code = $this->generateVerificationCode();
+            $verification_time = date("Y-m-d H:i:s", time() + 600); // 10 minutes
+
+            $table = $result ? 'user' : 'veterinarian';
+            $this->updateVerificationDetails($mail, $verification_code, $verification_time, $table);
+
+            $_SESSION['mailReset'] = $mail;
+            $_SESSION['resetCode'] = $verification_code;
+            header('Location: mail.php');
+            exit();
+        }
+
+        $this->logError($mail, "Password change", "Not registered E-mail!", "The email or the password doesn't match up!");
+        header('Location: logIn.php');
+        exit();
+    }
+
+    private function getEmailDetails($mail, $table)
+    {
+        $sql = "SELECT * FROM $table WHERE {$table}Mail = :mail";
+        $stmt = $this->connection->prepare($sql);
+        $stmt->bindParam(':mail', $mail);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    private function generateVerificationCode()
+    {
+        return substr(number_format(time() * rand(), 0, '', ''), 0, 6);
+    }
+
+    private function updateVerificationDetails($mail, $code, $time, $table)
+    {
+        $sql = "UPDATE $table SET passwordValidation = :code, passwordValidationTime = :time WHERE {$table}Mail = :mail";
+        $stmt = $this->connection->prepare($sql);
+        $stmt->bindParam(':code', $code);
+        $stmt->bindParam(':time', $time);
+        $stmt->bindParam(':mail', $mail);
+        $stmt->execute();
+    }
+
+    private function logError($mail, $logType, $logText, $logMessage)
+    {
+        $this->errorLogInsert($mail, $logText, $logType, $logMessage);
+    }
 
     public function resetPassword()
     {

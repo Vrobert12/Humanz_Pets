@@ -23,7 +23,7 @@ if(isset($_SESSION['email'])) {
     }
 }
 // Ensure token and email are set in $_GET
-elseif (!isset($_GET['mail']) || !isset($_GET['token'])) {
+elseif ((!isset($_GET['mail']) || !isset($_GET['token'])) && (!isset($_GET['mail']) || !isset($_GET['passwordValidation']))) {
     $_SESSION['message']="no mail or token specified";
     header('Location:index.php');
     exit();
@@ -50,6 +50,49 @@ $_SESSION['backPic']="http://localhost/Humanz_Pets/resetPassword.php?mail=" . $e
     if (isset($_SESSION['email']) && $_SESSION['email'] != $email) {
         die("Session email mismatch. Session: " . $_SESSION['email'] . ", URL email: $email");
     }
+}
+
+if(isset($_GET['passwordValidation'])) {
+    $email = trim($_GET['mail']);
+    $passwordValidation = trim($_GET['passwordValidation']);
+
+// Set the back picture URL in session
+    $_SESSION['backPic'] = "http://localhost/Humanz_Pets/resetPassword.php?mail=" . $email . "&passwordValidation=" . $passwordValidation;
+
+// Check for validation details in the `user` table
+    $stmt = "SELECT passwordValidation FROM user WHERE userMail = :email";
+    $stmt = $connection->prepare($stmt);
+    $stmt->bindParam(':email', $email, PDO::PARAM_STR);
+    $stmt->execute();
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+// If not found in `user`, check the `veterinarian` table
+    if (!$result) {
+        $stmt = "SELECT passwordValidation FROM veterinarian WHERE veterinarianMail = :email";
+        $stmt = $connection->prepare($stmt);
+        $stmt->bindParam(':email', $email, PDO::PARAM_STR);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+// If still not found, return an error
+    if (!$result) {
+        die("No result found for email: $email");
+    }
+
+// Verify the password validation token
+    if ($passwordValidation != $result['passwordValidation']) {
+        die("Password mismatch. URL token: $passwordValidation, DB token: " . $result['passwordValidation']);
+    }
+
+// Verify session email matches the provided email
+    if (isset($_SESSION['email']) && $_SESSION['email'] != $email) {
+        die("Session email mismatch. Session: " . $_SESSION['email'] . ", URL email: $email");
+    }
+
+// If all checks pass, proceed with further operations
+    echo "Validation successful! You can proceed to reset the password.";
+
 }
 // All checks passed
 echo "Verification successful!";
