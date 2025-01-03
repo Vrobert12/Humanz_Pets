@@ -146,8 +146,6 @@ if(isset($_SESSION['message']) && $_SESSION['message'] != "")
           </a>
       </div>";
 
-
-$_SESSION['message'] = "";
 ?>
 
 </body>
@@ -159,9 +157,9 @@ if (isset($_SESSION['email']) && isset($_SESSION['name']) && isset($_SESSION['pr
 
     if (isset($_POST['searchAction']) && $_POST['searchAction'] == 'search') {
         $veterinarianLike = "%" . $_POST['searchName'] . "%";
-        users("SELECT * FROM veterinarian WHERE area LIKE ?", [$veterinarianLike]);
+        users("SELECT * FROM veterinarian WHERE verify=1 and area LIKE ?", [$veterinarianLike]);
     } else {
-        users("SELECT * FROM veterinarian");
+        users("SELECT * FROM veterinarian WHERE verify=1");
     }
 } else {
     // Redirect to index.php if session variables are not set

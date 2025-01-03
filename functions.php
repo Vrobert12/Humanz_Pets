@@ -239,7 +239,7 @@ class Functions
                     $emailColumn = ($userType === 'user') ? 'userMail' : 'veterinarianMail';
 
                     // Update password
-                    $updateSql = "UPDATE $table SET $column = :newPassword WHERE $emailColumn = :email";
+                    $updateSql = "UPDATE $table SET verify=1,$column = :newPassword WHERE $emailColumn = :email";
                     $updateStmt = $this->connection->prepare($updateSql);
                     $updateStmt->bindParam(':newPassword', $newPassword, PDO::PARAM_STR);
                     $updateStmt->bindParam(':email', $mail, PDO::PARAM_STR);
