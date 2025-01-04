@@ -1,14 +1,8 @@
 <?php
 include 'functions.php';
-if (!isset($_GET['id'])) {
-    die('Product ID is required.');
-}
-
-$lang = $_GET['lang'] ?? $_SESSION['lang'] ?? 'en';
-include_once "lang_$lang.php";
-
 $product_id = (int)$_GET['id'];
 $functions = new Functions();
+$functions->language();
 $functions->checkAutoLogin();
 $pdo = $functions->connect($GLOBALS['dsn'], $_ENV['DB_USER'], $_ENV['DB_PASSWORD'], $GLOBALS['pdoOptions']);
 $product = $pdo->prepare("SELECT * FROM product WHERE productId = ?");

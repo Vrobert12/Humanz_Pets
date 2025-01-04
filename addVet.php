@@ -1,16 +1,8 @@
 <?php
 
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-    $lang = $_GET['lang'] ?? $_SESSION['lang'] ?? 'en';
-    if(isset($_GET['lang'])){
-        $_SESSION['lang'] = $_GET['lang'];
-    }
-    include "lang_$lang.php";
-}
-
 include "functions.php";
 $autoload=new Functions();
+$autoload->language();
 $autoload->checkAutoLogin();
 $_SESSION['backPic']='addVet.php';
 ?>
@@ -72,6 +64,12 @@ if (isset($_SESSION['title'])) {
     <input type="text" placeholder="Phone Number" name="tel" class="inputok" id="tel" ><br>
     <label for="mail">E-mail:</label><br>
     <input type="email" class="inputok" placeholder="Email" name="mail" id="mail" ><br>
+    <select name="lang">
+        <option hidden="hidden">Select your language</option>
+        <option value="en">English</option>
+        <option value="hu">Magyar</option>
+        <option value="sr">Srpski</option>
+    </select>
     <?php
     $_SESSION['backPic']='addVet.php';
     $_SESSION['token'] = substr(number_format(time() * rand(), 0, '', ''), 0, 6);

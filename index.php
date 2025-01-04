@@ -1,10 +1,12 @@
 <?php
-
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
     $lang = $_GET['lang'] ?? $_SESSION['lang'] ?? 'en';
     if(isset($_GET['lang'])){
         $_SESSION['lang'] = $_GET['lang'];
+    }
+    if(isset( $_SESSION['userLang'])){
+        $_SESSION['lang'] = $_SESSION['userLang'];
     }
     include "lang_$lang.php";
 }
@@ -131,6 +133,7 @@ https://getbootstrap.com/docs/5.3/components/navbar/
         </li>
         <?php
         if(isset($_SESSION['email'])){
+            if ($_SESSION['privilage'] != 'Veterinarian') {
         echo '<li>
         <a href="pet.php?email=' . $_SESSION['email'] . '" class="nav-link text-white">
             <svg class="bi me-2" width="16" height="16">
@@ -155,7 +158,7 @@ https://getbootstrap.com/docs/5.3/components/navbar/
               '.PRODUCT.'
             </a>
         </li>';
-            if ($_SESSION['privilage'] == 'Admin') {
+         }   if ($_SESSION['privilage'] == 'Admin') {
       echo'  <li>
             <a href="veterinarians.php" class="nav-link text-white">
                 <svg class="bi me-2" width="16" height="16"><use xlink:href="#grid"/></svg>

@@ -115,6 +115,7 @@ class Functions
             }
         }
     }
+
     public function mailAddAndPasswordChange()
     {
         if (!isset($_POST['mailReset'])) {
@@ -184,37 +185,37 @@ class Functions
             // Validate passwords
             if ($pass === '') {
                 $_SESSION['message'] = "The <b>Password</b> is not filled out.";
-                header('Location: '.$_SESSION['backPic']);
+                header('Location: ' . $_SESSION['backPic']);
                 exit();
             }
             if ($pass2 === '') {
                 $_SESSION['message'] = "The <b>Confirmation Password</b> is not filled out.";
-                header('Location: '.$_SESSION['backPic']);
+                header('Location: ' . $_SESSION['backPic']);
                 exit();
             }
             if ($pass !== $pass2) {
                 $_SESSION['message'] = "The Passwords do not match.";
-                header('Location: '.$_SESSION['backPic']);
+                header('Location: ' . $_SESSION['backPic']);
                 exit();
             }
             if (!preg_match("/[a-z]/", $pass)) {
                 $_SESSION['message'] = "The <b>Password</b> does not contain <b>Lower case</b> letters.";
-                header('Location: '.$_SESSION['backPic']);
+                header('Location: ' . $_SESSION['backPic']);
                 exit();
             }
             if (!preg_match("/[A-Z]/", $pass)) {
                 $_SESSION['message'] = "The <b>Password</b> does not contain <b>Upper case</b> letters.";
-                header('Location: '.$_SESSION['backPic']);
+                header('Location: ' . $_SESSION['backPic']);
                 exit();
             }
             if (!preg_match("/[0-9]/", $pass)) {
                 $_SESSION['message'] = "The <b>Password</b> does not contain <b>Numbers</b>.";
-                header('Location: '.$_SESSION['backPic']);
+                header('Location: ' . $_SESSION['backPic']);
                 exit();
             }
             if (strlen($pass) < 8) {
                 $_SESSION['message'] = "The <b>Password</b> must be at least <b>8 characters long</b>.";
-                header('Location: '.$_SESSION['backPic']);
+                header('Location: ' . $_SESSION['backPic']);
                 exit();
             }
 
@@ -249,22 +250,22 @@ class Functions
                         exit();
                     } else {
                         $_SESSION['message'] = "Failed to update the password. Please try again.";
-                        header('Location: '.$_SESSION['backPic']);
+                        header('Location: ' . $_SESSION['backPic']);
                         exit();
                     }
                 } else {
                     $_SESSION['message'] = "Email not found in our records." . $mail;
-                    header('Location: '.$_SESSION['backPic']);
+                    header('Location: ' . $_SESSION['backPic']);
                     exit();
                 }
             } catch (PDOException $e) {
                 $_SESSION['message'] = "An error occurred: " . $e->getMessage();
-                header('Location: '.$_SESSION['backPic']);
+                header('Location: ' . $_SESSION['backPic']);
                 exit();
             }
         } else {
             $_SESSION['message'] = "Required data is missing.";
-            header('Location: '.$_SESSION['backPic']);
+            header('Location: ' . $_SESSION['backPic']);
             exit();
         }
     }
@@ -375,7 +376,7 @@ class Functions
             $lname = $_POST['lname'];
             $tel = $_POST['tel'];
             $mail = $_POST['mail'];
-
+            $language = $_POST['lang'];
 
             $_SESSION["workerEmail"] = $mail;
 
@@ -404,13 +405,13 @@ class Functions
                 $pass_vali = null;
                 $verification = 0;
                 $banned_time = null;
-                $picture="logInPic.png";
+                $picture = "logInPic.png";
                 $verification_code_expire = null;
 
                 // Insert user data into the database
                 $sql = "INSERT INTO veterinarian 
-                    (firstName, lastName, phoneNumber, veterinarianMail, veterinarianPassword, registrationTime,profilePic, verification_code, verify, verification_time, passwordValidation, passwordValidationTime) 
-                    VALUES (:fname, :lname, :tel, :mail, :pass, :reg_time,:profilePic, :verification_code, :verify, :verification_time, :pass_vali, :banned_time)";
+                    (firstName, lastName, phoneNumber, veterinarianMail, veterinarianPassword, registrationTime,profilePic, verification_code, verify, verification_time, passwordValidation, passwordValidationTime, usedLanguage) 
+                    VALUES (:fname, :lname, :tel, :mail, :pass, :reg_time,:profilePic, :verification_code, :verify, :verification_time, :pass_vali, :banned_time, :usedLanguage)";
                 $stmt = $this->connection->prepare($sql);
 
                 $stmt->bindParam(':fname', $fname, PDO::PARAM_STR);
@@ -425,6 +426,7 @@ class Functions
                 $stmt->bindParam(':verification_time', $verification_time, PDO::PARAM_STR);
                 $stmt->bindParam(':pass_vali', $pass_vali, PDO::PARAM_NULL);
                 $stmt->bindParam(':banned_time', $banned_time, PDO::PARAM_NULL);
+                $stmt->bindParam(':usedLanguage', $language, PDO::PARAM_STR);
 
                 if ($stmt->execute()) {
                     $_SESSION['workerLink'] = "http://localhost/Humanz_Pets/resetPassword.php?mail=" . $mail . "&token=" . $verification_code;
@@ -727,7 +729,7 @@ WHERE productId = :productId;
             $lname = $_POST['lname'];
             $tel = $_POST['tel'];
 
-
+            $usedLanguage = $_POST['lang'];
             $mail = $_POST['mail'];
             $_SESSION["email"] = $mail;
             $pass = $_POST['pass'];
@@ -824,10 +826,10 @@ WHERE productId = :productId;
                 // Insert user data into the database
                 $sql = "INSERT INTO user (firstName, lastName, phoneNumber, userMail, userPassword,
                   verification_code, verify, profilePic,
-                  privilage, registrationTime, verification_time, banned, banned_time, passwordValidation, passwordValidationTime) 
+                  privilage, registrationTime, verification_time, banned, banned_time, passwordValidation, passwordValidationTime, usedLanguage) 
         VALUES (:firstName, :lastName, :phoneNumber, :userMail, :userPassword, 
                 :verification_code, :verify, :profilePic, :privilage, :registrationTime, 
-                :verification_time, :banned, :banned_time, :passwordValidation, :passwordValidationTime)";
+                :verification_time, :banned, :banned_time, :passwordValidation, :passwordValidationTime, :usedLanguage)";
 
                 $stmt = $this->connection->prepare($sql);
 
@@ -848,6 +850,7 @@ WHERE productId = :productId;
                 $stmt->bindParam(':banned_time', $banned_time, PDO::PARAM_STR);
                 $stmt->bindParam(':passwordValidation', $verification_code_pass, PDO::PARAM_STR);
                 $stmt->bindParam(':passwordValidationTime', $verification_code_expire, PDO::PARAM_STR);
+                $stmt->bindParam(':usedLanguage', $usedLanguage, PDO::PARAM_STR);
 
                 if ($stmt->execute()) {
                     $_SESSION['message'] = "We sent an email to you!";
@@ -913,19 +916,29 @@ WHERE productId = :productId;
         $count = 0;
         $phoneNumber = $_POST['tel'];
 
-        // Prepare the initial query to retrieve existing user details
-        $sql = $this->connection->prepare("SELECT firstName, lastName, phoneNumber FROM user WHERE userMail = ?");
+        // Check user privilege
+        if ($_SESSION['privilage'] == 'Veterinarian') {
+            $table = 'veterinarian';
+            $sql = $this->connection->prepare("SELECT firstName, lastName, phoneNumber FROM veterinarian WHERE veterinarianMail = ?");
+        } else {
+            $table = 'user';
+            $sql = $this->connection->prepare("SELECT firstName, lastName, phoneNumber, privilage FROM user WHERE userMail = ?");
+        }
+// Prepare the initial query to retrieve existing user details
+
         $sql->execute([$_SESSION['email']]);
         $result = $sql->fetch(PDO::FETCH_ASSOC);
 
-        // Calling userModifyData function with posted data
+
+// Calling userModifyData function with posted data
         $this->userModifyData($_POST['firstName'], $_POST['lastName'], $_POST['tel'], "modify.php");
 
-        // Check if user data was found and update if necessary
+
+// Check if user data was found and update if necessary
         if ($result) {
             // Update first name if provided
             if (!empty($_POST['firstName'])) {
-                $sql = $this->connection->prepare("UPDATE user SET firstName = ? WHERE userMail = ?");
+                $sql = $this->connection->prepare("UPDATE $table SET firstName = ? WHERE " . $table . "Mail = ?");
                 $sql->execute([$_POST['firstName'], $_SESSION['email']]);
                 $_SESSION['name'] = $_POST['firstName'];
                 $_SESSION['firstName'] = $_POST['firstName'];
@@ -937,7 +950,7 @@ WHERE productId = :productId;
 
             // Update last name if provided
             if (!empty($_POST['lastName'])) {
-                $sql = $this->connection->prepare("UPDATE user SET lastName = ? WHERE userMail = ?");
+                $sql = $this->connection->prepare("UPDATE $table SET lastName = ? WHERE " . $table . "Mail = ?");
                 $sql->execute([$_POST['lastName'], $_SESSION['email']]);
                 $_SESSION['name'] .= " " . $_POST['lastName'];
                 $_SESSION['lastName'] = $_POST['lastName'];
@@ -949,7 +962,7 @@ WHERE productId = :productId;
 
             // Update phone number if provided
             if (!empty($_POST['tel'])) {
-                $sql = $this->connection->prepare("UPDATE user SET phoneNumber = ? WHERE userMail = ?");
+                $sql = $this->connection->prepare("UPDATE $table SET phoneNumber = ? WHERE " . $table . "Mail = ?");
                 $sql->execute([$phoneNumber, $_SESSION['email']]);
                 $_SESSION['message'] = "Phone number is modified";
                 $_SESSION['phone'] = $phoneNumber;
@@ -957,30 +970,30 @@ WHERE productId = :productId;
             }
         }
 
-        // Set session message based on whether any changes were made
+// Set session message based on whether any changes were made
         $_SESSION['message'] = $count > 0 ? "We made changes to your profile" : "There are no changes made to your profile";
-        $stmt = "Select firstName,lastName,phoneNumber from user WHERE userId = :userId";
+
+        $stmt = "SELECT firstName, lastName, phoneNumber FROM $table WHERE " . $table . "Id = :Id";
         $stmt = $this->connection->prepare($stmt);
-        $stmt->bindParam(':userId', $_SESSION['userId']);
+        $stmt->bindParam(':Id', $_SESSION['userId']);
         $stmt->execute();
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             $_SESSION['qrCodeFile'] = $this->createQrCode($row['firstName'] . ' ' . $row['lastName'], $row['phoneNumber']);
-
         }
-        $stmt = "UPDATE qr_code qr
-INNER JOIN user u ON qr.userId = u.userId
+        if ($_SESSION['privilage'] != 'veterinarian') {
+            $stmt = "UPDATE qr_code qr
+INNER JOIN $table u ON qr.userId = u.userId
 SET qr.qrCodeName = :qrCodeName
-WHERE u.userId = :userId;
-";
-        $stmt = $this->connection->prepare($stmt);
-        $stmt->bindParam(':userId', $_SESSION['userId']);
-        $stmt->bindParam(':qrCodeName', $_SESSION['qrCodeFile']);
-        $stmt->execute();
-
-
-        // Redirect to index.php
+WHERE u.userId = :userId";
+            $stmt = $this->connection->prepare($stmt);
+            $stmt->bindParam(':userId', $_SESSION['userId']);
+            $stmt->bindParam(':qrCodeName', $_SESSION['qrCodeFile']);
+            $stmt->execute();
+        }
+// Redirect to index.php
         header('Location: index.php');
         exit();
+
     }
 
     public function picture($target = " ")
@@ -1067,11 +1080,15 @@ WHERE u.userId = :userId;
                     if ($target == "index.php" || $target == "users.php" || $target == "workers.php" || $target == "tables.php"
                         || $target == "reports.php" || $target == "menu.php" || $target == "coupon.php") {
 
-                        $query = $this->connection->prepare("UPDATE user SET profilePic = :profilePic WHERE userMail = :userMail");
+                        if($_SESSION['privilage'] != 'Veterinarian')
+                            $query = $this->connection->prepare("UPDATE user SET profilePic = :profilePic WHERE userMail = :userMail");
+                        else{
+                            $query = $this->connection->prepare("UPDATE veterinarian SET profilePic = :profilePic WHERE veterinarianMail = :userMail");
+
+                        }
                         $query->bindValue(":profilePic", $new_file_name, PDO::PARAM_STR);
                         $query->bindValue(":userMail", $_SESSION['email'], PDO::PARAM_STR);
                         $query->execute();
-
                         $_SESSION['profilePic'] = $new_file_name;
                         // Redirect to login page after successful upload
                         header('Location: ' . $_SESSION['backPic']);
@@ -1108,6 +1125,23 @@ WHERE u.userId = :userId;
         return $new_file_name;
     }
 
+    public function language()
+    {
+
+            // Determine the language: prioritize GET parameter, then userLang, then 'en'
+            if (isset($_GET['lang'])) {
+                $lang = $_GET['lang']; // User selected a language
+                $_SESSION['lang'] = $lang; // Save selected language in session
+            } else {
+                $lang = $_SESSION['userLang'] ?? 'en'; // Default to userLang or 'en'
+                $_SESSION['lang'] = $lang; // Set session language to default
+            }
+
+            // Include the language file
+            include "lang_$lang.php";
+
+    }
+
     public function logOut()
     {
         $_SESSION = [];
@@ -1133,7 +1167,7 @@ WHERE u.userId = :userId;
         try {
             // Check the `user` table first
             $sql = "SELECT 'user' AS userType, userMail AS mail, userPassword AS password, banned AS banned,
-                       firstName, lastName, profilePic, userId, phoneNumber, privilage
+                       firstName, lastName, profilePic, userId, phoneNumber, privilage, usedLanguage
                 FROM user
                 WHERE userMail = :email";
 
@@ -1149,7 +1183,7 @@ WHERE u.userId = :userId;
 
             // Otherwise, check the `veterinarian` table
             $sql = "SELECT 'vet' AS userType, veterinarianMail AS mail, veterinarianPassword AS password,
-         firstName, lastName, profilePic, veterinarianId, phoneNumber
+         firstName, lastName, profilePic, veterinarianId, phoneNumber, usedLanguage
                 FROM veterinarian
                 WHERE veterinarianMail = :email";
 
@@ -1198,11 +1232,12 @@ WHERE u.userId = :userId;
                             $_SESSION['name'] = $_SESSION['firstName'] . " " . $_SESSION['lastName'];
                             $_SESSION['profilePic'] = $result['profilePic'] ?? ''; // Default if missing
                             $_SESSION['phone'] = $result['phoneNumber'] ?? ''; // Default if missing
+                            $_SESSION['userLang'] = $result['usedLanguage'] ?? '';
                             // Veterinarian-specific session and cookies
                             if ($result['userType'] === 'vet') {
 
                                 $_SESSION['userId'] = $result['veterinarianId'] ?? ''; // Default if missing
-                                $_SESSION['privilage'] = 'veterinarian';
+                                $_SESSION['privilage'] = 'Veterinarian';
                             } else {
                                 // User-specific session and cookies
                                 $_SESSION['userId'] = $result['userId'] ?? ''; // Default if missing
@@ -1254,7 +1289,18 @@ WHERE u.userId = :userId;
 
                 unset($_COOKIE['last_activity']);
                 unset($_COOKIE['email']);
-                setcookie("email", $mail, time() + 10 * 60, "/");
+                unset($_COOKIE['name']);
+                unset($_COOKIE['profilePic']);
+                unset($_COOKIE['userId']);
+                unset($_COOKIE['phone']);
+                unset($_COOKIE['privilage']);
+
+                setcookie("email", $_SESSION['email'], time() + 10 * 60, "/");
+                setcookie("name", $_SESSION['name'], time() + 10 * 60, "/");
+                setcookie("profilePic", $_SESSION['profilePic'], time() + 10 * 60, "/");
+                setcookie("userId", $_SESSION['userId'], time() + 10 * 60, "/");
+                setcookie("phone", $_SESSION['phone'], time() + 10 * 60, "/");
+                setcookie("privilage", $_SESSION['privilage'], time() + 10 * 60, "/");
                 setcookie("last_activity", time(), time() + 10 * 60, "/");
                 if ($_SESSION['privilage'] == 'user') {
                     $sql = "SELECT p.petId FROM  pet p  inner join user u   on p.userId=u.userId  where u.userMail = :mail";

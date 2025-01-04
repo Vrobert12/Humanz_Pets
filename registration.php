@@ -1,12 +1,7 @@
 <?php
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-    $lang = $_GET['lang'] ?? $_SESSION['lang'] ?? 'en';
-    if(isset($_GET['lang'])){
-        $_SESSION['lang'] = $_GET['lang'];
-    }
-    include "lang_$lang.php";
-}
+
+$autoload = new Functions();
+$autoload->language();
 if(isset($_SESSION['email'])){
     header('Location: index.php');
     exit();
@@ -69,6 +64,12 @@ if (isset($_SESSION['title'])) {
     <input type="text" placeholder="Phone Number" name="tel" class="inputok" id="tel" ><br>
     <label for="mail">E-mail:</label><br>
     <input type="email" class="inputok" placeholder="Email" name="mail" id="mail" ><br>
+    <select name="lang">
+        <option hidden="hidden">Select your language</option>
+        <option value="en">English</option>
+        <option value="hu">Magyar</option>
+        <option value="sr">Srpski</option>
+    </select>
     <?php
     if (!isset($_GET['token']) || !isset($_SESSION['token'])) {
         $_SESSION['token'] = substr(number_format(time() * rand(), 0, '', ''), 0, 6);

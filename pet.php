@@ -2,16 +2,9 @@
 
 require 'vendor/autoload.php';
 
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-    $lang = $_GET['lang'] ?? $_SESSION['lang'] ?? 'en';
-    if (isset($_GET['lang'])) {
-        $_SESSION['lang'] = $_GET['lang'];
-    }
-    include "lang_$lang.php";
-}
 include "functions.php";
 $functions = new Functions();
+$functions->language();
 $functions->checkAutoLogin();
 
 ?>
@@ -54,13 +47,7 @@ $_SESSION['backPic']="pet.php";
         $stmt->bindParam(":userId", $userID, PDO::PARAM_INT);
         if ($stmt->execute()) {
             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                echo "<form action='updateAnimal.php'class='mainForm' method='get'>";
-                echo "<input type='hidden' name='petName' value='" . $row['petName'] . "'>
-                <input type='hidden' name='petId' value='" . $row['petId'] . "'>
-<input type='hidden' name='bred' value='" . $row['bred'] . "'>
-<input type='hidden' name='petSpecies' value='" . $row['petSpecies'] . "'>
-<input type='hidden' name='petPicture' value='" . $row['petPicture'] . "'>
-<input type='hidden' name='petUpdate' value='update'>";
+
                 $petName = htmlspecialchars($row['petName']);
                 $typeOfAnimal = htmlspecialchars($row['bred']);
                 $petSpecies = htmlspecialchars($row['petSpecies']);
@@ -74,16 +61,6 @@ $_SESSION['backPic']="pet.php";
                 echo '<p><strong>' . BREED . ':</strong> ' . $typeOfAnimal . '</p>';
                 echo '<p><strong>' . SPECIES . ':</strong> ' . $petSpecies . '</p>';
                 echo '<p><strong>' . EMAIL . ':</strong> ' . $userMail . '</p>';
-                echo "<form action='pet.php' method='post' style='display: inline-block; margin-right: 10px;'>
-            <input type='hidden' name='action' value='updatePet'>
-            <input type='submit' class='btn btn-primary' value='".UPDATE_PET."'>
-        </form>";
-
-                echo "<form action='pet.php' method='post' style='display: inline-block;'>
-            <input type='hidden' name='action' value='deletePet'>
-            <input type='hidden' name='petUpdate' value='update'>
-            <input type='submit' class='btn btn-primary' value='".DELETE_PET."'>
-        </form>";
 
                 echo '</div>';
                 echo '</div>';

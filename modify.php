@@ -1,12 +1,9 @@
 <?php
 include "functions.php";
 $autoload = new Functions();
+$autoload->language();
 $autoload->checkAutoLogin();
-$lang = $_GET['lang'] ?? $_SESSION['lang'] ?? 'en';
-if (isset($_GET['lang'])) {
-    $_SESSION['lang'] = $_GET['lang'];
-}
-include "lang_$lang.php";
+
 ?>
 <!DOCTYPE html>
 <html lang="en">

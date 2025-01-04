@@ -1,16 +1,8 @@
 <?php
 
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-    $lang = $_GET['lang'] ?? $_SESSION['lang'] ?? 'en';
-    if(isset($_GET['lang'])){
-        $_SESSION['lang'] = $_GET['lang'];
-    }
-    include "lang_$lang.php";
-}
-
 include "functions.php";
 $autoload=new Functions();
+$autoload->language();
 $autoload->checkAutoLogin();
 
 $pdo = $autoload->connect($GLOBALS['dsn'], $_ENV['DB_USER'], $_ENV['DB_PASSWORD'], $GLOBALS['pdoOptions']);
@@ -199,7 +191,7 @@ function users($command, $params = [])
                 echo '<label>Name: ' . htmlspecialchars($row['firstName'] . " " . $row['lastName']) . '</label><br>';
                 echo '<label>Phone: ' . htmlspecialchars($row['phoneNumber']) . '</label><br>';
                 echo '<label>Email: ' . htmlspecialchars($row['veterinarianMail']) . '</label><br>';
-                echo '<a href="book_apointment.php?veterinarian=' . htmlspecialchars($row['veterinarianId']) . '">Reserve</a>&nbsp;&nbsp;&nbsp;';
+                echo '<a href="book_apointment.php?email='.$_SESSION['email'].'&veterinarian=' . htmlspecialchars($row['veterinarianId']) . '">Reserve</a>&nbsp;&nbsp;&nbsp;';
                 echo '</div>';
             }
             echo '</div></div>';

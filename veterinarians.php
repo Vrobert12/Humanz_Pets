@@ -1,12 +1,8 @@
 <?php
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-    $lang = $_GET['lang'] ?? $_SESSION['lang'] ?? 'en';
-    if(isset($_GET['lang'])){
-        $_SESSION['lang'] = $_GET['lang'];
-    }
-    include "lang_$lang.php";
-}
+include "functions.php";
+$autoload = new Functions();
+$autoload->language();
+$autoload->checkAutoLogin();
 if($_SESSION['privilage']!='Admin'){
     header('location:index.php');
     exit();
@@ -78,10 +74,4 @@ if($_SESSION['privilage']!='Admin'){
 <script src="js/script.js"></script>
 </body>
 </html>
-<?php
 
-include 'functions.php';
-$autoload=new Functions();
-$autoload->checkAutoLogin();
-
-?>

@@ -2,9 +2,9 @@
 session_start();
 include "functions.php";
 $autoload = new Functions();
+$autoload->language();
 $autoload->checkAutoLogin('registerAnimal.php');
-$lang = $_GET['lang'] ?? $_SESSION['lang'] ?? 'en';
-include_once "lang_$lang.php";
+
 $_SESSION['backPic'] = "registerAnimal.php";
 ?>
 

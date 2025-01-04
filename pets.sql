@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2024. Dec 21. 20:07
+-- Létrehozás ideje: 2025. Jan 04. 22:12
 -- Kiszolgáló verziója: 10.4.32-MariaDB
 -- PHP verzió: 8.2.12
 
@@ -155,7 +155,45 @@ INSERT INTO `errorlog` (`errorLogId`, `errorType`, `errorMail`, `errorText`, `er
 (113, 'Picture', 'varrorobert03@gmail.com', 'The file is bigger than 300KB', '2024-12-14 13:46:40.000000'),
 (114, 'Log in', 'robertvarro12@gmail.com', 'The password was not valid!', '2024-12-14 14:42:20.000000'),
 (115, 'Log in', 'varrorobert03@gmail.com', 'The password was not valid!', '2024-12-14 15:26:41.000000'),
-(116, 'Picture', 'robertvarro12@gmail.com', 'The file is bigger than 300KB', '2024-12-21 19:00:25.000000');
+(116, 'Picture', 'robertvarro12@gmail.com', 'The file is bigger than 300KB', '2024-12-21 19:00:25.000000'),
+(117, 'Picture', 'varrorobert03@gmail.com', 'The file is bigger than 300KB', '2024-12-22 20:24:22.000000'),
+(118, 'Log in', 'robertvarro12@gmail.com', 'The password was not valid!', '2024-12-23 14:18:41.000000'),
+(119, 'Picture', 'robertvarro12@gmail.com', 'The file is bigger than 300KB', '2025-01-02 21:13:02.000000'),
+(120, 'Log in', 'robertvarro12@gmail.com', 'The password was not valid!', '2025-01-02 22:07:11.000000'),
+(121, 'Log in', 'varrorobert03@gmail.com', 'The E-mail is not in our database', '2025-01-02 23:19:26.000000'),
+(122, 'Log in', 'varrorobert03@gmail.com', 'The E-mail is not in our database', '2025-01-02 23:25:16.000000'),
+(123, 'Fetch User/Vet', 'varrorobert03@gmail.com', 'Database error: SQLSTATE[42S22]: Column not found: 1054 Unknown column \'banned\' in \'field list\'', '2025-01-02 23:25:37.000000'),
+(124, 'Log in', 'varrorobert03@gmail.com', 'The E-mail is not in our database', '2025-01-02 23:25:39.000000'),
+(125, 'Fetch User/Vet', 'varrorobert03@gmail.com', 'Database error: SQLSTATE[42S22]: Column not found: 1054 Unknown column \'banned\' in \'field list\'', '2025-01-02 23:26:45.000000'),
+(126, 'Log in', 'varrorobert03@gmail.com', 'The E-mail is not in our database', '2025-01-02 23:26:47.000000'),
+(127, 'Fetch User/Vet', 'varrorobert03@gmail.com', 'Database error: SQLSTATE[42S22]: Column not found: 1054 Unknown column \'banned\' in \'field list\'', '2025-01-02 23:42:03.000000'),
+(128, 'Log in', 'varrorobert03@gmail.com', 'The E-mail is not in our database', '2025-01-02 23:42:05.000000'),
+(129, 'Fetch User/Vet', 'varrorobert03@gmail.com', 'Database error: SQLSTATE[42S22]: Column not found: 1054 Unknown column \'banned\' in \'field list\'', '2025-01-02 23:42:30.000000'),
+(130, 'Log in', 'varrorobert03@gmail.com', 'The E-mail is not in our database', '2025-01-02 23:42:32.000000'),
+(131, 'Log in', 'robertvarro12@gmail.com', 'The password was not valid!', '2025-01-02 23:42:48.000000'),
+(132, 'Fetch User/Vet', 'varrorobert03@gmail.com', 'Database error: SQLSTATE[42S22]: Column not found: 1054 Unknown column \'banned\' in \'field list\'', '2025-01-02 23:53:55.000000'),
+(133, 'Log in', 'varrorobert03@gmail.com', 'The E-mail is not in our database', '2025-01-02 23:53:57.000000'),
+(134, 'Fetch User/Vet', 'varrorobert03@gmail.com', 'Database error: SQLSTATE[42S22]: Column not found: 1054 Unknown column \'banned\' in \'field list\'', '2025-01-02 23:54:09.000000'),
+(135, 'Log in', 'varrorobert03@gmail.com', 'The E-mail is not in our database', '2025-01-02 23:54:11.000000'),
+(136, 'Fetch User/Vet', 'varrorobert03@gmail.com', 'Database error: SQLSTATE[42S22]: Column not found: 1054 Unknown column \'banned\' in \'field list\'', '2025-01-02 23:54:47.000000'),
+(137, 'Log in', 'varrorobert03@gmail.com', 'The E-mail is not in our database', '2025-01-02 23:54:49.000000'),
+(138, 'Fetch User/Vet', 'varrorobert03@gmail.com', 'Database error: SQLSTATE[42S22]: Column not found: 1054 Unknown column \'banned\' in \'field list\'', '2025-01-02 23:57:45.000000'),
+(139, 'Log in', 'varrorobert03@gmail.com', 'The E-mail is not in our database', '2025-01-02 23:57:47.000000'),
+(140, 'Fetch User/Vet', 'varrorobert03@gmail.com', 'Database error: SQLSTATE[42S22]: Column not found: 1054 Unknown column \'banned\' in \'field list\'', '2025-01-03 00:00:15.000000'),
+(141, 'Log in', 'varrorobert03@gmail.com', 'The E-mail is not in our database', '2025-01-03 00:00:17.000000'),
+(142, 'Fetch User/Vet', 'varrorobert03@gmail.com', 'Database error: SQLSTATE[42S22]: Column not found: 1054 Unknown column \'privilage\' in \'field list\'', '2025-01-03 00:03:40.000000'),
+(143, 'Log in', 'varrorobert03@gmail.com', 'The E-mail is not in our database', '2025-01-03 00:03:42.000000'),
+(144, 'Fetch User/Vet', 'varrorobert03@gmail.com', 'Database error: SQLSTATE[42S22]: Column not found: 1054 Unknown column \'privilage\' in \'field list\'', '2025-01-03 00:03:53.000000'),
+(145, 'Log in', 'varrorobert03@gmail.com', 'The E-mail is not in our database', '2025-01-03 00:03:55.000000'),
+(146, 'Log in', 'robertvarro12@gmail.com', 'The password was not valid!', '2025-01-03 00:17:35.000000'),
+(147, 'Log in', 'robertvarro12@gmail.com', 'The password was not valid!', '2025-01-03 00:32:27.000000'),
+(148, 'Log in', 'robertvarro12@gmail.com', 'The password was not valid!', '2025-01-03 21:16:29.000000'),
+(149, 'Password change', 'varrorobert03@gmail.com', 'Not registered E-mail!', '2025-01-03 23:32:03.000000'),
+(150, 'Password change', 'varrorobert03@gmail.com', 'Not registered E-mail!', '2025-01-03 23:32:15.000000'),
+(151, 'Log in', 'robertvrro12@gmail.com', 'The E-mail is not in our database', '2025-01-04 19:07:13.000000'),
+(152, 'Picture', 'varrorobert03@gmail.com', 'The file is bigger than 300KB', '2025-01-04 19:08:32.000000'),
+(153, 'Log in', 'varrorobert03@gmail.com', 'The password was not valid!', '2025-01-04 19:47:20.000000'),
+(154, 'Log in', 'robertvarro12@gmail.com', 'The password was not valid!', '2025-01-04 20:42:38.000000');
 
 -- --------------------------------------------------------
 
@@ -214,8 +252,8 @@ CREATE TABLE `pet` (
 --
 
 INSERT INTO `pet` (`petId`, `petName`, `bred`, `petSpecies`, `petPicture`, `userId`, `veterinarId`) VALUES
-(1, 'Buksi', 'Mixed', 'Dog', '20241111154218.png', 19, 1),
-(2, 'Tigrincs', 'Mixed', 'Cat', '20241111193857.png', 19, 1),
+(1, 'Buksi', 'Mixed', 'Dog  ', '20241223153456.png', 19, 1),
+(2, 'Tigrincs', 'Mixed', 'Cat ', '20241223151911.png', 19, 1),
 (3, 'Buksi', 'Mixed', 'Dog', '20241214163313.png', 26, 1),
 (4, 'Tigrincs', 'Mixed', 'Cat', '20241214163628.png', 26, 1),
 (9, 'Buksi', 'Mixed', 'Cat', '20241214225926.png', 26, 1),
@@ -224,7 +262,10 @@ INSERT INTO `pet` (`petId`, `petName`, `bred`, `petSpecies`, `petPicture`, `user
 (12, 'Buksi', 'Mixed', 'Cat', '20241214230428.png', 27, 1),
 (13, 'Zizi', 'Pug', 'Dog', '20241215162746.png', 25, 1),
 (14, 'Zizi2', 'Pug', 'Dog', '20241215190624.png', 25, 1),
-(15, 'Tigrincs', 'Mixed', 'Cat', '20241221144748.png', 28, 1);
+(15, 'Tigrincs', 'Mixed', 'Cat', '20241221144748.png', 28, 1),
+(40, 'Buksi', 'Tiszta', 'Dog  ', '20241223000554.png', 29, 1),
+(44, 'Tigrincs', 'Mixed', 'Dog ', '20241223140237.png', 29, 1),
+(45, 'Buksi', 'V', 'Dog', '20241223140454.png', 29, NULL);
 
 -- --------------------------------------------------------
 
@@ -247,7 +288,7 @@ CREATE TABLE `product` (
 
 INSERT INTO `product` (`productId`, `productName`, `productPicture`, `description`, `productCost`, `productRelease`) VALUES
 (1, 'Collar', 'logInPic.png', 'This is a collar.', 5.00, '2024-12-16 18:27:39'),
-(2, 'Leash', '20241111140434.png', 'This is a leash.', 6.99, '2024-12-21 20:02:08'),
+(2, 'Leash', '20241226145950.png', 'This is a leash.', 6.99, '2024-12-26 14:59:50'),
 (3, 'Cicamica', '20241221193351.png', 'Da vidiomo', 23.99, '2024-12-21 20:00:13'),
 (4, 'Asd', '20241221193523.png', 'Egyedi textarea szoveg valamit meg irjunk domi', 23.34, '2024-12-21 19:57:39');
 
@@ -270,11 +311,12 @@ CREATE TABLE `qr_code` (
 --
 
 INSERT INTO `qr_code` (`qr_code_id`, `qrCodeName`, `userId`, `generated_at`, `updated_at`) VALUES
-(1, 'QRcodes/qrcode_6766c4c250184.png', 19, '2024-11-11 19:47:18', '2024-12-21 13:38:10'),
+(1, 'QRcodes/qrcode_677993d3f0e99.png', 19, '2024-11-11 19:47:18', '2025-01-04 20:02:28'),
 (2, 'QRcodes/qrcode_675da53946388.png', 26, '2024-12-14 16:33:13', '2024-12-14 15:33:13'),
 (3, 'QRcodes/qrcode_675e00a3bfff4.png', 27, '2024-12-14 23:03:15', '2024-12-14 22:03:15'),
 (4, 'QRcodes/qrcode_675ef571ca9a1.png', 25, '2024-12-15 16:27:46', '2024-12-15 15:27:46'),
-(5, 'QRcodes/qrcode_6766c7046bb35.png', 28, '2024-12-21 14:47:48', '2024-12-21 13:47:48');
+(5, 'QRcodes/qrcode_6766c7046bb35.png', 28, '2024-12-21 14:47:48', '2024-12-21 13:47:48'),
+(6, 'QRcodes/qrcode_676857dc08696.png', 29, '2024-12-22 19:18:04', '2024-12-22 18:18:04');
 
 -- --------------------------------------------------------
 
@@ -286,9 +328,19 @@ CREATE TABLE `reservation` (
   `reservationId` int(11) NOT NULL,
   `reservationDay` date DEFAULT NULL,
   `reservationTime` time DEFAULT NULL,
-  `veterinarId` int(11) NOT NULL,
+  `period` time NOT NULL,
+  `veterinarianId` int(11) NOT NULL,
   `petId` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- A tábla adatainak kiíratása `reservation`
+--
+
+INSERT INTO `reservation` (`reservationId`, `reservationDay`, `reservationTime`, `period`, `veterinarianId`, `petId`) VALUES
+(1, '2025-01-28', '15:14:00', '14:08:00', 3, 2),
+(2, '2025-01-28', '14:16:00', '14:11:00', 3, 1),
+(3, '2025-02-04', '14:11:00', '15:11:00', 3, 2);
 
 -- --------------------------------------------------------
 
@@ -325,21 +377,23 @@ CREATE TABLE `user` (
   `banned` tinyint(1) NOT NULL,
   `banned_time` timestamp NOT NULL DEFAULT current_timestamp(),
   `passwordValidation` int(10) DEFAULT NULL,
-  `passwordValidationTime` timestamp NOT NULL DEFAULT current_timestamp()
+  `passwordValidationTime` timestamp NOT NULL DEFAULT current_timestamp(),
+  `usedLanguage` enum('en','hu','sr','') DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- A tábla adatainak kiíratása `user`
 --
 
-INSERT INTO `user` (`userId`, `firstName`, `lastName`, `phoneNumber`, `userMail`, `userPassword`, `profilePic`, `privilage`, `registrationTime`, `verification_code`, `verify`, `verification_time`, `banned`, `banned_time`, `passwordValidation`, `passwordValidationTime`) VALUES
-(6, 'Nikoletta', 'Varro', '0', 'nikolettavarro12@gmail.com', '$2y$10$ZJtAXGLi1y8Y7VlLzE4Ru.nH.SbV5pbDRtoQTlOv88WgemWiSIrB2', 'logInPic.png', 'Guest', '0000-00-00 00:00:00', 401081, 0, '2024-04-29 22:00:00', 0, '0000-00-00 00:00:00', 0, '2024-04-23 09:54:10'),
-(7, 'Nikoletta', 'Varro', '0', 'nikolettavarro@gmail.com', '$2y$10$GZ9eslD9.lWIwuBi0by.sunJYqe1s8Jn8K2eX4CefmMN/LOnyRNua', 'logInPic.png', 'Guest', '0000-00-00 00:00:00', 102107, 0, '2024-04-29 22:00:00', 0, '0000-00-00 00:00:00', 0, '2024-04-23 09:54:10'),
-(19, 'Bob', 'Varro', '0649420637', 'robertvarro12@gmail.com', '$2y$10$cPLcJMsanfIKcT/RSF3rgO1zc/9JEbFgnD9YuEMZoFbNstohYDBha', '20241221194457.jpg', 'Admin', '0000-00-00 00:00:00', 229527, 1, '2024-04-29 22:00:00', 0, '0000-00-00 00:00:00', 136415, '2024-06-15 11:28:52'),
-(25, 'Dominik', 'Hupko', '628277140', 'hupkodominik143@gmail.com', '$2y$10$2GtJU92kqTP4FioPdkS0WuXGDZMTqQwpEuDToq9suKr3T7XP37EEm', 'logInPic.png', 'Admin', '2024-06-03 12:23:54', 2047970, 1, '2024-06-03 12:33:54', 0, '0000-00-00 00:00:00', NULL, '2024-06-03 12:23:54'),
-(26, 'Robert', 'Varro', '0649420637', 'varrorobert03@gmail.coml', '$2y$10$T5p19yMDoZ0EKiRXocAjJuNmNFK8INcDDWFkyC97i5rB6rODkLO82', 'logInPic.png', 'Guest', '2024-12-14 15:32:29', 1740492, 1, '2024-12-14 15:42:29', 0, '2024-12-14 15:32:29', NULL, '2024-12-14 15:32:29'),
-(27, 'Robert', 'Varro', '0649420637', 'varro7robert03@gmail.com', '$2y$10$7.Vqm7RZ7EaQISuO6xdo3OcNPbEAERoUAJF8hsBBxD8mCAvaH5Bpi', 'logInPic.png', 'Guest', '2024-12-14 22:01:34', 3299090, 1, '2024-12-14 22:11:34', 0, '2024-12-14 22:01:34', NULL, '2024-12-14 22:01:34'),
-(28, 'Robert', 'Varro', '0649420637', 'varrorobert03@gmail.com', '$2y$10$WuiMPKYoHYmik23BpzphiuOlUZIL.pVOsGDkuUl.zzW.csVbAaaCG', 'logInPic.png', 'Guest', '2024-12-21 13:46:39', 1176453, 1, '2024-12-21 13:56:39', 0, '2024-12-21 13:46:39', NULL, '2024-12-21 13:46:39');
+INSERT INTO `user` (`userId`, `firstName`, `lastName`, `phoneNumber`, `userMail`, `userPassword`, `profilePic`, `privilage`, `registrationTime`, `verification_code`, `verify`, `verification_time`, `banned`, `banned_time`, `passwordValidation`, `passwordValidationTime`, `usedLanguage`) VALUES
+(6, 'Nikoletta', 'Varro', '0', 'nikolettavarro12@gmail.com', '$2y$10$ZJtAXGLi1y8Y7VlLzE4Ru.nH.SbV5pbDRtoQTlOv88WgemWiSIrB2', 'logInPic.png', 'Guest', '0000-00-00 00:00:00', 401081, 0, '2024-04-29 22:00:00', 0, '0000-00-00 00:00:00', 0, '2024-04-23 09:54:10', 'en'),
+(7, 'Nikoletta', 'Varro', '0', 'nikolettavarro@gmail.com', '$2y$10$GZ9eslD9.lWIwuBi0by.sunJYqe1s8Jn8K2eX4CefmMN/LOnyRNua', 'logInPic.png', 'Guest', '0000-00-00 00:00:00', 102107, 0, '2024-04-29 22:00:00', 0, '0000-00-00 00:00:00', 0, '2024-04-23 09:54:10', 'en'),
+(19, 'Robert', 'Varro', '0649420637', 'robertvarro12@gmail.com', '$2y$10$sZKeBUr3S43dBnkiLkzP..1SJCekw6MqWlEpwwqj1puauC2HzEQ0O', '20250104204023.png', 'Admin', '0000-00-00 00:00:00', 229527, 1, '2024-04-29 22:00:00', 0, '0000-00-00 00:00:00', 167710, '2025-01-03 23:15:50', 'hu'),
+(25, 'Dominik', 'Hupko', '628277140', 'hupkodominik143@gmail.comk', '$2y$10$XFNjOOWh2HAr8ZiYb.ur8egpiw4TlYdIIDEv2L/qnysTyqxDh8cb2', 'logInPic.png', 'Admin', '2024-06-03 12:23:54', 2047970, 1, '2024-06-03 12:33:54', 0, '0000-00-00 00:00:00', NULL, '2024-06-03 12:23:54', 'en'),
+(26, 'Robert', 'Varro', '0649420637', 'varrorobert03@gmail.coml', '$2y$10$T5p19yMDoZ0EKiRXocAjJuNmNFK8INcDDWFkyC97i5rB6rODkLO82', 'logInPic.png', 'Guest', '2024-12-14 15:32:29', 1740492, 1, '2024-12-14 15:42:29', 0, '2024-12-14 15:32:29', NULL, '2024-12-14 15:32:29', 'en'),
+(27, 'Robert', 'Varro', '0649420637', 'varro7robert03@gmail.com', '$2y$10$7.Vqm7RZ7EaQISuO6xdo3OcNPbEAERoUAJF8hsBBxD8mCAvaH5Bpi', 'logInPic.png', 'Guest', '2024-12-14 22:01:34', 3299090, 1, '2024-12-14 22:11:34', 0, '2024-12-14 22:01:34', NULL, '2024-12-14 22:01:34', 'en'),
+(28, 'Robert', 'Varro', '0649420637', 'varkrorobert03@gmail.com', '$2y$10$WuiMPKYoHYmik23BpzphiuOlUZIL.pVOsGDkuUl.zzW.csVbAaaCG', 'logInPic.png', 'Guest', '2024-12-21 13:46:39', 1176453, 1, '2024-12-21 13:56:39', 0, '2024-12-21 13:46:39', NULL, '2024-12-21 13:46:39', 'en'),
+(29, 'Robert', 'Varro', '0649420637', 'varrorobert03@gmail.comj', '$2y$10$eQ64rp7wa7khUMrxClHZxOjSnZKmL57c6ZlP84OWG.YeKAbgRAdji', 'logInPic.png', 'Guest', '2024-12-22 18:15:01', 2028307, 1, '2024-12-22 18:25:01', 0, '2024-12-22 18:15:01', NULL, '2024-12-22 18:15:01', 'en');
 
 -- --------------------------------------------------------
 
@@ -388,7 +442,7 @@ CREATE TABLE `veterinarian` (
   `lastName` varchar(50) NOT NULL,
   `phoneNumber` varchar(13) NOT NULL,
   `veterinarianMail` varchar(100) NOT NULL,
-  `veterinarianPassword` varchar(60) NOT NULL,
+  `veterinarianPassword` varchar(60) DEFAULT NULL,
   `profilePic` varchar(100) DEFAULT NULL,
   `registrationTime` timestamp NOT NULL DEFAULT current_timestamp(),
   `verification_code` int(50) DEFAULT NULL,
@@ -396,15 +450,18 @@ CREATE TABLE `veterinarian` (
   `verification_time` timestamp NOT NULL DEFAULT current_timestamp(),
   `passwordValidation` int(10) DEFAULT NULL,
   `passwordValidationTime` timestamp NOT NULL DEFAULT current_timestamp(),
-  `workAddressId` int(11) NOT NULL
+  `workAddressId` int(11) NOT NULL,
+  `usedLanguage` enum('en','hu','sr','') DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- A tábla adatainak kiíratása `veterinarian`
 --
 
-INSERT INTO `veterinarian` (`veterinarianId`, `firstName`, `lastName`, `phoneNumber`, `veterinarianMail`, `veterinarianPassword`, `profilePic`, `registrationTime`, `verification_code`, `verify`, `verification_time`, `passwordValidation`, `passwordValidationTime`, `workAddressId`) VALUES
-(1, 'Robert', 'Varro', '0649420637', 'robertvarro11@gmail.com', '12345678', 'logInPic.png', '2024-12-14 13:02:10', NULL, 1, '2024-12-14 13:02:10', 1, '2024-12-14 13:02:10', 1);
+INSERT INTO `veterinarian` (`veterinarianId`, `firstName`, `lastName`, `phoneNumber`, `veterinarianMail`, `veterinarianPassword`, `profilePic`, `registrationTime`, `verification_code`, `verify`, `verification_time`, `passwordValidation`, `passwordValidationTime`, `workAddressId`, `usedLanguage`) VALUES
+(1, 'Robert', 'Varro', '0649420637', 'varrorobejrt03@gmail.com', '$2y$10$kDYqhdUxCiKKb86iW8vGIe6yi.8fmADky4QYmpcOXlV3Fh8hN1jOq', 'logInPic.png', '2024-12-14 13:02:10', NULL, 1, '2024-12-14 13:02:10', 1, '2024-12-14 13:02:10', 1, 'en'),
+(2, 'Robert', 'Varro', '0649420637', 'hupkodominik143@gmail.com', '$2y$10$BkQO5/YgtNn7TA8mHdhJpecVxchuQTTtJRtuuoZpW6xyOTTr92mw.', 'logInPic.png', '2025-01-03 23:21:19', 1607888, 1, '2025-01-03 23:31:19', NULL, '2025-01-03 23:21:19', 0, 'hu'),
+(3, 'Robert', 'Varro', '0649420637', 'varrorobert03@gmail.com', '$2y$10$u1KvS5Nh7JQBo89d7jM9yeFVAS6rrfptOrHum0v/KLNYPRfs60W/2', '20250104204104.jpg', '2025-01-04 18:44:36', 3296064, 1, '2025-01-04 18:54:36', NULL, '2025-01-04 18:44:36', 0, 'sr');
 
 -- --------------------------------------------------------
 
@@ -482,7 +539,7 @@ ALTER TABLE `qr_code`
 --
 ALTER TABLE `reservation`
   ADD PRIMARY KEY (`reservationId`),
-  ADD KEY `userId` (`veterinarId`),
+  ADD KEY `userId` (`veterinarianId`),
   ADD KEY `petId` (`petId`);
 
 --
@@ -543,7 +600,7 @@ ALTER TABLE `work_address`
 -- AUTO_INCREMENT a táblához `errorlog`
 --
 ALTER TABLE `errorlog`
-  MODIFY `errorLogId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=117;
+  MODIFY `errorLogId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=155;
 
 --
 -- AUTO_INCREMENT a táblához `log`
@@ -555,7 +612,7 @@ ALTER TABLE `log`
 -- AUTO_INCREMENT a táblához `pet`
 --
 ALTER TABLE `pet`
-  MODIFY `petId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `petId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
 
 --
 -- AUTO_INCREMENT a táblához `product`
@@ -567,19 +624,19 @@ ALTER TABLE `product`
 -- AUTO_INCREMENT a táblához `qr_code`
 --
 ALTER TABLE `qr_code`
-  MODIFY `qr_code_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `qr_code_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT a táblához `reservation`
 --
 ALTER TABLE `reservation`
-  MODIFY `reservationId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=115;
+  MODIFY `reservationId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT a táblához `user`
 --
 ALTER TABLE `user`
-  MODIFY `userId` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `userId` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT a táblához `user_product_relation`
@@ -597,7 +654,7 @@ ALTER TABLE `user_review_relation`
 -- AUTO_INCREMENT a táblához `veterinarian`
 --
 ALTER TABLE `veterinarian`
-  MODIFY `veterinarianId` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `veterinarianId` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT a táblához `veterinar_review_relation`
@@ -633,7 +690,7 @@ ALTER TABLE `qr_code`
 --
 ALTER TABLE `reservation`
   ADD CONSTRAINT `reservation_ibfk_1` FOREIGN KEY (`petId`) REFERENCES `pet` (`petId`),
-  ADD CONSTRAINT `reservation_ibfk_2` FOREIGN KEY (`veterinarId`) REFERENCES `veterinarian` (`veterinarianId`);
+  ADD CONSTRAINT `reservation_ibfk_2` FOREIGN KEY (`veterinarianId`) REFERENCES `veterinarian` (`veterinarianId`);
 
 --
 -- Megkötések a táblához `user_product_relation`

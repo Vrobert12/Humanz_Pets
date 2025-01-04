@@ -2,9 +2,9 @@
 session_start();
 include "functions.php";
 $autoload=new Functions();
+$autoload->language();
 $autoload->checkAutoLogin('selectVeterinarian.php');
-$lang = $_GET['lang'] ?? $_SESSION['lang'] ?? 'en';
-include_once "lang_$lang.php";
+
 $_SESSION['backPic'] = "selectVeterinarian.php";
 $functions = new Functions();
 $connection = $functions->connect($dsn, $_ENV['DB_USER'], $_ENV['DB_PASSWORD'], $pdoOptions);

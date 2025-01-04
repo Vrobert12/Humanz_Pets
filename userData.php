@@ -14,13 +14,8 @@
     <?php
     include "functions.php";
     $autoload = new Functions();
+    $autoload->language();
     $autoload->checkAutoLogin();
-
-    $lang = $_GET['lang'] ?? $_SESSION['lang'] ?? 'en';
-    if (isset($_GET['lang'])) {
-        $_SESSION['lang'] = $_GET['lang'];
-    }
-    include_once "lang_$lang.php";
 
     if (isset($_SESSION['message'])) {
         echo "<div class='alert alert-info'>" . $_SESSION['message'] . "</div>";
@@ -35,27 +30,48 @@
         // Use the connect method from the Functions class
         $connection = $functions->connect($dsn, $_ENV['DB_USER'], $_ENV['DB_PASSWORD'], $pdoOptions);
 
-        $sql = "SELECT FirstName, LastName, phoneNumber, userMail, profilePic, privilage, registrationTime 
+        if ($_SESSION['privilage'] == 'Veterinarian') {
+            $sql = "SELECT firstName, lastName, phoneNumber, veterinarianMail, profilePic, registrationTime 
+                FROM `veterinarian` WHERE veterinarianID = :veterinarianId";
+
+            $stmt = $connection->prepare($sql);
+            $stmt->bindParam(":veterinarianId", $userID, PDO::PARAM_INT);
+            $stmt->execute();
+
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $firstName = htmlspecialchars($row['firstName']);
+                $lastName = htmlspecialchars($row['lastName']);
+                $phoneNumber = htmlspecialchars($row['phoneNumber']);
+                $userMail = htmlspecialchars($row['veterinarianMail']);
+                $profilePic = htmlspecialchars($row['profilePic']);
+                $privilage = htmlspecialchars('Veterinarian');
+                $registrationTime = htmlspecialchars($row['registrationTime']);
+            }
+        } else {
+            $sql = "SELECT firstName, lastName, phoneNumber, userMail, profilePic, privilage, registrationTime 
                 FROM `user` WHERE userID = :userId";
 
-        $stmt = $connection->prepare($sql);
-        $stmt->bindParam(":userId", $userID, PDO::PARAM_INT);
-        $stmt->execute();
+            $stmt = $connection->prepare($sql);
+            $stmt->bindParam(":userId", $userID, PDO::PARAM_INT);
+            $stmt->execute();
 
-        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            $firstName = htmlspecialchars($row['FirstName']);
-            $lastName = htmlspecialchars($row['LastName']);
-            $phoneNumber = htmlspecialchars($row['phoneNumber']);
-            $userMail = htmlspecialchars($row['userMail']);
-            $profilePic = htmlspecialchars($row['profilePic']);
-            $privilage = htmlspecialchars($row['privilage']);
-            $registrationTime = htmlspecialchars($row['registrationTime']);
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $firstName = htmlspecialchars($row['firstName']);
+                $lastName = htmlspecialchars($row['lastName']);
+                $phoneNumber = htmlspecialchars($row['phoneNumber']);
+                $userMail = htmlspecialchars($row['userMail']);
+                $profilePic = htmlspecialchars($row['profilePic']);
+                $privilage = htmlspecialchars($row['privilage']);
+                $registrationTime = htmlspecialchars($row['registrationTime']);
+            }
+        }
             ?>
             <!-- User Profile Card -->
             <div class="card shadow mb-5">
                 <div class="row g-0">
                     <div class="col-md-4 text-center p-3">
-                        <img src="pictures/<?= $profilePic ?>" alt="Profile Picture" class="img-fluid rounded-circle" style="max-width: 200px;">
+                        <img src="pictures/<?= $profilePic ?>" alt="Profile Picture" class="img-fluid rounded-circle"
+                             style="max-width: 200px;">
                     </div>
                     <div class="col-md-8">
                         <div class="card-body">
@@ -69,7 +85,7 @@
                 </div>
             </div>
             <?php
-        }
+
     } else {
         header('Location: index.php');
         exit();
