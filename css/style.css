@@ -1,8 +1,0 @@
-.required .form-label:after {
-    content:"*";
-    color:red;
-}
-
-.pointer {
-    cursor: pointer;
-}
