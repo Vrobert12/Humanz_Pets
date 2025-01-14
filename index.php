@@ -80,7 +80,7 @@ https://getbootstrap.com/docs/5.3/components/navbar/
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
     <div class="container-fluid">
         <!-- Logo -->
-        <a class="navbar-brand" href="#">R&D</a>
+        <a class="navbar-brand" href="#">Logo</a>
         <!-- Toggler for mobile view -->
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
             <span class="navbar-toggler-icon"></span>
@@ -118,10 +118,7 @@ https://getbootstrap.com/docs/5.3/components/navbar/
 </nav>
 
 
-<div class="d-flex flex-row">
-
 <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark d-none d-md-inline-block" style=" top: 0; bottom: 0; width: 280px;">
-
     <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
         <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"/></svg>
         <span class="fs-4">Sidebar</span>
@@ -179,7 +176,7 @@ https://getbootstrap.com/docs/5.3/components/navbar/
                 echo'<li>
             <a href="addVet.php" class="nav-link text-white">
                 <svg class="bi me-2" width="16" height="16"><use xlink:href="#people-circle"/></svg>
-                '.ADDVET.'
+                Add veterinarian
             </a>
         </li>';
 
@@ -203,9 +200,9 @@ https://getbootstrap.com/docs/5.3/components/navbar/
 
                 // Dropdown menu
                 echo '<ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">';
-                echo '<li><a class="dropdown-item" href="modify.php"><i class="fas fa-gear"></i>&nbsp;'.SETTINGS.'</a></li>';
-                echo '<li><a class="dropdown-item" href="userData.php?email='.$_SESSION['email'].'"><i class="fas fa-circle-info"></i>&nbsp;'.ACCOUNT.'</a></li>';
-                echo'<li><a href="resetPassword.php?mail='.$_SESSION['email'].'" class="dropdown-item"><i class="bi bi-key"></i>&nbsp;'.CHANGEPS.'</a></li>';
+                echo '<li><a class="dropdown-item" href="modify.php"><i class="fas fa-gear"></i>&nbsp'.SETTINGS.'</a></li>';
+                echo '<li><a class="dropdown-item" href="userData.php?email='.$_SESSION['email'].'"><i class="fas fa-circle-info"></i>&nbsp'.ACCOUNT.'</a></li>';
+                echo'<li><a href="resetPassword.php?mail='.$_SESSION['email'].'" class="nav-link text-white">Change password </a></li>';
                 echo '<li><hr class="dropdown-divider"></li>';
                 echo '<li><a class="dropdown-item" href="functions.php?action=logOut" onclick="confirmLogout(event)">';
                 echo '<i class="bi bi-door-open fa-2x justify-content-end"></i>'.LOGOUT.'</a></li>';
@@ -236,81 +233,6 @@ https://getbootstrap.com/docs/5.3/components/navbar/
 
 
     </div>
-</div>
-<!--    CONTENT PART BELOW // CONTENT PART BELOW // CONTENT PART BELOW // CONTENT PART BELOW // CONTENT PART BELOW // -->
-    <div class="container mt-4">
-        <div class="row">
-            <div class="col">
-                <h1 class="text-center">Welcome to R&D, our Veterinary Platform!</h1>
-                <p class="lead text-center">
-                    Your one-stop solution for managing your pets' health and well-being!
-                </p>
-                <div class="row mt-5">
-                    <!-- Register Your Pets -->
-                    <div class="col-md-6">
-                        <img src="pictures/20241223154305.png" alt="Register Pet" class="img-fluid rounded">
-                    </div>
-                    <div class="col-md-6">
-                        <h4><i class="bi bi-file-earmark-person"></i> Register Your Pets</h4>
-                        <p>Create a personalized profile for each pet, including essential details like their breed, age, medical history, and vaccination status.</p>
-                    </div>
-                </div>
-
-                <hr class="my-5">
-
-                <!-- Book Appointments -->
-                <div class="row">
-                    <div class="col-md-6 order-md-2">
-                        <img src="pictures/vet.jpg" alt="Book Appointment" class="img-fluid rounded">
-                    </div>
-                    <div class="col-md-6 order-md-1">
-                        <h4><i class="bi bi-calendar-check"></i> Book Appointments</h4>
-                        <p>Choose your preferred veterinarian and book an appointment that suits your schedule, all from the comfort of your home.</p>
-                    </div>
-                </div>
-
-                <hr class="my-5">
-
-                <!-- Print QR Codes -->
-                <div class="row">
-                    <div class="col-md-6">
-                        <img src="QRcodes/qrcode_673252fcea043.png" alt="Print QR Codes" class="img-fluid rounded">
-                    </div>
-                    <div class="col-md-6">
-                        <h4><i class="bi bi-upc-scan"></i> Print QR Codes</h4>
-                        <p>Generate QR codes with your pet's information and your contact details. Perfect for collars in case your pet gets lost.</p>
-                    </div>
-                </div>
-
-                <hr class="my-5">
-
-                <!-- Rate Veterinarians -->
-                <div class="row">
-                    <div class="col-md-6 order-md-2">
-                        <img src="pictures/stars.png" alt="Rate Veterinarians" class="img-fluid rounded">
-                    </div>
-                    <div class="col-md-6 order-md-1">
-                        <h4><i class="bi bi-star-fill"></i> Rate Veterinarians</h4>
-                        <p>Help other pet owners by rating and reviewing veterinarians based on your experience.</p>
-                    </div>
-                </div>
-
-                <hr class="my-5">
-
-                <!-- Shop Recommended Products -->
-                <div class="row">
-                    <div class="col-md-6">
-                        <img src="images/shop_products.jpg" alt="Shop Products" class="img-fluid rounded">
-                    </div>
-                    <div class="col-md-6">
-                        <h4><i class="bi bi-cart-check"></i> Shop Recommended Products</h4>
-                        <p>Browse our curated collection of pet supplies, from high-quality food to fun toys, all recommended by experts.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
 </div>
 <div class="d-flex flex-column flex-shrink-0 bg-dark d-block d-md-none" style="width: 4.5rem; min-height: 100vh;">
     <div class="d-flex flex-column flex-shrink-0 bg-dark " style="width: 4.5rem;">
@@ -397,7 +319,6 @@ echo '<div class="dropdown border-top">';
         ?>
     </div>
     </div>
-
 </div>
 
 </body>

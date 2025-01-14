@@ -1,7 +1,4 @@
 <?php
-define('ADDVET','Dodaj novog veterinara');
-define('CHANGEPS','Izmeni lozinku');
-define('RESERVE','Rezerviraj');
 define('GENPDF','Generiši PDF');
 define('QR','QR kod');
 define('ADDCART','Dodaj u korpu');
@@ -14,7 +11,7 @@ define('NOPET','Nemate nijednog kućnog ljubimca registrovanog na vašem nalogu
 define('INFO', 'Vaše kontakt informacije se čuvaju u KR kodu. Možete ga pričvrstiti na ogrlicu vašeg ljubimca.');
 define('VETS', 'Veterinari');
 define('PRODUCT', 'Proizvodi');
-define('ADDPET','Registrovanje ljubimca');
+define('ADDPET','registrovanje ljubimca');
 define('MYPETS','Moji ljubimci');
 define('DOG','Pas');
 define('CAT','Mačka');

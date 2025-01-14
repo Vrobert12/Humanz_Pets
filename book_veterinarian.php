@@ -88,7 +88,8 @@ $pdo = $autoload->connect($GLOBALS['dsn'], $_ENV['DB_USER'], $_ENV['DB_PASSWORD'
     -->
     <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
         <div class="container-fluid">
-            <a class="btn btn-secondary back-button" href="index.php"><?php echo BACK ?></a>
+            <!-- Logo -->
+            <a class="navbar-brand" href="#">Logo</a>
             <!-- Toggler for mobile view -->
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
                 <span class="navbar-toggler-icon"></span>
@@ -107,6 +108,7 @@ $pdo = $autoload->connect($GLOBALS['dsn'], $_ENV['DB_USER'], $_ENV['DB_PASSWORD'
                         <?php
                         $sql = "SELECT * FROM user";
                         ?>
+                        <a class="nav-link" href="book_veterinarian.php"><i class="bi bi-book-fill fs-3"></i></a>
                     </li>
                 </ul>
                 <!-- Language Dropdown (Aligned Right) -->
@@ -186,10 +188,10 @@ function users($command, $params = [])
                 echo '<div class="col-xl-4"><img class="profilePic" 
                 src="pictures/' . htmlspecialchars($row['profilePic']) . '" width="250" height="250" alt="Profile Picture"></div>';
                 echo '<label>ID: ' . htmlspecialchars($row['veterinarianId']) . '</label><br>';
-                echo '<label>'.NAME.': ' . htmlspecialchars($row['firstName'] . " " . $row['lastName']) . '</label><br>';
-                echo '<label>'.PHONE.': ' . htmlspecialchars($row['phoneNumber']) . '</label><br>';
-                echo '<label>'.EMAIL.': ' . htmlspecialchars($row['veterinarianMail']) . '</label><br>';
-                echo '<a href="book_apointment.php?email='.$_SESSION['email'].'&veterinarian=' . htmlspecialchars($row['veterinarianId']) . '">'.RESERVE.'</a>&nbsp;&nbsp;&nbsp;';
+                echo '<label>Name: ' . htmlspecialchars($row['firstName'] . " " . $row['lastName']) . '</label><br>';
+                echo '<label>Phone: ' . htmlspecialchars($row['phoneNumber']) . '</label><br>';
+                echo '<label>Email: ' . htmlspecialchars($row['veterinarianMail']) . '</label><br>';
+                echo '<a href="book_apointment.php?email='.$_SESSION['email'].'&veterinarian=' . htmlspecialchars($row['veterinarianId']) . '">Reserve</a>&nbsp;&nbsp;&nbsp;';
                 echo '</div>';
             }
             echo '</div></div>';

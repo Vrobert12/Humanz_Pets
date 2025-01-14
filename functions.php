@@ -104,6 +104,12 @@ class Functions
                 case "deletePet":
                     $this->deletePet();
                     break;
+                case "deleteReservation":
+                    $this->deleteReservation();
+                    break;
+                case "insertReservation":
+                    $this->insertReservation();
+                    break;
                 default:
                     $_SESSION['message'] = "Something went wrong in switch";
                     header('Location:index.php');
@@ -332,7 +338,75 @@ class Functions
             header('Location:registerAnimal.php');
         exit();
     }
+    public function insertReservation()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $veterinarianId=$_POST['veterinarianId'];
+            $selectedPetId = $_POST['petId'] ?? null;
+            $reservationDate = $_POST['day'] ?? null;
+            $reservationStart = $_POST['reservationTimeStart'] ?? null;
+            $reservationEnd = $_POST['reservationTimeEnd'] ?? null;
 
+            if ($selectedPetId && $reservationDate && $reservationStart && $reservationEnd) {
+                // Check if the pet already has 5 reservations for the day
+                $today = date("Y-m-d");
+                $reservationCheckQuery =  $this->connection->prepare(
+                    "SELECT COUNT(*) AS reservationCount FROM reservation 
+             WHERE petId = :petId AND reservationDay >= :today"
+                );
+                $reservationCheckQuery->execute([
+                    ':petId' => $selectedPetId,
+                    ':today' => $today
+                ]);
+                $reservationCount = $reservationCheckQuery->fetch(PDO::FETCH_ASSOC)['reservationCount'] ?? 0;
+
+                if ($reservationCount < 1) {
+                    // Insert the reservation
+                    $insertQuery =  $this->connection->prepare(
+                        "INSERT INTO reservation (petId, veterinarianId, reservationDay, reservationTime, period) 
+                 VALUES (:petId, :veterinarianId, :reservationDay, :reservationStart, :reservationEnd)"
+                    );
+                    $insertQuery->execute([
+                        ':petId' => $selectedPetId,
+                        ':veterinarianId' => $veterinarianId,
+                        ':reservationDay' => $reservationDate,
+                        ':reservationStart' => $reservationStart,
+                        ':reservationEnd' => $reservationEnd
+                    ]);
+
+                    $_SESSION['message'] = "Reservation successfully created!";
+                } else {
+                    $_SESSION['message'] = "You already have too many reservations for this pet.";
+                }
+            } else {
+                $_SESSION['message'] = "All fields are required.";
+            }
+        }
+        header('Location:book_apointment.php?email=' . $_SESSION['email']."&veterinarian=".$_POST['veterinarian']);
+
+    }
+    public function deleteReservation()
+    {
+        $sql = 'DELETE FROM reservation
+WHERE reservationId = :reservationId
+  AND (
+      reservationDay > CURDATE() 
+      OR (reservationDay = CURDATE() AND reservationTime > ADDTIME(NOW(), "03:00:00"))
+  );
+
+';
+        $stmt = $this->connection->prepare($sql);
+        $stmt->bindValue(':reservationId', $_POST['reservationId']);
+        $stmt->execute();
+$result = $stmt->rowCount();
+if ($result)
+    $_SESSION['message'] = "Reservation successfully deleted.";
+else
+    $_SESSION['message'] = "Failed to delete the reservation. Please try again.";
+            header('Location:book_apointment.php?email=' . $_SESSION['email']."&veterinarian=".$_POST['veterinarian']);
+
+        exit();
+    }
     public function deletePet()
     {
         $sql = 'delete from pet where petId=:petId';

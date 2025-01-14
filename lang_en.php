@@ -1,7 +1,4 @@
 <?php
-define('ADDVET','Add veterinarian');
-define('CHANGEPS','Change password');
-define('RESERVE','Reserve');
 define('GENPDF','Generate PDF');
 define('QR','QR code');
 define('ADDCART','Add to cart');
