@@ -1,4 +1,7 @@
 <?php
+define('ADDVET','Állatorvos hozzáadása');
+define('CHANGEPS','Jelszóváltoztatás');
+define('RESERVE','Lefoglalás');
 define('GENPDF','PDF generálás');
 define('QR','QR kód');
 define('ADDCART','Hozzáadás a kosárhoz');

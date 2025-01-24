@@ -953,7 +953,11 @@ WHERE productId = :productId;
 
     public function userModifyData($fname, $lname, $tel, $location)
     {
-
+if(empty($fname) || empty($lname) || empty($tel) ) {
+    $_SESSION['message'] = "The fields <b>has to be filled.</b>";
+    header('Location: ' . $location);
+    exit();
+}
         if (preg_match("/[0-9]+/", $fname)) {
             $_SESSION['message'] = "The <b>First Name</b> filled contains <b>Numbers</b>.";
             header('Location: ' . $location);
@@ -1010,28 +1014,31 @@ WHERE productId = :productId;
 
 // Check if user data was found and update if necessary
         if ($result) {
+
+$empty=0;
             // Update first name if provided
             if (!empty($_POST['firstName'])) {
+                $firstName=ucfirst(strtolower($_POST['firstName']));
                 $sql = $this->connection->prepare("UPDATE $table SET firstName = ? WHERE " . $table . "Mail = ?");
-                $sql->execute([$_POST['firstName'], $_SESSION['email']]);
-                $_SESSION['name'] = $_POST['firstName'];
-                $_SESSION['firstName'] = $_POST['firstName'];
+                $sql->execute([$firstName, $_SESSION['email']]);
+
+                $_SESSION['firstName'] = $firstName;
+                $_SESSION['name'] =  $_SESSION['firstName'] ." " . $_SESSION['lastName'] ;
                 $_SESSION['message'] = "First name is modified";
                 $count++;
-            } else {
-                $_SESSION['name'] = $result['firstName'];
             }
+
 
             // Update last name if provided
             if (!empty($_POST['lastName'])) {
+                $lastName=ucfirst(strtolower($_POST['lastName']));
                 $sql = $this->connection->prepare("UPDATE $table SET lastName = ? WHERE " . $table . "Mail = ?");
-                $sql->execute([$_POST['lastName'], $_SESSION['email']]);
-                $_SESSION['name'] .= " " . $_POST['lastName'];
-                $_SESSION['lastName'] = $_POST['lastName'];
+                $sql->execute([$lastName, $_SESSION['email']]);
+
+                $_SESSION['lastName'] = $lastName;
+                $_SESSION['name'] = $_SESSION['firstName'] ." " . $_SESSION['lastName'] ;
                 $_SESSION['message'] = "Last name is modified";
                 $count++;
-            } else {
-                $_SESSION['name'] .= " " . $result['lastName'];
             }
 
             // Update phone number if provided
@@ -1042,10 +1049,11 @@ WHERE productId = :productId;
                 $_SESSION['phone'] = $phoneNumber;
                 $count++;
             }
+
         }
 
 // Set session message based on whether any changes were made
-        $_SESSION['message'] = $count > 0 ? "We made changes to your profile" : "There are no changes made to your profile";
+        $_SESSION['message'] = $count > 0 ? "Changes saved" : "Empty data cannot be saved!";
 
         $stmt = "SELECT firstName, lastName, phoneNumber FROM $table WHERE " . $table . "Id = :Id";
         $stmt = $this->connection->prepare($stmt);
