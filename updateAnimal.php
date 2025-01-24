@@ -3,7 +3,8 @@ session_start();
 include "functions.php";
 $autoload = new Functions();
 $_SESSION['backPic']="updateAnimal.php";
-$autoload->language();
+$lang=$autoload->language();
+include "lang_$lang.php";
 $autoload->checkAutoLogin('updateAnimal.php');
 
 

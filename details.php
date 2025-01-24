@@ -1,8 +1,9 @@
 <?php
 include 'functions.php';
 $product_id = (int)$_GET['id'];
-$functions = new Functions();
-$functions->language();
+$functions=new Functions();
+$lang=$functions->language();
+include "lang_$lang.php";
 $functions->checkAutoLogin();
 $pdo = $functions->connect($GLOBALS['dsn'], $_ENV['DB_USER'], $_ENV['DB_PASSWORD'], $GLOBALS['pdoOptions']);
 $product = $pdo->prepare("SELECT * FROM product WHERE productId = ?");

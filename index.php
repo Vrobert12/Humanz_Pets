@@ -1,18 +1,8 @@
 <?php
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-    $lang = $_GET['lang'] ?? $_SESSION['lang'] ?? 'en';
-    if(isset($_GET['lang'])){
-        $_SESSION['lang'] = $_GET['lang'];
-    }
-    if(isset( $_SESSION['userLang'])){
-        $_SESSION['lang'] = $_SESSION['userLang'];
-    }
-    include "lang_$lang.php";
-}
-
 include "functions.php";
 $autoload=new Functions();
+$lang=$autoload->language();
+include "lang_$lang.php";
 $autoload->checkAutoLogin();
 ?>
 

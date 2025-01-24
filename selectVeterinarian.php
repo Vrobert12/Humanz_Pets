@@ -2,7 +2,8 @@
 session_start();
 include "functions.php";
 $autoload=new Functions();
-$autoload->language();
+$lang=$autoload->language();
+include "lang_$lang.php";
 $autoload->checkAutoLogin('selectVeterinarian.php');
 
 $_SESSION['backPic'] = "selectVeterinarian.php";

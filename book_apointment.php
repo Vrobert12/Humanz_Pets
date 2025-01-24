@@ -3,8 +3,9 @@
 require 'vendor/autoload.php';
 
 include "functions.php";
-$functions = new Functions();
-$functions->language();
+$functions=new Functions();
+$lang=$functions->language();
+include "lang_$lang.php";
 $functions->checkAutoLogin();
 
 // Database connection

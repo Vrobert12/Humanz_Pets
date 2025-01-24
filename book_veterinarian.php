@@ -2,7 +2,8 @@
 
 include "functions.php";
 $autoload=new Functions();
-$autoload->language();
+$lang=$autoload->language();
+include "lang_$lang.php";
 $autoload->checkAutoLogin();
 
 $pdo = $autoload->connect($GLOBALS['dsn'], $_ENV['DB_USER'], $_ENV['DB_PASSWORD'], $GLOBALS['pdoOptions']);

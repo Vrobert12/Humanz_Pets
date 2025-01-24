@@ -1218,9 +1218,9 @@ WHERE u.userId = :userId";
                 $lang = $_SESSION['userLang'] ?? 'en'; // Default to userLang or 'en'
                 $_SESSION['lang'] = $lang; // Set session language to default
             }
-
+return $lang;
             // Include the language file
-            include "lang_$lang.php";
+//            include "lang_$lang.php";
 
     }
 
