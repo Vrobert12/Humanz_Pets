@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2025. Jan 04. 22:12
+-- Létrehozás ideje: 2025. Jan 24. 23:37
 -- Kiszolgáló verziója: 10.4.32-MariaDB
 -- PHP verzió: 8.2.12
 
@@ -193,7 +193,9 @@ INSERT INTO `errorlog` (`errorLogId`, `errorType`, `errorMail`, `errorText`, `er
 (151, 'Log in', 'robertvrro12@gmail.com', 'The E-mail is not in our database', '2025-01-04 19:07:13.000000'),
 (152, 'Picture', 'varrorobert03@gmail.com', 'The file is bigger than 300KB', '2025-01-04 19:08:32.000000'),
 (153, 'Log in', 'varrorobert03@gmail.com', 'The password was not valid!', '2025-01-04 19:47:20.000000'),
-(154, 'Log in', 'robertvarro12@gmail.com', 'The password was not valid!', '2025-01-04 20:42:38.000000');
+(154, 'Log in', 'robertvarro12@gmail.com', 'The password was not valid!', '2025-01-04 20:42:38.000000'),
+(155, 'Log in', 'varrorobert03@gmail.co', 'The E-mail is not in our database', '2025-01-24 15:18:51.000000'),
+(156, 'Log in', 'hupkodominik143@gmail.com', 'The password was not valid!', '2025-01-24 15:19:19.000000');
 
 -- --------------------------------------------------------
 
@@ -264,8 +266,7 @@ INSERT INTO `pet` (`petId`, `petName`, `bred`, `petSpecies`, `petPicture`, `user
 (14, 'Zizi2', 'Pug', 'Dog', '20241215190624.png', 25, 1),
 (15, 'Tigrincs', 'Mixed', 'Cat', '20241221144748.png', 28, 1),
 (40, 'Buksi', 'Tiszta', 'Dog  ', '20241223000554.png', 29, 1),
-(44, 'Tigrincs', 'Mixed', 'Dog ', '20241223140237.png', 29, 1),
-(45, 'Buksi', 'V', 'Dog', '20241223140454.png', 29, NULL);
+(44, 'Tigrincs', 'Mixed', 'Dog ', '20241223140237.png', 29, 1);
 
 -- --------------------------------------------------------
 
@@ -311,7 +312,7 @@ CREATE TABLE `qr_code` (
 --
 
 INSERT INTO `qr_code` (`qr_code_id`, `qrCodeName`, `userId`, `generated_at`, `updated_at`) VALUES
-(1, 'QRcodes/qrcode_677993d3f0e99.png', 19, '2024-11-11 19:47:18', '2025-01-04 20:02:28'),
+(1, 'QRcodes/qrcode_6793984e03426.png', 19, '2024-11-11 19:47:18', '2025-01-24 13:40:30'),
 (2, 'QRcodes/qrcode_675da53946388.png', 26, '2024-12-14 16:33:13', '2024-12-14 15:33:13'),
 (3, 'QRcodes/qrcode_675e00a3bfff4.png', 27, '2024-12-14 23:03:15', '2024-12-14 22:03:15'),
 (4, 'QRcodes/qrcode_675ef571ca9a1.png', 25, '2024-12-15 16:27:46', '2024-12-15 15:27:46'),
@@ -329,6 +330,7 @@ CREATE TABLE `reservation` (
   `reservationDay` date DEFAULT NULL,
   `reservationTime` time DEFAULT NULL,
   `period` time NOT NULL,
+  `animalChecked` tinyint(1) DEFAULT 0,
   `veterinarianId` int(11) NOT NULL,
   `petId` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -337,10 +339,14 @@ CREATE TABLE `reservation` (
 -- A tábla adatainak kiíratása `reservation`
 --
 
-INSERT INTO `reservation` (`reservationId`, `reservationDay`, `reservationTime`, `period`, `veterinarianId`, `petId`) VALUES
-(1, '2025-01-28', '15:14:00', '14:08:00', 3, 2),
-(2, '2025-01-28', '14:16:00', '14:11:00', 3, 1),
-(3, '2025-02-04', '14:11:00', '15:11:00', 3, 2);
+INSERT INTO `reservation` (`reservationId`, `reservationDay`, `reservationTime`, `period`, `animalChecked`, `veterinarianId`, `petId`) VALUES
+(1, '2025-01-13', '09:00:00', '10:00:00', 0, 3, 1),
+(2, '2025-01-31', '17:00:00', '18:00:00', 0, 3, 40),
+(4, '2025-01-12', '17:00:00', '18:00:00', 0, 3, 1),
+(9, '2025-01-14', '18:00:00', '19:00:00', 0, 3, 2),
+(20, '2025-01-25', '13:00:00', '14:00:00', 1, 3, 1),
+(21, '2025-01-25', '14:00:00', '15:00:00', 1, 3, 2),
+(22, '2025-01-30', '10:00:00', '11:00:00', 0, 3, 44);
 
 -- --------------------------------------------------------
 
@@ -350,10 +356,20 @@ INSERT INTO `reservation` (`reservationId`, `reservationDay`, `reservationTime`,
 
 CREATE TABLE `review` (
   `reviewId` int(11) NOT NULL,
-  `review` int(11) NOT NULL,
+  `review` int(11) DEFAULT NULL,
   `reviewTime` datetime NOT NULL DEFAULT current_timestamp(),
-  `userId` int(11) NOT NULL
+  `reviewCode` int(11) NOT NULL,
+  `userId` int(11) NOT NULL,
+  `veterinarianId` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- A tábla adatainak kiíratása `review`
+--
+
+INSERT INTO `review` (`reviewId`, `review`, `reviewTime`, `reviewCode`, `userId`, `veterinarianId`) VALUES
+(1, NULL, '2025-01-24 23:03:59', 2147483647, 19, 3),
+(2, NULL, '2025-01-24 23:05:33', 1471108962, 19, 3);
 
 -- --------------------------------------------------------
 
@@ -461,7 +477,7 @@ CREATE TABLE `veterinarian` (
 INSERT INTO `veterinarian` (`veterinarianId`, `firstName`, `lastName`, `phoneNumber`, `veterinarianMail`, `veterinarianPassword`, `profilePic`, `registrationTime`, `verification_code`, `verify`, `verification_time`, `passwordValidation`, `passwordValidationTime`, `workAddressId`, `usedLanguage`) VALUES
 (1, 'Robert', 'Varro', '0649420637', 'varrorobejrt03@gmail.com', '$2y$10$kDYqhdUxCiKKb86iW8vGIe6yi.8fmADky4QYmpcOXlV3Fh8hN1jOq', 'logInPic.png', '2024-12-14 13:02:10', NULL, 1, '2024-12-14 13:02:10', 1, '2024-12-14 13:02:10', 1, 'en'),
 (2, 'Robert', 'Varro', '0649420637', 'hupkodominik143@gmail.com', '$2y$10$BkQO5/YgtNn7TA8mHdhJpecVxchuQTTtJRtuuoZpW6xyOTTr92mw.', 'logInPic.png', '2025-01-03 23:21:19', 1607888, 1, '2025-01-03 23:31:19', NULL, '2025-01-03 23:21:19', 0, 'hu'),
-(3, 'Robert', 'Varro', '0649420637', 'varrorobert03@gmail.com', '$2y$10$u1KvS5Nh7JQBo89d7jM9yeFVAS6rrfptOrHum0v/KLNYPRfs60W/2', '20250104204104.jpg', '2025-01-04 18:44:36', 3296064, 1, '2025-01-04 18:54:36', NULL, '2025-01-04 18:44:36', 0, 'sr');
+(3, 'Robert', 'Varro', '0649420637', 'varrorobert03@gmail.com', '$2y$10$u1KvS5Nh7JQBo89d7jM9yeFVAS6rrfptOrHum0v/KLNYPRfs60W/2', '20250124221618.jpg', '2025-01-04 18:44:36', 3296064, 1, '2025-01-04 18:54:36', NULL, '2025-01-04 18:44:36', 0, 'sr');
 
 -- --------------------------------------------------------
 
@@ -600,7 +616,7 @@ ALTER TABLE `work_address`
 -- AUTO_INCREMENT a táblához `errorlog`
 --
 ALTER TABLE `errorlog`
-  MODIFY `errorLogId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=155;
+  MODIFY `errorLogId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=157;
 
 --
 -- AUTO_INCREMENT a táblához `log`
@@ -630,7 +646,13 @@ ALTER TABLE `qr_code`
 -- AUTO_INCREMENT a táblához `reservation`
 --
 ALTER TABLE `reservation`
-  MODIFY `reservationId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `reservationId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+
+--
+-- AUTO_INCREMENT a táblához `review`
+--
+ALTER TABLE `review`
+  MODIFY `reviewId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT a táblához `user`
