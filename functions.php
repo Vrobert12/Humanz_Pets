@@ -110,6 +110,9 @@ class Functions
                 case "insertReservation":
                     $this->insertReservation();
                     break;
+                case "animalChecked":
+                    $this->sendReview();
+                    break;
                 default:
                     $_SESSION['message'] = "Something went wrong in switch";
                     header('Location:index.php');
@@ -120,6 +123,55 @@ class Functions
                 $this->logOut();
             }
         }
+    }
+
+    public function sendReview()
+    {
+        $_SESSION['message'] = "Thank you for your feedback";
+        $sql = "Update reservation set animalChecked=true where reservationId=:reservationId";
+        $stmt = $this->connection->prepare($sql);
+        $stmt->bindParam(':reservationId', $_POST['reservationId']);
+        $stmt->execute();
+
+        $reviewCode = $this->generateVerificationCode(10);
+
+        do {
+            $isDuplicate = false;
+            $sql = "SELECT reviewCode FROM review";
+            $stmt = $this->connection->prepare($sql);
+            $stmt->execute();
+            $result = $stmt->fetchAll();
+
+            foreach ($result as $row) {
+                if ($reviewCode === $row['reviewCode']) {
+                    $isDuplicate = true;
+                    $reviewCode = $this->generateVerificationCode(8);
+                    break;
+                }
+            }
+        } while ($isDuplicate);
+
+        $sql="Select usedLanguage from user where userId=:userId";
+        $stmt=$this->connection->prepare($sql);
+        $stmt->bindParam(':userId',$_POST['ownerId']);
+        $stmt->execute();
+        $usedLanguage = $stmt->FetchColumn();
+
+
+        $sql = "INSERT INTO review( reviewCode, userId, veterinarianId)
+VALUES (:reviewCode,:userId,:veterinarianId)";
+        $stmt = $this->connection->prepare($sql);
+
+        $stmt->bindParam(':reviewCode', $reviewCode);
+        $stmt->bindParam(':userId', $_POST['ownerId']);
+        $stmt->bindParam(':veterinarianId', $_SESSION['userId']);
+        $stmt->execute();
+        $_SESSION['usedLanguage']=$usedLanguage;
+        $_SESSION['ownerMail'] = $_POST['ownerMail'];
+        $_SESSION['reviewLink'] = 'http://localhost/Humanz_Pets/reviewVeterinarian.php?veterinarianId='.$_SESSION['userId'].
+            '&reviewCode='.$reviewCode;
+        header('Location:mail.php');
+        exit();
     }
 
     public function mailAddAndPasswordChange()
@@ -161,9 +213,9 @@ class Functions
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    private function generateVerificationCode()
+    private function generateVerificationCode($length = 6)
     {
-        return substr(number_format(time() * rand(), 0, '', ''), 0, 6);
+        return substr(number_format(time() * rand(), 0, '', ''), 0, $length);
     }
 
     private function updateVerificationDetails($mail, $code, $time, $table)
@@ -338,10 +390,11 @@ class Functions
             header('Location:registerAnimal.php');
         exit();
     }
+
     public function insertReservation()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $veterinarianId=$_POST['veterinarianId'];
+            $veterinarianId = $_POST['veterinarianId'];
             $selectedPetId = $_POST['petId'] ?? null;
             $reservationDate = $_POST['day'] ?? null;
             $reservationStart = $_POST['reservationTimeStart'] ?? null;
@@ -350,7 +403,7 @@ class Functions
             if ($selectedPetId && $reservationDate && $reservationStart && $reservationEnd) {
                 // Check if the pet already has 5 reservations for the day
                 $today = date("Y-m-d");
-                $reservationCheckQuery =  $this->connection->prepare(
+                $reservationCheckQuery = $this->connection->prepare(
                     "SELECT COUNT(*) AS reservationCount FROM reservation 
              WHERE petId = :petId AND reservationDay >= :today"
                 );
@@ -362,7 +415,7 @@ class Functions
 
                 if ($reservationCount < 1) {
                     // Insert the reservation
-                    $insertQuery =  $this->connection->prepare(
+                    $insertQuery = $this->connection->prepare(
                         "INSERT INTO reservation (petId, veterinarianId, reservationDay, reservationTime, period) 
                  VALUES (:petId, :veterinarianId, :reservationDay, :reservationStart, :reservationEnd)"
                     );
@@ -382,9 +435,10 @@ class Functions
                 $_SESSION['message'] = "All fields are required.";
             }
         }
-        header('Location:book_apointment.php?email=' . $_SESSION['email']."&veterinarian=".$_POST['veterinarian']);
+        header('Location:book_apointment.php?email=' . $_SESSION['email'] . "&veterinarian=" . $_POST['veterinarian']);
 
     }
+
     public function deleteReservation()
     {
         $sql = 'DELETE FROM reservation
@@ -398,15 +452,16 @@ WHERE reservationId = :reservationId
         $stmt = $this->connection->prepare($sql);
         $stmt->bindValue(':reservationId', $_POST['reservationId']);
         $stmt->execute();
-$result = $stmt->rowCount();
-if ($result)
-    $_SESSION['message'] = "Reservation successfully deleted.";
-else
-    $_SESSION['message'] = "Failed to delete the reservation. Please try again.";
-            header('Location:book_apointment.php?email=' . $_SESSION['email']."&veterinarian=".$_POST['veterinarian']);
+        $result = $stmt->rowCount();
+        if ($result)
+            $_SESSION['message'] = "Reservation successfully deleted.";
+        else
+            $_SESSION['message'] = "Failed to delete the reservation. Please try again.";
+        header('Location:book_apointment.php?email=' . $_SESSION['email'] . "&veterinarian=" . $_POST['veterinarian']);
 
         exit();
     }
+
     public function deletePet()
     {
         $sql = 'delete from pet where petId=:petId';
@@ -953,11 +1008,11 @@ WHERE productId = :productId;
 
     public function userModifyData($fname, $lname, $tel, $location)
     {
-if(empty($fname) || empty($lname) || empty($tel) ) {
-    $_SESSION['message'] = "The fields <b>has to be filled.</b>";
-    header('Location: ' . $location);
-    exit();
-}
+        if (empty($fname) || empty($lname) || empty($tel)) {
+            $_SESSION['message'] = "The fields <b>has to be filled.</b>";
+            header('Location: ' . $location);
+            exit();
+        }
         if (preg_match("/[0-9]+/", $fname)) {
             $_SESSION['message'] = "The <b>First Name</b> filled contains <b>Numbers</b>.";
             header('Location: ' . $location);
@@ -1015,15 +1070,15 @@ if(empty($fname) || empty($lname) || empty($tel) ) {
 // Check if user data was found and update if necessary
         if ($result) {
 
-$empty=0;
+            $empty = 0;
             // Update first name if provided
             if (!empty($_POST['firstName'])) {
-                $firstName=ucfirst(strtolower($_POST['firstName']));
+                $firstName = ucfirst(strtolower($_POST['firstName']));
                 $sql = $this->connection->prepare("UPDATE $table SET firstName = ? WHERE " . $table . "Mail = ?");
                 $sql->execute([$firstName, $_SESSION['email']]);
 
                 $_SESSION['firstName'] = $firstName;
-                $_SESSION['name'] =  $_SESSION['firstName'] ." " . $_SESSION['lastName'] ;
+                $_SESSION['name'] = $_SESSION['firstName'] . " " . $_SESSION['lastName'];
                 $_SESSION['message'] = "First name is modified";
                 $count++;
             }
@@ -1031,12 +1086,12 @@ $empty=0;
 
             // Update last name if provided
             if (!empty($_POST['lastName'])) {
-                $lastName=ucfirst(strtolower($_POST['lastName']));
+                $lastName = ucfirst(strtolower($_POST['lastName']));
                 $sql = $this->connection->prepare("UPDATE $table SET lastName = ? WHERE " . $table . "Mail = ?");
                 $sql->execute([$lastName, $_SESSION['email']]);
 
                 $_SESSION['lastName'] = $lastName;
-                $_SESSION['name'] = $_SESSION['firstName'] ." " . $_SESSION['lastName'] ;
+                $_SESSION['name'] = $_SESSION['firstName'] . " " . $_SESSION['lastName'];
                 $_SESSION['message'] = "Last name is modified";
                 $count++;
             }
@@ -1162,9 +1217,9 @@ WHERE u.userId = :userId";
                     if ($target == "index.php" || $target == "users.php" || $target == "workers.php" || $target == "tables.php"
                         || $target == "reports.php" || $target == "menu.php" || $target == "coupon.php") {
 
-                        if($_SESSION['privilage'] != 'Veterinarian')
+                        if ($_SESSION['privilage'] != 'Veterinarian')
                             $query = $this->connection->prepare("UPDATE user SET profilePic = :profilePic WHERE userMail = :userMail");
-                        else{
+                        else {
                             $query = $this->connection->prepare("UPDATE veterinarian SET profilePic = :profilePic WHERE veterinarianMail = :userMail");
 
                         }
@@ -1210,16 +1265,16 @@ WHERE u.userId = :userId";
     public function language()
     {
 
-            // Determine the language: prioritize GET parameter, then userLang, then 'en'
-            if (isset($_GET['lang'])) {
-                $lang = $_GET['lang']; // User selected a language
-                $_SESSION['lang'] = $lang; // Save selected language in session
-            } else {
-                $lang = $_SESSION['userLang'] ?? 'en'; // Default to userLang or 'en'
-                $_SESSION['lang'] = $lang; // Set session language to default
-            }
-return $lang;
-            // Include the language file
+        // Determine the language: prioritize GET parameter, then userLang, then 'en'
+        if (isset($_GET['lang'])) {
+            $lang = $_GET['lang']; // User selected a language
+            $_SESSION['lang'] = $lang; // Save selected language in session
+        } else {
+            $lang = $_SESSION['userLang'] ?? 'en'; // Default to userLang or 'en'
+            $_SESSION['lang'] = $lang; // Set session language to default
+        }
+        return $lang;
+        // Include the language file
 //            include "lang_$lang.php";
 
     }

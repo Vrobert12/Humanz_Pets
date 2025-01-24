@@ -24,11 +24,33 @@ try {
     $mail->Password = $_ENV['SMTP_PASSWORD'];
     $mail->SMTPSecure = 'ssl';
     $mail->Port = 465;
-    $mail->setFrom('robertvarro12@gmail.com', 'Varró Róbert');
+    $mail->setFrom('robertvarro12@gmail.com', 'R&D Veterinary');
     $mail->CharSet = 'UTF-8';
+    if(isset($_SESSION['ownerMail']))
+    {
+        echo $_SESSION['usedLanguage'];
+        include "functions.php";
+        $autoload=new Functions();
+        $lang=$_SESSION['usedLanguage'];
+        include "lang_$lang.php";
+
+        $mail->addAddress(  $_SESSION['ownerMail'] ,$_SESSION['ownerMail'] );
+        $mail->addReplyTo('info@example.com', 'Information');
+        $mail->addCC('cc@example.com');
+        $mail->addBCC('bcc@example.com');
+        $mail->Subject = "R&D";
+        $mail->AltBody = REVIEV_MESSAGE . " Visit the review page here: " . $_SESSION['reviewLink'];
+        $mail->Body = REVIEV_MESSAGE . " <a href='" . $_SESSION['reviewLink'] . "'>here</a>";
+
+
+        unset($_SESSION['ownerMail']);
+        unset($_SESSION['usedLanguage']);
+        unset($_SESSION['reviewLink']);
+        header('Location:booked_users.php');
+    }
     if (isset($_SESSION['email']) && !empty($_SESSION['email']) && isset($_SESSION['verification_code']) && !isset($_SESSION["workerEmail"])) {
 
-        $mail->addAddress($_SESSION['email'], 'Varró Róbert');
+        $mail->addAddress($_SESSION['email'], $_SESSION['email']);
         $mail->addReplyTo('info@example.com', 'Information');
         $mail->addCC('cc@example.com');
         $mail->addBCC('bcc@example.com');
@@ -42,7 +64,7 @@ try {
 
 
     if (isset($_SESSION['mailReset']) && isset($_SESSION['resetCode'])) {
-        $mail->addAddress($_SESSION['mailReset'], 'Varró Róbert');
+        $mail->addAddress($_SESSION['mailReset'], $_SESSION['mailReset']);
         $mail->addReplyTo('info@example.com', 'Information');
         $mail->addCC('cc@example.com');
         $mail->addBCC('bcc@example.com');

@@ -31,7 +31,6 @@ if (!$userId) {
     exit();
 }
 
-$connection = $functions->connect($dsn, $_ENV['DB_USER'], $_ENV['DB_PASSWORD'], $pdoOptions);
 $petQuery = "SELECT p.petId, p.petName, p.bred, p.petSpecies, p.petPicture
 FROM pet p
 WHERE p.userId = :userId
@@ -41,7 +40,7 @@ AND p.petId NOT IN (
     WHERE r.reservationDay >= CURDATE()
 )
 ";
-$petStmt = $connection->prepare($petQuery);
+$petStmt = $pdo->prepare($petQuery);
 $petStmt->bindParam(":userId", $userId, PDO::PARAM_INT);
 $petStmt->execute();
 $pets = $petStmt->fetchAll(PDO::FETCH_ASSOC);
@@ -54,7 +53,7 @@ AND (r.reservationDay IS NOT NULL AND r.reservationDay >= CURDATE())
 
 ";
 
-$reservedPetStmt = $connection->prepare($petQuery);
+$reservedPetStmt = $pdo->prepare($petQuery);
 $reservedPetStmt->bindParam(":userId", $userId, PDO::PARAM_INT);
 $reservedPetStmt->execute();
 $reservedPets = $reservedPetStmt->fetchAll(PDO::FETCH_ASSOC);

@@ -22,7 +22,7 @@ $autoload->checkAutoLogin();
     <script>
         const lang = '<?php echo $lang; ?>';
     </script>
-    <script src="LogOut.js"></script>
+    <script src="sureCheck.js"></script>
     <script src="indexJS.js"></script>
     <link rel="stylesheet" href="style.css">
 

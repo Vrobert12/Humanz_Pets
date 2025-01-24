@@ -62,5 +62,7 @@ define('USERS','Korisnici');
 define('UPDATE','Ažurirati');
 define('UPDATE_PET','Modifikacija ljubimaca');
 define('DELETE_PET','Izbriši ljubimca');
+define('REVIEV_MESSAGE',"<h2>Molimo ocenite našeg veterinara</h2> Molimo vas da ocenite našeg veterinara
+ odlaskom na ovaj link, što važi 72 sata. To puno pomaže da saznamo kako naši radnici komuniciraju sa vlasnicima:<br>")
 ?>
 
