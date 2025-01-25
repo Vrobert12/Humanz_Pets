@@ -113,6 +113,9 @@ class Functions
                 case "animalChecked":
                     $this->sendReview();
                     break;
+                case "rateVeterinarian":
+                    $this->insertReview();
+                    break;
                 default:
                     $_SESSION['message'] = "Something went wrong in switch";
                     header('Location:index.php');
@@ -124,7 +127,24 @@ class Functions
             }
         }
     }
+public function insertReview()
+{
 
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        $reviewCode = $_POST["reviewCode"];
+        $rating = $_POST["rating"];
+
+        $sql = "UPDATE review SET review=:review  where reviewCode=:reviewCode";
+        $stmt = $this->connection->prepare($sql);
+        $stmt->bindParam(':reviewCode',   $reviewCode);
+        $stmt->bindParam(':review', $rating);
+        $stmt->execute();
+        header('Location:index.php');
+        exit();
+
+    }
+
+}
     public function sendReview()
     {
         $_SESSION['message'] = "Thank you for your feedback";
@@ -133,23 +153,22 @@ class Functions
         $stmt->bindParam(':reservationId', $_POST['reservationId']);
         $stmt->execute();
 
-        $reviewCode = $this->generateVerificationCode(10);
+        $reviewCode = $this->generateVerificationCode(8);
 
-        do {
-            $isDuplicate = false;
-            $sql = "SELECT reviewCode FROM review";
-            $stmt = $this->connection->prepare($sql);
-            $stmt->execute();
-            $result = $stmt->fetchAll();
+        $sql = "SELECT reviewCode FROM review";
+        $stmt = $this->connection->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-            foreach ($result as $row) {
-                if ($reviewCode === $row['reviewCode']) {
-                    $isDuplicate = true;
-                    $reviewCode = $this->generateVerificationCode(8);
-                    break;
-                }
+        foreach ($result as $row) {
+            if ($reviewCode === $row['reviewCode']) {
+                $reviewCode = $this->generateVerificationCode(9);
+                break;
             }
-        } while ($isDuplicate);
+        }
+
+
+
 
         $sql="Select usedLanguage from user where userId=:userId";
         $stmt=$this->connection->prepare($sql);
@@ -168,8 +187,7 @@ VALUES (:reviewCode,:userId,:veterinarianId)";
         $stmt->execute();
         $_SESSION['usedLanguage']=$usedLanguage;
         $_SESSION['ownerMail'] = $_POST['ownerMail'];
-        $_SESSION['reviewLink'] = 'http://localhost/Humanz_Pets/reviewVeterinarian.php?veterinarianId='.$_SESSION['userId'].
-            '&reviewCode='.$reviewCode;
+        $_SESSION['reviewLink'] = 'http://localhost/Humanz_Pets/reviewVeterinarian.php?reviewCode='.$reviewCode;
         header('Location:mail.php');
         exit();
     }
@@ -1490,32 +1508,33 @@ WHERE u.userId = :userId";
                 setcookie("phone", $_SESSION['phone'], time() + 10 * 60, "/");
                 setcookie("privilage", $_SESSION['privilage'], time() + 10 * 60, "/");
                 setcookie("last_activity", time(), time() + 10 * 60, "/");
+                if ($_SESSION['privilage'] == 'user') {
 
-
-                $sql = "SELECT p.petId FROM  pet p  inner join user u   on p.userId=u.userId  where u.userMail = :mail";
-                $stmt = $this->connection->prepare($sql);
-                $stmt->bindValue(":mail", $mail);
-                $stmt->execute();
-                $result = $stmt->fetch(PDO::FETCH_ASSOC);
-                if ($result == 0) {
-                    $_SESSION['message'] = '<br>You need to register an animal, without it you <b>can not</b> use the account.<br><br><a href="functions.php?action=logOut">Log out</a>';
-                    if ($currentPage != 'registerAnimal.php') {
-                        header('Location: registerAnimal.php');
-                        exit();
-                    }
-
-                } else {
-                    $sql = "SELECT v.veterinarianID FROM veterinarian v inner join pet p on
- p.veterinarId=v.veterinarianID inner join user u on u.userId=p.userId where userMail=:mail";
+                    $sql = "SELECT p.petId FROM  pet p  inner join user u   on p.userId=u.userId  where u.userMail = :mail";
                     $stmt = $this->connection->prepare($sql);
                     $stmt->bindValue(":mail", $mail);
                     $stmt->execute();
                     $result = $stmt->fetch(PDO::FETCH_ASSOC);
-                    if ($result == 0 && $_SESSION['privilage'] != 'admin') {
-                        $_SESSION['message'] = '<br>You have to <b>chose a veterinarian</b> to use this account further!<br><br><a href="functions.php?action=logOut">Log out</a>';
-                        if ($currentPage != 'selectVeterinarian.php' && $currentPage != 'registerAnimal.php') {
-                            header('Location: selectVeterinarian.php');
+                    if ($result == 0) {
+                        $_SESSION['message'] = '<br>You need to register an animal, without it you <b>can not</b> use the account.<br><br><a href="functions.php?action=logOut">Log out</a>';
+                        if ($currentPage != 'registerAnimal.php') {
+                            header('Location: registerAnimal.php');
                             exit();
+                        }
+
+                    } else {
+                        $sql = "SELECT v.veterinarianID FROM veterinarian v inner join pet p on
+ p.veterinarId=v.veterinarianID inner join user u on u.userId=p.userId where userMail=:mail";
+                        $stmt = $this->connection->prepare($sql);
+                        $stmt->bindValue(":mail", $mail);
+                        $stmt->execute();
+                        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+                        if ($result == 0 && $_SESSION['privilage'] != 'admin') {
+                            $_SESSION['message'] = '<br>You have to <b>chose a veterinarian</b> to use this account further!<br><br><a href="functions.php?action=logOut">Log out</a>';
+                            if ($currentPage != 'selectVeterinarian.php' && $currentPage != 'registerAnimal.php') {
+                                header('Location: selectVeterinarian.php');
+                                exit();
+                            }
                         }
                     }
                 }

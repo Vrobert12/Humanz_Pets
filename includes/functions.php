@@ -107,3 +107,27 @@ function getProducts(): array{
     return $data;
 
 }
+function getRatings(): array{
+
+    $sql = "SELECT r.review,r.reviewTime,v.veterinarianMail,v.firstName,v.lastName FROM 
+ review r INNER JOIN veterinarian v ON r.veterinarianId = v.veterinarianId ";
+
+    $stmt = $GLOBALS['pdo']->prepare($sql);
+    $stmt->execute();
+
+    $number = 1;
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        $data[] = [
+            $number,
+            $row['firstName']." ".$row['lastName'],
+            $row['review'],
+            $row['veterinarianMail'],
+            $row['reviewTime'],
+
+
+        ];
+        $number++;
+    }
+    return $data;
+
+}

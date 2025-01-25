@@ -35,9 +35,11 @@ $autoload->checkAutoLogin();
     <title>Datatables test</title>
 
 <div class="container mt-5">
+
     <a class="btn btn-secondary" href="index.php"><?php echo BACK?></a>
     <select id="tableSelect" class="form-select" style="width: 200px; display: inline-block;">
         <option selected hidden="hidden">--Choose Data--</option>
+        <option value="ratings">Ratings</option>
         <option value="users">Users</option>
         <option value="products">Products</option>
         <option value="veterinarians">Veterinarians</option>
@@ -74,7 +76,7 @@ $autoload->checkAutoLogin();
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
 <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.print.min.js"></script>
-<script src="js/script.js"></script>
+<script src="js/scripts.js"></script>
 
 </body>
 </html>

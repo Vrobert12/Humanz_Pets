@@ -8,6 +8,11 @@ $lang=$functions->language();
 include "lang_$lang.php";
 $functions->checkAutoLogin();
 
+if($_SESSION['privilage']=="Veterinarian"){
+    header("Location:index.php");
+    exit();
+}
+
 // Database connection
 $pdo = $functions->connect($GLOBALS['dsn'], $_ENV['DB_USER'], $_ENV['DB_PASSWORD'], $GLOBALS['pdoOptions']);
 

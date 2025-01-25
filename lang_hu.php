@@ -63,5 +63,6 @@ define('UPDATE','Frissítés');
 define('UPDATE_PET','Házikedvenc módosítása');
 define('DELETE_PET','Házikedvenc törlése');
 define('REVIEV_MESSAGE',"<h2>Kérjük értékelje állatorvosunkat</h2> Kérjük értékelje állatorvosunkat az alábbi linken, ami 72 óráig érvényes.
- Nagy segítség számunkra, hogy megtudjuk, hogyan kommunikálnak dolgozóink a gazdákkal:<br>")
+ Nagy segítség számunkra, hogy megtudjuk, hogyan kommunikálnak dolgozóink a gazdákkal:<br>");
+define('BACK_TO_RATINGS','Vissza az értékelésre');
 ?>
