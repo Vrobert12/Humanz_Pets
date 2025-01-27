@@ -281,6 +281,12 @@ https://getbootstrap.com/docs/5.3/components/navbar/
                     <i class="bi bi-people-fill" style="font-size: 24px;"></i>
                     <span class="visually-hidden">Home</span>
                 </a>
+            </li>
+            <li>
+                <a href="addVet.php" class="d-flex align-items-center justify-content-center p-3 link-light text-decoration-none" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
+                    <i class="fa-solid fa-user-plus" style="font-size: 24px;"></i>
+                    <span class="visually-hidden">Home</span>
+                </a>
             </li>';}
                 echo '</ul>';
                 $_SESSION['action'] = "kijelentkezes";
@@ -327,9 +333,9 @@ https://getbootstrap.com/docs/5.3/components/navbar/
     <div class="container mt-4">
         <div class="row">
             <div class="col">
-                <h1 class="text-center">Welcome to R&D, our Veterinary Platform!</h1>
+                <h1 class="text-center"><?php echo WELCOME?></h1>
                 <p class="lead text-center">
-                    Your one-stop solution for managing your pets' health and well-being!
+                    <?php echo WELCOME2?>
                 </p>
                 <div class="row mt-5">
                     <!-- Register Your Pets -->
@@ -337,8 +343,8 @@ https://getbootstrap.com/docs/5.3/components/navbar/
                         <img src="pictures/20241223154305.png" alt="Register Pet" class="img-fluid rounded">
                     </div>
                     <div class="col-md-6">
-                        <h4><i class="bi bi-file-earmark-person"></i> Register Your Pets</h4>
-                        <p>Create a personalized profile for each pet, including essential details like their breed, age, medical history, and vaccination status.</p>
+                        <h4><i class="bi bi-file-earmark-person"></i> <?php echo REG1?></h4>
+                        <p><?php echo REG2?></p>
                     </div>
                 </div>
 
@@ -350,8 +356,8 @@ https://getbootstrap.com/docs/5.3/components/navbar/
                         <img src="pictures/vet.jpg" alt="Book Appointment" class="img-fluid rounded">
                     </div>
                     <div class="col-md-6 order-md-1">
-                        <h4><i class="bi bi-calendar-check"></i> Book Appointments</h4>
-                        <p>Choose your preferred veterinarian and book an appointment that suits your schedule, all from the comfort of your home.</p>
+                        <h4><i class="bi bi-calendar-check"></i> <?php echo BOOK1?></h4>
+                        <p><?php echo BOOK2?></p>
                     </div>
                 </div>
 
@@ -363,8 +369,8 @@ https://getbootstrap.com/docs/5.3/components/navbar/
                         <img src="QRcodes/qrcode_673252fcea043.png" alt="Print QR Codes" class="img-fluid rounded">
                     </div>
                     <div class="col-md-6">
-                        <h4><i class="bi bi-upc-scan"></i> Print QR Codes</h4>
-                        <p>Generate QR codes with your pet's information and your contact details. Perfect for collars in case your pet gets lost.</p>
+                        <h4><i class="bi bi-upc-scan"></i> <?php echo QR1?></h4>
+                        <p><?php echo QR2?></p>
                     </div>
                 </div>
 
@@ -376,8 +382,8 @@ https://getbootstrap.com/docs/5.3/components/navbar/
                         <img src="pictures/stars.png" alt="Rate Veterinarians" class="img-fluid rounded">
                     </div>
                     <div class="col-md-6 order-md-1">
-                        <h4><i class="bi bi-star-fill"></i> Rate Veterinarians</h4>
-                        <p>Help other pet owners by rating and reviewing veterinarians based on your experience.</p>
+                        <h4><i class="bi bi-star-fill"></i> <?php echo RATE1?></h4>
+                        <p><?php echo RATE2?></p>
                     </div>
                 </div>
 
@@ -389,8 +395,8 @@ https://getbootstrap.com/docs/5.3/components/navbar/
                         <img src="images/shop_products.jpg" alt="Shop Products" class="img-fluid rounded">
                     </div>
                     <div class="col-md-6">
-                        <h4><i class="bi bi-cart-check"></i> Shop Recommended Products</h4>
-                        <p>Browse our curated collection of pet supplies, from high-quality food to fun toys, all recommended by experts.</p>
+                        <h4><i class="bi bi-cart-check"></i><?php echo SHOP1?></h4>
+                        <p><?php echo SHOP2?></p>
                     </div>
                 </div>
             </div>

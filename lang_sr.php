@@ -1,4 +1,20 @@
 <?php
+define('WELCOME','Dobrodošli u R&D, našu veterinarsku platformu!');
+define('WELCOME2','Vaše jedinstveno rešenje za upravljanje zdravlje i blagostanje vaših ljubimaca!');
+define('REG1','Registrujte svoje ljubimce');
+define('REG2','Kreirajte personalizovani profil za svakog ljubimca, uključujući osnovne informacije kao što su rasa, starost, medicinska istorija i status vakcinacije.');
+define('BOOK1','Rezervišite termin');
+define('BOOK2','Izaberite svog omiljenog veterinara i rezervišite termin koji vam odgovara, sve iz udobnosti vašeg doma.');
+define('QR1','Ispišite QR kodove');
+define('QR2','Generišite QR kodove sa informacijama o vašem ljubimcu i vašim kontakt podacima. Idealno za ogrlice u slučaju da vaš ljubimac zaluta.');
+define('RATE1','Ocijenite veterinare');
+define('RATE2','Pomozite drugim vlasnicima ljubimaca ocenjivanjem i pisanjem recenzija veterinara na osnovu vašeg iskustva.');
+define('SHOP1','Kupite preporučene proizvode');
+define('SHOP2','Pregledajte našu odabranu kolekciju proizvoda za ljubimce, od visokokvalitetne hrane do zabavnih igračaka, sve preporučeno od strane stručnjaka.');
+define('SUM_PROD','Količina');
+define('TOTAL_PRICE','Ukupna cena');
+define('DETAILS','Detalji');
+define('MODIFY','Podešajl');
 define('ADDVET','Dodaj novog veterinara');
 define('CHANGEPS','Izmeni lozinku');
 define('RESERVE','Rezerviraj');

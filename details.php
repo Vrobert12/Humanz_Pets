@@ -73,6 +73,7 @@ if (!$userId) {
         <form action="functions.php" method="POST">
             <input type="hidden" name="action" value="buyProduct">
             <input type="hidden" name="productId" value="<?php echo $product['productId']; ?>">
+            <input type="hidden" name="productPrice" value="<?php echo number_format($product['productCost'],2);?>"
             <input type="hidden" name="userId" value="<?php echo htmlspecialchars($userId); ?>">
             <input type="hidden" name="quantity" id="hidden-quantity" value="1">
             <button type="submit" class="btn btn-primary">

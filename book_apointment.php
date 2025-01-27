@@ -80,29 +80,19 @@ $reservedPets = $reservedPetStmt->fetchAll(PDO::FETCH_ASSOC);
             integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
             crossorigin="anonymous"></script>
     <style>
-
-        .profile-section {
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-        }
-
         .pet-card {
             border: 1px solid #ddd;
             border-radius: 8px;
             padding: 1rem;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            width: 200px;
             text-align: center;
             cursor: pointer;
             transition: border 0.3s ease, box-shadow 0.3s ease;
         }
 
         .pet-card img {
-            width: 150px;
-            height: 150px;
+            width: 100%;
+            max-width: 150px;
+            height: auto;
             border-radius: 8px;
             margin-bottom: 0.5rem;
         }
@@ -157,6 +147,40 @@ $reservedPets = $reservedPetStmt->fetchAll(PDO::FETCH_ASSOC);
             font-size: 1rem;
             font-weight: bold;
         }
+
+        .profile-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        @media (max-width: 576px) {
+            .pet-card {
+                padding: 0.5rem;
+            }
+
+            .pet-card img {
+                max-width: 100px;
+            }
+        }
+        @media (min-width: 768px) {
+            .container {
+                max-width: 900px;
+            }
+
+            .pet-card {
+                max-width: 250px;
+            }
+        }
+        @media (min-width: 1200px) {
+            .container {
+                max-width: 800px;
+            }
+
+            .pet-card {
+                max-width: 200px;
+            }
+        }
     </style>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
@@ -165,38 +189,32 @@ $reservedPets = $reservedPetStmt->fetchAll(PDO::FETCH_ASSOC);
             const reservationTimeStart = document.querySelector('[name="reservationTimeStart"]');
             const veterinarianId = <?= htmlspecialchars($veterinarianId) ?>;
 
-            // Set the allowed hours (9:00 to 20:00)
             const allowedStartTime = "09:00";
             const allowedEndTime = "20:00";
 
-            // Disable time inputs initially
             reservationTimeStart.disabled = true;
 
-            // Populate the select options for time slots
             function populateTimeOptions() {
                 const times = [];
-                let currentTime = 9; // Starting from 9:00 AM
+                let currentTime = 9;
                 times.push("Select time");
 
-                // Create options for each hour between 9 and 20 (9:00 to 20:00)
                 while (currentTime <= 20) {
                     const timeString = (currentTime < 10 ? '0' : '') + currentTime + ":00";
                     times.push(timeString);
                     currentTime++;
                 }
 
-                // Populate the start time select with options
                 times.forEach((time, index) => {
                     const startOption = document.createElement("option");
                     startOption.value = time;
                     startOption.textContent = time;
 
-                    // Make the first option the "Select time" option, visible but not selectable
                     if (index === 0) {
                         startOption.textContent = "Select time";
                         startOption.selected = true;
                         startOption.disabled = true;
-                        startOption.hidden = true; // This makes it unselectable
+                        startOption.hidden = true;
                     }
 
                     reservationTimeStart.appendChild(startOption);
@@ -205,7 +223,6 @@ $reservedPets = $reservedPetStmt->fetchAll(PDO::FETCH_ASSOC);
 
             populateTimeOptions();
 
-            // Enable and validate inputs based on the selected date
             reservationDate.addEventListener("change", async function () {
                 const selectedDate = reservationDate.value;
 
@@ -216,128 +233,112 @@ $reservedPets = $reservedPetStmt->fetchAll(PDO::FETCH_ASSOC);
                     return;
                 }
 
-                // Reset time dropdown to default state
-                reservationTimeStart.value = "Select time";  // Reset the time selection to "Select time"
-                reservationTimeStart.disabled = true;  // Disable the time dropdown while fetching availability
+                reservationTimeStart.value = "Select time";
+                reservationTimeStart.disabled = true;
 
-                // Fetch available time slots for the selected date
                 const response = await fetch(`check_availability.php?date=${selectedDate}&veterinarianId=${veterinarianId}`);
                 const data = await response.json();
 
-                // Disable unavailable time slots
                 if (data.isFullyBooked) {
                     alert("This date is fully booked. Please select another date.");
                     reservationDate.value = '';
                     reservationTimeStart.disabled = true;
                 } else {
-                    // Enable time slots and disable the ones that are already taken
                     reservationTimeStart.disabled = false;
+                    const reservedTimes = data.reservedTimes;
 
-                    // Disable the reserved time slots
-                    const reservedTimes = data.reservedTimes; // Array of reserved times on the selected date
-
-                    // Debugging: Log reserved times
-                    console.log("Reserved times:", reservedTimes);
-
-                    // Iterate through the options and disable the ones that are reserved
                     Array.from(reservationTimeStart.options).forEach(option => {
-                        // Log each option value and reserved time comparison
-                        console.log(`Checking option value: ${option.value}`);
                         if (reservedTimes.includes(option.value)) {
-                            option.disabled = true; // Disable the option if it's in reservedTimes
-                            option.hidden=true;
-                            console.log(`Disabled time slot: ${option.value}`);
+                            option.disabled = true;
+                            option.hidden = true;
                         } else {
-                            option.disabled = false; // Enable the option if it's not reserved
-                            if (option.textContent !== "Select time")
-                                option.hidden=false;
+                            option.disabled = false;
+                            option.hidden = option.textContent !== "Select time" ? false : true;
                         }
                     });
                 }
             });
 
-            // Enable and automatically calculate the end time based on start time
             reservationTimeStart.addEventListener("change", function () {
                 const startTime = reservationTimeStart.value;
 
                 if (startTime && startTime >= allowedStartTime && startTime <= allowedEndTime) {
-                    // Calculate the end time by adding 1 hour to the selected start time
                     let endHour = parseInt(startTime.split(":")[0]) + 1;
-                    if (endHour > 20) endHour = 20; // Ensure end time doesn't exceed 20:00
+                    if (endHour > 20) endHour = 20;
 
-                    const endTime = (endHour < 10 ? '0' : '') + endHour + ":00"; // Format end time (e.g., 10:00)
-
-                    // Set the end time value to 1 hour later
+                    const endTime = (endHour < 10 ? '0' : '') + endHour + ":00";
                     document.querySelector('[name="reservationTimeEnd"]').value = endTime;
                 }
             });
         });
-
     </script>
 </head>
-<body>
-<h2>Reserve Appointment for Veterinarian ID: <?= htmlspecialchars($veterinarianId) ?></h2>
+
+<body class="container py-4">
+<h2 class="text-center mb-4">Reserve Appointment for Veterinarian ID: <?= htmlspecialchars($veterinarianId) ?></h2>
 
 <?php if (isset($_SESSION['reservationMessage'])): ?>
-    <p><?= htmlspecialchars($_SESSION['reservationMessage']) ?></p>
+    <div class="alert alert-info"> <?= htmlspecialchars($_SESSION['reservationMessage']) ?> </div>
     <?php unset($_SESSION['reservationMessage']); endif; ?>
 
 <form method="POST" action="functions.php">
-    <label for="pet">Select Pet:</label>
-    <div class="profile-section">
-        <?php foreach ($pets as $pet): ?>
-            <div class="pet-card">
-
-                <input type="radio" id="pet-<?= htmlspecialchars($pet['petId']) ?>" name="petId" value="<?= htmlspecialchars($pet['petId']) ?>" required>
-                <label for="pet-<?= htmlspecialchars($pet['petId']) ?>">
-                    <span class="custom-radio"></span>
-                    <img alt="Pet Picture" src="pictures/<?= htmlspecialchars($pet['petPicture']) ?>">
-                    <p class="pet-details"><?= htmlspecialchars($pet['petName']) ?></p>
-                </label>
-            </div>
-        <?php endforeach; ?>
+    <div class="mb-3">
+        <label for="pet" class="form-label">Select Pet:</label>
+        <div class="profile-section">
+            <?php foreach ($pets as $pet): ?>
+                <div class="pet-card">
+                    <input type="radio" id="pet-<?= htmlspecialchars($pet['petId']) ?>" name="petId" value="<?= htmlspecialchars($pet['petId']) ?>" required>
+                    <label for="pet-<?= htmlspecialchars($pet['petId']) ?>">
+                        <span class="custom-radio"></span>
+                        <img alt="Pet Picture" src="pictures/<?= htmlspecialchars($pet['petPicture']) ?>">
+                        <p class="pet-details"> <?= htmlspecialchars($pet['petName']) ?> </p>
+                    </label>
+                </div>
+            <?php endforeach; ?>
+        </div>
     </div>
 
+    <div class="mb-3">
+        <label for="day" class="form-label">Reservation Date:</label>
+        <input type="date" class="form-control" name="day" required>
+    </div>
 
-    <label for="day">Reservation Date:</label>
-    <input type="date" name="day" required>
+    <div class="mb-3">
+        <label for="reservationTimeStart" class="form-label">Start Time:</label>
+        <select class="form-select" name="reservationTimeStart" required disabled></select>
+    </div>
 
-    <label for="reservationTimeStart">Start Time:</label>
-    <select name="reservationTimeStart" required disabled>
-        <!-- Options will be populated here by JavaScript -->
-    </select>
+    <div class="mb-3">
+        <label for="reservationTimeEnd" class="form-label">End Time:</label>
+        <input type="text" class="form-control" name="reservationTimeEnd" readonly>
+    </div>
 
-    <label for="reservationTimeEnd">End Time:</label>
     <input type="hidden" value="insertReservation" name="action">
-    <input type="text" name="reservationTimeEnd" readonly> <!-- This will show the calculated end time -->
-<input type="hidden" name="veterinarianId" value="<?= htmlspecialchars($_GET['veterinarian']) ?>">
-    <input type="hidden" value="<?= $_GET['veterinarian']?>" name="veterinarian">
-    <button type="submit">Reserve</button>
+    <input type="hidden" name="veterinarianId" value="<?= htmlspecialchars($_GET['veterinarian']) ?>">
+
+    <button type="submit" class="btn btn-primary w-100">Reserve</button>
 </form>
-<label for="pet">Reserved Pet:</label>
+
+<h3 class="mt-5">Reserved Pets</h3>
 <div class="profile-section">
     <?php foreach ($reservedPets as $reservedPet): ?>
         <div class="pet-card">
-
-            <label for="pet-<?= htmlspecialchars($reservedPet['petId']) ?>">
+            <label>
                 <img alt="Pet Picture" src="pictures/<?= htmlspecialchars($reservedPet['petPicture']) ?>">
-                <p class="pet-details"><?= htmlspecialchars($reservedPet['petName']) ?></p>
-                <p><?= htmlspecialchars($reservedPet['reservationDay']) ?></p>
-                <p><?= htmlspecialchars($reservedPet['reservationTime'])."-".htmlspecialchars($reservedPet['period']) ?></p>
+                <p class="pet-details"> <?= htmlspecialchars($reservedPet['petName']) ?> </p>
+                <p> <?= htmlspecialchars($reservedPet['reservationDay']) ?> </p>
+                <p> <?= htmlspecialchars($reservedPet['reservationTime']) . "-" . htmlspecialchars($reservedPet['period']) ?> </p>
                 <form method="post" action="functions.php">
-                    <input type="hidden" value="<?= $reservedPet['reservationId']?>" name="reservationId">
+                    <input type="hidden" value="<?= $reservedPet['reservationId'] ?>" name="reservationId">
                     <input type="hidden" value="deleteReservation" name="action">
-                    <input type="hidden" value="<?= $_GET['veterinarian']?>" name="veterinarian">
-                    <input type="submit" value="delete">
-
+                    <input type="hidden" value="<?= $_GET['veterinarian'] ?>" name="veterinarian">
+                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
                 </form>
-
             </label>
         </div>
     <?php endforeach; ?>
 </div>
 
-
-<a href="book_veterinarian.php">Back to Veterinarian Selection</a>
+<a href="book_veterinarian.php" class="btn btn-secondary mt-4">Back to Veterinarian Selection</a>
 </body>
 </html>

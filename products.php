@@ -167,7 +167,7 @@ $products = $pdo->query("SELECT productId, productName, productPicture,descripti
 <?php if (isset($_SESSION['privilage']) && $_SESSION['privilage'] === 'Admin'): ?>
     <div class="d-flex flex-wrap justify-content-center">
         <div class="new-product">
-            <h3><?php echo "Add a New Product" ?></h3>
+<!--            <h3>--><?php //echo "Add a New Product" ?><!--</h3>-->
             <form action="addProduct.php" method="get">
                 <button type="submit"><?php echo ADDPRODUCT ?></button>
             </form>
@@ -183,7 +183,7 @@ $products = $pdo->query("SELECT productId, productName, productPicture,descripti
                  alt="<?php echo htmlspecialchars($product['productName']); ?>">
             <h2><?php echo htmlspecialchars($product['productName']); ?></h2>
             <p><?php echo PRICE ?>: €<?php echo number_format($product['productCost'], 2); ?></p>
-            <a href="details.php?id=<?php echo $product['productId']; ?>" class="btn btn-primary">Details</a>
+            <a href="details.php?id=<?php echo $product['productId']; ?>" class="btn btn-primary"><?php echo DETAILS?></a>
             <?php if (isset($_SESSION['privilage']) && $_SESSION['privilage'] === 'Admin')
                 echo ' <form action="updateProduct.php?id='.$product['productId'].'" method="post" enctype="multipart/form-data">
  <input type="hidden" name="productId" value="' . $product['productId'] . '">
@@ -191,7 +191,7 @@ $products = $pdo->query("SELECT productId, productName, productPicture,descripti
   <input type="hidden" name="productCost" value="'.$product['productCost'].'" class="btn btn-primary">
     <input type="hidden" name="productDescription" value="'.$product['description'].'" class="btn btn-primary">
    <input type="hidden" name="productPicture" value="'.$product['productPicture'].'" class="btn btn-primary">
-               <br> <button type="submit" class="btn btn-warning">Update Product</button>
+               <br> <button type="submit" class="btn btn-warning">'.MODIFY.'</button>
             </form>';
             ?>
         </div>
@@ -214,7 +214,7 @@ foreach ($cartItems as $price) {
 ?>
 <div class="cart">
     <h2><?php echo CART ?></h2>
-    <h3><?php echo "Total price: €" . number_format($totalPrice, 2); ?></h3>
+    <h3><?php echo TOTAL_PRICE.": €" . number_format($totalPrice, 2); ?></h3>
     <ul id="cart-list">
         <?php foreach ($cartItems as $item): ?>
             <li class="cart-item">
@@ -222,8 +222,8 @@ foreach ($cartItems as $price) {
                      alt="<?php echo htmlspecialchars($item['productName']); ?>">
                 <div class="cart-item-details">
                     <h3><?php echo htmlspecialchars($item['productName']); ?></h3>
-                    <p>The sum of the products: <?php echo "<b>".$item['sum']."</b>"; ?></p>
-                    <p class="cart-item-price">€<?php echo number_format($item['productCost'], 2) * $item['sum']; ?></p>
+                    <p><?php echo SUM_PROD?>: <?php echo "<b>".$item['sum']."</b>"; ?></p>
+                    <p class="cart-item-price">€<?php echo number_format($item['price'], 2) * $item['sum']; ?></p>
                 </div>
             </li>
         <?php endforeach; ?>

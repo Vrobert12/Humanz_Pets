@@ -90,46 +90,8 @@ if ($_SESSION['privilage'] == "Veterinarian") {
 <!--
 https://getbootstrap.com/docs/5.3/components/navbar/
 -->
-<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-    <div class="container-fluid">
-        <!-- Logo -->
-        <a class="navbar-brand" href="#">Logo</a>
-        <!-- Toggler for mobile view -->
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <!-- Navbar Content -->
-        <div class="collapse navbar-collapse" id="collapsibleNavbar">
-            <!-- Centered Navigation Links -->
-            <ul class="navbar-nav mx-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="contacts.php"></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#"></a>
-                </li>
-                <li class="nav-item">
-                    <?php
-                    $sql = "SELECT * FROM user";
-                    ?>
-                    <a class="nav-link" href="book_veterinarian.php"><i class="bi bi-book-fill fs-3"></i></a>
-                </li>
-            </ul>
-            <!-- Language Dropdown (Aligned Right) -->
-            <div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
-                        data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <?php echo LG ?>
-                </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item" href="?lang=en"><?php echo LANGUAGE_en ?></a>
-                    <a class="dropdown-item" href="?lang=hu"><?php echo LANGUAGE_hu ?></a>
-                    <a class="dropdown-item" href="?lang=sr"><?php echo LANGUAGE_sr ?></a>
-                </div>
-            </div>
-        </div>
-    </div>
-</nav>
+
+<a class="btn btn-secondary back-button" style="margin-left: 10px; margin-top: 10px" href="index.php"><?php echo BACK ?></a>
 <?php
 if (isset($_SESSION['message']) && $_SESSION['message'] != "")
     echo "<div class='mainBlock rounded bg-dark text-white' style='text-align: center; margin-top: 100px;'>
@@ -191,7 +153,7 @@ function users($command, $params = [])
                 echo '<label>Name: ' . htmlspecialchars($row['firstName'] . " " . $row['lastName']) . '</label><br>';
                 echo '<label>Phone: ' . htmlspecialchars($row['phoneNumber']) . '</label><br>';
                 echo '<label>Email: ' . htmlspecialchars($row['veterinarianMail']) . '</label><br>';
-                echo '<a href="book_apointment.php?email=' . $_SESSION['email'] . '&veterinarian=' . htmlspecialchars($row['veterinarianId']) . '">Reserve</a>&nbsp;&nbsp;&nbsp;';
+                echo '<a class="btn btn-primary" href="book_apointment.php?email=' . $_SESSION['email'] . '&veterinarian=' . htmlspecialchars($row['veterinarianId']) . '">Reserve</a>&nbsp;&nbsp;&nbsp;';
                 echo '</div>';
             }
             echo '</div></div>';

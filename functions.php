@@ -497,14 +497,16 @@ WHERE reservationId = :reservationId
     {
         if (!empty($_POST['productId']) && !empty($_POST['quantity'])) {
             $productId = $_POST['productId'] ?? null;
+            $productPrice = $_POST['productPrice'] ?? null;
             $userId = $_SESSION['userId'] ?? null;
             $sum = $_POST['quantity'] ?? null;
 
-            $sql = "INSERT INTO user_product_relation( userId, productId,sum) VALUES (:userId,:productId,:sum)";
+            $sql = "INSERT INTO user_product_relation( userId, productId,sum, price) VALUES (:userId,:productId,:sum, :price)";
             $stmt = $this->connection->prepare($sql);
             $stmt->bindParam(':userId', $userId);
             $stmt->bindParam(':productId', $productId);
             $stmt->bindParam(':sum', $sum);
+            $stmt->bindParam(':price', $productPrice);
             $stmt->execute();
 
 

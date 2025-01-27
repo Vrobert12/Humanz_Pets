@@ -1,4 +1,20 @@
 <?php
+define('WELCOME','Üdvözöljük az R&D-nél, a mi állatorvosi platformunkon!');
+define('WELCOME2','Az Ön egyablakos megoldása a háziállatai egészségének és jólétének fenntartására!');
+define('REG1','Regisztrálja a háziállatait');
+define('REG2','Hozzon létre egy személyre szabott profilt minden egyes háziállata számára, beleértve olyan alapvető adatokat, mint a fajtájuk, életkoruk, orvosi előzményeik és oltási státuszuk.');
+define('BOOK1','Foglaljon időpontot');
+define('BOOK2','Válassza ki a preferált állatorvosát, és foglaljon időpontot, amely megfelel az Ön időpontjainak, mindezt otthona kényelméből.');
+define('QR1','Nyomtassa ki a QR-kódokat');
+define('QR2','Generáljon QR-kódokat a háziállatai információival és az Ön elérhetőségi adataival. Tökéletes a nyakörvekhez, ha a háziállata elveszne.');
+define('RATE1','Értékelje az állatorvosokat');
+define('RATE2','Segítsen más háziállat-tulajdonosoknak az állatorvosok értékelésével és véleményezésével, a saját tapasztalatai alapján.');
+define('SHOP1','Vásároljon ajánlott termékeket');
+define('SHOP2','Böngéssze végig válogatott háziállat-ellátmányainkat, a kiváló minőségű ételektől a szórakoztató játékokig, mindet szakértők ajánlják.');
+define('SUM_PROD','Mennyiség');
+define('TOTAL_PRICE','Összegzett ár');
+define('DETAILS','Részletek');
+define('MODIFY', 'Szerkesztés');
 define('ADDVET','Állatorvos hozzáadása');
 define('CHANGEPS','Jelszóváltoztatás');
 define('RESERVE','Lefoglalás');
