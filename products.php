@@ -16,6 +16,10 @@ $products = $pdo->query("SELECT productId, productName, productPicture,descripti
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <title>Product Page</title>
+    <script>
+        const lang = '<?php echo $lang; ?>';
+    </script>
+    <script src="sureCheck.js"></script>
     <style>
         body {
             background-color: #f8f9fa;
@@ -193,6 +197,11 @@ $products = $pdo->query("SELECT productId, productName, productPicture,descripti
    <input type="hidden" name="productPicture" value="'.$product['productPicture'].'" class="btn btn-primary">
                <br> <button type="submit" class="btn btn-warning">'.MODIFY.'</button>
             </form>';
+            echo '   <br><form action="functions.php" method="post">
+                    <input type="hidden" name="action" value="deleteFromProduct">
+                    <input type="hidden" name="productId" value="'.$product['productId'].'">
+                    <input type="submit" class="btn btn-danger" value="Delete Product" onclick="confirmDeletingProduct(event)">
+                </form>';
             ?>
         </div>
     <?php endforeach; ?>
@@ -200,8 +209,7 @@ $products = $pdo->query("SELECT productId, productName, productPicture,descripti
 
 <?php
 $totalPrice = 0;
-$sql = "SELECT * FROM product p 
-        INNER JOIN user_product_relation up ON p.productId = up.productId  
+$sql = "SELECT * FROM  user_product_relation up
         INNER JOIN user u ON u.userId = up.userId 
         WHERE u.userId = :userId";
 $stmt = $pdo->prepare($sql);
@@ -209,7 +217,7 @@ $stmt->bindValue(':userId', $_SESSION['userId']);
 $stmt->execute();
 $cartItems = $stmt->fetchAll(PDO::FETCH_ASSOC);
 foreach ($cartItems as $price) {
-    $totalPrice = $totalPrice + (float)$price['productCost'] * $price['sum'];
+    $totalPrice = $totalPrice + (float)$price['sum'] * $price['price'];
 }
 ?>
 <div class="cart">
@@ -228,8 +236,9 @@ foreach ($cartItems as $price) {
                 <form action="functions.php" method="post">
                     <input type="hidden" name="action" value="deleteFromCart">
                     <input type="hidden" name="cartId" value="<?php echo htmlspecialchars($item['userProductRelationId']); ?>">
-                    <input type="submit" value="delete Product">
+                    <input type="submit" class="btn btn-danger" value="Delete Product" onclick="confirmDeletingCart(event)">
                 </form>
+
             </li>
         <?php endforeach; ?>
     </ul>

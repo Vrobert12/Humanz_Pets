@@ -31,7 +31,8 @@ $_SESSION['backPic']="http://localhost/Humanz_Pets/resetPassword.php?mail=" . $e
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if (!$result) {
-        die("No result found for email: $email");
+        header('Location:index.php');
+        exit();
     }
 
     if ($token != $result['verification_code']) {

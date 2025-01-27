@@ -51,7 +51,17 @@ $autoload->checkAutoLogin();
                 <input type="text" class="form-control" placeholder="<?php echo PHONE ?>" value="<?php echo $_SESSION['phone'] ?>" name="tel" id="tel2">
             </div>
         </div>
-
+        <div class="mb-3">
+            <label for="usedLanguage" class="form-label"><?php echo LG; ?>:</label>
+            <div class="input-group">
+            <select name="usedLanguage" >
+                <option hidden="SELECT_LANG"><?php echo "SELECT_LANG"; ?></option>
+                <option value="en"><?php echo LANGUAGE_en; ?></option>
+                <option value="hu"><?php echo LANGUAGE_hu; ?></option>
+                <option value="sr"><?php echo LANGUAGE_sr; ?></option>
+            </select>
+            </div>
+        </div>
         <!-- Save Button -->
         <div class="mb-3 text-center">
             <input type="submit" name="submit" value="<?php echo SAVE ?>" class="btn btn-primary">

@@ -34,3 +34,39 @@ function confirmCheck(event) {
         event.target.closest("form").submit(); // Submit the form programmatically
     }
 }
+function confirmDeletingProduct(event) {
+    event.preventDefault();
+    let isConfirmed;
+    console.log("confirmCheck function triggered");
+    if (lang === 'en') {
+        isConfirmed = confirm("Are you sure you want to delete the product?");
+    } else if (lang === 'sr') {
+        isConfirmed = confirm("Da li ste sigurni da želite da izbrišete proizvod?");
+    } else if (lang === 'hu') {
+        isConfirmed = confirm("Biztos, hogy ki akarja törölni a terméket?");
+    } else {
+        isConfirmed = confirm("Are you sure you want to log out?");
+    }
+
+    if (isConfirmed) {
+        event.target.closest("form").submit(); // Submit the form programmatically
+    }
+}
+function confirmDeletingCart(event) {
+    event.preventDefault();
+    let isConfirmed;
+    console.log("confirmCheck function triggered");
+    if (lang === 'en') {
+        isConfirmed = confirm("Are you sure you want to remove the product from the cart?");
+    } else if (lang === 'sr') {
+        isConfirmed = confirm("Da li ste sigurni da želite da izbrišete proizvod iz vaše korpe?");
+    } else if (lang === 'hu') {
+        isConfirmed = confirm("Biztos, hogy el akarja távolítani a terméket a kosarából?");
+    } else {
+        isConfirmed = confirm("Are you sure you want to log out?");
+    }
+
+    if (isConfirmed) {
+        event.target.closest("form").submit(); // Submit the form programmatically
+    }
+}

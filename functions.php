@@ -119,6 +119,9 @@ class Functions
                 case "deleteFromCart":
                     $this->deleteFromCart();
                     break;
+                case "deleteFromProduct":
+                    $this->deleteFromProduct();
+                    break;
                 default:
                     $_SESSION['message'] = "Something went wrong in switch";
                     header('Location:index.php');
@@ -130,7 +133,26 @@ class Functions
             }
         }
     }
+    public function deleteFromProduct()
+    {
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            $productId = $_POST["productId"];
 
+            $sql = "Update user_product_relation set productId=NULL WHERE productId=:productId";
+            $stmt = $this->connection->prepare($sql);
+            $stmt->bindParam(":productId", $productId);
+            $stmt->execute();
+
+
+            $sql = "Delete from product WHERE productId=:productId";
+            $stmt = $this->connection->prepare($sql);
+            $stmt->bindParam(":productId", $productId );
+            $stmt->execute();
+            header('Location:products.php');
+            exit();
+
+        }
+    }
     public function deleteFromCart()
     {
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -773,31 +795,37 @@ WHERE productId = :productId;
 
     public function addProduct()
     {
+        if (isset($_POST['productName']) && isset($_POST['price']) && isset($_POST['productDescription']) && isset($_SESSION['backPic'])) {
+            try {
+                $productName = ucfirst(strtolower(trim($_POST["productName"])));
+                $price = ucfirst(strtolower(trim($_POST["price"])));
+                $picture = $this->picture($_SESSION['backPic']);
+                $description = ucfirst(strtolower(trim($_POST["productDescription"])));
 
-        try {
-            $productName = ucfirst(strtolower(trim($_POST["productName"])));
-            $price = ucfirst(strtolower(trim($_POST["price"])));
-            $picture = $this->picture($_SESSION['backPic']);
-            $description = ucfirst(strtolower(trim($_POST["productDescription"])));
-
-            // Insert the pet data into the database
-            $stmt = "INSERT INTO product (productName, productCost, productPicture, description, productRelease)
+                // Insert the pet data into the database
+                $stmt = "INSERT INTO product (productName, productCost, productPicture, description, productRelease)
                     VALUES (:productName, :price,:productPicture,:productDescription, NOW())";
-            $query = $this->connection->prepare($stmt);
-            $query->bindParam(':productName', $productName, PDO::PARAM_STR);
-            $query->bindParam(':price', $price, PDO::PARAM_STR);
-            $query->bindParam(':productPicture', $picture, PDO::PARAM_STR);
-            $query->bindParam(':productDescription', $description, PDO::PARAM_STR);
+                $query = $this->connection->prepare($stmt);
+                $query->bindParam(':productName', $productName, PDO::PARAM_STR);
+                $query->bindParam(':price', $price, PDO::PARAM_STR);
+                $query->bindParam(':productPicture', $picture, PDO::PARAM_STR);
+                $query->bindParam(':productDescription', $description, PDO::PARAM_STR);
 
 
-            if ($query->execute()) {
-                header("Location: products.php");
+                if ($query->execute()) {
+                    header("Location: products.php");
+                    exit();
+                } else {
+                    throw new Exception("Failed to register the pet.");
+                }
+            } catch (Exception $e) {
+                $_SESSION['message'] = "Error: " . $e->getMessage();
+                header("Location: addProduct.php");
                 exit();
-            } else {
-                throw new Exception("Failed to register the pet.");
             }
-        } catch (Exception $e) {
-            $_SESSION['message'] = "Error: " . $e->getMessage();
+        }
+        else{
+            $_SESSION['message'] = "Please fill in all the fields.";
             header("Location: addProduct.php");
             exit();
         }
@@ -1104,10 +1132,10 @@ WHERE productId = :productId;
         // Check user privilege
         if ($_SESSION['privilage'] == 'Veterinarian') {
             $table = 'veterinarian';
-            $sql = $this->connection->prepare("SELECT firstName, lastName, phoneNumber FROM veterinarian WHERE veterinarianMail = ?");
+            $sql = $this->connection->prepare("SELECT firstName, lastName, phoneNumber,usedLanguage FROM veterinarian WHERE veterinarianMail = ?");
         } else {
             $table = 'user';
-            $sql = $this->connection->prepare("SELECT firstName, lastName, phoneNumber, privilage FROM user WHERE userMail = ?");
+            $sql = $this->connection->prepare("SELECT firstName, lastName, phoneNumber,usedLanguage privilage FROM user WHERE userMail = ?");
         }
 // Prepare the initial query to retrieve existing user details
 
@@ -1154,6 +1182,14 @@ WHERE productId = :productId;
                 $sql->execute([$phoneNumber, $_SESSION['email']]);
                 $_SESSION['message'] = "Phone number is modified";
                 $_SESSION['phone'] = $phoneNumber;
+                $count++;
+            }
+            if (!empty($_POST['usedLanguage'])) {
+                $usedLanguage=$_POST['usedLanguage'];
+                $sql = $this->connection->prepare("UPDATE $table SET usedLanguage = ? WHERE " . $table . "Mail = ?");
+                $sql->execute([ $usedLanguage, $_SESSION['email']]);
+                $_SESSION['message'] = "Language is modified";
+                $_SESSION['userLang'] =  $usedLanguage;
                 $count++;
             }
 
