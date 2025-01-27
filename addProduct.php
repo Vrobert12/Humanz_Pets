@@ -1,7 +1,8 @@
 <?php
 include "functions.php";
 $autoload=new Functions();
-$autoload->language();
+$lang=$autoload->language();
+include "lang_$lang.php";
 $autoload->checkAutoLogin();
 
 $_SESSION['backPic'] = "addProduct.php";

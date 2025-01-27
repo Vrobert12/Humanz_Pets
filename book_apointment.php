@@ -3,9 +3,15 @@
 require 'vendor/autoload.php';
 
 include "functions.php";
-$functions = new Functions();
-$functions->language();
+$functions=new Functions();
+$lang=$functions->language();
+include "lang_$lang.php";
 $functions->checkAutoLogin();
+
+if($_SESSION['privilage']=="Veterinarian"){
+    header("Location:index.php");
+    exit();
+}
 
 // Database connection
 $pdo = $functions->connect($GLOBALS['dsn'], $_ENV['DB_USER'], $_ENV['DB_PASSWORD'], $GLOBALS['pdoOptions']);
@@ -30,22 +36,21 @@ if (!$userId) {
     exit();
 }
 
-$connection = $functions->connect($dsn, $_ENV['DB_USER'], $_ENV['DB_PASSWORD'], $pdoOptions);
 $petQuery = "SELECT p.petId, p.petName, p.bred, p.petSpecies, p.petPicture
 FROM pet p
 WHERE p.userId = :userId
 AND p.petId NOT IN (
     SELECT r.petId
     FROM reservation r
-    WHERE r.reservationDay > CURDATE()
+    WHERE r.reservationDay >= CURDATE()
 )
 ";
-$petStmt = $connection->prepare($petQuery);
+$petStmt = $pdo->prepare($petQuery);
 $petStmt->bindParam(":userId", $userId, PDO::PARAM_INT);
 $petStmt->execute();
 $pets = $petStmt->fetchAll(PDO::FETCH_ASSOC);
 
-$petQuery = "SELECT p.petId, p.petName, p.bred, p.petSpecies, p.petPicture, r.reservationDay, r.reservationTime, r.period
+$petQuery = "SELECT p.petId, p.petName, p.bred, p.petSpecies, p.petPicture, r.reservationDay, r.reservationTime, r.period,r.reservationId
 FROM pet p
 LEFT JOIN reservation r ON p.petId = r.petId
 WHERE p.userId = :userId
@@ -53,53 +58,13 @@ AND (r.reservationDay IS NOT NULL AND r.reservationDay >= CURDATE())
 
 ";
 
-$reservedPetStmt = $connection->prepare($petQuery);
+$reservedPetStmt = $pdo->prepare($petQuery);
 $reservedPetStmt->bindParam(":userId", $userId, PDO::PARAM_INT);
 $reservedPetStmt->execute();
 $reservedPets = $reservedPetStmt->fetchAll(PDO::FETCH_ASSOC);
 // Handle reservation submission
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $selectedPetId = $_POST['petId'] ?? null;
-    $reservationDate = $_POST['day'] ?? null;
-    $reservationStart = $_POST['reservationTimeStart'] ?? null;
-    $reservationEnd = $_POST['reservationTimeEnd'] ?? null;
 
-    if ($selectedPetId && $reservationDate && $reservationStart && $reservationEnd) {
-        // Check if the pet already has 5 reservations for the day
-        $today = date("Y-m-d");
-        $reservationCheckQuery = $pdo->prepare(
-            "SELECT COUNT(*) AS reservationCount FROM reservation 
-             WHERE petId = :petId AND reservationDay >= :today"
-        );
-        $reservationCheckQuery->execute([
-            ':petId' => $selectedPetId,
-            ':today' => $today
-        ]);
-        $reservationCount = $reservationCheckQuery->fetch(PDO::FETCH_ASSOC)['reservationCount'] ?? 0;
-
-        if ($reservationCount < 1) {
-            // Insert the reservation
-            $insertQuery = $pdo->prepare(
-                "INSERT INTO reservation (petId, veterinarianId, reservationDay, reservationTime, period) 
-                 VALUES (:petId, :veterinarianId, :reservationDay, :reservationStart, :reservationEnd)"
-            );
-            $insertQuery->execute([
-                ':petId' => $selectedPetId,
-                ':veterinarianId' => $veterinarianId,
-                ':reservationDay' => $reservationDate,
-                ':reservationStart' => $reservationStart,
-                ':reservationEnd' => $reservationEnd
-            ]);
-
-            $_SESSION['reservationMessage'] = "Reservation successfully created!";
-        } else {
-            $_SESSION['reservationMessage'] = "You already have too many reservations for this pet.";
-        }
-    } else {
-        $_SESSION['reservationMessage'] = "All fields are required.";
-    }
-}
 
 ?>
 <!DOCTYPE html>
@@ -244,7 +209,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             reservationDate.addEventListener("change", async function () {
                 const selectedDate = reservationDate.value;
 
-                if (selectedDate < today) {
+                if (selectedDate <= today) {
                     alert("You cannot select a past date.");
                     reservationDate.value = '';
                     reservationTimeStart.disabled = true;
@@ -317,7 +282,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <p><?= htmlspecialchars($_SESSION['reservationMessage']) ?></p>
     <?php unset($_SESSION['reservationMessage']); endif; ?>
 
-<form method="POST">
+<form method="POST" action="functions.php">
     <label for="pet">Select Pet:</label>
     <div class="profile-section">
         <?php foreach ($pets as $pet): ?>
@@ -332,21 +297,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
         <?php endforeach; ?>
     </div>
-    <label for="pet">Reserved Pet:</label>
-    <div class="profile-section">
-        <?php foreach ($reservedPets as $reservedPet): ?>
-            <div class="pet-card">
 
-               <label for="pet-<?= htmlspecialchars($reservedPet['petId']) ?>">
-                    <img alt="Pet Picture" src="pictures/<?= htmlspecialchars($reservedPet['petPicture']) ?>">
-                    <p class="pet-details"><?= htmlspecialchars($reservedPet['petName']) ?></p>
-                    <p><?= htmlspecialchars($reservedPet['reservationDay']) ?></p>
-                    <p><?= htmlspecialchars($reservedPet['reservationTime'])."-".htmlspecialchars($reservedPet['period']) ?></p>
-
-                </label>
-            </div>
-        <?php endforeach; ?>
-    </div>
 
     <label for="day">Reservation Date:</label>
     <input type="date" name="day" required>
@@ -357,11 +308,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </select>
 
     <label for="reservationTimeEnd">End Time:</label>
+    <input type="hidden" value="insertReservation" name="action">
     <input type="text" name="reservationTimeEnd" readonly> <!-- This will show the calculated end time -->
-
+<input type="hidden" name="veterinarianId" value="<?= htmlspecialchars($_GET['veterinarian']) ?>">
+    <input type="hidden" value="<?= $_GET['veterinarian']?>" name="veterinarian">
     <button type="submit">Reserve</button>
 </form>
+<label for="pet">Reserved Pet:</label>
+<div class="profile-section">
+    <?php foreach ($reservedPets as $reservedPet): ?>
+        <div class="pet-card">
 
+            <label for="pet-<?= htmlspecialchars($reservedPet['petId']) ?>">
+                <img alt="Pet Picture" src="pictures/<?= htmlspecialchars($reservedPet['petPicture']) ?>">
+                <p class="pet-details"><?= htmlspecialchars($reservedPet['petName']) ?></p>
+                <p><?= htmlspecialchars($reservedPet['reservationDay']) ?></p>
+                <p><?= htmlspecialchars($reservedPet['reservationTime'])."-".htmlspecialchars($reservedPet['period']) ?></p>
+                <form method="post" action="functions.php">
+                    <input type="hidden" value="<?= $reservedPet['reservationId']?>" name="reservationId">
+                    <input type="hidden" value="deleteReservation" name="action">
+                    <input type="hidden" value="<?= $_GET['veterinarian']?>" name="veterinarian">
+                    <input type="submit" value="delete">
+
+                </form>
+
+            </label>
+        </div>
+    <?php endforeach; ?>
+</div>
 
 
 <a href="book_veterinarian.php">Back to Veterinarian Selection</a>

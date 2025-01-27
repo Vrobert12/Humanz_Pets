@@ -109,9 +109,6 @@ https://getbootstrap.com/docs/5.3/components/navbar/
                     <a class="nav-link" href="#"></a>
                 </li>
                 <li class="nav-item">
-                    <?php
-                    $sql = "SELECT * FROM user";
-                    ?>
                     <a class="nav-link" href="book_veterinarian.php"><i class="bi bi-book-fill fs-3"></i></a>
                 </li>
             </ul>
@@ -149,9 +146,22 @@ if (isset($_SESSION['email']) && isset($_SESSION['name']) && isset($_SESSION['pr
 
     if (isset($_POST['searchAction']) && $_POST['searchAction'] == 'search') {
         $veterinarianLike = "%" . $_POST['searchName'] . "%";
-        users("SELECT * FROM veterinarian WHERE verify=1 and area LIKE ?", [$veterinarianLike]);
+        users("SELECT v.veterinarianId,v.firstName,v.lastName,v.veterinarianMail,v.profilePic,v.phoneNumber,
+       sum(r.review)/count(r.review) as averageReview FROM veterinarian v inner join 
+           review r ON v.veterinarianId=r.veterinarianId WHERE verify=1 and area LIKE ?", [$veterinarianLike]);
     } else {
-        users("SELECT * FROM veterinarian WHERE verify=1");
+        users("SELECT 
+    v.veterinarianId,
+    v.firstName,
+    v.lastName,
+    v.veterinarianMail,
+    v.profilePic,
+    v.phoneNumber,
+    COALESCE(AVG(r.review), 0) AS totalReviewSum
+FROM veterinarian v
+LEFT JOIN review r ON v.veterinarianId = r.veterinarianId AND v.verify = 1
+GROUP BY v.veterinarianId, v.firstName, v.lastName, v.veterinarianMail, v.profilePic, v.phoneNumber;
+");
     }
 } else {
     // Redirect to index.php if session variables are not set
@@ -191,6 +201,8 @@ function users($command, $params = [])
                 echo '<label>Name: ' . htmlspecialchars($row['firstName'] . " " . $row['lastName']) . '</label><br>';
                 echo '<label>Phone: ' . htmlspecialchars($row['phoneNumber']) . '</label><br>';
                 echo '<label>Email: ' . htmlspecialchars($row['veterinarianMail']) . '</label><br>';
+                $_SESSION['previousPage']="veterinarianRates.php";
+                echo '<label><a href="ratings.php">Review: <b>5 / ' . htmlspecialchars((float)$row['totalReviewSum']) . '</b></a></label><br>';
                 echo '<a href="book_apointment.php?email=' . $_SESSION['email'] . '&veterinarian=' . htmlspecialchars($row['veterinarianId']) . '">Reserve</a>&nbsp;&nbsp;&nbsp;';
                 echo '</div>';
             }

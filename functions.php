@@ -104,6 +104,18 @@ class Functions
                 case "deletePet":
                     $this->deletePet();
                     break;
+                case "deleteReservation":
+                    $this->deleteReservation();
+                    break;
+                case "insertReservation":
+                    $this->insertReservation();
+                    break;
+                case "animalChecked":
+                    $this->sendReview();
+                    break;
+                case "rateVeterinarian":
+                    $this->insertReview();
+                    break;
                 default:
                     $_SESSION['message'] = "Something went wrong in switch";
                     header('Location:index.php');
@@ -114,6 +126,70 @@ class Functions
                 $this->logOut();
             }
         }
+    }
+public function insertReview()
+{
+
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        $reviewCode = $_POST["reviewCode"];
+        $rating = $_POST["rating"];
+
+        $sql = "UPDATE review SET review=:review  where reviewCode=:reviewCode";
+        $stmt = $this->connection->prepare($sql);
+        $stmt->bindParam(':reviewCode',   $reviewCode);
+        $stmt->bindParam(':review', $rating);
+        $stmt->execute();
+        header('Location:index.php');
+        exit();
+
+    }
+
+}
+    public function sendReview()
+    {
+        $_SESSION['message'] = "Thank you for your feedback";
+        $sql = "Update reservation set animalChecked=true where reservationId=:reservationId";
+        $stmt = $this->connection->prepare($sql);
+        $stmt->bindParam(':reservationId', $_POST['reservationId']);
+        $stmt->execute();
+
+        $reviewCode = $this->generateVerificationCode(8);
+
+        $sql = "SELECT reviewCode FROM review";
+        $stmt = $this->connection->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        foreach ($result as $row) {
+            if ($reviewCode === $row['reviewCode']) {
+                $reviewCode = $this->generateVerificationCode(9);
+                break;
+            }
+        }
+
+
+
+
+        $sql="Select usedLanguage from user where userId=:userId";
+        $stmt=$this->connection->prepare($sql);
+        $stmt->bindParam(':userId',$_POST['ownerId']);
+        $stmt->execute();
+        $usedLanguage = $stmt->FetchColumn();
+
+
+        $sql = "INSERT INTO review( reviewCode, userId, veterinarianId)
+VALUES (:reviewCode,:userId,:veterinarianId)";
+        $stmt = $this->connection->prepare($sql);
+
+        $stmt->bindParam(':reviewCode', $reviewCode);
+        $stmt->bindParam(':userId', $_POST['ownerId']);
+        $stmt->bindParam(':veterinarianId', $_SESSION['userId']);
+        $stmt->execute();
+        $_SESSION['usedLanguage']=$usedLanguage;
+        $_SESSION['ownerMail'] = $_POST['ownerMail'];
+        $_SESSION['reviewLink'] = 'http://localhost/Humanz_Pets/reviewVeterinarian.php?reviewCode='.$reviewCode;
+        header('Location:mail.php');
+        exit();
     }
 
     public function mailAddAndPasswordChange()
@@ -155,9 +231,9 @@ class Functions
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    private function generateVerificationCode()
+    private function generateVerificationCode($length = 6)
     {
-        return substr(number_format(time() * rand(), 0, '', ''), 0, 6);
+        return substr(number_format(time() * rand(), 0, '', ''), 0, $length);
     }
 
     private function updateVerificationDetails($mail, $code, $time, $table)
@@ -330,6 +406,77 @@ class Functions
             header('Location:pet.php?email=' . $_SESSION['email']);
         else
             header('Location:registerAnimal.php');
+        exit();
+    }
+
+    public function insertReservation()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $veterinarianId = $_POST['veterinarianId'];
+            $selectedPetId = $_POST['petId'] ?? null;
+            $reservationDate = $_POST['day'] ?? null;
+            $reservationStart = $_POST['reservationTimeStart'] ?? null;
+            $reservationEnd = $_POST['reservationTimeEnd'] ?? null;
+
+            if ($selectedPetId && $reservationDate && $reservationStart && $reservationEnd) {
+                // Check if the pet already has 5 reservations for the day
+                $today = date("Y-m-d");
+                $reservationCheckQuery = $this->connection->prepare(
+                    "SELECT COUNT(*) AS reservationCount FROM reservation 
+             WHERE petId = :petId AND reservationDay >= :today"
+                );
+                $reservationCheckQuery->execute([
+                    ':petId' => $selectedPetId,
+                    ':today' => $today
+                ]);
+                $reservationCount = $reservationCheckQuery->fetch(PDO::FETCH_ASSOC)['reservationCount'] ?? 0;
+
+                if ($reservationCount < 1) {
+                    // Insert the reservation
+                    $insertQuery = $this->connection->prepare(
+                        "INSERT INTO reservation (petId, veterinarianId, reservationDay, reservationTime, period) 
+                 VALUES (:petId, :veterinarianId, :reservationDay, :reservationStart, :reservationEnd)"
+                    );
+                    $insertQuery->execute([
+                        ':petId' => $selectedPetId,
+                        ':veterinarianId' => $veterinarianId,
+                        ':reservationDay' => $reservationDate,
+                        ':reservationStart' => $reservationStart,
+                        ':reservationEnd' => $reservationEnd
+                    ]);
+
+                    $_SESSION['message'] = "Reservation successfully created!";
+                } else {
+                    $_SESSION['message'] = "You already have too many reservations for this pet.";
+                }
+            } else {
+                $_SESSION['message'] = "All fields are required.";
+            }
+        }
+        header('Location:book_apointment.php?email=' . $_SESSION['email'] . "&veterinarian=" . $_POST['veterinarian']);
+
+    }
+
+    public function deleteReservation()
+    {
+        $sql = 'DELETE FROM reservation
+WHERE reservationId = :reservationId
+  AND (
+      reservationDay > CURDATE() 
+      OR (reservationDay = CURDATE() AND reservationTime > ADDTIME(NOW(), "03:00:00"))
+  );
+
+';
+        $stmt = $this->connection->prepare($sql);
+        $stmt->bindValue(':reservationId', $_POST['reservationId']);
+        $stmt->execute();
+        $result = $stmt->rowCount();
+        if ($result)
+            $_SESSION['message'] = "Reservation successfully deleted.";
+        else
+            $_SESSION['message'] = "Failed to delete the reservation. Please try again.";
+        header('Location:book_apointment.php?email=' . $_SESSION['email'] . "&veterinarian=" . $_POST['veterinarian']);
+
         exit();
     }
 
@@ -879,7 +1026,11 @@ WHERE productId = :productId;
 
     public function userModifyData($fname, $lname, $tel, $location)
     {
-
+        if (empty($fname) || empty($lname) || empty($tel)) {
+            $_SESSION['message'] = "The fields <b>has to be filled.</b>";
+            header('Location: ' . $location);
+            exit();
+        }
         if (preg_match("/[0-9]+/", $fname)) {
             $_SESSION['message'] = "The <b>First Name</b> filled contains <b>Numbers</b>.";
             header('Location: ' . $location);
@@ -936,28 +1087,31 @@ WHERE productId = :productId;
 
 // Check if user data was found and update if necessary
         if ($result) {
+
+            $empty = 0;
             // Update first name if provided
             if (!empty($_POST['firstName'])) {
+                $firstName = ucfirst(strtolower($_POST['firstName']));
                 $sql = $this->connection->prepare("UPDATE $table SET firstName = ? WHERE " . $table . "Mail = ?");
-                $sql->execute([$_POST['firstName'], $_SESSION['email']]);
-                $_SESSION['name'] = $_POST['firstName'];
-                $_SESSION['firstName'] = $_POST['firstName'];
+                $sql->execute([$firstName, $_SESSION['email']]);
+
+                $_SESSION['firstName'] = $firstName;
+                $_SESSION['name'] = $_SESSION['firstName'] . " " . $_SESSION['lastName'];
                 $_SESSION['message'] = "First name is modified";
                 $count++;
-            } else {
-                $_SESSION['name'] = $result['firstName'];
             }
+
 
             // Update last name if provided
             if (!empty($_POST['lastName'])) {
+                $lastName = ucfirst(strtolower($_POST['lastName']));
                 $sql = $this->connection->prepare("UPDATE $table SET lastName = ? WHERE " . $table . "Mail = ?");
-                $sql->execute([$_POST['lastName'], $_SESSION['email']]);
-                $_SESSION['name'] .= " " . $_POST['lastName'];
-                $_SESSION['lastName'] = $_POST['lastName'];
+                $sql->execute([$lastName, $_SESSION['email']]);
+
+                $_SESSION['lastName'] = $lastName;
+                $_SESSION['name'] = $_SESSION['firstName'] . " " . $_SESSION['lastName'];
                 $_SESSION['message'] = "Last name is modified";
                 $count++;
-            } else {
-                $_SESSION['name'] .= " " . $result['lastName'];
             }
 
             // Update phone number if provided
@@ -968,10 +1122,11 @@ WHERE productId = :productId;
                 $_SESSION['phone'] = $phoneNumber;
                 $count++;
             }
+
         }
 
 // Set session message based on whether any changes were made
-        $_SESSION['message'] = $count > 0 ? "We made changes to your profile" : "There are no changes made to your profile";
+        $_SESSION['message'] = $count > 0 ? "Changes saved" : "Empty data cannot be saved!";
 
         $stmt = "SELECT firstName, lastName, phoneNumber FROM $table WHERE " . $table . "Id = :Id";
         $stmt = $this->connection->prepare($stmt);
@@ -1080,9 +1235,9 @@ WHERE u.userId = :userId";
                     if ($target == "index.php" || $target == "users.php" || $target == "workers.php" || $target == "tables.php"
                         || $target == "reports.php" || $target == "menu.php" || $target == "coupon.php") {
 
-                        if($_SESSION['privilage'] != 'Veterinarian')
+                        if ($_SESSION['privilage'] != 'Veterinarian')
                             $query = $this->connection->prepare("UPDATE user SET profilePic = :profilePic WHERE userMail = :userMail");
-                        else{
+                        else {
                             $query = $this->connection->prepare("UPDATE veterinarian SET profilePic = :profilePic WHERE veterinarianMail = :userMail");
 
                         }
@@ -1128,17 +1283,17 @@ WHERE u.userId = :userId";
     public function language()
     {
 
-            // Determine the language: prioritize GET parameter, then userLang, then 'en'
-            if (isset($_GET['lang'])) {
-                $lang = $_GET['lang']; // User selected a language
-                $_SESSION['lang'] = $lang; // Save selected language in session
-            } else {
-                $lang = $_SESSION['userLang'] ?? 'en'; // Default to userLang or 'en'
-                $_SESSION['lang'] = $lang; // Set session language to default
-            }
-
-            // Include the language file
-            include "lang_$lang.php";
+        // Determine the language: prioritize GET parameter, then userLang, then 'en'
+        if (isset($_GET['lang'])) {
+            $lang = $_GET['lang']; // User selected a language
+            $_SESSION['lang'] = $lang; // Save selected language in session
+        } else {
+            $lang = $_SESSION['userLang'] ?? 'en'; // Default to userLang or 'en'
+            $_SESSION['lang'] = $lang; // Set session language to default
+        }
+        return $lang;
+        // Include the language file
+//            include "lang_$lang.php";
 
     }
 
@@ -1353,32 +1508,33 @@ WHERE u.userId = :userId";
                 setcookie("phone", $_SESSION['phone'], time() + 10 * 60, "/");
                 setcookie("privilage", $_SESSION['privilage'], time() + 10 * 60, "/");
                 setcookie("last_activity", time(), time() + 10 * 60, "/");
+                if ($_SESSION['privilage'] == 'user') {
 
-
-                $sql = "SELECT p.petId FROM  pet p  inner join user u   on p.userId=u.userId  where u.userMail = :mail";
-                $stmt = $this->connection->prepare($sql);
-                $stmt->bindValue(":mail", $mail);
-                $stmt->execute();
-                $result = $stmt->fetch(PDO::FETCH_ASSOC);
-                if ($result == 0) {
-                    $_SESSION['message'] = '<br>You need to register an animal, without it you <b>can not</b> use the account.<br><br><a href="functions.php?action=logOut">Log out</a>';
-                    if ($currentPage != 'registerAnimal.php') {
-                        header('Location: registerAnimal.php');
-                        exit();
-                    }
-
-                } else {
-                    $sql = "SELECT v.veterinarianID FROM veterinarian v inner join pet p on
- p.veterinarId=v.veterinarianID inner join user u on u.userId=p.userId where userMail=:mail";
+                    $sql = "SELECT p.petId FROM  pet p  inner join user u   on p.userId=u.userId  where u.userMail = :mail";
                     $stmt = $this->connection->prepare($sql);
                     $stmt->bindValue(":mail", $mail);
                     $stmt->execute();
                     $result = $stmt->fetch(PDO::FETCH_ASSOC);
-                    if ($result == 0 && $_SESSION['privilage'] != 'admin') {
-                        $_SESSION['message'] = '<br>You have to <b>chose a veterinarian</b> to use this account further!<br><br><a href="functions.php?action=logOut">Log out</a>';
-                        if ($currentPage != 'selectVeterinarian.php' && $currentPage != 'registerAnimal.php') {
-                            header('Location: selectVeterinarian.php');
+                    if ($result == 0) {
+                        $_SESSION['message'] = '<br>You need to register an animal, without it you <b>can not</b> use the account.<br><br><a href="functions.php?action=logOut">Log out</a>';
+                        if ($currentPage != 'registerAnimal.php') {
+                            header('Location: registerAnimal.php');
                             exit();
+                        }
+
+                    } else {
+                        $sql = "SELECT v.veterinarianID FROM veterinarian v inner join pet p on
+ p.veterinarId=v.veterinarianID inner join user u on u.userId=p.userId where userMail=:mail";
+                        $stmt = $this->connection->prepare($sql);
+                        $stmt->bindValue(":mail", $mail);
+                        $stmt->execute();
+                        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+                        if ($result == 0 && $_SESSION['privilage'] != 'admin') {
+                            $_SESSION['message'] = '<br>You have to <b>chose a veterinarian</b> to use this account further!<br><br><a href="functions.php?action=logOut">Log out</a>';
+                            if ($currentPage != 'selectVeterinarian.php' && $currentPage != 'registerAnimal.php') {
+                                header('Location: selectVeterinarian.php');
+                                exit();
+                            }
                         }
                     }
                 }

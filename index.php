@@ -1,18 +1,8 @@
 <?php
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-    $lang = $_GET['lang'] ?? $_SESSION['lang'] ?? 'en';
-    if(isset($_GET['lang'])){
-        $_SESSION['lang'] = $_GET['lang'];
-    }
-    if(isset( $_SESSION['userLang'])){
-        $_SESSION['lang'] = $_SESSION['userLang'];
-    }
-    include "lang_$lang.php";
-}
-
 include "functions.php";
 $autoload=new Functions();
+$lang=$autoload->language();
+include "lang_$lang.php";
 $autoload->checkAutoLogin();
 ?>
 
@@ -32,7 +22,7 @@ $autoload->checkAutoLogin();
     <script>
         const lang = '<?php echo $lang; ?>';
     </script>
-    <script src="LogOut.js"></script>
+    <script src="sureCheck.js"></script>
     <script src="indexJS.js"></script>
     <link rel="stylesheet" href="style.css">
 
@@ -95,12 +85,22 @@ https://getbootstrap.com/docs/5.3/components/navbar/
                 <li class="nav-item">
                     <a class="nav-link" href="#"></a>
                 </li>
-                <li class="nav-item">
-                    <?php
-                    $sql = "SELECT * FROM user";
-                    ?>
+                <?php
+                if(isset($_SESSION['privilage'])) {
+                    if ($_SESSION['privilage'] != "Veterinarian")
+                        echo '<li class="nav-item">
+
                     <a class="nav-link" href="book_veterinarian.php"><i class="bi bi-book-fill fs-3"></i></a>
-                </li>
+                </li>';
+                    else echo ' <li class="nav-item">
+                    <a class="nav-link" href="booked_users.php"><i class="bi bi-people-fill fs-3"></i></a>
+                </li>';
+                    if($_SESSION['privilage'] == "Admin")
+                        echo ' <li class="nav-item">
+                    <a class="nav-link" href="veterinarianRates.php"><i class="bi bi-star-fill fs-3"></i></a>
+                </li>';
+                }
+                    ?>
             </ul>
             <!-- Language Dropdown (Aligned Right) -->
             <div class="dropdown">
@@ -120,24 +120,24 @@ https://getbootstrap.com/docs/5.3/components/navbar/
 
 <div class="d-flex flex-row">
 
-<div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark d-none d-md-inline-block" style=" top: 0; bottom: 0; width: 280px;">
+    <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark d-none d-md-inline-block" style=" top: 0; bottom: 0; width: 280px;">
 
-    <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
-        <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"/></svg>
-        <span class="fs-4">Sidebar</span>
-    </a>
-    <hr>
-    <ul class="nav nav-pills flex-column mb-auto">
-        <li class="nav-item">
-            <a href="#" class="nav-link active" aria-current="page">
-                <svg class="bi me-2" width="16" height="16"><use xlink:href="#home"/></svg>
-                Home
-            </a>
-        </li>
-        <?php
-        if(isset($_SESSION['email'])){
-            if ($_SESSION['privilage'] != 'Veterinarian') {
-        echo '<li>
+        <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+            <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"/></svg>
+            <span class="fs-4">Sidebar</span>
+        </a>
+        <hr>
+        <ul class="nav nav-pills flex-column mb-auto">
+            <li class="nav-item">
+                <a href="#" class="nav-link active" aria-current="page">
+                    <svg class="bi me-2" width="16" height="16"><use xlink:href="#home"/></svg>
+                    Home
+                </a>
+            </li>
+            <?php
+            if(isset($_SESSION['email'])){
+                if ($_SESSION['privilage'] != 'Veterinarian') {
+                    echo '<li>
         <a href="pet.php?email=' . $_SESSION['email'] . '" class="nav-link text-white">
             <svg class="bi me-2" width="16" height="16">
                 <use xlink:href="pet.php?email=' . urlencode($_SESSION['email']) . '" />
@@ -146,7 +146,7 @@ https://getbootstrap.com/docs/5.3/components/navbar/
         </a>
     </li>';
 
-        echo '<li>
+                    echo '<li>
         <a href="registerAnimal.php" class="nav-link text-white">
             <svg class="bi me-2" width="16" height="16">
                 <use xlink:href="registerAnimal.php" />
@@ -155,41 +155,41 @@ https://getbootstrap.com/docs/5.3/components/navbar/
         </a>
     </li>';
 
-      echo'  <li>
+                    echo'  <li>
             <a href="products.php" class="nav-link text-white">
                 <svg class="bi me-2" width="16" height="16"><use xlink:href="#grid"/></svg>
               '.PRODUCT.'
             </a>
         </li>';
-         }   if ($_SESSION['privilage'] == 'Admin') {
-      echo'  <li>
+                }   if ($_SESSION['privilage'] == 'Admin') {
+                    echo'  <li>
             <a href="veterinarians.php" class="nav-link text-white">
                 <svg class="bi me-2" width="16" height="16"><use xlink:href="#grid"/></svg>
                 '.VETS.'
             </a>
         </li>';
 
-        echo'<li>
+                    echo'<li>
             <a href="users.php" class="nav-link text-white">
                 <svg class="bi me-2" width="16" height="16"><use xlink:href="#people-circle"/></svg>
                 '.USERS.'
             </a>
         </li>';
 
-                echo'<li>
+                    echo'<li>
             <a href="addVet.php" class="nav-link text-white">
                 <svg class="bi me-2" width="16" height="16"><use xlink:href="#people-circle"/></svg>
                 '.ADDVET.'
             </a>
         </li>';
 
-        }
-          }
+                }
+            }
 
-        ?>
-    </ul>
-    <hr>
-    <div class="dropdown">
+            ?>
+        </ul>
+        <hr>
+        <div class="dropdown">
             <?php
             echo '<div class="d-none d-lg-block d-md-block dropdown">';
             if (isset($_SESSION['email'])) {
@@ -235,9 +235,95 @@ https://getbootstrap.com/docs/5.3/components/navbar/
             ?>
 
 
+        </div>
     </div>
-</div>
-<!--    CONTENT PART BELOW // CONTENT PART BELOW // CONTENT PART BELOW // CONTENT PART BELOW // CONTENT PART BELOW // -->
+    <div class="d-flex flex-column flex-shrink-0 bg-dark d-block d-md-none" style="width: 4.5rem; min-height: 100vh;">
+        <div class="d-flex flex-column flex-shrink-0 bg-dark " style="width: 4.5rem;">
+            <a href="/" class="d-flex align-items-center justify-content-center p-3 link-light text-decoration-none" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home" style="background: #007bff">
+                <i class="bi bi-house-door" style="font-size: 24px;"></i>
+                <span class="visually-hidden">Home</span>
+            </a>
+
+            </ul>
+            <?php
+            echo '<div class="dropdown border-top">';
+            if(isset($_SESSION['email'])){
+                echo '
+        <ul class="nav nav-pills nav-flush flex-column text-center">
+            <li class="nav-item">
+                <a href="pet.php?email=' . urlencode($_SESSION['email']) . '" class="d-flex align-items-center justify-content-center p-3 link-light text-decoration-none" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
+                    <i class="fas fa-dog" style="font-size: 24px;"></i>
+                    <span class="visually-hidden">Home</span>
+                </a>
+            </li>
+            <li>
+                <a href="registerAnimal.php" class="d-flex align-items-center justify-content-center p-3 link-light text-decoration-none" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
+                    <i class="fas fa-clipboard" style="font-size: 24px;"></i>
+                    <span class="visually-hidden">Home</span>
+                </a>
+            </li>';
+                if($_SESSION['privilage'] == 'Admin') {
+                    echo'
+            <li>
+                <a href="products.php" class="d-flex align-items-center justify-content-center p-3 link-light text-decoration-none" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
+                    <i class="fas fa-dolly" style="font-size: 24px;"></i>
+                    <span class="visually-hidden">Home</span>
+                </a>
+            </li>
+            <li>
+                <a href="veterinarians.php" class="d-flex align-items-center justify-content-center p-3 link-light text-decoration-none" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
+                    <i class="fas fa-stethoscope" style="font-size: 24px;"></i>
+                    <span class="visually-hidden">Home</span>
+                </a>
+            </li>
+             <li>
+                <a href="users.php" class="d-flex align-items-center justify-content-center p-3 link-light text-decoration-none" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
+                    <i class="bi bi-people-fill" style="font-size: 24px;"></i>
+                    <span class="visually-hidden">Home</span>
+                </a>
+            </li>';}
+                echo '</ul>';
+                $_SESSION['action'] = "kijelentkezes";
+                echo '<a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false" style="color: white;">';
+                echo '<img src="pictures/' . $_SESSION['profilePic'] . '" alt="img" width="32" height="32" class="rounded-circle me-2" onclick="activateProfilePicture()" style="cursor: pointer;">';
+
+                echo '</a>';
+
+                // Dropdown menu
+                echo '<ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">';
+                echo '<li><a class="dropdown-item" href="modify.php"><i class="fas fa-gear"></i>&nbspSettings</a></li>';
+                echo '<li><a class="dropdown-item" href="userData.php?email='.$_SESSION['email'].'"><i class="fas fa-circle-info"></i>&nbspProfile</a></li>';
+                echo '<li><hr class="dropdown-divider"></li>';
+                echo '<li><a class="dropdown-item" href="functions.php?action=logOut" onclick="confirmLogout(event)">';
+                echo '<i class="bi bi-door-open fa-2x justify-content-end"></i> Log out</a></li>';
+                echo '</ul>';
+
+                // Hidden form for file upload
+                echo "<form method='post' action='functions.php' enctype='multipart/form-data' style='display: none;'>";
+                $_SESSION['backPic'] = "index.php";
+                echo "<input class='dropdown-item' type='file' name='picture' id='pictureInput' style='display: none;' accept='image/*' onchange='activateSubmitUser()'>";
+                echo "<input type='submit' name='action' id='submitButton' value='picture' style='display: none;'>";
+                echo '</form>';
+
+                echo '</div>';
+            }
+            else{
+                echo '<div class="d-flex justify-content-center">'; // Center the entire block
+                echo '  <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">';
+                echo '    <img src="pictures/logInPic.png" alt="img" width="32" height="32" class="rounded-circle me-2">';
+                echo '  </a>';
+                echo '  <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">';
+                echo '    <li><a class="dropdown-item" href="logIn.php">Log in</a></li>';
+                echo '    <li><a class="dropdown-item" href="registration.php">Register</a></li>';
+                echo '  </ul>';
+                echo '</div>';
+
+            }
+            ?>
+        </div>
+    </div>
+
+    <!--    CONTENT PART BELOW // CONTENT PART BELOW // CONTENT PART BELOW // CONTENT PART BELOW // CONTENT PART BELOW // -->
     <div class="container mt-4">
         <div class="row">
             <div class="col">
@@ -312,91 +398,6 @@ https://getbootstrap.com/docs/5.3/components/navbar/
     </div>
 
 </div>
-<div class="d-flex flex-column flex-shrink-0 bg-dark d-block d-md-none" style="width: 4.5rem; min-height: 100vh;">
-    <div class="d-flex flex-column flex-shrink-0 bg-dark " style="width: 4.5rem;">
-        <a href="/" class="d-flex align-items-center justify-content-center p-3 link-light text-decoration-none" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home" style="background: #007bff">
-            <i class="bi bi-house-door" style="font-size: 24px;"></i>
-            <span class="visually-hidden">Home</span>
-        </a>
-
-        </ul>
-        <?php
-echo '<div class="dropdown border-top">';
-        if(isset($_SESSION['email'])){
-            echo '
-        <ul class="nav nav-pills nav-flush flex-column text-center">
-            <li class="nav-item">
-                <a href="pet.php?email=' . urlencode($_SESSION['email']) . '" class="d-flex align-items-center justify-content-center p-3 link-light text-decoration-none" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
-                    <i class="fas fa-dog" style="font-size: 24px;"></i>
-                    <span class="visually-hidden">Home</span>
-                </a>
-            </li>
-            <li>
-                <a href="registerAnimal.php" class="d-flex align-items-center justify-content-center p-3 link-light text-decoration-none" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
-                    <i class="fas fa-clipboard" style="font-size: 24px;"></i>
-                    <span class="visually-hidden">Home</span>
-                </a>
-            </li>';
-            if($_SESSION['privilage'] == 'Admin') {
-            echo'
-            <li>
-                <a href="products.php" class="d-flex align-items-center justify-content-center p-3 link-light text-decoration-none" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
-                    <i class="fas fa-dolly" style="font-size: 24px;"></i>
-                    <span class="visually-hidden">Home</span>
-                </a>
-            </li>
-            <li>
-                <a href="veterinarians.php" class="d-flex align-items-center justify-content-center p-3 link-light text-decoration-none" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
-                    <i class="fas fa-stethoscope" style="font-size: 24px;"></i>
-                    <span class="visually-hidden">Home</span>
-                </a>
-            </li>
-             <li>
-                <a href="users.php" class="d-flex align-items-center justify-content-center p-3 link-light text-decoration-none" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
-                    <i class="bi bi-people-fill" style="font-size: 24px;"></i>
-                    <span class="visually-hidden">Home</span>
-                </a>
-            </li>';}
-            echo '</ul>';
-            $_SESSION['action'] = "kijelentkezes";
-            echo '<a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false" style="color: white;">';
-            echo '<img src="pictures/' . $_SESSION['profilePic'] . '" alt="img" width="32" height="32" class="rounded-circle me-2" onclick="activateProfilePicture()" style="cursor: pointer;">';
-
-            echo '</a>';
-
-            // Dropdown menu
-            echo '<ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">';
-            echo '<li><a class="dropdown-item" href="modify.php"><i class="fas fa-gear"></i>&nbspSettings</a></li>';
-            echo '<li><a class="dropdown-item" href="userData.php?email='.$_SESSION['email'].'"><i class="fas fa-circle-info"></i>&nbspProfile</a></li>';
-            echo '<li><hr class="dropdown-divider"></li>';
-            echo '<li><a class="dropdown-item" href="functions.php?action=logOut" onclick="confirmLogout(event)">';
-            echo '<i class="bi bi-door-open fa-2x justify-content-end"></i> Log out</a></li>';
-            echo '</ul>';
-
-            // Hidden form for file upload
-            echo "<form method='post' action='functions.php' enctype='multipart/form-data' style='display: none;'>";
-            $_SESSION['backPic'] = "index.php";
-            echo "<input class='dropdown-item' type='file' name='picture' id='pictureInput' style='display: none;' accept='image/*' onchange='activateSubmitUser()'>";
-            echo "<input type='submit' name='action' id='submitButton' value='picture' style='display: none;'>";
-            echo '</form>';
-
-            echo '</div>';
-        }
-        else{
-            echo '<div class="d-flex justify-content-center">'; // Center the entire block
-            echo '  <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">';
-            echo '    <img src="pictures/logInPic.png" alt="img" width="32" height="32" class="rounded-circle me-2">';
-            echo '  </a>';
-            echo '  <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">';
-            echo '    <li><a class="dropdown-item" href="logIn.php">Log in</a></li>';
-            echo '    <li><a class="dropdown-item" href="registration.php">Register</a></li>';
-            echo '  </ul>';
-            echo '</div>';
-
-        }
-        ?>
-    </div>
-    </div>
 
 </div>
 

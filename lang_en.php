@@ -62,4 +62,7 @@ define('USERS','Users');
 define('UPDATE','Update');
 define('UPDATE_PET','Update Pet');
 define('DELETE_PET','Delete Pet');
+define('REVIEV_MESSAGE',"<h2>Please rate our Veterinarian</h2> Please rate our veterinarian by going to this link, that is active for 72 hours.
+It help a lot to now our workers are communicationg with the owners:<br>");
+define('BACK_TO_RATINGS','Back to ratings');
 ?>

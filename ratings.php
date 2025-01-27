@@ -8,6 +8,7 @@ if($_SESSION['privilage']!='Admin'){
     header('location:index.php');
     exit();
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -32,8 +33,11 @@ if($_SESSION['privilage']!='Admin'){
 <body class="bg-light ">
 
 <title>Datatables test</title>
+
 <div class="container mt-5">
+
     <a class="btn btn-secondary" href="index.php"><?php echo BACK?></a>
+    <a class="btn btn-secondary" href="<?php echo $_SESSION['previousPage'];?>"><?php echo BACK_TO_RATINGS?></a>
     <select id="tableSelect" class="form-select" style="width: 200px; display: inline-block;">
         <option selected hidden="hidden">--Choose Data--</option>
         <option value="ratings">Ratings</option>
@@ -41,22 +45,23 @@ if($_SESSION['privilage']!='Admin'){
         <option value="products">Products</option>
         <option value="veterinarians">Veterinarians</option>
     </select><br><br>
-    <table id="veterinarians" class="table table-striped table-bordered table-hover display" style="width:100%">
+    <table id="ratings" class="table table-striped table-bordered table-hover display" style="width:100%">
         <thead>
         <tr>
             <th>No</th>
             <th>Name</th>
-            <th>Phone Number</th>
+            <th>Rating</th>
             <th>Email Address</th>
+            <th>Rating Time</th>
         </tr>
         </thead>
         <tfoot>
         <tr>
             <th>No</th>
             <th>Name</th>
-            <th>Phone Number</th>
+            <th>Rating</th>
             <th>Email Address</th>
-
+            <th>Rating Time</th>
         </tr>
         </tfoot>
     </table>
@@ -74,6 +79,6 @@ if($_SESSION['privilage']!='Admin'){
 <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.print.min.js"></script>
 <script src="js/scripts.js"></script>
+
 </body>
 </html>
-
