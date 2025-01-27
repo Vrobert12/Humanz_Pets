@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2025. Jan 27. 22:28
+-- Létrehozás ideje: 2025. Jan 28. 00:00
 -- Kiszolgáló verziója: 10.4.32-MariaDB
 -- PHP verzió: 8.2.12
 
@@ -297,13 +297,8 @@ CREATE TABLE `product` (
 --
 
 INSERT INTO `product` (`productId`, `productName`, `productPicture`, `description`, `productCost`, `productRelease`) VALUES
-(1, 'Retek', '20250127221203.png', 'This is a collar.', 3.00, '2025-01-27 22:12:03'),
-(2, 'Leash', '20241226145950.png', 'This is a leash.', 7.99, '2025-01-27 16:38:22'),
 (3, 'Vts', '20250127222030.jpg', 'Najbolji', 23.99, '2025-01-27 22:20:30'),
-(4, 'Asd', '20241221193523.png', 'Egyedi textarea szoveg valamit meg irjunk domi', 23.34, '2024-12-21 19:57:39'),
-(5, 'Cica', '20250127222105.png', 'Papapraprap', 3.00, '2025-01-27 22:21:05'),
-(6, '', '20250127222347.png', '', 0.00, '2025-01-27 22:23:47'),
-(7, 'Cica', '20250127222411.png', 'Da vidiomo', 23.34, '2025-01-27 22:24:11');
+(11, 'Asd', '20250127233624.png', 'Da vidiomo', 23.99, '2025-01-27 23:36:24');
 
 -- --------------------------------------------------------
 
@@ -324,7 +319,7 @@ CREATE TABLE `qr_code` (
 --
 
 INSERT INTO `qr_code` (`qr_code_id`, `qrCodeName`, `userId`, `generated_at`, `updated_at`) VALUES
-(1, 'QRcodes/qrcode_6793984e03426.png', 19, '2024-11-11 19:47:18', '2025-01-24 13:40:30'),
+(1, 'QRcodes/qrcode_67980f81a25c5.png', 19, '2024-11-11 19:47:18', '2025-01-27 22:58:09'),
 (2, 'QRcodes/qrcode_675da53946388.png', 26, '2024-12-14 16:33:13', '2024-12-14 15:33:13'),
 (3, 'QRcodes/qrcode_675e00a3bfff4.png', 27, '2024-12-14 23:03:15', '2024-12-14 22:03:15'),
 (4, 'QRcodes/qrcode_675ef571ca9a1.png', 25, '2024-12-15 16:27:46', '2024-12-15 15:27:46'),
@@ -385,7 +380,8 @@ INSERT INTO `review` (`reviewId`, `review`, `reviewTime`, `reviewCode`, `userId`
 (3, NULL, '2025-01-27 21:36:34', 78591095, 29, 3),
 (4, 5, '2025-01-27 21:38:54', 23267100, 19, 3),
 (5, 3, '2025-01-27 21:44:42', 36928989, 19, 3),
-(6, NULL, '2025-01-27 21:56:11', 33457626, 19, 3);
+(6, NULL, '2025-01-27 21:56:11', 33457626, 19, 3),
+(7, 1, '2025-01-27 22:37:57', 31477648, 19, 3);
 
 -- --------------------------------------------------------
 
@@ -420,7 +416,7 @@ CREATE TABLE `user` (
 INSERT INTO `user` (`userId`, `firstName`, `lastName`, `phoneNumber`, `userMail`, `userPassword`, `profilePic`, `privilage`, `registrationTime`, `verification_code`, `verify`, `verification_time`, `banned`, `banned_time`, `passwordValidation`, `passwordValidationTime`, `usedLanguage`) VALUES
 (6, 'Nikoletta', 'Varro', '0', 'nikolettavarro12@gmail.com', '$2y$10$ZJtAXGLi1y8Y7VlLzE4Ru.nH.SbV5pbDRtoQTlOv88WgemWiSIrB2', 'logInPic.png', 'Guest', '0000-00-00 00:00:00', 401081, 0, '2024-04-29 22:00:00', 0, '0000-00-00 00:00:00', 0, '2024-04-23 09:54:10', 'en'),
 (7, 'Nikoletta', 'Varro', '0', 'nikolettavarro@gmail.com', '$2y$10$GZ9eslD9.lWIwuBi0by.sunJYqe1s8Jn8K2eX4CefmMN/LOnyRNua', 'logInPic.png', 'Guest', '0000-00-00 00:00:00', 102107, 0, '2024-04-29 22:00:00', 0, '0000-00-00 00:00:00', 0, '2024-04-23 09:54:10', 'en'),
-(19, 'Robert', 'Varro', '0649420637', 'robertvarro12@gmail.com', '$2y$10$sZKeBUr3S43dBnkiLkzP..1SJCekw6MqWlEpwwqj1puauC2HzEQ0O', '20250104204023.png', 'Admin', '0000-00-00 00:00:00', 229527, 1, '2024-04-29 22:00:00', 0, '0000-00-00 00:00:00', 167710, '2025-01-03 23:15:50', 'en'),
+(19, 'Robert', 'Varro', '0649420637', 'robertvarro12@gmail.com', '$2y$10$sZKeBUr3S43dBnkiLkzP..1SJCekw6MqWlEpwwqj1puauC2HzEQ0O', '20250104204023.png', 'Admin', '0000-00-00 00:00:00', 229527, 1, '2024-04-29 22:00:00', 0, '0000-00-00 00:00:00', 167710, '2025-01-03 23:15:50', 'sr'),
 (25, 'Dominik', 'Hupko', '628277140', 'hupkodominik143@gmail.com', '$2y$10$B1cB9B1pWGshgJPbFbUBleB3yicBi3cILKWBT2DAkDbz5kDoLhtuC', 'logInPic.png', 'Admin', '2024-06-03 12:23:54', 2047970, 1, '2024-06-03 12:33:54', 0, '0000-00-00 00:00:00', 173548, '2025-01-27 15:31:17', 'hu'),
 (26, 'Robert', 'Varro', '0649420637', 'varrorobert03@gmail.coml', '$2y$10$T5p19yMDoZ0EKiRXocAjJuNmNFK8INcDDWFkyC97i5rB6rODkLO82', 'logInPic.png', 'Guest', '2024-12-14 15:32:29', 1740492, 1, '2024-12-14 15:42:29', 0, '2024-12-14 15:32:29', NULL, '2024-12-14 15:32:29', 'en'),
 (27, 'Robert', 'Varro', '0649420637', 'varro7robert03@gmail.com', '$2y$10$7.Vqm7RZ7EaQISuO6xdo3OcNPbEAERoUAJF8hsBBxD8mCAvaH5Bpi', 'logInPic.png', 'Guest', '2024-12-14 22:01:34', 3299090, 1, '2024-12-14 22:11:34', 0, '2024-12-14 22:01:34', NULL, '2024-12-14 22:01:34', 'en'),
@@ -438,7 +434,7 @@ CREATE TABLE `user_product_relation` (
   `userId` int(11) NOT NULL,
   `productName` varchar(50) NOT NULL,
   `productPicture` varchar(100) NOT NULL,
-  `productId` int(11) NOT NULL,
+  `productId` int(11) DEFAULT NULL,
   `sum` int(11) NOT NULL,
   `price` decimal(6,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -449,11 +445,10 @@ CREATE TABLE `user_product_relation` (
 
 INSERT INTO `user_product_relation` (`userProductRelationId`, `userId`, `productName`, `productPicture`, `productId`, `sum`, `price`) VALUES
 (5, 28, '', '', 3, 2, 11.00),
-(9, 25, '', '', 2, 1, 7.99),
-(10, 25, '', '', 2, 1, 6.99),
-(11, 25, '', '', 2, 1, 7.99),
-(14, 19, 'Retek', '20250127220830.png', 1, 3, 3.00),
-(16, 19, 'Cica', '20250127222105.png', 5, 1, 3.00);
+(9, 25, '', '', NULL, 1, 7.99),
+(10, 25, '', '', NULL, 1, 6.99),
+(11, 25, '', '', NULL, 1, 7.99),
+(17, 19, 'Cica', '20250127230916.png', NULL, 1, 23.34);
 
 -- --------------------------------------------------------
 
@@ -654,7 +649,7 @@ ALTER TABLE `pet`
 -- AUTO_INCREMENT a táblához `product`
 --
 ALTER TABLE `product`
-  MODIFY `productId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `productId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT a táblához `qr_code`
@@ -672,7 +667,7 @@ ALTER TABLE `reservation`
 -- AUTO_INCREMENT a táblához `review`
 --
 ALTER TABLE `review`
-  MODIFY `reviewId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `reviewId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT a táblához `user`
@@ -684,7 +679,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT a táblához `user_product_relation`
 --
 ALTER TABLE `user_product_relation`
-  MODIFY `userProductRelationId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `userProductRelationId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT a táblához `user_review_relation`
