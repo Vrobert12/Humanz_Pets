@@ -7,7 +7,7 @@ include "lang_$lang.php";
 
 $pdo = $autoload->connect($GLOBALS['dsn'], $_ENV['DB_USER'], $_ENV['DB_PASSWORD'], $GLOBALS['pdoOptions']);
 
-$sql = "SELECT reviewCode, reviewTime FROM review";
+$sql = "SELECT review,reviewCode, reviewTime FROM review";
 $stmt = $pdo->prepare($sql);
 $stmt->execute();
 $result = $stmt->fetchAll();
@@ -17,7 +17,7 @@ $reviewTime = "";
 
 // Check if the reviewCode exists and get the corresponding reviewTime
 foreach ($result as $row) {
-    if ($row['reviewCode'] == $_GET['reviewCode']) {
+    if ($row['reviewCode'] == $_GET['reviewCode'] && $row['review']==NULL) {
         $valid = true;
         $reviewTime = $row['reviewTime'];
         break; // Stop the loop once we've found the matching reviewCode

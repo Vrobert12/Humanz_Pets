@@ -15,7 +15,7 @@ $_SESSION['backPic'] = "addProduct.php";
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-    <script src="indexJS.js"></script>
+    <script src="ajaxPictureUpdate.js"></script>
     <style>
         .warning {
             color: red;
@@ -61,8 +61,10 @@ $_SESSION['backPic']='addProduct.php';
 <input type="text" class="inputok" placeholder="<?php echo PRICE?>" name="price" id="price" ><br>
 <label for="bred"><?php echo PRODUCTDESCRIPTION?>:</label><br>
 <input type='text' class="inputok"placeholder="<?php echo PRODUCTDESCRIPTION?>"  name='productDescription' id='productDescription'><br>
-<img id="productImage" src="pictures/logInPic.png"
-     alt="img" width="32" height="32" onclick="activateProfilePicture()" style="cursor: pointer;">
+<img id="productImage"  src="pictures/logInPic.png"
+     alt="Product Image" width="150" height="150" onclick="document.getElementById('pictureInput').click();"
+     style="cursor: pointer; opacity: 0.7; transition: opacity 0.3s;"
+     onmouseover="this.style.opacity=1;" onmouseout="this.style.opacity=0.7;">
 
 <input type="file" name="picture" id="pictureInput"
        style="display: none;" accept="image/*" onchange="updateImagePreview(this)"><br>

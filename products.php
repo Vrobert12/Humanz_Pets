@@ -225,6 +225,11 @@ foreach ($cartItems as $price) {
                     <p><?php echo SUM_PROD?>: <?php echo "<b>".$item['sum']."</b>"; ?></p>
                     <p class="cart-item-price">€<?php echo number_format($item['price'], 2) * $item['sum']; ?></p>
                 </div>
+                <form action="functions.php" method="post">
+                    <input type="hidden" name="action" value="deleteFromCart">
+                    <input type="hidden" name="cartId" value="<?php echo htmlspecialchars($item['userProductRelationId']); ?>">
+                    <input type="submit" value="delete Product">
+                </form>
             </li>
         <?php endforeach; ?>
     </ul>

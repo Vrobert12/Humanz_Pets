@@ -116,6 +116,9 @@ class Functions
                 case "rateVeterinarian":
                     $this->insertReview();
                     break;
+                case "deleteFromCart":
+                    $this->deleteFromCart();
+                    break;
                 default:
                     $_SESSION['message'] = "Something went wrong in switch";
                     header('Location:index.php');
@@ -127,24 +130,41 @@ class Functions
             }
         }
     }
-public function insertReview()
-{
 
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $reviewCode = $_POST["reviewCode"];
-        $rating = $_POST["rating"];
+    public function deleteFromCart()
+    {
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            $cartId = $_POST["cartId"];
 
-        $sql = "UPDATE review SET review=:review  where reviewCode=:reviewCode";
-        $stmt = $this->connection->prepare($sql);
-        $stmt->bindParam(':reviewCode',   $reviewCode);
-        $stmt->bindParam(':review', $rating);
-        $stmt->execute();
-        header('Location:index.php');
-        exit();
+            $sql = "Delete from user_product_relation WHERE userProductRelationId=:userProductRelationId";
+            $stmt = $this->connection->prepare($sql);
+            $stmt->bindParam(":userProductRelationId", $cartId);
+            $stmt->execute();
+            header('Location:products.php');
+            exit();
+
+        }
+    }
+
+    public function insertReview()
+    {
+
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            $reviewCode = $_POST["reviewCode"];
+            $rating = $_POST["rating"];
+
+            $sql = "UPDATE review SET review=:review  where reviewCode=:reviewCode";
+            $stmt = $this->connection->prepare($sql);
+            $stmt->bindParam(':reviewCode', $reviewCode);
+            $stmt->bindParam(':review', $rating);
+            $stmt->execute();
+            header('Location:index.php');
+            exit();
+
+        }
 
     }
 
-}
     public function sendReview()
     {
         $_SESSION['message'] = "Thank you for your feedback";
@@ -168,11 +188,9 @@ public function insertReview()
         }
 
 
-
-
-        $sql="Select usedLanguage from user where userId=:userId";
-        $stmt=$this->connection->prepare($sql);
-        $stmt->bindParam(':userId',$_POST['ownerId']);
+        $sql = "Select usedLanguage from user where userId=:userId";
+        $stmt = $this->connection->prepare($sql);
+        $stmt->bindParam(':userId', $_POST['ownerId']);
         $stmt->execute();
         $usedLanguage = $stmt->FetchColumn();
 
@@ -185,9 +203,9 @@ VALUES (:reviewCode,:userId,:veterinarianId)";
         $stmt->bindParam(':userId', $_POST['ownerId']);
         $stmt->bindParam(':veterinarianId', $_SESSION['userId']);
         $stmt->execute();
-        $_SESSION['usedLanguage']=$usedLanguage;
+        $_SESSION['usedLanguage'] = $usedLanguage;
         $_SESSION['ownerMail'] = $_POST['ownerMail'];
-        $_SESSION['reviewLink'] = 'http://localhost/Humanz_Pets/reviewVeterinarian.php?reviewCode='.$reviewCode;
+        $_SESSION['reviewLink'] = 'http://localhost/Humanz_Pets/reviewVeterinarian.php?reviewCode=' . $reviewCode;
         header('Location:mail.php');
         exit();
     }
@@ -497,13 +515,18 @@ WHERE reservationId = :reservationId
     {
         if (!empty($_POST['productId']) && !empty($_POST['quantity'])) {
             $productId = $_POST['productId'] ?? null;
+            $productName = $_POST['productName'] ?? null;
             $productPrice = $_POST['productPrice'] ?? null;
+            $productPicture = $_POST['productPicture'] ?? null;
             $userId = $_SESSION['userId'] ?? null;
             $sum = $_POST['quantity'] ?? null;
 
-            $sql = "INSERT INTO user_product_relation( userId, productId,sum, price) VALUES (:userId,:productId,:sum, :price)";
+            $sql = "INSERT INTO user_product_relation( userId, productName,productPicture,productId,sum, price) 
+VALUES (:userId,:productName,:productPicture,:productId,:sum, :price)";
             $stmt = $this->connection->prepare($sql);
             $stmt->bindParam(':userId', $userId);
+            $stmt->bindParam(':productName', $productName);
+            $stmt->bindParam(':productPicture', $productPicture);
             $stmt->bindParam(':productId', $productId);
             $stmt->bindParam(':sum', $sum);
             $stmt->bindParam(':price', $productPrice);
@@ -546,7 +569,16 @@ WHERE reservationId = :reservationId
                     header('Location: addVet.php');
                     exit();
                 }
+                $sql = "SELECT userMail, verify, verification_time FROM user WHERE userMail = :mail";
+                $stmt = $this->connection->prepare($sql);
+                $stmt->bindParam(':mail', $mail, PDO::PARAM_STR);
+                $stmt->execute();
 
+                if ($stmt->rowCount() > 0) {
+                    $_SESSION['message'] = "mail already exists";
+                    header('Location: addVet.php');
+                    exit();
+                }
                 $kep = "logInPic.png";
 
                 $verification_code = substr(number_format(time() * rand(), 0, '', ''), 0, 7);

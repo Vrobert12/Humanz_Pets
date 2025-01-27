@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Jan 27, 2025 at 07:45 PM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- Gép: 127.0.0.1
+-- Létrehozás ideje: 2025. Jan 27. 22:28
+-- Kiszolgáló verziója: 10.4.32-MariaDB
+-- PHP verzió: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `pets`
+-- Adatbázis: `pets`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `errorlog`
+-- Tábla szerkezet ehhez a táblához `errorlog`
 --
 
 CREATE TABLE `errorlog` (
@@ -36,7 +36,7 @@ CREATE TABLE `errorlog` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `errorlog`
+-- A tábla adatainak kiíratása `errorlog`
 --
 
 INSERT INTO `errorlog` (`errorLogId`, `errorType`, `errorMail`, `errorText`, `errorTime`) VALUES
@@ -201,12 +201,15 @@ INSERT INTO `errorlog` (`errorLogId`, `errorType`, `errorMail`, `errorText`, `er
 (159, 'Log in', 'hupkodominik143@gmail.com', 'The password was not valid!', '2025-01-27 16:19:53.000000'),
 (160, 'Log in', 'hupkodominik143@gmail.com', 'The password was not valid!', '2025-01-27 16:20:08.000000'),
 (161, 'Log in', 'hupkodominik143@gmail.comk', 'The password was not valid!', '2025-01-27 16:20:40.000000'),
-(162, 'Log in', 'hupkodominik143@gmail.com', 'The password was not valid!', '2025-01-27 16:21:08.000000');
+(162, 'Log in', 'hupkodominik143@gmail.com', 'The password was not valid!', '2025-01-27 16:21:08.000000'),
+(163, 'Log in', 'dominikhupko143@gmail.com', 'The E-mail is not in our database', '2025-01-27 21:59:22.000000'),
+(164, 'Log in', 'hupkodominik143@gmail.com', 'The password was not valid!', '2025-01-27 22:00:36.000000'),
+(165, 'Log in', 'hupkodominik143@gmail.com', 'The password was not valid!', '2025-01-27 22:00:47.000000');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `log`
+-- Tábla szerkezet ehhez a táblához `log`
 --
 
 CREATE TABLE `log` (
@@ -221,7 +224,7 @@ CREATE TABLE `log` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `log`
+-- A tábla adatainak kiíratása `log`
 --
 
 INSERT INTO `log` (`id_log`, `user_agent`, `ip_address`, `country`, `date_time`, `device_type`, `proxy`, `isp`) VALUES
@@ -242,7 +245,7 @@ INSERT INTO `log` (`id_log`, `user_agent`, `ip_address`, `country`, `date_time`,
 -- --------------------------------------------------------
 
 --
--- Table structure for table `pet`
+-- Tábla szerkezet ehhez a táblához `pet`
 --
 
 CREATE TABLE `pet` (
@@ -256,7 +259,7 @@ CREATE TABLE `pet` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `pet`
+-- A tábla adatainak kiíratása `pet`
 --
 
 INSERT INTO `pet` (`petId`, `petName`, `bred`, `petSpecies`, `petPicture`, `userId`, `veterinarId`) VALUES
@@ -277,7 +280,7 @@ INSERT INTO `pet` (`petId`, `petName`, `bred`, `petSpecies`, `petPicture`, `user
 -- --------------------------------------------------------
 
 --
--- Table structure for table `product`
+-- Tábla szerkezet ehhez a táblához `product`
 --
 
 CREATE TABLE `product` (
@@ -290,19 +293,22 @@ CREATE TABLE `product` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `product`
+-- A tábla adatainak kiíratása `product`
 --
 
 INSERT INTO `product` (`productId`, `productName`, `productPicture`, `description`, `productCost`, `productRelease`) VALUES
-(1, 'Collar', 'logInPic.png', 'This is a collar.', 5.00, '2024-12-16 18:27:39'),
+(1, 'Retek', '20250127221203.png', 'This is a collar.', 3.00, '2025-01-27 22:12:03'),
 (2, 'Leash', '20241226145950.png', 'This is a leash.', 7.99, '2025-01-27 16:38:22'),
-(3, 'Cicamica', '20241221193351.png', 'Da vidiomo', 23.99, '2024-12-21 20:00:13'),
-(4, 'Asd', '20241221193523.png', 'Egyedi textarea szoveg valamit meg irjunk domi', 23.34, '2024-12-21 19:57:39');
+(3, 'Vts', '20250127222030.jpg', 'Najbolji', 23.99, '2025-01-27 22:20:30'),
+(4, 'Asd', '20241221193523.png', 'Egyedi textarea szoveg valamit meg irjunk domi', 23.34, '2024-12-21 19:57:39'),
+(5, 'Cica', '20250127222105.png', 'Papapraprap', 3.00, '2025-01-27 22:21:05'),
+(6, '', '20250127222347.png', '', 0.00, '2025-01-27 22:23:47'),
+(7, 'Cica', '20250127222411.png', 'Da vidiomo', 23.34, '2025-01-27 22:24:11');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `qr_code`
+-- Tábla szerkezet ehhez a táblához `qr_code`
 --
 
 CREATE TABLE `qr_code` (
@@ -314,7 +320,7 @@ CREATE TABLE `qr_code` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `qr_code`
+-- A tábla adatainak kiíratása `qr_code`
 --
 
 INSERT INTO `qr_code` (`qr_code_id`, `qrCodeName`, `userId`, `generated_at`, `updated_at`) VALUES
@@ -328,7 +334,7 @@ INSERT INTO `qr_code` (`qr_code_id`, `qrCodeName`, `userId`, `generated_at`, `up
 -- --------------------------------------------------------
 
 --
--- Table structure for table `reservation`
+-- Tábla szerkezet ehhez a táblához `reservation`
 --
 
 CREATE TABLE `reservation` (
@@ -342,7 +348,7 @@ CREATE TABLE `reservation` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `reservation`
+-- A tábla adatainak kiíratása `reservation`
 --
 
 INSERT INTO `reservation` (`reservationId`, `reservationDay`, `reservationTime`, `period`, `animalChecked`, `veterinarianId`, `petId`) VALUES
@@ -350,14 +356,14 @@ INSERT INTO `reservation` (`reservationId`, `reservationDay`, `reservationTime`,
 (2, '2025-01-31', '17:00:00', '18:00:00', 0, 3, 40),
 (4, '2025-01-12', '17:00:00', '18:00:00', 0, 3, 1),
 (9, '2025-01-14', '18:00:00', '19:00:00', 0, 3, 2),
-(20, '2025-01-25', '13:00:00', '14:00:00', 1, 3, 1),
-(21, '2025-01-25', '14:00:00', '15:00:00', 1, 3, 2),
+(20, '2025-01-27', '13:00:00', '14:00:00', 1, 3, 1),
+(21, '2025-01-27', '14:00:00', '15:00:00', 1, 3, 2),
 (22, '2025-01-30', '10:00:00', '11:00:00', 0, 3, 44);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `review`
+-- Tábla szerkezet ehhez a táblához `review`
 --
 
 CREATE TABLE `review` (
@@ -370,17 +376,21 @@ CREATE TABLE `review` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `review`
+-- A tábla adatainak kiíratása `review`
 --
 
 INSERT INTO `review` (`reviewId`, `review`, `reviewTime`, `reviewCode`, `userId`, `veterinarianId`) VALUES
 (1, 3, '2025-01-24 23:03:59', 2147483647, 19, 3),
-(2, 4, '2025-01-24 23:05:33', 1471108962, 19, 3);
+(2, 4, '2025-01-24 23:05:33', 1471108962, 19, 3),
+(3, NULL, '2025-01-27 21:36:34', 78591095, 29, 3),
+(4, 5, '2025-01-27 21:38:54', 23267100, 19, 3),
+(5, 3, '2025-01-27 21:44:42', 36928989, 19, 3),
+(6, NULL, '2025-01-27 21:56:11', 33457626, 19, 3);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `user`
+-- Tábla szerkezet ehhez a táblához `user`
 --
 
 CREATE TABLE `user` (
@@ -391,7 +401,7 @@ CREATE TABLE `user` (
   `userMail` varchar(100) NOT NULL,
   `userPassword` varchar(60) NOT NULL,
   `profilePic` varchar(100) DEFAULT NULL,
-  `privilage` varchar(25) NOT NULL,
+  `privilage` enum('Guest','Admin','','') NOT NULL,
   `registrationTime` timestamp NOT NULL DEFAULT current_timestamp(),
   `verification_code` int(50) DEFAULT NULL,
   `verify` int(11) NOT NULL,
@@ -404,13 +414,13 @@ CREATE TABLE `user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `user`
+-- A tábla adatainak kiíratása `user`
 --
 
 INSERT INTO `user` (`userId`, `firstName`, `lastName`, `phoneNumber`, `userMail`, `userPassword`, `profilePic`, `privilage`, `registrationTime`, `verification_code`, `verify`, `verification_time`, `banned`, `banned_time`, `passwordValidation`, `passwordValidationTime`, `usedLanguage`) VALUES
 (6, 'Nikoletta', 'Varro', '0', 'nikolettavarro12@gmail.com', '$2y$10$ZJtAXGLi1y8Y7VlLzE4Ru.nH.SbV5pbDRtoQTlOv88WgemWiSIrB2', 'logInPic.png', 'Guest', '0000-00-00 00:00:00', 401081, 0, '2024-04-29 22:00:00', 0, '0000-00-00 00:00:00', 0, '2024-04-23 09:54:10', 'en'),
 (7, 'Nikoletta', 'Varro', '0', 'nikolettavarro@gmail.com', '$2y$10$GZ9eslD9.lWIwuBi0by.sunJYqe1s8Jn8K2eX4CefmMN/LOnyRNua', 'logInPic.png', 'Guest', '0000-00-00 00:00:00', 102107, 0, '2024-04-29 22:00:00', 0, '0000-00-00 00:00:00', 0, '2024-04-23 09:54:10', 'en'),
-(19, 'Robert', 'Varro', '0649420637', 'robertvarro12@gmail.com', '$2y$10$sZKeBUr3S43dBnkiLkzP..1SJCekw6MqWlEpwwqj1puauC2HzEQ0O', '20250104204023.png', 'Admin', '0000-00-00 00:00:00', 229527, 1, '2024-04-29 22:00:00', 0, '0000-00-00 00:00:00', 167710, '2025-01-03 23:15:50', 'hu'),
+(19, 'Robert', 'Varro', '0649420637', 'robertvarro12@gmail.com', '$2y$10$sZKeBUr3S43dBnkiLkzP..1SJCekw6MqWlEpwwqj1puauC2HzEQ0O', '20250104204023.png', 'Admin', '0000-00-00 00:00:00', 229527, 1, '2024-04-29 22:00:00', 0, '0000-00-00 00:00:00', 167710, '2025-01-03 23:15:50', 'en'),
 (25, 'Dominik', 'Hupko', '628277140', 'hupkodominik143@gmail.com', '$2y$10$B1cB9B1pWGshgJPbFbUBleB3yicBi3cILKWBT2DAkDbz5kDoLhtuC', 'logInPic.png', 'Admin', '2024-06-03 12:23:54', 2047970, 1, '2024-06-03 12:33:54', 0, '0000-00-00 00:00:00', 173548, '2025-01-27 15:31:17', 'hu'),
 (26, 'Robert', 'Varro', '0649420637', 'varrorobert03@gmail.coml', '$2y$10$T5p19yMDoZ0EKiRXocAjJuNmNFK8INcDDWFkyC97i5rB6rODkLO82', 'logInPic.png', 'Guest', '2024-12-14 15:32:29', 1740492, 1, '2024-12-14 15:42:29', 0, '2024-12-14 15:32:29', NULL, '2024-12-14 15:32:29', 'en'),
 (27, 'Robert', 'Varro', '0649420637', 'varro7robert03@gmail.com', '$2y$10$7.Vqm7RZ7EaQISuO6xdo3OcNPbEAERoUAJF8hsBBxD8mCAvaH5Bpi', 'logInPic.png', 'Guest', '2024-12-14 22:01:34', 3299090, 1, '2024-12-14 22:11:34', 0, '2024-12-14 22:01:34', NULL, '2024-12-14 22:01:34', 'en'),
@@ -420,34 +430,35 @@ INSERT INTO `user` (`userId`, `firstName`, `lastName`, `phoneNumber`, `userMail`
 -- --------------------------------------------------------
 
 --
--- Table structure for table `user_product_relation`
+-- Tábla szerkezet ehhez a táblához `user_product_relation`
 --
 
 CREATE TABLE `user_product_relation` (
   `userProductRelationId` int(11) NOT NULL,
   `userId` int(11) NOT NULL,
+  `productName` varchar(50) NOT NULL,
+  `productPicture` varchar(100) NOT NULL,
   `productId` int(11) NOT NULL,
   `sum` int(11) NOT NULL,
   `price` decimal(6,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `user_product_relation`
+-- A tábla adatainak kiíratása `user_product_relation`
 --
 
-INSERT INTO `user_product_relation` (`userProductRelationId`, `userId`, `productId`, `sum`, `price`) VALUES
-(1, 19, 2, 1, 0.00),
-(3, 19, 2, 1, 0.00),
-(4, 19, 2, 3, 0.00),
-(5, 28, 3, 2, 0.00),
-(9, 25, 2, 1, 7.99),
-(10, 25, 2, 1, 6.99),
-(11, 25, 2, 1, 7.99);
+INSERT INTO `user_product_relation` (`userProductRelationId`, `userId`, `productName`, `productPicture`, `productId`, `sum`, `price`) VALUES
+(5, 28, '', '', 3, 2, 11.00),
+(9, 25, '', '', 2, 1, 7.99),
+(10, 25, '', '', 2, 1, 6.99),
+(11, 25, '', '', 2, 1, 7.99),
+(14, 19, 'Retek', '20250127220830.png', 1, 3, 3.00),
+(16, 19, 'Cica', '20250127222105.png', 5, 1, 3.00);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `user_review_relation`
+-- Tábla szerkezet ehhez a táblához `user_review_relation`
 --
 
 CREATE TABLE `user_review_relation` (
@@ -459,7 +470,7 @@ CREATE TABLE `user_review_relation` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `veterinarian`
+-- Tábla szerkezet ehhez a táblához `veterinarian`
 --
 
 CREATE TABLE `veterinarian` (
@@ -481,7 +492,7 @@ CREATE TABLE `veterinarian` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `veterinarian`
+-- A tábla adatainak kiíratása `veterinarian`
 --
 
 INSERT INTO `veterinarian` (`veterinarianId`, `firstName`, `lastName`, `phoneNumber`, `veterinarianMail`, `veterinarianPassword`, `profilePic`, `registrationTime`, `verification_code`, `verify`, `verification_time`, `passwordValidation`, `passwordValidationTime`, `workAddressId`, `usedLanguage`) VALUES
@@ -491,7 +502,7 @@ INSERT INTO `veterinarian` (`veterinarianId`, `firstName`, `lastName`, `phoneNum
 -- --------------------------------------------------------
 
 --
--- Table structure for table `veterinar_review_relation`
+-- Tábla szerkezet ehhez a táblához `veterinar_review_relation`
 --
 
 CREATE TABLE `veterinar_review_relation` (
@@ -503,7 +514,7 @@ CREATE TABLE `veterinar_review_relation` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `work_address`
+-- Tábla szerkezet ehhez a táblához `work_address`
 --
 
 CREATE TABLE `work_address` (
@@ -516,30 +527,30 @@ CREATE TABLE `work_address` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `work_address`
+-- A tábla adatainak kiíratása `work_address`
 --
 
 INSERT INTO `work_address` (`workAddressId`, `workAddress`, `workCity`, `workDisctrict`, `workStart`, `workEnd`) VALUES
 (1, 'Strostmajerova 12', 'Subotica', 'Serverno Backi', 123443, 124325);
 
 --
--- Indexes for dumped tables
+-- Indexek a kiírt táblákhoz
 --
 
 --
--- Indexes for table `errorlog`
+-- A tábla indexei `errorlog`
 --
 ALTER TABLE `errorlog`
   ADD PRIMARY KEY (`errorLogId`);
 
 --
--- Indexes for table `log`
+-- A tábla indexei `log`
 --
 ALTER TABLE `log`
   ADD PRIMARY KEY (`id_log`);
 
 --
--- Indexes for table `pet`
+-- A tábla indexei `pet`
 --
 ALTER TABLE `pet`
   ADD PRIMARY KEY (`petId`),
@@ -547,20 +558,20 @@ ALTER TABLE `pet`
   ADD KEY `veterinarId` (`veterinarId`);
 
 --
--- Indexes for table `product`
+-- A tábla indexei `product`
 --
 ALTER TABLE `product`
   ADD PRIMARY KEY (`productId`);
 
 --
--- Indexes for table `qr_code`
+-- A tábla indexei `qr_code`
 --
 ALTER TABLE `qr_code`
   ADD PRIMARY KEY (`qr_code_id`),
   ADD KEY `userId` (`userId`);
 
 --
--- Indexes for table `reservation`
+-- A tábla indexei `reservation`
 --
 ALTER TABLE `reservation`
   ADD PRIMARY KEY (`reservationId`),
@@ -568,20 +579,20 @@ ALTER TABLE `reservation`
   ADD KEY `petId` (`petId`);
 
 --
--- Indexes for table `review`
+-- A tábla indexei `review`
 --
 ALTER TABLE `review`
   ADD PRIMARY KEY (`reviewId`),
   ADD KEY `userId` (`userId`);
 
 --
--- Indexes for table `user`
+-- A tábla indexei `user`
 --
 ALTER TABLE `user`
   ADD PRIMARY KEY (`userId`);
 
 --
--- Indexes for table `user_product_relation`
+-- A tábla indexei `user_product_relation`
 --
 ALTER TABLE `user_product_relation`
   ADD PRIMARY KEY (`userProductRelationId`),
@@ -589,7 +600,7 @@ ALTER TABLE `user_product_relation`
   ADD KEY `productId` (`productId`);
 
 --
--- Indexes for table `user_review_relation`
+-- A tábla indexei `user_review_relation`
 --
 ALTER TABLE `user_review_relation`
   ADD PRIMARY KEY (`userReviewRelationId`),
@@ -597,14 +608,14 @@ ALTER TABLE `user_review_relation`
   ADD KEY `reviewId` (`reviewId`);
 
 --
--- Indexes for table `veterinarian`
+-- A tábla indexei `veterinarian`
 --
 ALTER TABLE `veterinarian`
   ADD PRIMARY KEY (`veterinarianId`),
   ADD KEY `workAddressId` (`workAddressId`);
 
 --
--- Indexes for table `veterinar_review_relation`
+-- A tábla indexei `veterinar_review_relation`
 --
 ALTER TABLE `veterinar_review_relation`
   ADD PRIMARY KEY (`veterinarReviewRelationID`),
@@ -612,140 +623,140 @@ ALTER TABLE `veterinar_review_relation`
   ADD KEY `reviewId` (`reviewId`);
 
 --
--- Indexes for table `work_address`
+-- A tábla indexei `work_address`
 --
 ALTER TABLE `work_address`
   ADD PRIMARY KEY (`workAddressId`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- A kiírt táblák AUTO_INCREMENT értéke
 --
 
 --
--- AUTO_INCREMENT for table `errorlog`
+-- AUTO_INCREMENT a táblához `errorlog`
 --
 ALTER TABLE `errorlog`
-  MODIFY `errorLogId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=163;
+  MODIFY `errorLogId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=166;
 
 --
--- AUTO_INCREMENT for table `log`
+-- AUTO_INCREMENT a táblához `log`
 --
 ALTER TABLE `log`
   MODIFY `id_log` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
--- AUTO_INCREMENT for table `pet`
+-- AUTO_INCREMENT a táblához `pet`
 --
 ALTER TABLE `pet`
   MODIFY `petId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
 
 --
--- AUTO_INCREMENT for table `product`
+-- AUTO_INCREMENT a táblához `product`
 --
 ALTER TABLE `product`
-  MODIFY `productId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `productId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
--- AUTO_INCREMENT for table `qr_code`
+-- AUTO_INCREMENT a táblához `qr_code`
 --
 ALTER TABLE `qr_code`
   MODIFY `qr_code_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
--- AUTO_INCREMENT for table `reservation`
+-- AUTO_INCREMENT a táblához `reservation`
 --
 ALTER TABLE `reservation`
-  MODIFY `reservationId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `reservationId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
--- AUTO_INCREMENT for table `review`
+-- AUTO_INCREMENT a táblához `review`
 --
 ALTER TABLE `review`
-  MODIFY `reviewId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `reviewId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
--- AUTO_INCREMENT for table `user`
+-- AUTO_INCREMENT a táblához `user`
 --
 ALTER TABLE `user`
   MODIFY `userId` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
--- AUTO_INCREMENT for table `user_product_relation`
+-- AUTO_INCREMENT a táblához `user_product_relation`
 --
 ALTER TABLE `user_product_relation`
-  MODIFY `userProductRelationId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `userProductRelationId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
--- AUTO_INCREMENT for table `user_review_relation`
+-- AUTO_INCREMENT a táblához `user_review_relation`
 --
 ALTER TABLE `user_review_relation`
   MODIFY `userReviewRelationId` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `veterinarian`
+-- AUTO_INCREMENT a táblához `veterinarian`
 --
 ALTER TABLE `veterinarian`
-  MODIFY `veterinarianId` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `veterinarianId` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT for table `veterinar_review_relation`
+-- AUTO_INCREMENT a táblához `veterinar_review_relation`
 --
 ALTER TABLE `veterinar_review_relation`
   MODIFY `veterinarReviewRelationID` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `work_address`
+-- AUTO_INCREMENT a táblához `work_address`
 --
 ALTER TABLE `work_address`
   MODIFY `workAddressId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- Constraints for dumped tables
+-- Megkötések a kiírt táblákhoz
 --
 
 --
--- Constraints for table `pet`
+-- Megkötések a táblához `pet`
 --
 ALTER TABLE `pet`
   ADD CONSTRAINT `pet_ibfk_2` FOREIGN KEY (`userId`) REFERENCES `user` (`userId`),
   ADD CONSTRAINT `pet_ibfk_3` FOREIGN KEY (`veterinarId`) REFERENCES `veterinarian` (`veterinarianId`);
 
 --
--- Constraints for table `qr_code`
+-- Megkötések a táblához `qr_code`
 --
 ALTER TABLE `qr_code`
   ADD CONSTRAINT `qr_code_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `user` (`userId`);
 
 --
--- Constraints for table `reservation`
+-- Megkötések a táblához `reservation`
 --
 ALTER TABLE `reservation`
   ADD CONSTRAINT `reservation_ibfk_1` FOREIGN KEY (`petId`) REFERENCES `pet` (`petId`),
   ADD CONSTRAINT `reservation_ibfk_2` FOREIGN KEY (`veterinarianId`) REFERENCES `veterinarian` (`veterinarianId`);
 
 --
--- Constraints for table `user_product_relation`
+-- Megkötések a táblához `user_product_relation`
 --
 ALTER TABLE `user_product_relation`
   ADD CONSTRAINT `user_product_relation_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `user` (`userId`),
   ADD CONSTRAINT `user_product_relation_ibfk_2` FOREIGN KEY (`productId`) REFERENCES `product` (`productId`);
 
 --
--- Constraints for table `user_review_relation`
+-- Megkötések a táblához `user_review_relation`
 --
 ALTER TABLE `user_review_relation`
   ADD CONSTRAINT `user_review_relation_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `user` (`userId`),
   ADD CONSTRAINT `user_review_relation_ibfk_2` FOREIGN KEY (`reviewId`) REFERENCES `review` (`reviewId`);
 
 --
--- Constraints for table `veterinar_review_relation`
+-- Megkötések a táblához `veterinar_review_relation`
 --
 ALTER TABLE `veterinar_review_relation`
   ADD CONSTRAINT `veterinar_review_relation_ibfk_1` FOREIGN KEY (`reviewId`) REFERENCES `review` (`reviewId`),
   ADD CONSTRAINT `veterinar_review_relation_ibfk_2` FOREIGN KEY (`veterinarId`) REFERENCES `veterinarian` (`veterinarianId`);
 
 --
--- Constraints for table `work_address`
+-- Megkötések a táblához `work_address`
 --
 ALTER TABLE `work_address`
   ADD CONSTRAINT `work_address_ibfk_1` FOREIGN KEY (`workAddressId`) REFERENCES `veterinarian` (`workAddressId`);
