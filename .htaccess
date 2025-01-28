@@ -1,0 +1,16 @@
+RewriteEngine On    # Turn on the rewriting engine
+
+RewriteRule ^getPets/([a-z_-]*)$ getPets.php?table=$1 [NC,L]
+
+# This rule doesn’t change the URL but sets an environment variable for handling HTTP authorization headers.
+# Pattern: .*
+# The .* pattern matches any URL.
+# Rewrite Target: -
+# The - symbol means "no substitution" — the URL won’t be rewritten.
+
+# Flag: [e=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+# This sets an environment variable HTTP_AUTHORIZATION with the value of the Authorization header from the HTTP request
+# (%{HTTP:Authorization}).
+
+# This rule is often used to pass authorization headers to PHP scripts, especially if they aren’t being passed
+# automatically by the server configuration. It’s commonly used when handling authentication tokens in APIs.
