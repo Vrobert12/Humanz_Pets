@@ -1,0 +1,1017 @@
+{
+	"info": {
+		"_postman_id": "6f8d1197-4acd-4cc0-9dd2-f1d03a825ffa",
+		"name": "Pets_Collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "39875743"
+	},
+	"item": [
+		{
+			"name": "Get_Everything&Specific",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": [
+				{
+					"name": "Get_All_Users",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost/Humanz_Pets/getPets/veterinarian/3"
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Tue, 28 Jan 2025 15:14:32 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Apache/2.4.58 (Win64) OpenSSL/3.1.3 PHP/8.2.12"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.2.12"
+						},
+						{
+							"key": "X-Xdebug-Profile-Filename",
+							"value": "C:\\Windows\\Temp\\cachegrind.out.3024.gz"
+						},
+						{
+							"key": "Expires",
+							"value": "Thu, 19 Nov 1981 08:52:00 GMT"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-store, no-cache, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Content-Length",
+							"value": "597"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5, max=100"
+						},
+						{
+							"key": "Connection",
+							"value": "Keep-Alive"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=UTF-8"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"Data fetched successfully.\",\n    \"status\": 200,\n    \"data\": [\n        {\n            \"veterinarianId\": 3,\n            \"firstName\": \"Robert\",\n            \"lastName\": \"Varro\",\n            \"phoneNumber\": \"0649420637\",\n            \"veterinarianMail\": \"varrorobert03@gmail.com\",\n            \"veterinarianPassword\": \"$2y$10$u1KvS5Nh7JQBo89d7jM9yeFVAS6rrfptOrHum0v/KLNYPRfs60W/2\",\n            \"profilePic\": \"20250124221618.jpg\",\n            \"registrationTime\": \"2025-01-05 02:44:36\",\n            \"verification_code\": 3296064,\n            \"verify\": 1,\n            \"verification_time\": \"2025-01-05 02:54:36\",\n            \"banned\": 0,\n            \"banned_time\": \"2025-01-29 00:53:53\",\n            \"passwordValidation\": null,\n            \"passwordValidationTime\": \"2025-01-05 02:44:36\",\n            \"workAddressId\": 0,\n            \"usedLanguage\": \"sr\"\n        }\n    ]\n}"
+				},
+				{
+					"name": "Get_One_Veterinarian",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost/Humanz_Pets/getPets/veterinarian"
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Tue, 28 Jan 2025 15:25:45 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Apache/2.4.58 (Win64) OpenSSL/3.1.3 PHP/8.2.12"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.2.12"
+						},
+						{
+							"key": "X-Xdebug-Profile-Filename",
+							"value": "C:\\Windows\\Temp\\cachegrind.out.11884.gz"
+						},
+						{
+							"key": "Expires",
+							"value": "Thu, 19 Nov 1981 08:52:00 GMT"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-store, no-cache, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Content-Length",
+							"value": "1119"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5, max=100"
+						},
+						{
+							"key": "Connection",
+							"value": "Keep-Alive"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=UTF-8"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"Data fetched successfully.\",\n    \"status\": 200,\n    \"data\": [\n        {\n            \"veterinarianId\": 1,\n            \"firstName\": \"Robert\",\n            \"lastName\": \"Varro\",\n            \"phoneNumber\": \"0649420637\",\n            \"veterinarianMail\": \"varrorobejrt03@gmail.com\",\n            \"veterinarianPassword\": \"$2y$10$kDYqhdUxCiKKb86iW8vGIe6yi.8fmADky4QYmpcOXlV3Fh8hN1jOq\",\n            \"profilePic\": \"logInPic.png\",\n            \"registrationTime\": \"2024-12-14 21:02:10\",\n            \"verification_code\": null,\n            \"verify\": 1,\n            \"verification_time\": \"2024-12-14 21:02:10\",\n            \"banned\": 0,\n            \"banned_time\": \"2025-01-29 00:53:53\",\n            \"passwordValidation\": 1,\n            \"passwordValidationTime\": \"2024-12-14 21:02:10\",\n            \"workAddressId\": 1,\n            \"usedLanguage\": \"en\"\n        },\n        {\n            \"veterinarianId\": 3,\n            \"firstName\": \"Robert\",\n            \"lastName\": \"Varro\",\n            \"phoneNumber\": \"0649420637\",\n            \"veterinarianMail\": \"varrorobert03@gmail.com\",\n            \"veterinarianPassword\": \"$2y$10$u1KvS5Nh7JQBo89d7jM9yeFVAS6rrfptOrHum0v/KLNYPRfs60W/2\",\n            \"profilePic\": \"20250124221618.jpg\",\n            \"registrationTime\": \"2025-01-05 02:44:36\",\n            \"verification_code\": 3296064,\n            \"verify\": 1,\n            \"verification_time\": \"2025-01-05 02:54:36\",\n            \"banned\": 0,\n            \"banned_time\": \"2025-01-29 00:53:53\",\n            \"passwordValidation\": null,\n            \"passwordValidationTime\": \"2025-01-05 02:44:36\",\n            \"workAddressId\": 0,\n            \"usedLanguage\": \"sr\"\n        }\n    ]\n}"
+				},
+				{
+					"name": "Get_All_Veterinarians",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost/Humanz_Pets/getPets/veterinarian"
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Tue, 28 Jan 2025 15:25:45 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Apache/2.4.58 (Win64) OpenSSL/3.1.3 PHP/8.2.12"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.2.12"
+						},
+						{
+							"key": "X-Xdebug-Profile-Filename",
+							"value": "C:\\Windows\\Temp\\cachegrind.out.11884.gz"
+						},
+						{
+							"key": "Expires",
+							"value": "Thu, 19 Nov 1981 08:52:00 GMT"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-store, no-cache, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Content-Length",
+							"value": "1119"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5, max=100"
+						},
+						{
+							"key": "Connection",
+							"value": "Keep-Alive"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=UTF-8"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"Data fetched successfully.\",\n    \"status\": 200,\n    \"data\": [\n        {\n            \"veterinarianId\": 1,\n            \"firstName\": \"Robert\",\n            \"lastName\": \"Varro\",\n            \"phoneNumber\": \"0649420637\",\n            \"veterinarianMail\": \"varrorobejrt03@gmail.com\",\n            \"veterinarianPassword\": \"$2y$10$kDYqhdUxCiKKb86iW8vGIe6yi.8fmADky4QYmpcOXlV3Fh8hN1jOq\",\n            \"profilePic\": \"logInPic.png\",\n            \"registrationTime\": \"2024-12-14 21:02:10\",\n            \"verification_code\": null,\n            \"verify\": 1,\n            \"verification_time\": \"2024-12-14 21:02:10\",\n            \"banned\": 0,\n            \"banned_time\": \"2025-01-29 00:53:53\",\n            \"passwordValidation\": 1,\n            \"passwordValidationTime\": \"2024-12-14 21:02:10\",\n            \"workAddressId\": 1,\n            \"usedLanguage\": \"en\"\n        },\n        {\n            \"veterinarianId\": 3,\n            \"firstName\": \"Robert\",\n            \"lastName\": \"Varro\",\n            \"phoneNumber\": \"0649420637\",\n            \"veterinarianMail\": \"varrorobert03@gmail.com\",\n            \"veterinarianPassword\": \"$2y$10$u1KvS5Nh7JQBo89d7jM9yeFVAS6rrfptOrHum0v/KLNYPRfs60W/2\",\n            \"profilePic\": \"20250124221618.jpg\",\n            \"registrationTime\": \"2025-01-05 02:44:36\",\n            \"verification_code\": 3296064,\n            \"verify\": 1,\n            \"verification_time\": \"2025-01-05 02:54:36\",\n            \"banned\": 0,\n            \"banned_time\": \"2025-01-29 00:53:53\",\n            \"passwordValidation\": null,\n            \"passwordValidationTime\": \"2025-01-05 02:44:36\",\n            \"workAddressId\": 0,\n            \"usedLanguage\": \"sr\"\n        }\n    ]\n}"
+				},
+				{
+					"name": "Get_One_User",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost/Humanz_Pets/getPets/user/19"
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Tue, 28 Jan 2025 15:29:19 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Apache/2.4.58 (Win64) OpenSSL/3.1.3 PHP/8.2.12"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.2.12"
+						},
+						{
+							"key": "X-Xdebug-Profile-Filename",
+							"value": "C:\\Windows\\Temp\\cachegrind.out.7768.gz"
+						},
+						{
+							"key": "Expires",
+							"value": "Thu, 19 Nov 1981 08:52:00 GMT"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-store, no-cache, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Content-Length",
+							"value": "575"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5, max=100"
+						},
+						{
+							"key": "Connection",
+							"value": "Keep-Alive"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=UTF-8"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"Data fetched successfully.\",\n    \"status\": 200,\n    \"data\": [\n        {\n            \"userId\": 19,\n            \"firstName\": \"Robert\",\n            \"lastName\": \"Varro\",\n            \"phoneNumber\": \"0649420637\",\n            \"userMail\": \"robertvarro12@gmail.com\",\n            \"userPassword\": \"$2y$10$sZKeBUr3S43dBnkiLkzP..1SJCekw6MqWlEpwwqj1puauC2HzEQ0O\",\n            \"profilePic\": \"20250104204023.png\",\n            \"privilage\": \"Admin\",\n            \"registrationTime\": \"0000-00-00 00:00:00\",\n            \"verification_code\": 229527,\n            \"verify\": 1,\n            \"verification_time\": \"2024-04-30 06:00:00\",\n            \"banned\": 0,\n            \"banned_time\": \"0000-00-00 00:00:00\",\n            \"passwordValidation\": 167710,\n            \"passwordValidationTime\": \"2025-01-04 07:15:50\",\n            \"usedLanguage\": \"hu\"\n        }\n    ]\n}"
+				},
+				{
+					"name": "Get_ALL_Products",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost/Humanz_Pets/getPets/product"
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Tue, 28 Jan 2025 15:32:07 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Apache/2.4.58 (Win64) OpenSSL/3.1.3 PHP/8.2.12"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.2.12"
+						},
+						{
+							"key": "X-Xdebug-Profile-Filename",
+							"value": "C:\\Windows\\Temp\\cachegrind.out.7768.gz"
+						},
+						{
+							"key": "Expires",
+							"value": "Thu, 19 Nov 1981 08:52:00 GMT"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-store, no-cache, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Content-Length",
+							"value": "225"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5, max=100"
+						},
+						{
+							"key": "Connection",
+							"value": "Keep-Alive"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=UTF-8"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"Data fetched successfully.\",\n    \"status\": 200,\n    \"data\": [\n        {\n            \"productId\": 11,\n            \"productName\": \"Asd\",\n            \"productPicture\": \"20250128161408.png\",\n            \"description\": \"Da vidiomo\",\n            \"productCost\": \"23.99\",\n            \"productRelease\": \"2025-01-28 16:14:08\"\n        }\n    ]\n}"
+				},
+				{
+					"name": "Get_One_Product",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost/Humanz_Pets/getPets/product/11"
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Tue, 28 Jan 2025 15:32:07 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Apache/2.4.58 (Win64) OpenSSL/3.1.3 PHP/8.2.12"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.2.12"
+						},
+						{
+							"key": "X-Xdebug-Profile-Filename",
+							"value": "C:\\Windows\\Temp\\cachegrind.out.7768.gz"
+						},
+						{
+							"key": "Expires",
+							"value": "Thu, 19 Nov 1981 08:52:00 GMT"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-store, no-cache, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Content-Length",
+							"value": "225"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5, max=100"
+						},
+						{
+							"key": "Connection",
+							"value": "Keep-Alive"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=UTF-8"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"Data fetched successfully.\",\n    \"status\": 200,\n    \"data\": [\n        {\n            \"productId\": 11,\n            \"productName\": \"Asd\",\n            \"productPicture\": \"20250128161408.png\",\n            \"description\": \"Da vidiomo\",\n            \"productCost\": \"23.99\",\n            \"productRelease\": \"2025-01-28 16:14:08\"\n        }\n    ]\n}"
+				},
+				{
+					"name": "Get_all_Review",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost/Humanz_Pets/getPets/review"
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Tue, 28 Jan 2025 15:35:30 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Apache/2.4.58 (Win64) OpenSSL/3.1.3 PHP/8.2.12"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.2.12"
+						},
+						{
+							"key": "X-Xdebug-Profile-Filename",
+							"value": "C:\\Windows\\Temp\\cachegrind.out.7768.gz"
+						},
+						{
+							"key": "Expires",
+							"value": "Thu, 19 Nov 1981 08:52:00 GMT"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-store, no-cache, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Content-Length",
+							"value": "870"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5, max=100"
+						},
+						{
+							"key": "Connection",
+							"value": "Keep-Alive"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=UTF-8"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"Data fetched successfully.\",\n    \"status\": 200,\n    \"data\": [\n        {\n            \"reviewId\": 1,\n            \"review\": 3,\n            \"reviewTime\": \"2025-01-24 23:03:59\",\n            \"reviewCode\": 2147483647,\n            \"userId\": 19,\n            \"veterinarianId\": 3\n        },\n        {\n            \"reviewId\": 2,\n            \"review\": 4,\n            \"reviewTime\": \"2025-01-24 23:05:33\",\n            \"reviewCode\": 1471108962,\n            \"userId\": 19,\n            \"veterinarianId\": 3\n        },\n        {\n            \"reviewId\": 3,\n            \"review\": null,\n            \"reviewTime\": \"2025-01-27 21:36:34\",\n            \"reviewCode\": 78591095,\n            \"userId\": 29,\n            \"veterinarianId\": 3\n        },\n        {\n            \"reviewId\": 4,\n            \"review\": 5,\n            \"reviewTime\": \"2025-01-27 21:38:54\",\n            \"reviewCode\": 23267100,\n            \"userId\": 19,\n            \"veterinarianId\": 3\n        },\n        {\n            \"reviewId\": 5,\n            \"review\": 3,\n            \"reviewTime\": \"2025-01-27 21:44:42\",\n            \"reviewCode\": 36928989,\n            \"userId\": 19,\n            \"veterinarianId\": 3\n        },\n        {\n            \"reviewId\": 6,\n            \"review\": null,\n            \"reviewTime\": \"2025-01-27 21:56:11\",\n            \"reviewCode\": 33457626,\n            \"userId\": 19,\n            \"veterinarianId\": 3\n        },\n        {\n            \"reviewId\": 7,\n            \"review\": 1,\n            \"reviewTime\": \"2025-01-27 22:37:57\",\n            \"reviewCode\": 31477648,\n            \"userId\": 19,\n            \"veterinarianId\": 3\n        }\n    ]\n}"
+				},
+				{
+					"name": "Get_One_Review",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost/Humanz_Pets/getPets/review/2"
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Tue, 28 Jan 2025 15:36:23 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Apache/2.4.58 (Win64) OpenSSL/3.1.3 PHP/8.2.12"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.2.12"
+						},
+						{
+							"key": "X-Xdebug-Profile-Filename",
+							"value": "C:\\Windows\\Temp\\cachegrind.out.11884.gz"
+						},
+						{
+							"key": "Expires",
+							"value": "Thu, 19 Nov 1981 08:52:00 GMT"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-store, no-cache, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Content-Length",
+							"value": "178"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5, max=100"
+						},
+						{
+							"key": "Connection",
+							"value": "Keep-Alive"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=UTF-8"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"Data fetched successfully.\",\n    \"status\": 200,\n    \"data\": [\n        {\n            \"reviewId\": 2,\n            \"review\": 4,\n            \"reviewTime\": \"2025-01-24 23:05:33\",\n            \"reviewCode\": 1471108962,\n            \"userId\": 19,\n            \"veterinarianId\": 3\n        }\n    ]\n}"
+				},
+				{
+					"name": "Get_All_Reservation",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost/Humanz_Pets/getPets/reservation"
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Tue, 28 Jan 2025 15:38:21 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Apache/2.4.58 (Win64) OpenSSL/3.1.3 PHP/8.2.12"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.2.12"
+						},
+						{
+							"key": "X-Xdebug-Profile-Filename",
+							"value": "C:\\Windows\\Temp\\cachegrind.out.11884.gz"
+						},
+						{
+							"key": "Expires",
+							"value": "Thu, 19 Nov 1981 08:52:00 GMT"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-store, no-cache, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Content-Length",
+							"value": "1236"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5, max=100"
+						},
+						{
+							"key": "Connection",
+							"value": "Keep-Alive"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=UTF-8"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"Data fetched successfully.\",\n    \"status\": 200,\n    \"data\": [\n        {\n            \"reservationId\": 1,\n            \"reservationDay\": \"2025-01-13\",\n            \"reservationTime\": \"09:00:00\",\n            \"period\": \"10:00:00\",\n            \"animalChecked\": 0,\n            \"veterinarianId\": 3,\n            \"petId\": 1\n        },\n        {\n            \"reservationId\": 2,\n            \"reservationDay\": \"2025-01-31\",\n            \"reservationTime\": \"17:00:00\",\n            \"period\": \"18:00:00\",\n            \"animalChecked\": 0,\n            \"veterinarianId\": 3,\n            \"petId\": 40\n        },\n        {\n            \"reservationId\": 4,\n            \"reservationDay\": \"2025-01-12\",\n            \"reservationTime\": \"17:00:00\",\n            \"period\": \"18:00:00\",\n            \"animalChecked\": 0,\n            \"veterinarianId\": 3,\n            \"petId\": 1\n        },\n        {\n            \"reservationId\": 9,\n            \"reservationDay\": \"2025-01-14\",\n            \"reservationTime\": \"18:00:00\",\n            \"period\": \"19:00:00\",\n            \"animalChecked\": 0,\n            \"veterinarianId\": 3,\n            \"petId\": 2\n        },\n        {\n            \"reservationId\": 20,\n            \"reservationDay\": \"2025-01-27\",\n            \"reservationTime\": \"13:00:00\",\n            \"period\": \"14:00:00\",\n            \"animalChecked\": 1,\n            \"veterinarianId\": 3,\n            \"petId\": 1\n        },\n        {\n            \"reservationId\": 21,\n            \"reservationDay\": \"2025-01-27\",\n            \"reservationTime\": \"14:00:00\",\n            \"period\": \"15:00:00\",\n            \"animalChecked\": 1,\n            \"veterinarianId\": 3,\n            \"petId\": 2\n        },\n        {\n            \"reservationId\": 22,\n            \"reservationDay\": \"2025-01-30\",\n            \"reservationTime\": \"10:00:00\",\n            \"period\": \"11:00:00\",\n            \"animalChecked\": 0,\n            \"veterinarianId\": 3,\n            \"petId\": 44\n        },\n        {\n            \"reservationId\": 39,\n            \"reservationDay\": \"2025-02-01\",\n            \"reservationTime\": \"10:00:00\",\n            \"period\": \"11:00:00\",\n            \"animalChecked\": 0,\n            \"veterinarianId\": 3,\n            \"petId\": 2\n        }\n    ]\n}"
+				},
+				{
+					"name": "Get_One_Reservation",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost/Humanz_Pets/getPets/reservation/4"
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Tue, 28 Jan 2025 15:38:46 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Apache/2.4.58 (Win64) OpenSSL/3.1.3 PHP/8.2.12"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.2.12"
+						},
+						{
+							"key": "X-Xdebug-Profile-Filename",
+							"value": "C:\\Windows\\Temp\\cachegrind.out.7768.gz"
+						},
+						{
+							"key": "Expires",
+							"value": "Thu, 19 Nov 1981 08:52:00 GMT"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-store, no-cache, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Content-Length",
+							"value": "208"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5, max=100"
+						},
+						{
+							"key": "Connection",
+							"value": "Keep-Alive"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=UTF-8"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"Data fetched successfully.\",\n    \"status\": 200,\n    \"data\": [\n        {\n            \"reservationId\": 4,\n            \"reservationDay\": \"2025-01-12\",\n            \"reservationTime\": \"17:00:00\",\n            \"period\": \"18:00:00\",\n            \"animalChecked\": 0,\n            \"veterinarianId\": 3,\n            \"petId\": 1\n        }\n    ]\n}"
+				},
+				{
+					"name": "Get_All_Pets",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost/Humanz_Pets/getPets/pet"
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Tue, 28 Jan 2025 15:39:35 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Apache/2.4.58 (Win64) OpenSSL/3.1.3 PHP/8.2.12"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.2.12"
+						},
+						{
+							"key": "X-Xdebug-Profile-Filename",
+							"value": "C:\\Windows\\Temp\\cachegrind.out.11884.gz"
+						},
+						{
+							"key": "Expires",
+							"value": "Thu, 19 Nov 1981 08:52:00 GMT"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-store, no-cache, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Content-Length",
+							"value": "1725"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5, max=100"
+						},
+						{
+							"key": "Connection",
+							"value": "Keep-Alive"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=UTF-8"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"Data fetched successfully.\",\n    \"status\": 200,\n    \"data\": [\n        {\n            \"petId\": 1,\n            \"petName\": \"Buksi\",\n            \"bred\": \"Mixed\",\n            \"petSpecies\": \"Dog  \",\n            \"petPicture\": \"20241223153456.png\",\n            \"userId\": 19,\n            \"veterinarId\": 1\n        },\n        {\n            \"petId\": 2,\n            \"petName\": \"Tigrincs\",\n            \"bred\": \"Mixed\",\n            \"petSpecies\": \"Cat \",\n            \"petPicture\": \"20241223151911.png\",\n            \"userId\": 19,\n            \"veterinarId\": 1\n        },\n        {\n            \"petId\": 3,\n            \"petName\": \"Buksi\",\n            \"bred\": \"Mixed\",\n            \"petSpecies\": \"Dog\",\n            \"petPicture\": \"20241214163313.png\",\n            \"userId\": 26,\n            \"veterinarId\": 1\n        },\n        {\n            \"petId\": 4,\n            \"petName\": \"Tigrincs\",\n            \"bred\": \"Mixed\",\n            \"petSpecies\": \"Cat\",\n            \"petPicture\": \"20241214163628.png\",\n            \"userId\": 26,\n            \"veterinarId\": 1\n        },\n        {\n            \"petId\": 9,\n            \"petName\": \"Buksi\",\n            \"bred\": \"Mixed\",\n            \"petSpecies\": \"Cat\",\n            \"petPicture\": \"20241214225926.png\",\n            \"userId\": 26,\n            \"veterinarId\": 1\n        },\n        {\n            \"petId\": 10,\n            \"petName\": \"Buksi\",\n            \"bred\": \"Mixed\",\n            \"petSpecies\": \"Dog\",\n            \"petPicture\": \"20241214230315.png\",\n            \"userId\": 27,\n            \"veterinarId\": 1\n        },\n        {\n            \"petId\": 11,\n            \"petName\": \"Tigrincs\",\n            \"bred\": \"Mixed\",\n            \"petSpecies\": \"Cat\",\n            \"petPicture\": \"20241214230343.png\",\n            \"userId\": 27,\n            \"veterinarId\": 1\n        },\n        {\n            \"petId\": 12,\n            \"petName\": \"Buksi\",\n            \"bred\": \"Mixed\",\n            \"petSpecies\": \"Cat\",\n            \"petPicture\": \"20241214230428.png\",\n            \"userId\": 27,\n            \"veterinarId\": 1\n        },\n        {\n            \"petId\": 13,\n            \"petName\": \"Zizi\",\n            \"bred\": \"Pug\",\n            \"petSpecies\": \"Dog\",\n            \"petPicture\": \"20241215162746.png\",\n            \"userId\": 25,\n            \"veterinarId\": 1\n        },\n        {\n            \"petId\": 14,\n            \"petName\": \"Zizi2\",\n            \"bred\": \"Pug\",\n            \"petSpecies\": \"Dog\",\n            \"petPicture\": \"20241215190624.png\",\n            \"userId\": 25,\n            \"veterinarId\": 1\n        },\n        {\n            \"petId\": 15,\n            \"petName\": \"Tigrincs\",\n            \"bred\": \"Mixed\",\n            \"petSpecies\": \"Cat\",\n            \"petPicture\": \"20241221144748.png\",\n            \"userId\": 28,\n            \"veterinarId\": 1\n        },\n        {\n            \"petId\": 40,\n            \"petName\": \"Buksi\",\n            \"bred\": \"Tiszta\",\n            \"petSpecies\": \"Dog  \",\n            \"petPicture\": \"20241223000554.png\",\n            \"userId\": 29,\n            \"veterinarId\": 1\n        },\n        {\n            \"petId\": 44,\n            \"petName\": \"Tigrincs\",\n            \"bred\": \"Mixed\",\n            \"petSpecies\": \"Dog \",\n            \"petPicture\": \"20241223140237.png\",\n            \"userId\": 29,\n            \"veterinarId\": 1\n        }\n    ]\n}"
+				},
+				{
+					"name": "Get_One_Pet",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost/Humanz_Pets/getPets/pet/9"
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Tue, 28 Jan 2025 15:40:01 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Apache/2.4.58 (Win64) OpenSSL/3.1.3 PHP/8.2.12"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.2.12"
+						},
+						{
+							"key": "X-Xdebug-Profile-Filename",
+							"value": "C:\\Windows\\Temp\\cachegrind.out.7768.gz"
+						},
+						{
+							"key": "Expires",
+							"value": "Thu, 19 Nov 1981 08:52:00 GMT"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-store, no-cache, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Content-Length",
+							"value": "188"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5, max=100"
+						},
+						{
+							"key": "Connection",
+							"value": "Keep-Alive"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=UTF-8"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"Data fetched successfully.\",\n    \"status\": 200,\n    \"data\": [\n        {\n            \"petId\": 9,\n            \"petName\": \"Buksi\",\n            \"bred\": \"Mixed\",\n            \"petSpecies\": \"Cat\",\n            \"petPicture\": \"20241214225926.png\",\n            \"userId\": 26,\n            \"veterinarId\": 1\n        }\n    ]\n}"
+				}
+			]
+		},
+		{
+			"name": "Add_Data",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": [
+				{
+					"name": "Add_Product",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \r\n    \"productName\":\"Bob\",\r\n    \"productPicture\":\"logInPic.jpg\",\r\n    \"description\":\"Postman Teszt\",\r\n    \"productCost\": \"1.99\"\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost/Humanz_Pets/getPets/product"
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Tue, 28 Jan 2025 15:59:14 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Apache/2.4.58 (Win64) OpenSSL/3.1.3 PHP/8.2.12"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.2.12"
+						},
+						{
+							"key": "X-Xdebug-Profile-Filename",
+							"value": "C:\\Windows\\Temp\\cachegrind.out.11884.gz"
+						},
+						{
+							"key": "Expires",
+							"value": "Thu, 19 Nov 1981 08:52:00 GMT"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-store, no-cache, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Content-Length",
+							"value": "168"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5, max=100"
+						},
+						{
+							"key": "Connection",
+							"value": "Keep-Alive"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=UTF-8"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"Product created successfully.\",\n    \"status\": 201,\n    \"data\": {\n        \"productName\": \"Bob\",\n        \"productPicture\": \"logInPic.jpg\",\n        \"description\": \"Postman Teszt\",\n        \"productCost\": \"1.99\"\n    }\n}"
+				},
+				{
+					"name": "Add_Review",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \r\n    \"reviewCode\":\"12345678\",\r\n    \"userId\":19,\r\n    \"veterinarianId\":3\r\n    \r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost/Humanz_Pets/getPets/review"
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Tue, 28 Jan 2025 16:18:21 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Apache/2.4.58 (Win64) OpenSSL/3.1.3 PHP/8.2.12"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.2.12"
+						},
+						{
+							"key": "X-Xdebug-Profile-Filename",
+							"value": "C:\\Windows\\Temp\\cachegrind.out.12732.gz"
+						},
+						{
+							"key": "Expires",
+							"value": "Thu, 19 Nov 1981 08:52:00 GMT"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-store, no-cache, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Content-Length",
+							"value": "189"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5, max=100"
+						},
+						{
+							"key": "Connection",
+							"value": "Keep-Alive"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=UTF-8"
+						}
+					],
+					"cookie": [],
+					"body": "{\"message\":\"Invalid input. All fields are required.\",\"status\":400}{\"message\":\"Review created successfully.\",\"status\":201,\"data\":{\"reviewCode\":\"12345678\",\"userId\":\"19\",\"veterinarianId\":\"3\"}}"
+				}
+			]
+		},
+		{
+			"name": "New Request",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": [
+				{
+					"name": "Update_Review",
+					"originalRequest": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"reviewCode\": \"33457626\",\r\n  \"review\": 5\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost/Humanz_Pets/getPets/review"
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Tue, 28 Jan 2025 16:32:25 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Apache/2.4.58 (Win64) OpenSSL/3.1.3 PHP/8.2.12"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.2.12"
+						},
+						{
+							"key": "X-Xdebug-Profile-Filename",
+							"value": "C:\\Windows\\Temp\\cachegrind.out.7876.gz"
+						},
+						{
+							"key": "Expires",
+							"value": "Thu, 19 Nov 1981 08:52:00 GMT"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-store, no-cache, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Content-Length",
+							"value": "101"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5, max=100"
+						},
+						{
+							"key": "Connection",
+							"value": "Keep-Alive"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=UTF-8"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"Review updated successfully.\",\n    \"status\": 200,\n    \"data\": {\n        \"review\": \"5\",\n        \"reviewCode\": \"33457626\"\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "New Request",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": [
+				{
+					"name": "Product_From_User_Deleted",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"url": "http://localhost/Humanz_Pets/getPets/user_product_relation/11"
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Tue, 28 Jan 2025 16:40:41 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Apache/2.4.58 (Win64) OpenSSL/3.1.3 PHP/8.2.12"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.2.12"
+						},
+						{
+							"key": "X-Xdebug-Profile-Filename",
+							"value": "C:\\Windows\\Temp\\cachegrind.out.3024.gz"
+						},
+						{
+							"key": "Expires",
+							"value": "Thu, 19 Nov 1981 08:52:00 GMT"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-store, no-cache, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Content-Length",
+							"value": "56"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5, max=100"
+						},
+						{
+							"key": "Connection",
+							"value": "Keep-Alive"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=UTF-8"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"Product deleted successfully.\",\n    \"status\": 200\n}"
+				}
+			]
+		}
+	]
+}
