@@ -14,7 +14,7 @@ if($_SESSION['privilage'] != 'Veterinarian'){
 $veterinarianId=$_SESSION['userId'];
 $pdo = $autoload->connect($GLOBALS['dsn'], $_ENV['DB_USER'], $_ENV['DB_PASSWORD'], $GLOBALS['pdoOptions']);
 
-$petQuery = "SELECT u.userMail,u.userId,p.petId, p.petName, p.bred, p.petSpecies, p.petPicture, r.reservationDay, r.reservationTime, r.period,r.reservationId
+$petQuery = "SELECT u.userMail,u.userId,u.usedLanguage,p.petId, p.petName, p.bred, p.petSpecies, p.petPicture, r.reservationDay, r.reservationTime, r.period,r.reservationId
 FROM pet p
 LEFT JOIN reservation r ON p.petId = r.petId INNER JOIN user u ON p.userId = u.userId
 WHERE r.veterinarianId=:veterinarianId AND r.animalChecked=0
@@ -123,25 +123,65 @@ $reservedPets = $reservedPetStmt->fetchAll(PDO::FETCH_ASSOC);
 </head>
 <body>
 <h2>Reserve Appointment for you</h2>
+<!-- Show popup message if session message is set -->
+<?php if (isset($_SESSION['message'])): ?>
+    <div class="popup-message" id="popupMessage">
+        <?php echo $_SESSION['message']; ?>
+    </div>
+    <?php unset($_SESSION['message']); // Clear message after it's displayed ?>
+<?php endif; ?>
+
+<script>
+    // Show the popup message and hide it after 5 seconds
+    window.onload = function () {
+        var popupMessage = document.getElementById('popupMessage');
+        if (popupMessage) {
+            popupMessage.style.display = 'block';  // Show the popup
+
+            // Hide the popup after 5 seconds
+            setTimeout(function () {
+                popupMessage.style.display = 'none';
+            }, 5000);
+        }
+    };
+</script>
 <div class="profile-section">
     <?php
     if (count($reservedPets) > 0) {
-        foreach ($reservedPets as $reservedPet) { ?>
+        foreach ($reservedPets as $reservedPet) {
+            if($reservedPet['usedLanguage'] == 'hu')
+                $language = LANGUAGE_hu;
+            if($reservedPet['usedLanguage'] == 'sr')
+                $language = LANGUAGE_sr;
+            if($reservedPet['usedLanguage'] == 'en')
+                $language = LANGUAGE_en;
+            ?>
 
             <div class="pet-card">
                 <label for="pet-<?= htmlspecialchars($reservedPet['petId']) ?>">
                     <img alt="Pet Picture" src="pictures/<?= htmlspecialchars($reservedPet['petPicture']) ?>">
                     <p class="pet-details"><?= htmlspecialchars($reservedPet['userMail']) ?></p>
                     <p class="pet-details"><?= htmlspecialchars($reservedPet['petName']) ?></p>
+                    <p class="pet-details"><?= htmlspecialchars($language) ?></p>
                     <p><?= htmlspecialchars($reservedPet['reservationDay']) ?></p>
                     <p><?= htmlspecialchars($reservedPet['reservationTime']) . "-" . htmlspecialchars($reservedPet['period']) ?></p>
+                    <form method="post" action="functions.php">
+                        <label for="mailText">Reason for deleteing reservation:</label>
+                        <input type="hidden" value="<?= $reservedPet['reservationId'] ?>" name="reservationId">
+                        <input type="hidden" value="deleteReservationByVet" name="action">
+                        <input type="hidden" name="cancelEmail" value="<?= htmlspecialchars($reservedPet['userMail']) ?>">
+                        <input type="hidden" value="<?= htmlspecialchars($reservedPet['usedLanguage']) ?>" name="ownerLanguage">
+                        <textarea  name="mailText"></textarea>
+                        <input type="submit" value="Delete" class="btn btn-danger btn-sm" onclick="confirmDeletingApointment(event)">
+                    </form>
                     <form method="post" action="functions.php">
                         <input type="hidden" value="<?= htmlspecialchars($reservedPet['reservationId']) ?>" name="reservationId">
                         <input type="hidden" value="<?= htmlspecialchars($reservedPet['userMail']) ?>" name="ownerMail">
                         <input type="hidden" value="<?= htmlspecialchars($reservedPet['userId']) ?>" name="ownerId">
-                        <input type="hidden" value="animalChecked" name="action">
-                        <input type="submit" value="Check" onclick="confirmCheck(event)" />
+                        <input type="hidden" value="deleteReservation" name="action">
+                        <input type="submit" value="Check" class="btn btn-primary btn-sm" onclick="confirmCheck(event)" />
                     </form>
+
                 </label>
             </div>
 

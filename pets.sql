@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2025. Jan 28. 00:00
+-- Létrehozás ideje: 2025. Jan 28. 19:35
 -- Kiszolgáló verziója: 10.4.32-MariaDB
 -- PHP verzió: 8.2.12
 
@@ -204,7 +204,8 @@ INSERT INTO `errorlog` (`errorLogId`, `errorType`, `errorMail`, `errorText`, `er
 (162, 'Log in', 'hupkodominik143@gmail.com', 'The password was not valid!', '2025-01-27 16:21:08.000000'),
 (163, 'Log in', 'dominikhupko143@gmail.com', 'The E-mail is not in our database', '2025-01-27 21:59:22.000000'),
 (164, 'Log in', 'hupkodominik143@gmail.com', 'The password was not valid!', '2025-01-27 22:00:36.000000'),
-(165, 'Log in', 'hupkodominik143@gmail.com', 'The password was not valid!', '2025-01-27 22:00:47.000000');
+(165, 'Log in', 'hupkodominik143@gmail.com', 'The password was not valid!', '2025-01-27 22:00:47.000000'),
+(166, 'Log in', 'robertvarro12@gmail.com', 'The password was not valid!', '2025-01-28 17:48:04.000000');
 
 -- --------------------------------------------------------
 
@@ -297,8 +298,7 @@ CREATE TABLE `product` (
 --
 
 INSERT INTO `product` (`productId`, `productName`, `productPicture`, `description`, `productCost`, `productRelease`) VALUES
-(3, 'Vts', '20250127222030.jpg', 'Najbolji', 23.99, '2025-01-27 22:20:30'),
-(11, 'Asd', '20250127233624.png', 'Da vidiomo', 23.99, '2025-01-27 23:36:24');
+(11, 'Asd', '20250128161408.png', 'Da vidiomo', 23.99, '2025-01-28 16:14:08');
 
 -- --------------------------------------------------------
 
@@ -319,7 +319,7 @@ CREATE TABLE `qr_code` (
 --
 
 INSERT INTO `qr_code` (`qr_code_id`, `qrCodeName`, `userId`, `generated_at`, `updated_at`) VALUES
-(1, 'QRcodes/qrcode_67980f81a25c5.png', 19, '2024-11-11 19:47:18', '2025-01-27 22:58:09'),
+(1, 'QRcodes/qrcode_67992231b109e.png', 19, '2024-11-11 19:47:18', '2025-01-28 18:30:10'),
 (2, 'QRcodes/qrcode_675da53946388.png', 26, '2024-12-14 16:33:13', '2024-12-14 15:33:13'),
 (3, 'QRcodes/qrcode_675e00a3bfff4.png', 27, '2024-12-14 23:03:15', '2024-12-14 22:03:15'),
 (4, 'QRcodes/qrcode_675ef571ca9a1.png', 25, '2024-12-15 16:27:46', '2024-12-15 15:27:46'),
@@ -353,7 +353,8 @@ INSERT INTO `reservation` (`reservationId`, `reservationDay`, `reservationTime`,
 (9, '2025-01-14', '18:00:00', '19:00:00', 0, 3, 2),
 (20, '2025-01-27', '13:00:00', '14:00:00', 1, 3, 1),
 (21, '2025-01-27', '14:00:00', '15:00:00', 1, 3, 2),
-(22, '2025-01-30', '10:00:00', '11:00:00', 0, 3, 44);
+(22, '2025-01-30', '10:00:00', '11:00:00', 0, 3, 44),
+(39, '2025-02-01', '10:00:00', '11:00:00', 0, 3, 2);
 
 -- --------------------------------------------------------
 
@@ -416,8 +417,8 @@ CREATE TABLE `user` (
 INSERT INTO `user` (`userId`, `firstName`, `lastName`, `phoneNumber`, `userMail`, `userPassword`, `profilePic`, `privilage`, `registrationTime`, `verification_code`, `verify`, `verification_time`, `banned`, `banned_time`, `passwordValidation`, `passwordValidationTime`, `usedLanguage`) VALUES
 (6, 'Nikoletta', 'Varro', '0', 'nikolettavarro12@gmail.com', '$2y$10$ZJtAXGLi1y8Y7VlLzE4Ru.nH.SbV5pbDRtoQTlOv88WgemWiSIrB2', 'logInPic.png', 'Guest', '0000-00-00 00:00:00', 401081, 0, '2024-04-29 22:00:00', 0, '0000-00-00 00:00:00', 0, '2024-04-23 09:54:10', 'en'),
 (7, 'Nikoletta', 'Varro', '0', 'nikolettavarro@gmail.com', '$2y$10$GZ9eslD9.lWIwuBi0by.sunJYqe1s8Jn8K2eX4CefmMN/LOnyRNua', 'logInPic.png', 'Guest', '0000-00-00 00:00:00', 102107, 0, '2024-04-29 22:00:00', 0, '0000-00-00 00:00:00', 0, '2024-04-23 09:54:10', 'en'),
-(19, 'Robert', 'Varro', '0649420637', 'robertvarro12@gmail.com', '$2y$10$sZKeBUr3S43dBnkiLkzP..1SJCekw6MqWlEpwwqj1puauC2HzEQ0O', '20250104204023.png', 'Admin', '0000-00-00 00:00:00', 229527, 1, '2024-04-29 22:00:00', 0, '0000-00-00 00:00:00', 167710, '2025-01-03 23:15:50', 'sr'),
-(25, 'Dominik', 'Hupko', '628277140', 'hupkodominik143@gmail.com', '$2y$10$B1cB9B1pWGshgJPbFbUBleB3yicBi3cILKWBT2DAkDbz5kDoLhtuC', 'logInPic.png', 'Admin', '2024-06-03 12:23:54', 2047970, 1, '2024-06-03 12:33:54', 0, '0000-00-00 00:00:00', 173548, '2025-01-27 15:31:17', 'hu'),
+(19, 'Robert', 'Varro', '0649420637', 'robertvarro12@gmail.com', '$2y$10$sZKeBUr3S43dBnkiLkzP..1SJCekw6MqWlEpwwqj1puauC2HzEQ0O', '20250104204023.png', 'Admin', '0000-00-00 00:00:00', 229527, 1, '2024-04-29 22:00:00', 0, '0000-00-00 00:00:00', 167710, '2025-01-03 23:15:50', 'hu'),
+(25, 'Dominik', 'Hupko', '628277140', 'hupkodominik143@gmail.com', '$2y$10$B1cB9B1pWGshgJPbFbUBleB3yicBi3cILKWBT2DAkDbz5kDoLhtuC', 'logInPic.png', 'Admin', '2024-06-03 12:23:54', 2047970, 1, '2024-06-03 12:33:54', 1, '0000-00-00 00:00:00', 173548, '2025-01-27 15:31:17', 'hu'),
 (26, 'Robert', 'Varro', '0649420637', 'varrorobert03@gmail.coml', '$2y$10$T5p19yMDoZ0EKiRXocAjJuNmNFK8INcDDWFkyC97i5rB6rODkLO82', 'logInPic.png', 'Guest', '2024-12-14 15:32:29', 1740492, 1, '2024-12-14 15:42:29', 0, '2024-12-14 15:32:29', NULL, '2024-12-14 15:32:29', 'en'),
 (27, 'Robert', 'Varro', '0649420637', 'varro7robert03@gmail.com', '$2y$10$7.Vqm7RZ7EaQISuO6xdo3OcNPbEAERoUAJF8hsBBxD8mCAvaH5Bpi', 'logInPic.png', 'Guest', '2024-12-14 22:01:34', 3299090, 1, '2024-12-14 22:11:34', 0, '2024-12-14 22:01:34', NULL, '2024-12-14 22:01:34', 'en'),
 (28, 'Robert', 'Varro', '0649420637', 'varkrorobert03@gmail.com', '$2y$10$WuiMPKYoHYmik23BpzphiuOlUZIL.pVOsGDkuUl.zzW.csVbAaaCG', 'logInPic.png', 'Guest', '2024-12-21 13:46:39', 1176453, 1, '2024-12-21 13:56:39', 0, '2024-12-21 13:46:39', NULL, '2024-12-21 13:46:39', 'en'),
@@ -444,7 +445,7 @@ CREATE TABLE `user_product_relation` (
 --
 
 INSERT INTO `user_product_relation` (`userProductRelationId`, `userId`, `productName`, `productPicture`, `productId`, `sum`, `price`) VALUES
-(5, 28, '', '', 3, 2, 11.00),
+(5, 28, '', '', NULL, 2, 11.00),
 (9, 25, '', '', NULL, 1, 7.99),
 (10, 25, '', '', NULL, 1, 6.99),
 (11, 25, '', '', NULL, 1, 7.99),
@@ -480,6 +481,8 @@ CREATE TABLE `veterinarian` (
   `verification_code` int(50) DEFAULT NULL,
   `verify` int(11) NOT NULL,
   `verification_time` timestamp NOT NULL DEFAULT current_timestamp(),
+  `banned` tinyint(1) NOT NULL,
+  `banned_time` timestamp NOT NULL DEFAULT current_timestamp(),
   `passwordValidation` int(10) DEFAULT NULL,
   `passwordValidationTime` timestamp NOT NULL DEFAULT current_timestamp(),
   `workAddressId` int(11) NOT NULL,
@@ -490,9 +493,9 @@ CREATE TABLE `veterinarian` (
 -- A tábla adatainak kiíratása `veterinarian`
 --
 
-INSERT INTO `veterinarian` (`veterinarianId`, `firstName`, `lastName`, `phoneNumber`, `veterinarianMail`, `veterinarianPassword`, `profilePic`, `registrationTime`, `verification_code`, `verify`, `verification_time`, `passwordValidation`, `passwordValidationTime`, `workAddressId`, `usedLanguage`) VALUES
-(1, 'Robert', 'Varro', '0649420637', 'varrorobejrt03@gmail.com', '$2y$10$kDYqhdUxCiKKb86iW8vGIe6yi.8fmADky4QYmpcOXlV3Fh8hN1jOq', 'logInPic.png', '2024-12-14 13:02:10', NULL, 1, '2024-12-14 13:02:10', 1, '2024-12-14 13:02:10', 1, 'en'),
-(3, 'Robert', 'Varro', '0649420637', 'varrorobert03@gmail.com', '$2y$10$u1KvS5Nh7JQBo89d7jM9yeFVAS6rrfptOrHum0v/KLNYPRfs60W/2', '20250124221618.jpg', '2025-01-04 18:44:36', 3296064, 1, '2025-01-04 18:54:36', NULL, '2025-01-04 18:44:36', 0, 'sr');
+INSERT INTO `veterinarian` (`veterinarianId`, `firstName`, `lastName`, `phoneNumber`, `veterinarianMail`, `veterinarianPassword`, `profilePic`, `registrationTime`, `verification_code`, `verify`, `verification_time`, `banned`, `banned_time`, `passwordValidation`, `passwordValidationTime`, `workAddressId`, `usedLanguage`) VALUES
+(1, 'Robert', 'Varro', '0649420637', 'varrorobejrt03@gmail.com', '$2y$10$kDYqhdUxCiKKb86iW8vGIe6yi.8fmADky4QYmpcOXlV3Fh8hN1jOq', 'logInPic.png', '2024-12-14 13:02:10', NULL, 1, '2024-12-14 13:02:10', 0, '2025-01-28 16:53:53', 1, '2024-12-14 13:02:10', 1, 'en'),
+(3, 'Robert', 'Varro', '0649420637', 'varrorobert03@gmail.com', '$2y$10$u1KvS5Nh7JQBo89d7jM9yeFVAS6rrfptOrHum0v/KLNYPRfs60W/2', '20250124221618.jpg', '2025-01-04 18:44:36', 3296064, 1, '2025-01-04 18:54:36', 0, '2025-01-28 16:53:53', NULL, '2025-01-04 18:44:36', 0, 'sr');
 
 -- --------------------------------------------------------
 
@@ -631,7 +634,7 @@ ALTER TABLE `work_address`
 -- AUTO_INCREMENT a táblához `errorlog`
 --
 ALTER TABLE `errorlog`
-  MODIFY `errorLogId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=166;
+  MODIFY `errorLogId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=167;
 
 --
 -- AUTO_INCREMENT a táblához `log`
@@ -661,7 +664,7 @@ ALTER TABLE `qr_code`
 -- AUTO_INCREMENT a táblához `reservation`
 --
 ALTER TABLE `reservation`
-  MODIFY `reservationId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `reservationId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
 -- AUTO_INCREMENT a táblához `review`

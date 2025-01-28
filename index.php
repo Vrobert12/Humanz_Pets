@@ -39,18 +39,6 @@ $autoload->checkAutoLogin();
 <?php endif; ?>
 
 <script>
-
-</script>
-
-<!-- Show popup message if session message is set -->
-<?php if (isset($_SESSION['message'])): ?>
-    <div class="popup-message" id="popupMessage">
-        <?php echo $_SESSION['message']; ?>
-    </div>
-    <?php unset($_SESSION['message']); // Clear message after it's displayed ?>
-<?php endif; ?>
-
-<script>
     // Show the popup message and hide it after 5 seconds
     window.onload = function () {
         var popupMessage = document.getElementById('popupMessage');
@@ -95,10 +83,14 @@ https://getbootstrap.com/docs/5.3/components/navbar/
                     else echo ' <li class="nav-item">
                     <a class="nav-link" href="booked_users.php"><i class="bi bi-people-fill fs-3"></i></a>
                 </li>';
-                    if($_SESSION['privilage'] == "Admin")
+                    if($_SESSION['privilage'] == "Admin"){
                         echo ' <li class="nav-item">
                     <a class="nav-link" href="veterinarianRates.php"><i class="bi bi-star-fill fs-3"></i></a>
                 </li>';
+                      echo ' <li class="nav-item">
+                    <a class="nav-link" href="banSite.php"><i class="bi bi-ban fs-3"></i></a>
+                </li>';
+                    }
                 }
                     ?>
             </ul>

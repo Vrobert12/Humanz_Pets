@@ -48,6 +48,19 @@ try {
         unset($_SESSION['reviewLink']);
         header('Location:booked_users.php');
     }
+    if(isset($_SESSION['mailText']) && isset($_SESSION['cancelEmail'])){
+        $mail->addAddress($_SESSION['cancelEmail'],$_SESSION['cancelEmail']);
+        $mail->addReplyTo('info@example.com', 'Information');
+        $mail->addCC('cc@example.com');
+        $mail->addBCC('bcc@example.com');
+        $mail->Subject = $_SESSION['cancelSubject'];
+        $mail->Body = $_SESSION['mailText'];
+        $mail->AltBody = $_SESSION['mailText'];
+        unset($_SESSION['mailText']);
+        unset($_SESSION['cancelMail']);
+        unset($_SESSION['cancelSubject']);
+        header('Location:booked_users.php');
+    }
     if (isset($_SESSION['email']) && !empty($_SESSION['email']) && isset($_SESSION['verification_code']) && !isset($_SESSION["workerEmail"])) {
 
         $mail->addAddress($_SESSION['email'], $_SESSION['email']);

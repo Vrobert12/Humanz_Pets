@@ -111,9 +111,9 @@ if (isset($_SESSION['email']) && isset($_SESSION['name']) && isset($_SESSION['pr
 
     if (isset($_POST['searchAction']) && $_POST['searchAction'] == 'search') {
         $veterinarianLike = "%" . $_POST['searchName'] . "%";
-        users("SELECT * FROM veterinarian WHERE verify=1 and area LIKE ?", [$veterinarianLike]);
+        users("SELECT * FROM veterinarian WHERE verify=1 and banned!=1 and area LIKE ?", [$veterinarianLike]);
     } else {
-        users("SELECT * FROM veterinarian WHERE verify=1");
+        users("SELECT * FROM veterinarian WHERE verify=1 and banned!=1");
     }
 } else {
     // Redirect to index.php if session variables are not set

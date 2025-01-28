@@ -7,7 +7,7 @@ include "lang_$lang.php";
 $autoload->checkAutoLogin();
 
 $pdo = $autoload->connect($GLOBALS['dsn'], $_ENV['DB_USER'], $_ENV['DB_PASSWORD'], $GLOBALS['pdoOptions']);
-if ($_SESSION['privilage'] == "Veterinarian") {
+if ($_SESSION['privilage'] != "Admin") {
     header("Location:index.php");
     exit();
 }
@@ -110,8 +110,8 @@ if (isset($_SESSION['email']) && isset($_SESSION['name']) && isset($_SESSION['pr
 
     if (isset($_POST['searchAction']) && $_POST['searchAction'] == 'search') {
         $veterinarianLike = "%" . $_POST['searchName'] . "%";
-        users("SELECT v.veterinarianId,v.firstName,v.lastName,v.veterinarianMail,v.profilePic,v.phoneNumber,
-       sum(r.review)/count(r.review) as averageReview FROM veterinarian v inner join 
+        users("SELECT v.veterinarianId,v.firstName,v.lastName,v.veterinarianMail,v.profilePic,v.phoneNumber,v.banned,
+        COALESCE(AVG(r.review), 0) AS totalReviewSum FROM veterinarian v inner join 
            review r ON v.veterinarianId=r.veterinarianId WHERE verify=1 and area LIKE ?", [$veterinarianLike]);
     } else {
         users("SELECT 
@@ -121,6 +121,7 @@ if (isset($_SESSION['email']) && isset($_SESSION['name']) && isset($_SESSION['pr
     v.veterinarianMail,
     v.profilePic,
     v.phoneNumber,
+    v.banned,
     COALESCE(AVG(r.review), 0) AS totalReviewSum
 FROM veterinarian v
 LEFT JOIN review r ON v.veterinarianId = r.veterinarianId AND v.verify = 1
@@ -158,6 +159,7 @@ function users($command, $params = [])
             echo '<div class="container">
                     <div class="row justify-content-around">';
             foreach ($results as $row) {
+                $isBanned = $row['banned'] == 1;
                 echo '<div class="col-xl-4 p-5 border bg-dark" style="margin: auto; margin-top:100px; margin-bottom: 50px; width: fit-content">';
                 echo '<div class="col-xl-4"><img class="profilePic" 
                 src="pictures/' . htmlspecialchars($row['profilePic']) . '" width="250" height="250" alt="Profile Picture"></div>';
@@ -165,6 +167,8 @@ function users($command, $params = [])
                 echo '<label>Name: ' . htmlspecialchars($row['firstName'] . " " . $row['lastName']) . '</label><br>';
                 echo '<label>Phone: ' . htmlspecialchars($row['phoneNumber']) . '</label><br>';
                 echo '<label>Email: ' . htmlspecialchars($row['veterinarianMail']) . '</label><br>';
+                echo $isBanned ? '<label style="color: red;">Banned</label><br>' : '<label style="color: green;">Active</label><br>';
+
                 $_SESSION['previousPage']="veterinarianRates.php";
                 echo '<label><a class="btn btn-primary" href="ratings.php">Review: <b>5 / ' . htmlspecialchars((float)$row['totalReviewSum']) . '</b></a></label><br><br>';
                 echo '<a class="btn btn-primary" href="book_apointment.php?email=' . $_SESSION['email'] . '&veterinarian=' . htmlspecialchars($row['veterinarianId']) . '">Reserve</a>&nbsp;&nbsp;&nbsp;';

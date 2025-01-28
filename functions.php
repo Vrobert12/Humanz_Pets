@@ -76,10 +76,6 @@ class Functions
                 case 'AddCoupon':
                     $this->addCoupon();
                     break;
-                case 'BanPerson':
-                case 'UnBanPerson':
-                    $this->ban();
-                    break;
                 case 'AddTable':
                     $this->addTable();
                     break;
@@ -122,6 +118,15 @@ class Functions
                 case "deleteFromProduct":
                     $this->deleteFromProduct();
                     break;
+                case 'ban':
+                    $this->ban();
+                    break;
+                case 'vetBan':
+                    $this->vetBan();
+                    break;
+                case 'deleteReservationByVet':
+                    $this->deleteReservationByVet();
+                    break;
                 default:
                     $_SESSION['message'] = "Something went wrong in switch";
                     header('Location:index.php');
@@ -133,6 +138,107 @@ class Functions
             }
         }
     }
+    public function deleteReservationByVet()
+    {
+        if(!empty($_POST['mailText'])) {
+            $sql = 'DELETE FROM reservation
+WHERE reservationId = :reservationId
+  AND (
+      reservationDay > CURDATE() 
+      OR (reservationDay = CURDATE() AND reservationTime > ADDTIME(NOW(), "01:00:00"))
+  );';
+            $stmt = $this->connection->prepare($sql);
+            $stmt->bindValue(':reservationId', $_POST['reservationId']);
+            $stmt->execute();
+            $result = $stmt->rowCount();
+            if ($result) {
+                $_SESSION['message'] = "Reservation successfully deleted.";
+                $_SESSION['mailText'] = $_POST['mailText'];
+                $_SESSION['cancelEmail']= $_POST['cancelEmail'];
+
+                if( $_POST['ownerLanguage']=="hu")
+                $_SESSION['cancelSubject']= "Vizsgálat lemondva";
+
+                if( $_POST['ownerLanguage']=="sr")
+                    $_SESSION['cancelSubject']= "Pregled Odkazano";
+
+                if( $_POST['ownerLanguage']=="en")
+                    $_SESSION['cancelSubject']= "Reservation Cancelled";
+
+                header('Location:mail.php');
+                exit();
+            } else
+                $_SESSION['message'] = "Failed to delete the reservation. Please try again.";
+            header('Location:booked_users.php');
+            exit();
+        }
+        else
+            $_SESSION['message'] = "Fill the message out.";
+        header('Location:booked_users.php');
+        exit();
+    }
+
+    public function vetBan()
+    {
+        if (isset($_POST['ban'])) {
+            try {
+                $time = time();
+                $currentTime = date("Y-m-d H:i:s", $time);
+                if ($_POST['ban'] == "yes") {
+                    $_SESSION['message'] = "The person is unbanned:" .$_POST['veterinarianId'];
+                    $sql = "UPDATE veterinarian SET banned=0 WHERE veterinarianId=:veterinarianId";
+
+                } else {
+                    $_SESSION['message'] = "The person is banned:" .$_POST['veterinarianId'];
+                    $sql = "UPDATE veterinarian SET banned=1 WHERE veterinarianId=:veterinarianId";
+
+                }
+                $stmt = $this->connection->prepare($sql);
+                $stmt->bindParam(':veterinarianId', $_POST['veterinarianId']);
+                $stmt->execute();
+
+                header('Location:' . $_SESSION['previousPage']);
+                $_SESSION['previousPage'] = "";
+                exit();
+            } catch (Exception $e) {
+                $_SESSION['message'] = "Something went wrong";
+                header('Location:' . $_SESSION['previousPage']);
+                $_SESSION['previousPage'] = "";
+                exit();
+            }
+        }
+    }
+    public function ban()
+    {
+        if (isset($_POST['ban'])) {
+            try {
+                $time = time();
+                $currentTime = date("Y-m-d H:i:s", $time);
+                if ($_POST['ban'] == "yes") {
+                    $_SESSION['message'] = "The person is unbanned: ".$_POST['userId'];
+                    $sql = "UPDATE user SET banned=0 WHERE userId=:userId";
+
+                } else {
+                    $_SESSION['message'] = "The person is banned: ".$_POST['userId'];
+                    $sql = "UPDATE user SET banned=1 WHERE userId=:userId";
+
+                }
+                $stmt = $this->connection->prepare($sql);
+                $stmt->bindParam(':userId', $_POST['userId']);
+                $stmt->execute();
+
+                header('Location:' . $_SESSION['previousPage']);
+                $_SESSION['previousPage'] = "";
+                exit();
+            } catch (Exception $e) {
+                $_SESSION['message'] = "Something went wrong";
+                header('Location:' . $_SESSION['previousPage']);
+                $_SESSION['previousPage'] = "";
+                exit();
+            }
+        }
+    }
+
     public function deleteFromProduct()
     {
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -503,7 +609,7 @@ VALUES (:reviewCode,:userId,:veterinarianId)";
 WHERE reservationId = :reservationId
   AND (
       reservationDay > CURDATE() 
-      OR (reservationDay = CURDATE() AND reservationTime > ADDTIME(NOW(), "03:00:00"))
+      OR (reservationDay = CURDATE() AND reservationTime > ADDTIME(NOW(), "01:00:00"))
   );
 
 ';
@@ -1407,7 +1513,7 @@ WHERE u.userId = :userId";
             }
 
             // Otherwise, check the `veterinarian` table
-            $sql = "SELECT 'vet' AS userType, veterinarianMail AS mail, veterinarianPassword AS password,
+            $sql = "SELECT 'vet' AS userType, veterinarianMail AS mail, veterinarianPassword AS password, banned AS banned,
          firstName, lastName, profilePic, veterinarianId, phoneNumber, usedLanguage
                 FROM veterinarian
                 WHERE veterinarianMail = :email";
@@ -1493,8 +1599,28 @@ WHERE u.userId = :userId";
 
     public function checkAutoLogin(string $currentPage = null)
     {
+
         if (!isset($_GET['action'])) {
             if (isset($_COOKIE['last_activity']) && isset($_SESSION['email'])) {
+                $result = $this->fetchUserByEmail($_SESSION['email']);
+                if($result['banned']){
+                    $_SESSION = [];
+                    session_unset();
+                    session_destroy();
+                    if (isset($_SERVER['HTTP_COOKIE'])) {
+                        $cookies = explode(';', $_SERVER['HTTP_COOKIE']);
+                        foreach ($cookies as $cookie) {
+                            $parts = explode('=', $cookie);
+                            $name = trim($parts[0]);
+                            setcookie($name, '', time() - 3600, '/');
+                            unset($_COOKIE[$name]);
+                        }
+                    }
+
+                    // Redirect to login page
+                    header('Location: index.php');
+                    exit();
+                }
                 if (isset($_SESSION['backPic']))
                     $backPage = $_SESSION['backPic'];
                 $mail = $_SESSION['email'];
@@ -1543,6 +1669,25 @@ WHERE u.userId = :userId";
                 }
 
             } elseif (isset($_COOKIE['email'])) {
+                $result = $this->fetchUserByEmail($_COOKIE['email']);
+                if($result['banned']){
+                    $_SESSION = [];
+                    session_unset();
+                    session_destroy();
+                    if (isset($_SERVER['HTTP_COOKIE'])) {
+                        $cookies = explode(';', $_SERVER['HTTP_COOKIE']);
+                        foreach ($cookies as $cookie) {
+                            $parts = explode('=', $cookie);
+                            $name = trim($parts[0]);
+                            setcookie($name, '', time() - 3600, '/');
+                            unset($_COOKIE[$name]);
+                        }
+                    }
+
+                    // Redirect to login page
+                    header('Location: index.php');
+                    exit();
+                }
                 $_SESSION['email'] = $_COOKIE['email'];
                 $_SESSION['name'] = $_COOKIE['name'];
                 $_SESSION['profilePic'] = $_COOKIE['profilePic'];

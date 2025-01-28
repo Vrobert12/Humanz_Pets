@@ -79,6 +79,10 @@ $reservedPets = $reservedPetStmt->fetchAll(PDO::FETCH_ASSOC);
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
             crossorigin="anonymous"></script>
+    <script>
+        const lang = '<?php echo $lang; ?>';
+    </script>
+    <script src="sureCheck.js"></script>
     <style>
         .pet-card {
             border: 1px solid #ddd;
@@ -92,7 +96,7 @@ $reservedPets = $reservedPetStmt->fetchAll(PDO::FETCH_ASSOC);
         .pet-card img {
             width: 100%;
             max-width: 150px;
-            height: auto;
+            height: 150px;
             border-radius: 8px;
             margin-bottom: 0.5rem;
         }
@@ -332,7 +336,7 @@ $reservedPets = $reservedPetStmt->fetchAll(PDO::FETCH_ASSOC);
                     <input type="hidden" value="<?= $reservedPet['reservationId'] ?>" name="reservationId">
                     <input type="hidden" value="deleteReservation" name="action">
                     <input type="hidden" value="<?= $_GET['veterinarian'] ?>" name="veterinarian">
-                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                    <input type="submit" value="Delete" class="btn btn-danger btn-sm" onclick="confirmDeletingApointment(event)">
                 </form>
             </label>
         </div>
