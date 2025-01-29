@@ -122,7 +122,10 @@ $reservedPets = $reservedPetStmt->fetchAll(PDO::FETCH_ASSOC);
     </style>
 </head>
 <body>
-<h2>Reserve Appointment for you</h2>
+
+
+<div class="profile-section"><a class="btn btn-secondary mb-4" href="index.php"><?php echo BACK ?></a>
+    <h2>Reserved Appointment for you</h2> </div>
 <!-- Show popup message if session message is set -->
 <?php if (isset($_SESSION['message'])): ?>
     <div class="popup-message" id="popupMessage">
@@ -155,9 +158,13 @@ $reservedPets = $reservedPetStmt->fetchAll(PDO::FETCH_ASSOC);
                 $language = LANGUAGE_sr;
             if($reservedPet['usedLanguage'] == 'en')
                 $language = LANGUAGE_en;
+            $_SESSION['backPic']='booked_users.php';
             ?>
 
             <div class="pet-card">
+                <a class="btn btn-success btn-sm"
+                   href="petsInfo.php?petId=<?= htmlspecialchars($reservedPet['petId']) ?>">More Details</a><br>
+
                 <label for="pet-<?= htmlspecialchars($reservedPet['petId']) ?>">
                     <img alt="Pet Picture" src="pictures/<?= htmlspecialchars($reservedPet['petPicture']) ?>">
                     <p class="pet-details"><?= htmlspecialchars($reservedPet['userMail']) ?></p>
