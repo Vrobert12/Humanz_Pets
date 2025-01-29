@@ -24,7 +24,7 @@ try {
     $mail->Password = $_ENV['SMTP_PASSWORD'];
     $mail->SMTPSecure = 'ssl';
     $mail->Port = 465;
-    $mail->setFrom('robertvarro12@gmail.com', 'R&D Veterinary');
+
     $mail->CharSet = 'UTF-8';
     if(isset($_SESSION['ownerMail']))
     {
@@ -33,11 +33,9 @@ try {
         $autoload=new Functions();
         $lang=$_SESSION['usedLanguage'];
         include "lang_$lang.php";
-
+        $mail->setFrom($_SESSION["email"], 'R&D Veterinary');
         $mail->addAddress(  $_SESSION['ownerMail'] ,$_SESSION['ownerMail'] );
-        $mail->addReplyTo('info@example.com', 'Information');
-        $mail->addCC('cc@example.com');
-        $mail->addBCC('bcc@example.com');
+        $mail->addReplyTo($_SESSION["email"], 'Reply');
         $mail->Subject = "R&D";
         $mail->AltBody = REVIEV_MESSAGE . " Visit the review page here: " . $_SESSION['reviewLink'];
         $mail->Body = REVIEV_MESSAGE . " <a href='" . $_SESSION['reviewLink'] . "'>here</a>";
@@ -49,10 +47,9 @@ try {
         header('Location:booked_users.php');
     }
     if(isset($_SESSION['mailText']) && isset($_SESSION['cancelEmail'])){
+        $mail->setFrom($_SESSION["email"], 'R&D Veterinary');
         $mail->addAddress($_SESSION['cancelEmail'],$_SESSION['cancelEmail']);
-        $mail->addReplyTo('info@example.com', 'Information');
-        $mail->addCC('cc@example.com');
-        $mail->addBCC('bcc@example.com');
+        $mail->addReplyTo($_SESSION["email"], 'Reply');
         $mail->Subject = $_SESSION['cancelSubject'];
         $mail->Body = $_SESSION['mailText'];
         $mail->AltBody = $_SESSION['mailText'];
@@ -62,11 +59,9 @@ try {
         header('Location:booked_users.php');
     }
     if (isset($_SESSION['email']) && !empty($_SESSION['email']) && isset($_SESSION['verification_code']) && !isset($_SESSION["workerEmail"])) {
-
+        $mail->setFrom($_SESSION["email"], 'R&D Veterinary');
         $mail->addAddress($_SESSION['email'], $_SESSION['email']);
-        $mail->addReplyTo('info@example.com', 'Information');
-        $mail->addCC('cc@example.com');
-        $mail->addBCC('bcc@example.com');
+        $mail->addReplyTo($_SESSION["email"], 'Reply');
         $mail->Subject = "R&D";
         $mail->Body = "<h2>Validate</h2> Your code:<br><h3>" . $_SESSION['verification_code'] . "</h3>";
         $mail->AltBody = "Your code:<br><h3>" . $_SESSION['verification_code'] . "</h3>";
@@ -77,10 +72,9 @@ try {
 
 
     if (isset($_SESSION['mailReset']) && isset($_SESSION['resetCode'])) {
+        $mail->setFrom($_SESSION["email"], 'R&D Veterinary');
         $mail->addAddress($_SESSION['mailReset'], $_SESSION['mailReset']);
-        $mail->addReplyTo('info@example.com', 'Information');
-        $mail->addCC('cc@example.com');
-        $mail->addBCC('bcc@example.com');
+        $mail->addReplyTo($_SESSION["email"], 'Reply');
         $mail->Subject = "R&D";
         $_SESSION['message'] = "<b>Check your mail for password verification</b>";
         $mail->Body = "<h2>Reset password</h2> Your code:<br><h3>" . $_SESSION['resetCode'] . "</h3>";
@@ -89,11 +83,9 @@ try {
         header('Location:email-verification.php');
     }
     if (isset($_SESSION["veterinarianEmail"])) {
-
+        $mail->setFrom($_SESSION["email"], 'R&D Veterinary');
         $mail->addAddress($_SESSION["workerEmail"], $_SESSION['name']);
-        $mail->addReplyTo('info@example.com', 'Information');
-        $mail->addCC('cc@example.com');
-        $mail->addBCC('bcc@example.com');
+        $mail->addReplyTo($_SESSION["email"], 'Reply');
         $mail->Subject = "R&D";
 
         $_SESSION['message'] = "<b>Worker is added</b>";
