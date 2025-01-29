@@ -216,7 +216,62 @@ try {
                     "status" => 404,
                 ]);
             }
-        } else {
+        }
+        elseif (!empty($_GET['id']) && !empty($data['firstName']) && !empty($data['lastName'])
+            && !empty($data['phoneNumber']) && !empty($data['usedLanguage'])) {
+
+                    $Id = $_GET['id']; // The ID from the request body
+                    $firstName = $data['firstName'];
+                    $lastName = $data['lastName'];
+                    $phoneNumber = $data['phoneNumber'];
+                    $usedLanguage = $data['usedLanguage'];
+
+                    // Check if user exists
+                    $stmt = $pdo->prepare("SELECT * FROM user WHERE userId = :userId");
+                    $stmt->bindParam(':userId', $Id);
+                    $stmt->execute();
+                    $existingUser = $stmt->fetch(PDO::FETCH_ASSOC);
+
+                    if ($existingUser) {
+                        // Update user details
+                        $stmt = $pdo->prepare("UPDATE user SET firstName = :firstName, lastName = :lastName, 
+                phoneNumber = :phoneNumber, usedLanguage = :usedLanguage WHERE userId = :userId");
+                        $stmt->bindParam(':userId', $Id);
+                        $stmt->bindParam(':firstName', $firstName);
+                        $stmt->bindParam(':lastName', $lastName);
+                        $stmt->bindParam(':phoneNumber', $phoneNumber);
+                        $stmt->bindParam(':usedLanguage', $usedLanguage);
+
+                        if ($stmt->execute()) {
+                            http_response_code(200); // OK
+                            echo json_encode([
+                                "message" => "User updated successfully.",
+                                "status" => 200,
+                                "data" => [
+                                    "id" => $Id,
+                                    "firstName" => $firstName,
+                                    "lastName" => $lastName,
+                                    "phoneNumber" => $phoneNumber,
+                                    "usedLanguage" => $usedLanguage
+                                ],
+                            ]);
+                        } else {
+                            http_response_code(500); // Internal Server Error
+                            echo json_encode([
+                                "message" => "Failed to update user in the database.",
+                                "status" => 500,
+                            ]);
+                        }
+                    } else {
+                        http_response_code(404); // Not Found
+                        echo json_encode([
+                            "message" => "User not found.",
+                            "status" => 404,
+                        ]);
+                    }
+                }
+
+        else {
             http_response_code(400); // Bad Request
             echo json_encode([
                 "message" => "Invalid input. Both reviewCode and review fields are required.",
