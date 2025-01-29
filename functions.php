@@ -1462,14 +1462,19 @@ WHERE u.userId = :userId";
         // Determine the language: prioritize GET parameter, then userLang, then 'en'
         if (isset($_GET['lang'])) {
             $lang = $_GET['lang']; // User selected a language
+            $_SESSION['get_lang'] = $lang;
             $_SESSION['lang'] = $lang; // Save selected language in session
-        } else {
+        }
+        elseif(isset( $_SESSION['get_lang']))
+        {
+            $lang = $_SESSION['get_lang'];
+            $_SESSION['lang'] = $lang;
+        }
+        else {
             $lang = $_SESSION['userLang'] ?? 'en'; // Default to userLang or 'en'
             $_SESSION['lang'] = $lang; // Set session language to default
         }
         return $lang;
-        // Include the language file
-//            include "lang_$lang.php";
 
     }
 
