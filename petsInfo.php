@@ -43,8 +43,7 @@ $functions->checkAutoLogin();
 $_SESSION['backPic']="pet.php";
         // Fetch pet details
         echo '<div class="col-lg-8 order-lg-2 profile-section">';
-        $sql = "SELECT p.petId,p.petName, p.bred, p.petSpecies, p.petPicture, r.reservationDay, r.reservationTime, r.period FROM veterinarian v 
-                INNER JOIN pet p ON v.veterinarianId = p.veterinarId INNER JOIN reservation r ON r.petId=p.petId WHERE v.veterinarianId = :veterinarId";
+        $sql = "SELECT p.petId, p.petName, p.bred, p.petSpecies, p.petPicture, r.reservationDay, r.reservationTime, r.period FROM veterinarian v INNER JOIN pet p ON v.veterinarianId = p.veterinarId INNER JOIN reservation r ON r.petId = p.petId WHERE r.veterinarianId = :veterinarId;";
         $stmt = $connection->prepare($sql);
         $stmt->bindParam(":veterinarId", $vetID, PDO::PARAM_INT);
         if ($stmt->execute()) {
