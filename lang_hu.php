@@ -1,4 +1,7 @@
 <?php
+define('RESERVATION','Foglalás ettől: ');
+define('RESERVATION2','Eddig: ');
+define('RESERVATION3','Foglalás dátuma: ');
 define('WELCOME','Üdvözöljük az R&D-nél, a mi állatorvosi platformunkon!');
 define('WELCOME2','Az Ön egyablakos megoldása a háziállatai egészségének és jólétének fenntartására!');
 define('REG1','Regisztrálja a háziállatait');

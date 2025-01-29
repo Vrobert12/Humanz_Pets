@@ -1,4 +1,7 @@
 <?php
+define('RESERVATION','Rezervacija od: ');
+define('RESERVATION2','Do: ');
+define('RESERVATION3','Datum rezervacije: ');
 define('WELCOME','Dobrodošli u R&D, našu veterinarsku platformu!');
 define('WELCOME2','Vaše jedinstveno rešenje za upravljanje zdravlje i blagostanje vaših ljubimaca!');
 define('REG1','Registrujte svoje ljubimce');

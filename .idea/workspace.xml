@@ -4,8 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2367ab9a-341c-4300-a7ed-72f717181f7d" name="Changes" comment="new DB">
+    <list default="true" id="2367ab9a-341c-4300-a7ed-72f717181f7d" name="Changes" comment="API version 1">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lang_en.php" beforeDir="false" afterPath="$PROJECT_DIR$/lang_en.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lang_hu.php" beforeDir="false" afterPath="$PROJECT_DIR$/lang_hu.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lang_sr.php" beforeDir="false" afterPath="$PROJECT_DIR$/lang_sr.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -93,7 +97,8 @@
       <workItem from="1734365872517" duration="4612000" />
       <workItem from="1736793267536" duration="5406000" />
       <workItem from="1738003546215" duration="68000" />
-      <workItem from="1738098146992" duration="1653000" />
+      <workItem from="1738098146992" duration="3326000" />
+      <workItem from="1738166512039" duration="5330000" />
     </task>
     <task id="LOCAL-00001" summary="Responsivity">
       <option name="closed" value="true" />
@@ -127,17 +132,37 @@
       <option name="project" value="LOCAL" />
       <updated>1738003588774</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="API version 1">
+      <option name="closed" value="true" />
+      <created>1738099866132</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1738099866132</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Responsivity" />
     <MESSAGE value="random commit" />
     <MESSAGE value="Product fix, design update and language update." />
     <MESSAGE value="new DB" />
-    <option name="LAST_COMMIT_MESSAGE" value="new DB" />
+    <MESSAGE value="API version 1" />
+    <option name="LAST_COMMIT_MESSAGE" value="API version 1" />
   </component>
 </project>

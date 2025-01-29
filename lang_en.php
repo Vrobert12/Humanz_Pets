@@ -1,4 +1,7 @@
 <?php
+define('RESERVATION','Reservation From: ');
+define('RESERVATION2','To: ');
+define('RESERVATION3','Reservation Date: ');
 define('WELCOME','Welcome to R&D, our Veterinary Platform!');
 define('WELCOME2','Your one-stop solution for managing your petses health and well-being!');
 define('REG1','Register your pets');
