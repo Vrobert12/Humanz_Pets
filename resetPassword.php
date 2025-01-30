@@ -54,25 +54,29 @@ if(isset($_GET['verification_code'])) {
     $_SESSION['backPic'] = "http://localhost/Humanz_Pets/resetPassword.php?mail=" . $email . "&passwordValidation=" . $passwordValidation;
 
 // Check for validation details in the `user` table
-    $stmt = "SELECT passwordValidation FROM user WHERE userMail = :email";
+    $stmt = "SELECT passwordValidation FROM user WHERE userMail = :email and passwordValidation = :passwordValidation";
     $stmt = $connection->prepare($stmt);
     $stmt->bindParam(':email', $email, PDO::PARAM_STR);
+    $stmt->bindParam(':passwordValidation', $passwordValidation, PDO::PARAM_STR);
     $stmt->execute();
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
 // If not found in `user`, check the `veterinarian` table
     if (!$result) {
-        $stmt = "SELECT passwordValidation FROM veterinarian WHERE veterinarianMail = :email";
+        $stmt = "SELECT passwordValidation FROM veterinarian WHERE veterinarianMail = :email and passwordValidation = :passwordValidation";
         $stmt = $connection->prepare($stmt);
         $stmt->bindParam(':email', $email, PDO::PARAM_STR);
+        $stmt->bindParam(':passwordValidation', $passwordValidation, PDO::PARAM_STR);
         $stmt->execute();
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
 // If still not found, return an error
     if (!$result) {
-        die("No result found for email: $email");
+        header('Location:index.php');
+        exit();
     }
+
 
 // Verify session email matches the provided email
     if (isset($_SESSION['email']) && $_SESSION['email'] != $email) {
