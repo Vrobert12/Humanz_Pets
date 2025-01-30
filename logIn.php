@@ -28,7 +28,7 @@ if (session_status() === PHP_SESSION_NONE) {
     }
     include "lang_$lang.php";
 }
-if(isset($_SESSION['email'])){
+if(isset($_SESSION['email']) && isset($_SESSION['registration'])){
     header('Location: index.php');
     exit();
 }

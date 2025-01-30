@@ -12,31 +12,33 @@ if(isset($_SESSION['email'])) {
         header('Location:index.php');
         exit();
     }
+    $email=$_GET['mail'];
 }
 // Ensure token and email are set in $_GET
-elseif ((!isset($_GET['mail']) || !isset($_GET['token'])) && (!isset($_GET['mail']) || !isset($_GET['passwordValidation']))) {
+elseif ((!isset($_GET['verify_email']) || !isset($_GET['verification_code']))) {
     $_SESSION['message']="no mail or token specified";
     header('Location:index.php');
     exit();
 }
-if(isset($_GET['token'])) {
-    $email = trim($_GET['mail']);
-    $token = trim($_GET['token']);
+if(isset($_GET['verification_code'])) {
+    $email = trim($_GET['verify_email']);
+    $token = trim($_GET['verification_code']);
 $_SESSION['backPic']="http://localhost/Humanz_Pets/resetPassword.php?mail=" . $email . "&token=" . $token;
 // Fetch verification code for the given email
     $stmt = "SELECT verification_code FROM veterinarian WHERE veterinarianMail = :email";
     $stmt = $connection->prepare($stmt);
     $stmt->bindParam(':email', $email, PDO::PARAM_STR);
     $stmt->execute();
-    $result = $stmt->fetch(PDO::FETCH_ASSOC);
-
-    if (!$result) {
+    $vetResult = $stmt->fetch(PDO::FETCH_ASSOC);
+    $stmt = "SELECT verification_code FROM user WHERE userMail = :email";
+    $stmt = $connection->prepare($stmt);
+    $stmt->bindParam(':email', $email, PDO::PARAM_STR);
+    $stmt->execute();
+    $userResult = $stmt->fetch(PDO::FETCH_ASSOC);
+    $email=$_GET['verify_email'];
+    if (!$vetResult and !$userResult) {
         header('Location:index.php');
         exit();
-    }
-
-    if ($token != $result['verification_code']) {
-        die("Token mismatch. URL token: $token, DB token: " . $result['verification_code']);
     }
 
     if (isset($_SESSION['email']) && $_SESSION['email'] != $email) {
@@ -44,9 +46,9 @@ $_SESSION['backPic']="http://localhost/Humanz_Pets/resetPassword.php?mail=" . $e
     }
 }
 
-if(isset($_GET['passwordValidation'])) {
-    $email = trim($_GET['mail']);
-    $passwordValidation = trim($_GET['passwordValidation']);
+if(isset($_GET['verification_code'])) {
+    $email = trim($_GET['verify_email']);
+    $passwordValidation = trim($_GET['verification_code']);
 
 // Set the back picture URL in session
     $_SESSION['backPic'] = "http://localhost/Humanz_Pets/resetPassword.php?mail=" . $email . "&passwordValidation=" . $passwordValidation;
@@ -70,11 +72,6 @@ if(isset($_GET['passwordValidation'])) {
 // If still not found, return an error
     if (!$result) {
         die("No result found for email: $email");
-    }
-
-// Verify the password validation token
-    if ($passwordValidation != $result['passwordValidation']) {
-        die("Password mismatch. URL token: $passwordValidation, DB token: " . $result['passwordValidation']);
     }
 
 // Verify session email matches the provided email
@@ -109,7 +106,7 @@ echo "Verification successful!";
     ?>"><br>
     <?php
 
-    echo '<input type="hidden" name="mail" value="'.$_GET['mail'].'" class="inputok"><br><br>';
+    echo '<input type="hidden" name="mail" value="'.$email.'" class="inputok"><br><br>';
     ?>
     <label><b>Change Your password.</b></label><br><br>
     <label for="password">Your new password:</label><br>

@@ -358,7 +358,8 @@ VALUES (:reviewCode,:userId,:veterinarianId)";
             $this->updateVerificationDetails($mail, $verification_code, $verification_time, $table);
 
             $_SESSION['mailReset'] = $mail;
-            $_SESSION['resetCode'] = $verification_code;
+            $_SESSION['mailResetLink'] = 'http://localhost/Humanz_Pets/resetPassword.php?verification_code='
+                . $verification_code."&verify_email=".$mail;
             header('Location: mail.php');
             exit();
         }
@@ -467,8 +468,16 @@ VALUES (:reviewCode,:userId,:veterinarianId)";
                     $updateStmt->bindParam(':newPassword', $newPassword, PDO::PARAM_STR);
                     $updateStmt->bindParam(':email', $mail, PDO::PARAM_STR);
                     if ($updateStmt->execute()) {
-                        $_SESSION['message'] = "Password updated successfully. You can now log in.";
-                        header('Location: logIn.php');
+
+                        $_SESSION['message'] = "Password updated successfully.";
+                        if(isset($_SESSION['email'])) {
+                            header('Location: index.php');
+
+                        }
+                            else {
+                                $_SESSION['message'] = "Password updated successfully. You can now log in.";
+                                header('Location: logIn.php');
+                            }
                         exit();
                     } else {
                         $_SESSION['message'] = "Failed to update the password. Please try again.";
@@ -738,7 +747,7 @@ VALUES (:userId,:productName,:productPicture,:productId,:sum, :price)";
                 $stmt->bindParam(':usedLanguage', $language, PDO::PARAM_STR);
 
                 if ($stmt->execute()) {
-                    $_SESSION['workerLink'] = "http://localhost/Humanz_Pets/resetPassword.php?mail=" . $mail . "&token=" . $verification_code;
+                    $_SESSION['workerLink'] = "http://localhost/Humanz_Pets/resetPassword.php?verify_email=" . $mail . "&verification_code==" . $verification_code;
                     $_SESSION['message'] = "Worker added Successfully!";
                     $_SESSION['text'] = "<h2>Registration</h2>";
                     $_SESSION['verification_code'] = $verification_code;
@@ -1039,14 +1048,13 @@ WHERE productId = :productId;
     {
         if (isset($_POST['fname']) && isset($_POST['lname']) && isset($_POST['tel']) && isset($_POST['mail']) && isset($_POST['pass']) && isset($_POST['pass2'])) {
 
-
+            $_SESSION['registration'] = true;
             $fname = $_POST['fname'];
             $lname = $_POST['lname'];
             $tel = $_POST['tel'];
 
             $usedLanguage = $_POST['lang'];
             $mail = $_POST['mail'];
-            $_SESSION["email"] = $mail;
             $pass = $_POST['pass'];
             $pass2 = $_POST['pass2'];
 
@@ -1069,12 +1077,27 @@ WHERE productId = :productId;
 
 
                         if ($rows['userMail'] == $mail) {
-                            if ($rows['verify'] == 1) {
-                                $_SESSION['message'] = "The <b>Registration</b> has not been successful! Try again or check if your mail is not registered here";
-                                header('Location: registration.php');
-                                exit();
-                            } else {
+                            if ($rows['verification_time'] < $verification_time) {
+                                if ($rows['verify'] == 1) {
+                                    $_SESSION['message'] = "The <b>Registration</b> has not been successful! Try again or check if your mail is not registered here";
+                                    header('Location: registration.php');
+                                    exit();
+                                } else {
 
+                                    $verification_code = substr(number_format(time() * rand(), 0, '', ''), 0, 6);
+                                    $query = "UPDATE user SET verification_code = ? ,verification_time =? WHERE userMail = ?";
+                                    $query = $this->connection->prepare($query);
+                                    $query->execute([$verification_code, $verification_time, $mail]);
+                                    $_SESSION['message'] = "If you think the<b>E-mail</b> address is registered try again.";
+                                    $_SESSION['verification_code'] = $verification_code;
+                                    $_SESSION['email'] = $mail;
+
+                                    header('Location: registration.php');
+
+                                    exit();
+                                }
+                            }
+                            else{
                                 $verification_code = substr(number_format(time() * rand(), 0, '', ''), 0, 6);
                                 $query = "UPDATE user SET verification_code = ? ,verification_time =? WHERE userMail = ?";
                                 $query = $this->connection->prepare($query);
@@ -1082,12 +1105,10 @@ WHERE productId = :productId;
                                 $_SESSION['message'] = "If you think the<b>E-mail</b> address is registered try again.";
                                 $_SESSION['verification_code'] = $verification_code;
                                 $_SESSION['email'] = $mail;
-
+                                $_SESSION['registrationLink'] = 'http://localhost/Humanz_Pets/email-verification.php?verification_code=' . $verification_code."&verify_email=".$mail;
                                 header('Location: mail.php');
-
                                 exit();
                             }
-
                         }
                     }
                 }
@@ -1098,7 +1119,7 @@ WHERE productId = :productId;
                     while ($rows = $stmtTeszt->fetch(PDO::FETCH_ASSOC)) {
 
 
-                        if ($rows['userMail'] == $mail) {
+                        if ($rows['veterinarianMail'] == $mail) {
                             if ($rows['verify'] == 1) {
                                 $_SESSION['message'] = "The <b>Registration</b> has not been successful! Try again or check if your mail is not registered here";
                                 header('Location: registration.php');
@@ -1170,8 +1191,8 @@ WHERE productId = :productId;
                 if ($stmt->execute()) {
                     $_SESSION['message'] = "We sent an email to you!";
                     $_SESSION['text'] = "<h2>Registration</h2>";
-                    $_SESSION['verification_code'] = $verification_code;
-                    $_SESSION['mail'] = $mail;
+                    $_SESSION['email'] = $mail;
+                    $_SESSION['registrationLink'] = 'http://localhost/Humanz_Pets/email-verification.php?verification_code=' . $verification_code."&verify_email=".$mail;
                     header('Location: mail.php');
                     exit(); // Exit script after redirection
                 } else {
@@ -1475,6 +1496,8 @@ WHERE u.userId = :userId";
             $_SESSION['lang'] = $lang; // Set session language to default
         }
         return $lang;
+        // Include the language file
+//            include "lang_$lang.php";
 
     }
 
@@ -1503,7 +1526,7 @@ WHERE u.userId = :userId";
         try {
             // Check the `user` table first
             $sql = "SELECT 'user' AS userType, userMail AS mail, userPassword AS password, banned AS banned,
-                       firstName, lastName, profilePic, userId, phoneNumber, privilage, usedLanguage
+                       firstName, lastName, profilePic, userId, phoneNumber, privilage, usedLanguage,verify,verification_code
                 FROM user
                 WHERE userMail = :email";
 
@@ -1519,7 +1542,7 @@ WHERE u.userId = :userId";
 
             // Otherwise, check the `veterinarian` table
             $sql = "SELECT 'vet' AS userType, veterinarianMail AS mail, veterinarianPassword AS password, banned AS banned,
-         firstName, lastName, profilePic, veterinarianId, phoneNumber, usedLanguage
+         firstName, lastName, profilePic, veterinarianId, phoneNumber, usedLanguage,verify,verification_code
                 FROM veterinarian
                 WHERE veterinarianMail = :email";
 
@@ -1559,32 +1582,47 @@ WHERE u.userId = :userId";
                     $_SESSION['message'] = "The account did not set up a password!";
                 } else {
                     if (password_verify($password, $result['password'])) {
-                        if ($result['banned']) {
-                            $_SESSION['message'] = "You have been banned from our website!";
-                        } else {
-                            $_SESSION['email'] = $result['mail'];
-                            $_SESSION['firstName'] = $result['firstName'] ?? ''; // Default if missing
-                            $_SESSION['lastName'] = $result['lastName'] ?? ''; // Default if missing
-                            $_SESSION['name'] = $_SESSION['firstName'] . " " . $_SESSION['lastName'];
-                            $_SESSION['profilePic'] = $result['profilePic'] ?? ''; // Default if missing
-                            $_SESSION['phone'] = $result['phoneNumber'] ?? ''; // Default if missing
-                            $_SESSION['userLang'] = $result['usedLanguage'] ?? '';
-                            // Veterinarian-specific session and cookies
-                            if ($result['userType'] === 'vet') {
-
-                                $_SESSION['userId'] = $result['veterinarianId'] ?? ''; // Default if missing
-                                $_SESSION['privilage'] = 'Veterinarian';
+                        if ($result['verify'] == 1) {
+                            if ($result['banned']) {
+                                $_SESSION['message'] = "You have been banned from our website!";
                             } else {
-                                // User-specific session and cookies
-                                $_SESSION['userId'] = $result['userId'] ?? ''; // Default if missing
-                                $_SESSION['privilage'] = $result['privilage'] ?? ''; // Default if missing
-                            }
+                                $_SESSION['email'] = $result['mail'];
+                                $_SESSION['firstName'] = $result['firstName'] ?? ''; // Default if missing
+                                $_SESSION['lastName'] = $result['lastName'] ?? ''; // Default if missing
+                                $_SESSION['name'] = $_SESSION['firstName'] . " " . $_SESSION['lastName'];
+                                $_SESSION['profilePic'] = $result['profilePic'] ?? ''; // Default if missing
+                                $_SESSION['phone'] = $result['phoneNumber'] ?? ''; // Default if missing
+                                $_SESSION['userLang'] = $result['usedLanguage'] ?? '';
+                                // Veterinarian-specific session and cookies
+                                if ($result['userType'] === 'vet') {
 
-                            setcookie("last_activity", time(), time() + 10 * 60, "/");
-                            header('Location: index.php');
+                                    $_SESSION['userId'] = $result['veterinarianId'] ?? ''; // Default if missing
+                                    $_SESSION['privilage'] = 'Veterinarian';
+                                } else {
+                                    // User-specific session and cookies
+                                    $_SESSION['userId'] = $result['userId'] ?? ''; // Default if missing
+                                    $_SESSION['privilage'] = $result['privilage'] ?? ''; // Default if missing
+                                }
+if(isset($_SESSION['registration']))
+    unset($_SESSION['registration']);
+                                setcookie("last_activity", time(), time() + 10 * 60, "/");
+                                header('Location: index.php');
+                                exit();
+                            }
+                        }
+                        else{
+                            $this->errorLogInsert($mail, "The password was not valid!", "Log in", "Wrong password!");
+                            $_SESSION['message'] = "Verify Account, we sent a mail to you!";
+                            $_SESSION['text'] = "<h2>Registration</h2>";
+                            $_SESSION['email'] = $mail;
+                            $_SESSION['registrationLink'] = 'http://localhost/Humanz_Pets/email-verification.php?verification_code=' . $result['verification_code']."&verify_email=".$mail;
+                           $_SESSION['reSend']=true;
+                            header('Location: mail.php');
+
                             exit();
                         }
-                    } else {
+                    }
+                    else {
                         $this->errorLogInsert($mail, "The password was not valid!", "Log in", "Wrong password!");
                         $_SESSION['message'] = "Wrong password!";
                     }
@@ -1606,8 +1644,9 @@ WHERE u.userId = :userId";
     {
 
         if (!isset($_GET['action'])) {
-            if (isset($_COOKIE['last_activity']) && isset($_SESSION['email'])) {
+            if (isset($_COOKIE['last_activity']) && isset($_SESSION['email']) && !isset($_SESSION['registration'])) {
                 $result = $this->fetchUserByEmail($_SESSION['email']);
+
                 if($result['banned']){
                     $_SESSION = [];
                     session_unset();
@@ -1673,7 +1712,7 @@ WHERE u.userId = :userId";
                     }
                 }
 
-            } elseif (isset($_COOKIE['email'])) {
+            } elseif (isset($_COOKIE['email']) && !isset($_SESSION['registration'])) {
                 $result = $this->fetchUserByEmail($_COOKIE['email']);
                 if($result['banned']){
                     $_SESSION = [];
@@ -1761,7 +1800,8 @@ WHERE u.userId = :userId";
                 header('Location: index.php');
                 exit();
 
-            } elseif (isset($_SESSION['email'])) {
+            }
+            elseif (isset($_SESSION['email']) ) {
                 session_destroy();
                 header('Location: logIn.php');
                 exit();
