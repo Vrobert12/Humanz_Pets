@@ -121,7 +121,7 @@ $reservedPets = $reservedPetStmt->fetchAll(PDO::FETCH_ASSOC);
         }
     </style>
 </head>
-<body>
+<body style="background: #659df7">
 
 
 <div class="profile-section"><a class="btn btn-secondary mb-4" href="index.php"><?php echo BACK ?></a>

@@ -51,7 +51,7 @@ if ($_SESSION['privilage'] == "Veterinarian") {
 
     </style>
 </head>
-<body>
+<body style="background: #659df7">
 
 <!-- Show popup message if session message is set -->
 <?php if (isset($_SESSION['message'])): ?>

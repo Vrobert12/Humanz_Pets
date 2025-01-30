@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="style.css">
 
 </head>
-<body>
+<body style="background: #659df7">
 <?php
 session_start();
  if (isset($_SESSION['token']) && isset($_GET['logToken'])) {

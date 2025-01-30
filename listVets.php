@@ -7,10 +7,8 @@ include "lang_$lang.php";
 $autoload->checkAutoLogin();
 
 $pdo = $autoload->connect($GLOBALS['dsn'], $_ENV['DB_USER'], $_ENV['DB_PASSWORD'], $GLOBALS['pdoOptions']);
-if ($_SESSION['privilage'] != "Admin") {
-    header("Location:index.php");
-    exit();
-}
+
+$backgroundImage = "pictures/background.jpg";
 
 ?>
 
@@ -48,7 +46,6 @@ if ($_SESSION['privilage'] != "Admin") {
             padding: 15px;
             font-size: 20px;
         }
-
     </style>
 </head>
 <body style="background: #659df7">
@@ -90,7 +87,9 @@ if ($_SESSION['privilage'] != "Admin") {
 <!--
 https://getbootstrap.com/docs/5.3/components/navbar/
 -->
-<a class="btn btn-secondary back-button" style="margin-left: 10px; margin-top: 10px" href="index.php"><?php echo BACK ?></a>
+
+<a class="btn btn-secondary back-button" style="margin-left: 10px; margin-top: 10px"
+   href="index.php"><?php echo BACK ?></a>
 <?php
 if (isset($_SESSION['message']) && $_SESSION['message'] != "")
     echo "<div class='mainBlock rounded bg-dark text-white' style='text-align: center; margin-top: 100px;'>
@@ -104,35 +103,16 @@ if (isset($_SESSION['message']) && $_SESSION['message'] != "")
           </a>
       </div>";
 
-if (isset($_SESSION['email']) && isset($_SESSION['name']) && isset($_SESSION['profilePic'])) {
-    // Set a session variable for returning to tables.php
-    $_SESSION['backPic'] = "book_veterinarian.php";
+// Set a session variable for returning to tables.php
+$_SESSION['backPic'] = "book_veterinarian.php";
 
-    if (isset($_POST['searchAction']) && $_POST['searchAction'] == 'search') {
-        $veterinarianLike = "%" . $_POST['searchName'] . "%";
-        users("SELECT v.veterinarianId,v.firstName,v.lastName,v.veterinarianMail,v.profilePic,v.phoneNumber,v.banned,
-        COALESCE(AVG(r.review), 0) AS totalReviewSum FROM veterinarian v inner join 
-           review r ON v.veterinarianId=r.veterinarianId WHERE verify=1 and area LIKE ?", [$veterinarianLike]);
-    } else {
-        users("SELECT 
-    v.veterinarianId,
-    v.firstName,
-    v.lastName,
-    v.veterinarianMail,
-    v.profilePic,
-    v.phoneNumber,
-    v.banned,
-    COALESCE(AVG(r.review), 0) AS totalReviewSum
-FROM veterinarian v
-LEFT JOIN review r ON v.veterinarianId = r.veterinarianId AND v.verify = 1
-GROUP BY v.veterinarianId, v.firstName, v.lastName, v.veterinarianMail, v.profilePic, v.phoneNumber;
-");
-    }
+if (isset($_POST['searchAction']) && $_POST['searchAction'] == 'search') {
+    $veterinarianLike = "%" . $_POST['searchName'] . "%";
+    users("SELECT * FROM veterinarian WHERE verify=1 and banned!=1 and area LIKE ?", [$veterinarianLike]);
 } else {
-    // Redirect to index.php if session variables are not set
-    header('Location: index.php');
-    exit();
+    users("SELECT * FROM veterinarian WHERE verify=1 and banned!=1");
 }
+
 
 function users($command, $params = [])
 {
@@ -157,27 +137,25 @@ function users($command, $params = [])
 
         if (!empty($results)) {
             echo '<div class="container">
-                    <div class="row justify-content-around">';
-            foreach ($results as $row) {
-                $isBanned = $row['banned'] == 1;
-                echo '<div class="col-xl-4 p-5 border bg-dark" style="margin: auto; margin-top:100px; margin-bottom: 50px; width: fit-content">';
-                echo '<div class="col-xl-4"><img class="profilePic" 
-                src="pictures/' . htmlspecialchars($row['profilePic']) . '" width="250" height="250" alt="Profile Picture"></div>';
-                echo '<label>ID: ' . htmlspecialchars($row['veterinarianId']) . '</label><br>';
-                echo '<label>Name: ' . htmlspecialchars($row['firstName'] . " " . $row['lastName']) . '</label><br>';
-                echo '<label>Phone: ' . htmlspecialchars($row['phoneNumber']) . '</label><br>';
-                echo '<label>Email: ' . htmlspecialchars($row['veterinarianMail']) . '</label><br>';
-                echo $isBanned ? '<label style="color: red;">Banned</label><br>' : '<label style="color: green;">Active</label><br>';
+            <ul class="list-group list-group-flush">';
 
-                $_SESSION['previousPage']="veterinarianRates.php";
-                echo '<label><a class="btn btn-primary" href="ratings.php">Review: <b>5 / ' . htmlspecialchars((float)$row['totalReviewSum']) . '</b></a></label><br><br>';
-                echo '<a class="btn btn-primary" href="book_apointment.php?email=' . $_SESSION['email'] . '&veterinarian=' . htmlspecialchars($row['veterinarianId']) . '">Reserve</a>&nbsp;&nbsp;&nbsp;';
+            foreach ($results as $row) {
+                echo '<li class="list-group-item d-flex align-items-center" style="background-color: #f8f9fa; padding: 15px; border-bottom: 1px solid #ddd;">';
+                echo '<img class="rounded-circle me-3" src="pictures/' . htmlspecialchars($row['profilePic']) . '" width="80" height="80" alt="Profile Picture">';
+                echo '<div>';
+                echo '<h5 class="mb-1">' . htmlspecialchars($row['firstName'] . " " . $row['lastName']) . '</h5>';
+                echo '<p class="mb-1"><strong>ID:</strong> ' . htmlspecialchars($row['veterinarianId']) . '</p>';
+                echo '<p class="mb-1"><strong>Phone:</strong> ' . htmlspecialchars($row['phoneNumber']) . '</p>';
+                echo '<p class="mb-1"><strong>Email:</strong> ' . htmlspecialchars($row['veterinarianMail']) . '</p>';
                 echo '</div>';
+                echo '</li>';
             }
-            echo '</div></div>';
+
+            echo '</ul></div>';
         } else {
             $_SESSION['message'] = "<h2 style='color: white'>No result found.</h2>";
         }
+
     } catch (PDOException $e) {
         echo "Error: " . $e->getMessage();
     }

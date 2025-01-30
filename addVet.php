@@ -34,7 +34,7 @@ $_SESSION['backPic']='addVet.php';
     </style>
     <script src="validate.js"></script>
 </head>
-<body>
+<body style="background: #659df7">
 
 <?php
 

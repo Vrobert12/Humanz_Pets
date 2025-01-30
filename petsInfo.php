@@ -33,7 +33,7 @@ if($_SESSION['privilage']!="Veterinarian"){
         }
     </style>
 </head>
-<body>
+<body style="background: #659df7">
 <div class="container mt-5">
     <a class="btn btn-secondary mb-4" href="<?php echo $_SESSION['backPic'];?>"><?php echo BACK ?></a>
     <?php

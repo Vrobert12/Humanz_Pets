@@ -34,7 +34,7 @@ if(isset($_SESSION['email'])){
     </style>
     <script src="validate.js"></script>
 </head>
-<body>
+<body style="background: #659df7">
 
 <?php
 

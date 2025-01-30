@@ -1,4 +1,5 @@
 <?php
+define('SEEVET','Állatorvosok megtekintése');
 define('RESERVATION','Foglalás ettől: ');
 define('RESERVATION2','Eddig: ');
 define('RESERVATION3','Foglalás dátuma: ');

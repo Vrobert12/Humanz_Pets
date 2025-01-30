@@ -24,11 +24,11 @@ $autoload->checkAutoLogin();
     </script>
     <script src="sureCheck.js"></script>
     <script src="indexJS.js"></script>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css" type="text/css">
 
 
 </head>
-<body>
+<body style="background: #659df7">
 
 <!-- Show popup message if session message is set -->
 <?php if (isset($_SESSION['message'])): ?>
@@ -176,6 +176,14 @@ https://getbootstrap.com/docs/5.3/components/navbar/
         </li>';
 
                 }
+            }
+            else{
+                echo'<li>
+            <a href="listVets.php" class="nav-link text-white">
+                <svg class="bi me-2" width="16" height="16"><use xlink:href="#people-circle"/></svg>
+                '.SEEVET.'
+            </a>
+        </li>';
             }
 
             ?>

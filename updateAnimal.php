@@ -35,7 +35,7 @@ $autoload->checkAutoLogin('updateAnimal.php');
         }
     </style>
 </head>
-<body>
+<body style="background: #659df7">
 
 <?php
 

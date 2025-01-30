@@ -101,7 +101,7 @@ echo "Verification successful!";
     <link rel="stylesheet" href="style.css">
 
 </head>
-<body>
+<body style="background: #659df7">
 <form method="post" action="functions.php" class="mainForm">
 
     <input type="hidden" placeholder="Emailcím" name="mail" class="inputok" id="mail" value="<?php

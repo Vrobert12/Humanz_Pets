@@ -1,4 +1,5 @@
 <?php
+define('SEEVET','List of veterinarians');
 define('RESERVATION','Reservation From: ');
 define('RESERVATION2','To: ');
 define('RESERVATION3','Reservation Date: ');

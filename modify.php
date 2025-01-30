@@ -17,7 +17,7 @@ $autoload->checkAutoLogin();
     <!-- Optional: Custom Styles -->
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body style="background: #659df7">
 <div class="container my-5">
     <form method="post" action="functions.php" class="mainForm">
         <!-- Back Link -->

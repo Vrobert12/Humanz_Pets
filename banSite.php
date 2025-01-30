@@ -29,7 +29,7 @@ $autoload->checkAutoLogin();
         }
     </style>
 </head>
-<body>
+<body style="background: #659df7">
 
 <div class="container-fluid">
     <a class="btn btn-secondary back-button" style="margin-left: 10px; margin-top: 10px" href="index.php"><?php echo BACK ?></a>

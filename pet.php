@@ -29,7 +29,7 @@ $functions->checkAutoLogin();
         }
     </style>
 </head>
-<body>
+<body style="background: #659df7">
 <div class="container mt-5">
     <a class="btn btn-secondary mb-4" href="index.php"><?php echo BACK ?></a>
     <?php

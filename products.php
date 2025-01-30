@@ -153,7 +153,7 @@ $products = $pdo->query("SELECT productId, productName, productPicture,descripti
 
     </style>
 </head>
-<body>
+<body style="background: #659df7">
 <div class="header-container">
     <a class="btn btn-secondary back-button" href="index.php"><?php echo BACK ?></a>
     <h1><?php echo PRODUCT ?></h1><br>

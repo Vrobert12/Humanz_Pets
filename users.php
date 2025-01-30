@@ -30,11 +30,11 @@ $autoload->checkAutoLogin();
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/themes/base/jquery-ui.min.css"/>
     <link rel="stylesheet" href="css/style.css">
 </head>
-<body class="bg-light ">
+<body style="background: #659df7">
 
     <title>Datatables test</title>
 
-<div class="container mt-5">
+<div class="container mt-5" >
 
     <a class="btn btn-secondary" href="index.php"><?php echo BACK?></a>
     <select id="tableSelect" class="form-select" style="width: 200px; display: inline-block;">

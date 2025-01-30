@@ -30,7 +30,7 @@ if($_SESSION['privilage']!='Admin'){
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/themes/base/jquery-ui.min.css"/>
     <link rel="stylesheet" href="css/style.css">
 </head>
-<body class="bg-light ">
+<body class="bg-light " style="background: #659df7">
 
 <title>Datatables test</title>
 

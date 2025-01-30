@@ -278,7 +278,7 @@ $reservedPets = $reservedPetStmt->fetchAll(PDO::FETCH_ASSOC);
     </script>
 </head>
 
-<body class="container py-4">
+<body class="container py-4" style="background: #659df7">
 <h2 class="text-center mb-4">Reserve Appointment for Veterinarian ID: <?= htmlspecialchars($veterinarianId) ?></h2>
 
 <?php if (isset($_SESSION['reservationMessage'])): ?>

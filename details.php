@@ -49,7 +49,7 @@ if (!$userId) {
         }
     </style>
 </head>
-<body>
+<body style="background: #659df7">
 <a class="btn btn-secondary" href="products.php"><?php echo BACK ?></a><br><br>
 <div class="details">
     <img src="pictures/<?php echo htmlspecialchars($product['productPicture']); ?>"

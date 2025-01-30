@@ -33,7 +33,7 @@ $_SESSION['backPic'] = "addProduct.php";
     </style>
 
 </head>
-<body>
+<body style="background: #659df7">
 
 <?php
 $_SESSION['backPic']='addProduct.php';

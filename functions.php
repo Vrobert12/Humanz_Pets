@@ -138,9 +138,10 @@ class Functions
             }
         }
     }
+
     public function deleteReservationByVet()
     {
-        if(!empty($_POST['mailText'])) {
+        if (!empty($_POST['mailText'])) {
             $sql = 'DELETE FROM reservation
 WHERE reservationId = :reservationId
   AND (
@@ -154,16 +155,16 @@ WHERE reservationId = :reservationId
             if ($result) {
                 $_SESSION['message'] = "Reservation successfully deleted.";
                 $_SESSION['mailText'] = $_POST['mailText'];
-                $_SESSION['cancelEmail']= $_POST['cancelEmail'];
+                $_SESSION['cancelEmail'] = $_POST['cancelEmail'];
 
-                if( $_POST['ownerLanguage']=="hu")
-                $_SESSION['cancelSubject']= "Vizsgálat lemondva";
+                if ($_POST['ownerLanguage'] == "hu")
+                    $_SESSION['cancelSubject'] = "Vizsgálat lemondva";
 
-                if( $_POST['ownerLanguage']=="sr")
-                    $_SESSION['cancelSubject']= "Pregled Odkazano";
+                if ($_POST['ownerLanguage'] == "sr")
+                    $_SESSION['cancelSubject'] = "Pregled Odkazano";
 
-                if( $_POST['ownerLanguage']=="en")
-                    $_SESSION['cancelSubject']= "Reservation Cancelled";
+                if ($_POST['ownerLanguage'] == "en")
+                    $_SESSION['cancelSubject'] = "Reservation Cancelled";
 
                 header('Location:mail.php');
                 exit();
@@ -171,8 +172,7 @@ WHERE reservationId = :reservationId
                 $_SESSION['message'] = "Failed to delete the reservation. Please try again.";
             header('Location:booked_users.php');
             exit();
-        }
-        else
+        } else
             $_SESSION['message'] = "Fill the message out.";
         header('Location:booked_users.php');
         exit();
@@ -185,11 +185,11 @@ WHERE reservationId = :reservationId
                 $time = time();
                 $currentTime = date("Y-m-d H:i:s", $time);
                 if ($_POST['ban'] == "yes") {
-                    $_SESSION['message'] = "The person is unbanned:" .$_POST['veterinarianId'];
+                    $_SESSION['message'] = "The person is unbanned:" . $_POST['veterinarianId'];
                     $sql = "UPDATE veterinarian SET banned=0 WHERE veterinarianId=:veterinarianId";
 
                 } else {
-                    $_SESSION['message'] = "The person is banned:" .$_POST['veterinarianId'];
+                    $_SESSION['message'] = "The person is banned:" . $_POST['veterinarianId'];
                     $sql = "UPDATE veterinarian SET banned=1 WHERE veterinarianId=:veterinarianId";
 
                 }
@@ -208,6 +208,7 @@ WHERE reservationId = :reservationId
             }
         }
     }
+
     public function ban()
     {
         if (isset($_POST['ban'])) {
@@ -215,11 +216,11 @@ WHERE reservationId = :reservationId
                 $time = time();
                 $currentTime = date("Y-m-d H:i:s", $time);
                 if ($_POST['ban'] == "yes") {
-                    $_SESSION['message'] = "The person is unbanned: ".$_POST['userId'];
+                    $_SESSION['message'] = "The person is unbanned: " . $_POST['userId'];
                     $sql = "UPDATE user SET banned=0 WHERE userId=:userId";
 
                 } else {
-                    $_SESSION['message'] = "The person is banned: ".$_POST['userId'];
+                    $_SESSION['message'] = "The person is banned: " . $_POST['userId'];
                     $sql = "UPDATE user SET banned=1 WHERE userId=:userId";
 
                 }
@@ -252,13 +253,14 @@ WHERE reservationId = :reservationId
 
             $sql = "Delete from product WHERE productId=:productId";
             $stmt = $this->connection->prepare($sql);
-            $stmt->bindParam(":productId", $productId );
+            $stmt->bindParam(":productId", $productId);
             $stmt->execute();
             header('Location:products.php');
             exit();
 
         }
     }
+
     public function deleteFromCart()
     {
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -359,7 +361,7 @@ VALUES (:reviewCode,:userId,:veterinarianId)";
 
             $_SESSION['mailReset'] = $mail;
             $_SESSION['mailResetLink'] = 'http://localhost/Humanz_Pets/resetPassword.php?verification_code='
-                . $verification_code."&verify_email=".$mail;
+                . $verification_code . "&verify_email=" . $mail;
             header('Location: mail.php');
             exit();
         }
@@ -470,14 +472,13 @@ VALUES (:reviewCode,:userId,:veterinarianId)";
                     if ($updateStmt->execute()) {
 
                         $_SESSION['message'] = "Password updated successfully.";
-                        if(isset($_SESSION['email'])) {
+                        if (isset($_SESSION['email'])) {
                             header('Location: index.php');
 
+                        } else {
+                            $_SESSION['message'] = "Password updated successfully. You can now log in.";
+                            header('Location: logIn.php');
                         }
-                            else {
-                                $_SESSION['message'] = "Password updated successfully. You can now log in.";
-                                header('Location: logIn.php');
-                            }
                         exit();
                     } else {
                         $_SESSION['message'] = "Failed to update the password. Please try again.";
@@ -651,6 +652,7 @@ WHERE reservationId = :reservationId
     public function buyProduct()
     {
         if (!empty($_POST['productId']) && !empty($_POST['quantity'])) {
+
             $productId = $_POST['productId'] ?? null;
             $productName = $_POST['productName'] ?? null;
             $productPrice = $_POST['productPrice'] ?? null;
@@ -658,18 +660,29 @@ WHERE reservationId = :reservationId
             $userId = $_SESSION['userId'] ?? null;
             $sum = $_POST['quantity'] ?? null;
 
-            $sql = "INSERT INTO user_product_relation( userId, productName,productPicture,productId,sum, price) 
+            $sql2 = "SELECT * FROM product WHERE productId = :productId AND productName = :productName AND productCost = :productPrice";
+            $stmt2 = $this->connection->prepare($sql2);
+            $stmt2->bindParam(':productId', $productId, PDO::PARAM_STR);
+            $stmt2->bindParam(':productName', $productName, PDO::PARAM_STR);
+            $stmt2->bindParam(':productPrice', $productPrice, PDO::PARAM_STR);
+            $stmt2->execute();
+
+            if ($stmt2->rowCount() > 0) {
+
+                $sql = "INSERT INTO user_product_relation( userId, productName,productPicture,productId,sum, price) 
 VALUES (:userId,:productName,:productPicture,:productId,:sum, :price)";
-            $stmt = $this->connection->prepare($sql);
-            $stmt->bindParam(':userId', $userId);
-            $stmt->bindParam(':productName', $productName);
-            $stmt->bindParam(':productPicture', $productPicture);
-            $stmt->bindParam(':productId', $productId);
-            $stmt->bindParam(':sum', $sum);
-            $stmt->bindParam(':price', $productPrice);
-            $stmt->execute();
+                $stmt = $this->connection->prepare($sql);
+                $stmt->bindParam(':userId', $userId);
+                $stmt->bindParam(':productName', $productName);
+                $stmt->bindParam(':productPicture', $productPicture);
+                $stmt->bindParam(':productId', $productId);
+                $stmt->bindParam(':sum', $sum);
+                $stmt->bindParam(':price', $productPrice);
+                $stmt->execute();
 
-
+            } else {
+                $_SESSION['message'] = "Product ID, Name or Price does not match existing product.";
+            }
         } else {
             $_SESSION['message'] = "Something is missing in the product parameters";
         }
@@ -938,8 +951,7 @@ WHERE productId = :productId;
                 header("Location: addProduct.php");
                 exit();
             }
-        }
-        else{
+        } else {
             $_SESSION['message'] = "Please fill in all the fields.";
             header("Location: addProduct.php");
             exit();
@@ -1096,8 +1108,7 @@ WHERE productId = :productId;
 
                                     exit();
                                 }
-                            }
-                            else{
+                            } else {
                                 $verification_code = substr(number_format(time() * rand(), 0, '', ''), 0, 6);
                                 $query = "UPDATE user SET verification_code = ? ,verification_time =? WHERE userMail = ?";
                                 $query = $this->connection->prepare($query);
@@ -1105,7 +1116,7 @@ WHERE productId = :productId;
                                 $_SESSION['message'] = "If you think the<b>E-mail</b> address is registered try again.";
                                 $_SESSION['verification_code'] = $verification_code;
                                 $_SESSION['email'] = $mail;
-                                $_SESSION['registrationLink'] = 'http://localhost/Humanz_Pets/email-verification.php?verification_code=' . $verification_code."&verify_email=".$mail;
+                                $_SESSION['registrationLink'] = 'http://localhost/Humanz_Pets/email-verification.php?verification_code=' . $verification_code . "&verify_email=" . $mail;
                                 header('Location: mail.php');
                                 exit();
                             }
@@ -1192,7 +1203,7 @@ WHERE productId = :productId;
                     $_SESSION['message'] = "We sent an email to you!";
                     $_SESSION['text'] = "<h2>Registration</h2>";
                     $_SESSION['email'] = $mail;
-                    $_SESSION['registrationLink'] = 'http://localhost/Humanz_Pets/email-verification.php?verification_code=' . $verification_code."&verify_email=".$mail;
+                    $_SESSION['registrationLink'] = 'http://localhost/Humanz_Pets/email-verification.php?verification_code=' . $verification_code . "&verify_email=" . $mail;
                     header('Location: mail.php');
                     exit(); // Exit script after redirection
                 } else {
@@ -1312,11 +1323,11 @@ WHERE productId = :productId;
                 $count++;
             }
             if (!empty($_POST['usedLanguage'])) {
-                $usedLanguage=$_POST['usedLanguage'];
+                $usedLanguage = $_POST['usedLanguage'];
                 $sql = $this->connection->prepare("UPDATE $table SET usedLanguage = ? WHERE " . $table . "Mail = ?");
-                $sql->execute([ $usedLanguage, $_SESSION['email']]);
+                $sql->execute([$usedLanguage, $_SESSION['email']]);
                 $_SESSION['message'] = "Language is modified";
-                $_SESSION['userLang'] =  $usedLanguage;
+                $_SESSION['userLang'] = $usedLanguage;
                 $count++;
             }
 
@@ -1485,13 +1496,10 @@ WHERE u.userId = :userId";
             $lang = $_GET['lang']; // User selected a language
             $_SESSION['get_lang'] = $lang;
             $_SESSION['lang'] = $lang; // Save selected language in session
-        }
-        elseif(isset( $_SESSION['get_lang']))
-        {
+        } elseif (isset($_SESSION['get_lang'])) {
             $lang = $_SESSION['get_lang'];
             $_SESSION['lang'] = $lang;
-        }
-        else {
+        } else {
             $lang = $_SESSION['userLang'] ?? 'en'; // Default to userLang or 'en'
             $_SESSION['lang'] = $lang; // Set session language to default
         }
@@ -1603,26 +1611,24 @@ WHERE u.userId = :userId";
                                     $_SESSION['userId'] = $result['userId'] ?? ''; // Default if missing
                                     $_SESSION['privilage'] = $result['privilage'] ?? ''; // Default if missing
                                 }
-if(isset($_SESSION['registration']))
-    unset($_SESSION['registration']);
+                                if (isset($_SESSION['registration']))
+                                    unset($_SESSION['registration']);
                                 setcookie("last_activity", time(), time() + 10 * 60, "/");
                                 header('Location: index.php');
                                 exit();
                             }
-                        }
-                        else{
+                        } else {
                             $this->errorLogInsert($mail, "The password was not valid!", "Log in", "Wrong password!");
                             $_SESSION['message'] = "Verify Account, we sent a mail to you!";
                             $_SESSION['text'] = "<h2>Registration</h2>";
                             $_SESSION['email'] = $mail;
-                            $_SESSION['registrationLink'] = 'http://localhost/Humanz_Pets/email-verification.php?verification_code=' . $result['verification_code']."&verify_email=".$mail;
-                           $_SESSION['reSend']=true;
+                            $_SESSION['registrationLink'] = 'http://localhost/Humanz_Pets/email-verification.php?verification_code=' . $result['verification_code'] . "&verify_email=" . $mail;
+                            $_SESSION['reSend'] = true;
                             header('Location: mail.php');
 
                             exit();
                         }
-                    }
-                    else {
+                    } else {
                         $this->errorLogInsert($mail, "The password was not valid!", "Log in", "Wrong password!");
                         $_SESSION['message'] = "Wrong password!";
                     }
@@ -1647,7 +1653,7 @@ if(isset($_SESSION['registration']))
             if (isset($_COOKIE['last_activity']) && isset($_SESSION['email']) && !isset($_SESSION['registration'])) {
                 $result = $this->fetchUserByEmail($_SESSION['email']);
 
-                if($result['banned']){
+                if ($result['banned']) {
                     $_SESSION = [];
                     session_unset();
                     session_destroy();
@@ -1714,7 +1720,7 @@ if(isset($_SESSION['registration']))
 
             } elseif (isset($_COOKIE['email']) && !isset($_SESSION['registration'])) {
                 $result = $this->fetchUserByEmail($_COOKIE['email']);
-                if($result['banned']){
+                if ($result['banned']) {
                     $_SESSION = [];
                     session_unset();
                     session_destroy();
@@ -1800,8 +1806,7 @@ if(isset($_SESSION['registration']))
                 header('Location: index.php');
                 exit();
 
-            }
-            elseif (isset($_SESSION['email']) ) {
+            } elseif (isset($_SESSION['email'])) {
                 session_destroy();
                 header('Location: logIn.php');
                 exit();
