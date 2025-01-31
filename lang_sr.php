@@ -1,4 +1,17 @@
 <?php
+define('BAN','Osoba je zabranjena:');
+define('UNBAN','Osoba nije zabranjena:');
+define('FILLMES','Popunite poruku');
+define('RESDELFAIL','Brisanje rezervacije nije uspelo. Pokušajte ponovo.');
+define('RESDELSUC','Rezervacija je uspešno obrisana.');
+define('PICSUCCESS','Slika je uspešno izbrisana');
+define('VERFAIL','Verifikacija nije uspela');
+define('LOGSET','Prijavite se i završite podešavanje naloga');
+define('EMAILNOTREG','Ovaj email nije registrovan.');
+define('CODENOVALID','Ovaj kod nije važeći na našoj stranici');
+define('CHANGEPASS','Sada možete promeniti lozinku.');
+define('VALIDEXP','Vreme valjanosti je isteklo. Zatražite novi kod.');
+define('NOCHECK','Ne možete proveriti kućnog ljubimca dan ili više pre zakazanog termina');
 define('SEEVET','Lista veterinara');
 define('RESERVATION','Rezervacija od: ');
 define('RESERVATION2','Do: ');

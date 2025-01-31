@@ -4,39 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2367ab9a-341c-4300-a7ed-72f717181f7d" name="Changes" comment="DB">
+    <list default="true" id="2367ab9a-341c-4300-a7ed-72f717181f7d" name="Changes" comment="Offline vet list, product data check and background color">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/addProduct.php" beforeDir="false" afterPath="$PROJECT_DIR$/addProduct.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/addVet.php" beforeDir="false" afterPath="$PROJECT_DIR$/addVet.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/banSite.php" beforeDir="false" afterPath="$PROJECT_DIR$/banSite.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/book_apointment.php" beforeDir="false" afterPath="$PROJECT_DIR$/book_apointment.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/book_veterinarian.php" beforeDir="false" afterPath="$PROJECT_DIR$/book_veterinarian.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/booked_users.php" beforeDir="false" afterPath="$PROJECT_DIR$/booked_users.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/details.php" beforeDir="false" afterPath="$PROJECT_DIR$/details.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/email-verification.php" beforeDir="false" afterPath="$PROJECT_DIR$/email-verification.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/functions.php" beforeDir="false" afterPath="$PROJECT_DIR$/functions.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/index.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lang_en.php" beforeDir="false" afterPath="$PROJECT_DIR$/lang_en.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lang_hu.php" beforeDir="false" afterPath="$PROJECT_DIR$/lang_hu.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lang_sr.php" beforeDir="false" afterPath="$PROJECT_DIR$/lang_sr.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/logIn.php" beforeDir="false" afterPath="$PROJECT_DIR$/logIn.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modify.php" beforeDir="false" afterPath="$PROJECT_DIR$/modify.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pet.php" beforeDir="false" afterPath="$PROJECT_DIR$/pet.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/petsInfo.php" beforeDir="false" afterPath="$PROJECT_DIR$/petsInfo.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/products.php" beforeDir="false" afterPath="$PROJECT_DIR$/products.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ratings.php" beforeDir="false" afterPath="$PROJECT_DIR$/ratings.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/registerAnimal.php" beforeDir="false" afterPath="$PROJECT_DIR$/registerAnimal.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/registration.php" beforeDir="false" afterPath="$PROJECT_DIR$/registration.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resetPassword-mail.php" beforeDir="false" afterPath="$PROJECT_DIR$/resetPassword-mail.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resetPassword.php" beforeDir="false" afterPath="$PROJECT_DIR$/resetPassword.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/reviewVeterinarian.php" beforeDir="false" afterPath="$PROJECT_DIR$/reviewVeterinarian.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/selectVeterinarian.php" beforeDir="false" afterPath="$PROJECT_DIR$/selectVeterinarian.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/updateAnimal.php" beforeDir="false" afterPath="$PROJECT_DIR$/updateAnimal.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/updateProduct.php" beforeDir="false" afterPath="$PROJECT_DIR$/updateProduct.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/userData.php" beforeDir="false" afterPath="$PROJECT_DIR$/userData.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/users.php" beforeDir="false" afterPath="$PROJECT_DIR$/users.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/veterinarianRates.php" beforeDir="false" afterPath="$PROJECT_DIR$/veterinarianRates.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/veterinarians.php" beforeDir="false" afterPath="$PROJECT_DIR$/veterinarians.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -127,7 +101,8 @@
       <workItem from="1738098146992" duration="3326000" />
       <workItem from="1738166512039" duration="5577000" />
       <workItem from="1738177983696" duration="1353000" />
-      <workItem from="1738256359383" duration="5874000" />
+      <workItem from="1738256359383" duration="7386000" />
+      <workItem from="1738345427419" duration="5248000" />
     </task>
     <task id="LOCAL-00001" summary="Responsivity">
       <option name="closed" value="true" />
@@ -193,7 +168,15 @@
       <option name="project" value="LOCAL" />
       <updated>1738179328517</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Offline vet list, product data check and background color">
+      <option name="closed" value="true" />
+      <created>1738263870763</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1738263870763</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -219,6 +202,7 @@
     <MESSAGE value="Vet info page on pets v1" />
     <MESSAGE value="Vet info page on pets v2" />
     <MESSAGE value="DB" />
-    <option name="LAST_COMMIT_MESSAGE" value="DB" />
+    <MESSAGE value="Offline vet list, product data check and background color" />
+    <option name="LAST_COMMIT_MESSAGE" value="Offline vet list, product data check and background color" />
   </component>
 </project>

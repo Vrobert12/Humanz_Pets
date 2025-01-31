@@ -141,25 +141,27 @@ class Functions
             }
         }
     }
-public function deletePicture()
-{
-    if ( $_POST['table'] == 'veterinarian') {
 
-        $sql = "UPDATE veterinarian SET profilePic=:profilePic WHERE veterinarianID=:veterinarianID";
-        $stmt = $this->connection->prepare($sql);
-        $stmt->bindParam(':veterinarianID', $_POST['veterinarianId']);
-    } else {
-        $sql = "UPDATE user SET profilePic=:profilePic WHERE userID=:userID";
-        $stmt = $this->connection->prepare($sql);
-        $stmt->bindParam(':userID', $_POST['userId']);
+    public function deletePicture()
+    {
+        if ($_POST['table'] == 'veterinarian') {
+
+            $sql = "UPDATE veterinarian SET profilePic=:profilePic WHERE veterinarianID=:veterinarianID";
+            $stmt = $this->connection->prepare($sql);
+            $stmt->bindParam(':veterinarianID', $_POST['veterinarianId']);
+        } else {
+            $sql = "UPDATE user SET profilePic=:profilePic WHERE userID=:userID";
+            $stmt = $this->connection->prepare($sql);
+            $stmt->bindParam(':userID', $_POST['userId']);
+        }
+        $stmt->bindValue(':profilePic', "logInPic.png");
+        if ($stmt->execute()) {
+            $_SESSION['message'] = PICSUCCESS . $_POST['veterinarianId'];
+            header('Location:banSite.php');
+            exit();
+        }
     }
-    $stmt->bindValue(':profilePic', "logInPic.png");
-    if($stmt->execute()){
-        $_SESSION['message'] = "Picture deleted successfully".$_POST['veterinarianId'];
-        header('Location:banSite.php');
-        exit();
-    }
-}
+
     public function deleteReservationByVet()
     {
         if (!empty($_POST['mailText'])) {
@@ -174,7 +176,7 @@ WHERE reservationId = :reservationId
             $stmt->execute();
             $result = $stmt->rowCount();
             if ($result) {
-                $_SESSION['message'] = "Reservation successfully deleted.";
+                $_SESSION['message'] = RESDELSUC;
                 $_SESSION['mailText'] = $_POST['mailText'];
                 $_SESSION['cancelEmail'] = $_POST['cancelEmail'];
 
@@ -190,11 +192,11 @@ WHERE reservationId = :reservationId
                 header('Location:mail.php');
                 exit();
             } else
-                $_SESSION['message'] = "Failed to delete the reservation. Please try again.";
+                $_SESSION['message'] = RESDELFAIL;
             header('Location:booked_users.php');
             exit();
         } else
-            $_SESSION['message'] = "Fill the message out.";
+            $_SESSION['message'] = FILLMES;
         header('Location:booked_users.php');
         exit();
     }
@@ -206,11 +208,11 @@ WHERE reservationId = :reservationId
                 $time = time();
                 $currentTime = date("Y-m-d H:i:s", $time);
                 if ($_POST['ban'] == "yes") {
-                    $_SESSION['message'] = "The person is unbanned:" . $_POST['veterinarianId'];
+                    $_SESSION['message'] = UNBAN . $_POST['veterinarianId'];
                     $sql = "UPDATE veterinarian SET banned=0 WHERE veterinarianId=:veterinarianId";
 
                 } else {
-                    $_SESSION['message'] = "The person is banned:" . $_POST['veterinarianId'];
+                    $_SESSION['message'] = BAN . $_POST['veterinarianId'];
                     $sql = "UPDATE veterinarian SET banned=1 WHERE veterinarianId=:veterinarianId";
 
                 }
@@ -237,11 +239,11 @@ WHERE reservationId = :reservationId
                 $time = time();
                 $currentTime = date("Y-m-d H:i:s", $time);
                 if ($_POST['ban'] == "yes") {
-                    $_SESSION['message'] = "The person is unbanned: " . $_POST['userId'];
+                    $_SESSION['message'] = UNBAN . $_POST['userId'];
                     $sql = "UPDATE user SET banned=0 WHERE userId=:userId";
 
                 } else {
-                    $_SESSION['message'] = "The person is banned: " . $_POST['userId'];
+                    $_SESSION['message'] = BAN . $_POST['userId'];
                     $sql = "UPDATE user SET banned=1 WHERE userId=:userId";
 
                 }
@@ -318,47 +320,62 @@ WHERE reservationId = :reservationId
 
     public function sendReview()
     {
-        $_SESSION['message'] = "Thank you for your feedback";
-        $sql = "Update reservation set animalChecked=true where reservationId=:reservationId";
-        $stmt = $this->connection->prepare($sql);
-        $stmt->bindParam(':reservationId', $_POST['reservationId']);
-        $stmt->execute();
+        $sql2 = "Select reservationDay FROM reservation WHERE reservationId = :reservationId";
+        $stmt2 = $this->connection->prepare($sql2);
+        $stmt2->bindParam(':reservationId', $_POST['reservationId']);
+        $stmt2->execute();
+        $result2 = $stmt2->fetchAll(PDO::FETCH_ASSOC);
+        $date = date("Y-m-d");
+        if ($result2['reservationDay'] <= $date) {
 
-        $reviewCode = $this->generateVerificationCode(8);
 
-        $sql = "SELECT reviewCode FROM review";
-        $stmt = $this->connection->prepare($sql);
-        $stmt->execute();
-        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $_SESSION['message'] = "Thank you for your feedback";
+            $sql = "Update reservation set animalChecked=true where reservationId=:reservationId";
+            $stmt = $this->connection->prepare($sql);
+            $stmt->bindParam(':reservationId', $_POST['reservationId']);
+            $stmt->execute();
 
-        foreach ($result as $row) {
-            if ($reviewCode === $row['reviewCode']) {
-                $reviewCode = $this->generateVerificationCode(9);
-                break;
+            $reviewCode = $this->generateVerificationCode(8);
+
+            $sql = "SELECT reviewCode FROM review";
+            $stmt = $this->connection->prepare($sql);
+            $stmt->execute();
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            foreach ($result as $row) {
+                if ($reviewCode === $row['reviewCode']) {
+                    $reviewCode = $this->generateVerificationCode(9);
+                    break;
+                }
             }
-        }
 
 
-        $sql = "Select usedLanguage from user where userId=:userId";
-        $stmt = $this->connection->prepare($sql);
-        $stmt->bindParam(':userId', $_POST['ownerId']);
-        $stmt->execute();
-        $usedLanguage = $stmt->FetchColumn();
+            $sql = "Select usedLanguage from user where userId=:userId";
+            $stmt = $this->connection->prepare($sql);
+            $stmt->bindParam(':userId', $_POST['ownerId']);
+            $stmt->execute();
+            $usedLanguage = $stmt->FetchColumn();
 
 
-        $sql = "INSERT INTO review( reviewCode, userId, veterinarianId)
+            $sql = "INSERT INTO review( reviewCode, userId, veterinarianId)
 VALUES (:reviewCode,:userId,:veterinarianId)";
-        $stmt = $this->connection->prepare($sql);
+            $stmt = $this->connection->prepare($sql);
 
-        $stmt->bindParam(':reviewCode', $reviewCode);
-        $stmt->bindParam(':userId', $_POST['ownerId']);
-        $stmt->bindParam(':veterinarianId', $_SESSION['userId']);
-        $stmt->execute();
-        $_SESSION['usedLanguage'] = $usedLanguage;
-        $_SESSION['ownerMail'] = $_POST['ownerMail'];
-        $_SESSION['reviewLink'] = 'http://localhost/Humanz_Pets/reviewVeterinarian.php?reviewCode=' . $reviewCode;
-        header('Location:mail.php');
-        exit();
+            $stmt->bindParam(':reviewCode', $reviewCode);
+            $stmt->bindParam(':userId', $_POST['ownerId']);
+            $stmt->bindParam(':veterinarianId', $_SESSION['userId']);
+            $stmt->execute();
+            $_SESSION['usedLanguage'] = $usedLanguage;
+            $_SESSION['ownerMail'] = $_POST['ownerMail'];
+            $_SESSION['reviewLink'] = 'http://localhost/Humanz_Pets/reviewVeterinarian.php?reviewCode=' . $reviewCode;
+            header('Location:mail.php');
+            exit();
+        }
+        else{
+            $_SESSION['message'] = NOCHECK;
+            header('Location:' . $_SESSION['previousPage']);
+            exit();
+        }
     }
 
     public function mailAddAndPasswordChange()
@@ -1095,7 +1112,7 @@ WHERE productId = :productId;
         if ($result) { // Ensure the result is not empty before outputting HTML
             $mailColumn = ($table === 'user') ? 'userMail' : 'veterinarianMail';
             echo '<input type="hidden" name="mail" class="form-control" id="mail" value="' . htmlspecialchars($result[$mailColumn]) . '">';
-echo '<input type="hidden" name="table" class="form-control" id="table" value="' . $table . '">';
+            echo '<input type="hidden" name="table" class="form-control" id="table" value="' . $table . '">';
             echo '  <div class="mb-3">
                 <label for="knev" class="form-label">' . NAME . ':</label>
                 <input type="text" class="form-control" placeholder="' . NAME . '" value="' . htmlspecialchars($result['firstName']) . '" name="firstName" id="knev">
@@ -1352,14 +1369,13 @@ echo '<input type="hidden" name="table" class="form-control" id="table" value="'
 // Calling userModifyData function with posted data
         if ($_POST['table'] == 'veterinarian') {
             $this->userModifyData($_POST['firstName'], $_POST['lastName'], $_POST['tel'], $_POST['usedLanguage'], "modify.php?veterinarianId=" . $result['veterinarianID']);
-            $id=$result['veterinarianID'];
-        } elseif ($_POST['table'] == 'user'){
+            $id = $result['veterinarianID'];
+        } elseif ($_POST['table'] == 'user') {
             $this->userModifyData($_POST['firstName'], $_POST['lastName'], $_POST['tel'], $_POST['usedLanguage'], "modify.php?userId=" . $result['userId']);
-    $id=$result['userId'];
-        }
-        else {
+            $id = $result['userId'];
+        } else {
             $this->userModifyData($_POST['firstName'], $_POST['lastName'], $_POST['tel'], $_POST['usedLanguage'], "modify.php");
-        $id=$_SESSION['userId'];
+            $id = $_SESSION['userId'];
         }// Check if user data was found and update if necessary
         if ($result) {
 
@@ -1417,18 +1433,18 @@ echo '<input type="hidden" name="table" class="form-control" id="table" value="'
 
         $stmt = "SELECT firstName, lastName, phoneNumber FROM $table WHERE " . $table . "Id = :Id";
         $stmt = $this->connection->prepare($stmt);
-        $stmt->bindParam(':Id',  $id);
+        $stmt->bindParam(':Id', $id);
         $stmt->execute();
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             $_SESSION['qrCodeFile'] = $this->createQrCode($row['firstName'] . ' ' . $row['lastName'], $row['phoneNumber']);
         }
-        if ($_SESSION['privilage'] != 'veterinarian' &&   $_POST['table'] != 'veterinarian') {
+        if ($_SESSION['privilage'] != 'veterinarian' && $_POST['table'] != 'veterinarian') {
             $stmt = "UPDATE qr_code qr
 INNER JOIN $table u ON qr.userId = u.userId
 SET qr.qrCodeName = :qrCodeName
 WHERE u.userId = :userId";
             $stmt = $this->connection->prepare($stmt);
-            $stmt->bindParam(':userId',  $id);
+            $stmt->bindParam(':userId', $id);
             $stmt->bindParam(':qrCodeName', $_SESSION['qrCodeFile']);
             $stmt->execute();
         }

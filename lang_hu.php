@@ -1,4 +1,17 @@
 <?php
+define('BAN','Személy letiltva:');
+define('UNBAN','Személy tilalma felmentve:');
+define('FILLMES','Töltse ki az üzenetet');
+define('RESDELFAIL','Nem sikerült törölni a foglalást. Kérjük, próbálja újra.');
+define('RESDELSUC','Foglalás sikeresen törölve');
+define('PICSUCCESS','A kép sikeresen törölve');
+define('VERFAIL','Az ellenőrzés nem sikerült');
+define('LOGSET','Jelentkezzen be, és fejezze be fiókja beállítását');
+define('EMAILNOTREG','Ez az e-mail nincs regisztrálva.');
+define('CODENOVALID','Ez a kód nem érvényes oldalunkon');
+define('CHANGEPASS','Most megváltoztathatja jelszavát.');
+define('VALIDEXP','Az érvényesítési idő lejárt. Kérjen új kódot.');
+define('NOCHECK','A találkozó előtt egy nappal vagy többel nem ellenőrizhető az állat');
 define('SEEVET','Állatorvosok megtekintése');
 define('RESERVATION','Foglalás ettől: ');
 define('RESERVATION2','Eddig: ');

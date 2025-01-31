@@ -1,4 +1,17 @@
 <?php
+define('BAN','This person is banned:');
+define('UNBAN','This person is unbanned:');
+define('FILLMES','Fill the message out.');
+define('RESDELFAIL','Failed to delete the reservation. Please try again.');
+define('RESDELSUC','Reservation successfully deleted.');
+define('PICSUCCESS','Picture deleted successfully');
+define('VERFAIL','Verification failed');
+define('LOGSET','Log in and finish setting up your account');
+define('EMAILNOTREG','This email is not registered.');
+define('CODENOVALID','This code is not valid on our page');
+define('CHANGEPASS','Now you can change the password.');
+define('VALIDEXP','Validation time has expired. Please request a new code.');
+define('NOCHECK','Cannot check pet a day or more before the appointment');
 define('SEEVET','List of veterinarians');
 define('RESERVATION','Reservation From: ');
 define('RESERVATION2','To: ');

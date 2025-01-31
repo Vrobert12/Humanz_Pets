@@ -29,21 +29,21 @@ if (isset($_GET['verify_email']) && isset($_SESSION['mailReset'])) {
             $_SESSION['test'] = 1;
             $_SESSION['registrationLink'] = 'http://localhost/Humanz_Pets/email-verification.php?
                     verification_code=' . $verification_code."&verify_email=".$email;
-            $_SESSION['message'] = "Validation time has expired. Please request a new code.";
+            $_SESSION['message'] = VALIDEXP;
             header('Location: mail.php');
             exit();
         }
 
         if ($result['passwordValidation'] == $verificationCode) {
-            $_SESSION['message'] = "Now you can change the password.";
+            $_SESSION['message'] = CHANGEPASS;
             header("Location: resetPassword.php?mail=$email&passwordValidation={$result['passwordValidation']}");
             exit();
         } else {
-            $_SESSION['message'] = "This code is not valid on our page ".$result['passwordValidation']." ".$verificationCode;
+            $_SESSION['message'] = CODENOVALID.$result['passwordValidation']." ".$verificationCode;
         }
     } else {
         error_log("Email not registered: $email");
-        $_SESSION['message'] = "This email is not registered.";
+        $_SESSION['message'] = EMAILNOTREG;
     }
 
     header('Location: logIn.php');
@@ -88,7 +88,7 @@ if (isset($_GET['verify_email']) && isset($_GET['verification_code'])) {
                 $query->bindParam(':mail', $email, PDO::PARAM_STR);
                 $query->execute();
 
-                $_SESSION['message'] = "This code is not valid on our page.<br> If you are registered, we sent you an email with a new code.";
+                $_SESSION['message'] = CODENOVALID;
                 $_SESSION['registrationLink'] = 'http://localhost/Humanz_Pets/email-verification.php?
                     verification_code=' . $verification_code."&verify_email=".$email;
 
@@ -113,16 +113,16 @@ if (isset($_GET['verify_email']) && isset($_GET['verification_code'])) {
 
                     if ($stmt->execute()) {
                         sleep(2);
-                        $_SESSION['message'] = "Log in and finish setting up your account";
+                        $_SESSION['message'] = LOGSET;
                         header('Location: logIn.php');
                         exit();
                     } else {
                         sleep(2);
-                        $_SESSION['message'] = "Verification failed";
+                        $_SESSION['message'] = VERFAIL;
                     }
                 } else {
                     sleep(2);
-                    $_SESSION['message'] = "This code is not valid on our page.";
+                    $_SESSION['message'] = CODENOVALID;
                     $mail = $_SESSION['email'];
                     $_SESSION['registrationLink'] = 'http://localhost/Humanz_Pets/email-verification.php?
                     verification_code=' . $verification_code."&verify_email=".$email;
