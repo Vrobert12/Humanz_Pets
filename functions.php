@@ -429,8 +429,8 @@ VALUES (:reviewCode,:userId,:veterinarianId)";
             $this->updateVerificationDetails($mail, $verification_code, $verification_time, $table);
 
             $_SESSION['mailReset'] = $mail;
-            $_SESSION['mailResetLink'] = '<a href="http://localhost/Humanz_Pets/resetPassword.php?verification_code='
-                . $verification_code . '&verify_email=' . $mail . '">here</a>';
+            $_SESSION['mailResetLink'] = 'http://localhost/Humanz_Pets/resetPassword.php?verification_code='
+                . $verification_code . '&verify_email=' . $mail ;
             header('Location: mail.php');
             exit();
         }
@@ -648,7 +648,7 @@ VALUES (:reviewCode,:userId,:veterinarianId)";
                 $today = date("Y-m-d");
                 $reservationCheckQuery = $this->connection->prepare(
                     "SELECT COUNT(*) AS reservationCount FROM reservation 
-             WHERE petId = :petId AND reservationDay >= :today"
+             WHERE petId = :petId AND reservationDay >= :today and animalChecked=0"
                 );
                 $reservationCheckQuery->execute([
                     ':petId' => $selectedPetId,
@@ -829,7 +829,7 @@ VALUES (:userId,:productName,:productPicture,:productId,:sum, :price)";
                 $stmt->bindParam(':usedLanguage', $language, PDO::PARAM_STR);
 
                 if ($stmt->execute()) {
-                    $_SESSION['workerLink'] = 'http://localhost/Humanz_Pets/resetPassword.php?verify_email=' . $mail . '&verification_code=' . $verification_code;
+                    $_SESSION['workerLink'] = 'http://localhost/Humanz_Pets/resetPassword.php?verify_email=' . $mail . '&verification_code=' . $verification_code ;
                     $_SESSION['message'] = "Worker added Successfully!";
                     $_SESSION['text'] = "<h2>Registration</h2>";
                     $_SESSION['verification_code'] = $verification_code;
@@ -1225,7 +1225,7 @@ WHERE productId = :productId;
                                 $_SESSION['message'] = "If you think the<b>E-mail</b> address is registered try again.";
                                 $_SESSION['verification_code'] = $verification_code;
                                 $_SESSION['email'] = $mail;
-                                $_SESSION['registrationLink'] = '<a href="http://localhost/Humanz_Pets/email-verification.php?verification_code=' . $verification_code . '&verify_email=' . $mail . '">here</a>';
+                                $_SESSION['registrationLink'] = 'http://localhost/Humanz_Pets/email-verification.php?verification_code=' . $verification_code ;
                                 header('Location: mail.php');
                                 exit();
                             }
@@ -1312,7 +1312,7 @@ WHERE productId = :productId;
                     $_SESSION['message'] = "We sent an email to you!";
                     $_SESSION['text'] = "<h2>Registration</h2>";
                     $_SESSION['email'] = $mail;
-                    $_SESSION['registrationLink'] = '<a href="http://localhost/Humanz_Pets/email-verification.php?verification_code=' . $verification_code . '&verify_email=' . $mail . '">here</a>';
+                    $_SESSION['registrationLink'] = 'http://localhost/Humanz_Pets/email-verification.php?verification_code=' . $verification_code . '&verify_email=' . $mail ;
                     header('Location: mail.php');
                     exit(); // Exit script after redirection
                 } else {
@@ -1845,7 +1845,7 @@ WHERE u.userId = :userId";
                             $_SESSION['message'] = "Verify Account, we sent a mail to you!";
                             $_SESSION['text'] = "<h2>Registration</h2>";
                             $_SESSION['email'] = $mail;
-                            $_SESSION['registrationLink'] = '<a href="http://localhost/Humanz_Pets/email-verification.php?verification_code=' . $result['verification_code'] . '&verify_email=' . $mail . '">here</a>';
+                            $_SESSION['registrationLink'] = 'http://localhost/Humanz_Pets/email-verification.php?verification_code=' . $result['verification_code'] . '&verify_email=' . $mail;
                             $_SESSION['reSend'] = true;
                             header('Location: mail.php');
 

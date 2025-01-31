@@ -1,4 +1,5 @@
 <?php
+define('HERE','ovde');
 define('BAN','Osoba je zabranjena:');
 define('UNBAN','Osoba nije zabranjena:');
 define('FILLMES','Popunite poruku');

@@ -1,4 +1,5 @@
 <?php
+define('HERE','itt');
 define('BAN','Személy letiltva:');
 define('UNBAN','Személy tilalma felmentve:');
 define('FILLMES','Töltse ki az üzenetet');

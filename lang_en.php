@@ -1,4 +1,5 @@
 <?php
+define('HERE','here');
 define('BAN','This person is banned:');
 define('UNBAN','This person is unbanned:');
 define('FILLMES','Fill the message out.');

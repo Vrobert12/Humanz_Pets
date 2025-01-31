@@ -42,7 +42,7 @@ WHERE p.userId = :userId
 AND p.petId NOT IN (
     SELECT r.petId
     FROM reservation r
-    WHERE r.reservationDay >= CURDATE()
+    WHERE r.reservationDay >= CURDATE() AND r.animalChecked=0
 )
 ";
 $petStmt = $pdo->prepare($petQuery);
@@ -54,7 +54,7 @@ $petQuery = "SELECT p.petId, p.petName, p.bred, p.petSpecies, p.petPicture, r.re
 FROM pet p
 LEFT JOIN reservation r ON p.petId = r.petId
 WHERE p.userId = :userId
-AND (r.reservationDay IS NOT NULL AND r.reservationDay >= CURDATE())
+AND (r.reservationDay IS NOT NULL AND r.reservationDay >= CURDATE() AND r.animalChecked=0)
 
 ";
 

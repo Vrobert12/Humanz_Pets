@@ -37,8 +37,8 @@ try {
         $mail->addAddress(  $_SESSION['ownerMail'] ,$_SESSION['ownerMail'] );
         $mail->addReplyTo($_SESSION["email"], 'Reply');
         $mail->Subject = "R&D";
-        $mail->AltBody = REVIEV_MESSAGE . " Visit the review page here: " . $_SESSION['reviewLink'];
-        $mail->Body = REVIEV_MESSAGE . " <a href='" . $_SESSION['reviewLink'] . "'>here</a>";
+        $mail->AltBody = REVIEV_MESSAGE . " <a href='" . $_SESSION['reviewLink']. "'>".HERE."</a>";
+        $mail->Body = REVIEV_MESSAGE . " <a href='" . $_SESSION['reviewLink'] . "'>".HERE."</a>";
 
 
         unset($_SESSION['ownerMail']);
@@ -63,8 +63,8 @@ try {
         $mail->addAddress($_SESSION['email'], $_SESSION['email']);
         $mail->addReplyTo("robertvarro12@gmail.com", 'Reply');
         $mail->Subject = "R&D";
-        $mail->Body = "<h2>Validate</h2> Your link:<br><h3>" . $_SESSION['registrationLink']  . "</h3>";
-        $mail->AltBody = "Your link:<br><h3>" . $_SESSION['registrationLink']  . "</h3>";
+        $mail->Body = "<h2>Validate</h2> Your link:<br><a href=" . $_SESSION['registrationLink']  . ">".HERE."</a>";
+        $mail->AltBody = "Your link:<br><a href=" . $_SESSION['registrationLink']  . ">".HERE."</a>";
         $_SESSION['message'] = "<b>Check your mail for account verification</b>";
         unset($_SESSION['registrationLink'] );
         unset($_SESSION['email'] );
@@ -83,8 +83,8 @@ try {
         $mail->addReplyTo("robertvarro12@gmail.com", 'Reply');
         $mail->Subject = "R&D";
         $_SESSION['message'] = "<b>Check your mail for password verification</b>";
-        $mail->Body = "<h2>Reset password</h2> Your link:<br><h3>" . $_SESSION['mailResetLink'] . "</h3>";
-        $mail->AltBody = "Your link:<br><h3>" . $_SESSION['mailResetLink']  . "</h3>";
+        $mail->Body = "<h2>Reset password</h2> Your link:<br><a href=" . $_SESSION['mailResetLink'] . ">".HERE."</a>";
+        $mail->AltBody = "Your link:<br><a href=" . $_SESSION['mailResetLink']  . ">".HERE."</a>";
         $_SESSION['message'] = "<b>Check your mail for password reset</b>";
         unset($_SESSION['mailResetLink']);
         unset($_SESSION['mailReset']);
@@ -97,8 +97,8 @@ try {
         $mail->Subject = "R&D";
 
         $_SESSION['message'] = "<b>Worker is added</b>";
-        $mail->Body = "<h2>You are hired :)</h2> Set up your profile <a href=" . $_SESSION['workerLink'] . ">here</a>";
-        $mail->AltBody = "<h2>You are hired :)</h2> Set up your profile <a href=" . $_SESSION['workerLink'] . ">here</a>";
+        $mail->Body = "<h2>You are hired :)</h2> Set up your profile <a href=" . $_SESSION['workerLink'] . ">".HERE."</a>";
+        $mail->AltBody = "<h2>You are hired :)</h2> Set up your profile <a href=" . $_SESSION['workerLink'] . ">".HERE."</a>";
         unset($_SESSION['workerEmail']);
         header('Location:addVet.php');
     }
