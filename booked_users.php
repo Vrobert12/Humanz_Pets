@@ -185,7 +185,7 @@ $reservedPets = $reservedPetStmt->fetchAll(PDO::FETCH_ASSOC);
                         <input type="hidden" value="<?= htmlspecialchars($reservedPet['reservationId']) ?>" name="reservationId">
                         <input type="hidden" value="<?= htmlspecialchars($reservedPet['userMail']) ?>" name="ownerMail">
                         <input type="hidden" value="<?= htmlspecialchars($reservedPet['userId']) ?>" name="ownerId">
-                        <input type="hidden" value="deleteReservation" name="action">
+                        <input type="hidden" value="animalChecked" name="action">
                         <input type="submit" value="Check" class="btn btn-primary btn-sm" onclick="confirmCheck(event)" />
                     </form>
 

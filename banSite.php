@@ -104,7 +104,7 @@ if (isset($_SESSION['email']) && isset($_SESSION['profilePic'])) {
                 echo '<input type="hidden" name="userId" value="' . htmlspecialchars($row['userId']) . '">';
                 echo '<input type="hidden" name="action" value="deletePicture">';
                 echo '<input type="hidden" name="table" value="user">';
-                echo '<input type="submit" class="btn btn-danger" value="' . ($isBanned ? 'Unban' : 'Ban') . '">';
+                echo '<input type="submit" class="btn btn-danger" value="Delete Picture">';
 
                 echo '</form>';
                 echo '<label>Name: ' . $fullName . '</label><br>';

@@ -36,19 +36,19 @@ $autoload->checkAutoLogin();
 
             echo '  <div class="mb-3">
             <label for="knev" class="form-label">' . NAME . ':</label>
-            <input type="text" class="form-control" placeholder="<?php echo NAME ?>" value="' . $_SESSION['firstName'] . '" name="firstName" id="knev">
+            <input type="text" class="form-control" placeholder=" '.NAME.' " value="' . $_SESSION['firstName'] . '" name="firstName" id="knev">
         </div>';
 
             echo ' <div class="mb-3">
             <label for="vnev" class="form-label">' . LASTNAME . ':</label>
-            <input type="text" class="form-control" placeholder="<?php echo LASTNAME ?>" value="' . $_SESSION['lastName'] . '" name="lastName" id="vnev">
+            <input type="text" class="form-control" placeholder="'. LASTNAME .'" value="' . $_SESSION['lastName'] . '" name="lastName" id="vnev">
         </div>';
 
             echo '<div class="mb-3">
             <label for="tel" class="form-label">' . PHONE . ':</label>
             <div class="input-group">
 
-                <input type="text" class="form-control" placeholder="<?php echo PHONE ?>" value="' . $_SESSION['phone'] . '" name="tel" id="tel2">
+                <input type="text" class="form-control" placeholder="<'. PHONE .'" value="' . $_SESSION['phone'] . '" name="tel" id="tel2">
             </div>';
         } ?>
 

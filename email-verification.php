@@ -27,8 +27,8 @@ if (isset($_GET['verify_email']) && isset($_SESSION['mailReset'])) {
             $email=$_GET['verify_email'];
             $_SESSION['email'] = $email;
             $_SESSION['test'] = 1;
-            $_SESSION['registrationLink'] = 'http://localhost/Humanz_Pets/email-verification.php?
-                    verification_code=' . $verificationCode."&verify_email=".$email;
+            $_SESSION['registrationLink'] = '<a href="http://localhost/Humanz_Pets/email-verification.php?
+                    verification_code=' . $verificationCode.'&verify_email='.$email.'">here</a>';
             $_SESSION['message'] = VALIDEXP;
             header('Location: mail.php');
             exit();
@@ -89,8 +89,8 @@ if (isset($_GET['verify_email']) && isset($_GET['verification_code'])) {
                 $query->execute();
 
                 $_SESSION['message'] = CODENOVALID;
-                $_SESSION['registrationLink'] = 'http://localhost/Humanz_Pets/email-verification.php?
-                    verification_code=' . $verification_code."&verify_email=".$email;
+                $_SESSION['registrationLink'] = '<a href="http://localhost/Humanz_Pets/email-verification.php?
+                    verification_code=' . $verification_code.'&verify_email='.$email.'">here</a>';
 
                 sleep(2);
 
@@ -124,8 +124,8 @@ if (isset($_GET['verify_email']) && isset($_GET['verification_code'])) {
                     sleep(2);
                     $_SESSION['message'] = CODENOVALID;
                     $mail = $_SESSION['email'];
-                    $_SESSION['registrationLink'] = 'http://localhost/Humanz_Pets/email-verification.php?
-                    verification_code=' . $verification_code."&verify_email=".$email;
+                    $_SESSION['registrationLink'] = '<a href="http://localhost/Humanz_Pets/email-verification.php?
+                    verification_code=' . $verification_code.'&verify_email='.$email.'">here</a>';
 
                     $logType = "E-mail validation";
                     $errorText = "The validation code is not correct!";
