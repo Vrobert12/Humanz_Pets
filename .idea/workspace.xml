@@ -4,13 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2367ab9a-341c-4300-a7ed-72f717181f7d" name="Changes" comment="Offline vet list, product data check and background color">
+    <list default="true" id="2367ab9a-341c-4300-a7ed-72f717181f7d" name="Changes" comment="Pet-checking restrictions and language improvements.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/email-verification.php" beforeDir="false" afterPath="$PROJECT_DIR$/email-verification.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/functions.php" beforeDir="false" afterPath="$PROJECT_DIR$/functions.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lang_en.php" beforeDir="false" afterPath="$PROJECT_DIR$/lang_en.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lang_hu.php" beforeDir="false" afterPath="$PROJECT_DIR$/lang_hu.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lang_sr.php" beforeDir="false" afterPath="$PROJECT_DIR$/lang_sr.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -102,7 +98,7 @@
       <workItem from="1738166512039" duration="5577000" />
       <workItem from="1738177983696" duration="1353000" />
       <workItem from="1738256359383" duration="7386000" />
-      <workItem from="1738345427419" duration="5248000" />
+      <workItem from="1738345427419" duration="5801000" />
     </task>
     <task id="LOCAL-00001" summary="Responsivity">
       <option name="closed" value="true" />
@@ -176,7 +172,15 @@
       <option name="project" value="LOCAL" />
       <updated>1738263870763</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Pet-checking restrictions and language improvements.">
+      <option name="closed" value="true" />
+      <created>1738350908339</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1738350908339</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -203,6 +207,7 @@
     <MESSAGE value="Vet info page on pets v2" />
     <MESSAGE value="DB" />
     <MESSAGE value="Offline vet list, product data check and background color" />
-    <option name="LAST_COMMIT_MESSAGE" value="Offline vet list, product data check and background color" />
+    <MESSAGE value="Pet-checking restrictions and language improvements." />
+    <option name="LAST_COMMIT_MESSAGE" value="Pet-checking restrictions and language improvements." />
   </component>
 </project>
