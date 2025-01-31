@@ -34,7 +34,7 @@ $autoload->checkAutoLogin();
 <div class="container-fluid">
     <a class="btn btn-secondary back-button" style="margin-left: 10px; margin-top: 10px" href="index.php"><?php echo BACK ?></a>
     <?php
-
+    $_SESSION['backPic'] = "banSite.php";
     $connection = $autoload->connect($dsn, $_ENV['DB_USER'], $_ENV['DB_PASSWORD'], $pdoOptions);
     if ($_SESSION['privilage'] != "Admin") {
         header("Location:index.php");
@@ -108,6 +108,8 @@ if (isset($_SESSION['email']) && isset($_SESSION['profilePic'])) {
                 echo '<input type="hidden" name="ban" value="' . ($isBanned ? 'yes' : 'no') . '">';
                 echo '<input type="hidden" name="action" value="ban">';
                 echo '<input type="submit" class="btn btn-danger" value="' . ($isBanned ? 'Unban' : 'Ban') . '">';
+                echo ' <a class="btn btn-primary back-button" href="modify.php?userId='.htmlspecialchars($row['userId']).'">'.MODIFY.' </a>';
+
                 echo '</form>';
                 echo '</div>';
             }
@@ -144,8 +146,12 @@ if (isset($_SESSION['email']) && isset($_SESSION['profilePic'])) {
                 echo '<input type="hidden" name="ban" value="' . ($isBanned ? 'yes' : 'no') . '">';
                 echo '<input type="hidden" name="action" value="vetBan">';
                 echo '<input type="submit" class="btn btn-danger" value="' . ($isBanned ? 'Unban' : 'Ban') . '">';
+                echo ' <a class="btn btn-primary back-button" href="modify.php?veterinarianId='.htmlspecialchars($row['veterinarianId']).'">'.MODIFY.' </a>';
+
+
                 echo '</form>';
-                echo '</div>';
+
+echo '</div>';
             }
             echo '</div></div>';
         }

@@ -17,12 +17,9 @@ $backgroundImage = "pictures/background.jpg";
 <head>
     <title>Main Page</title>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=yes">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-            crossorigin="anonymous"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
     <script>
@@ -32,78 +29,60 @@ $backgroundImage = "pictures/background.jpg";
     <script src="indexJS.js"></script>
     <link rel="stylesheet" href="style.css">
     <style>
-
-
-        th {
-            background-color: lightblue;
+        body {
+            background: #659df7;
         }
-
-        label {
+        .popup-message {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(0, 0, 0, 0.8);
             color: white;
-        }
-
-        td, th {
             padding: 15px;
-            font-size: 20px;
+            border-radius: 5px;
+            display: none;
+            z-index: 1000;
+        }
+        .list-group-item {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            text-align: center;
+            justify-content: center;
+        }
+        .list-group-item img {
+            max-width: 100%;
+            height: auto;
         }
     </style>
 </head>
-<body style="background: #659df7">
+<body>
 
-<!-- Show popup message if session message is set -->
 <?php if (isset($_SESSION['message'])): ?>
     <div class="popup-message" id="popupMessage">
         <?php echo $_SESSION['message']; ?>
     </div>
-    <?php unset($_SESSION['message']); // Clear message after it's displayed ?>
+    <?php unset($_SESSION['message']); ?>
 <?php endif; ?>
 
 <script>
-
-</script>
-
-<!-- Show popup message if session message is set -->
-<?php if (isset($_SESSION['message'])): ?>
-    <div class="popup-message" id="popupMessage">
-        <?php echo $_SESSION['message']; ?>
-    </div>
-    <?php unset($_SESSION['message']); // Clear message after it's displayed ?>
-<?php endif; ?>
-
-<script>
-    // Show the popup message and hide it after 5 seconds
     window.onload = function () {
         var popupMessage = document.getElementById('popupMessage');
         if (popupMessage) {
-            popupMessage.style.display = 'block';  // Show the popup
-
-            // Hide the popup after 5 seconds
+            popupMessage.style.display = 'block';
             setTimeout(function () {
                 popupMessage.style.display = 'none';
             }, 5000);
         }
     };
 </script>
-<!--
-https://getbootstrap.com/docs/5.3/components/navbar/
--->
 
-<a class="btn btn-secondary back-button" style="margin-left: 10px; margin-top: 10px"
-   href="index.php"><?php echo BACK ?></a>
+<div class="container mt-3">
+    <a class="btn btn-secondary" href="index.php"><?php echo BACK; ?></a>
+</div>
+
 <?php
-if (isset($_SESSION['message']) && $_SESSION['message'] != "")
-    echo "<div class='mainBlock rounded bg-dark text-white' style='text-align: center; margin-top: 100px;'>
-          <h1 style='margin: auto;'>
-              " . $_SESSION['message'] . "
-          </h1>
-          <a class='inputok' onclick='refreshPage()' style='display: inline-block; padding: 10px 20px; 
-             background-color: #19451e; color: white; text-decoration: none; border-radius: 5px; 
-             cursor: pointer; transition: background-color 0.3s ease; margin-top: 20px;'>
-              Okay
-          </a>
-      </div>";
-
-// Set a session variable for returning to tables.php
 $_SESSION['backPic'] = "book_veterinarian.php";
 
 if (isset($_POST['searchAction']) && $_POST['searchAction'] == 'search') {
@@ -113,54 +92,41 @@ if (isset($_POST['searchAction']) && $_POST['searchAction'] == 'search') {
     users("SELECT * FROM veterinarian WHERE verify=1 and banned!=1");
 }
 
-
 function users($command, $params = [])
 {
     global $pdo;
-
     $_SESSION['reservation'] = 0;
 
     try {
-        // Prepare the SQL query
         $stmt = $pdo->prepare($command);
-
-        // Bind parameters dynamically
         foreach ($params as $index => $value) {
-            $stmt->bindValue($index + 1, $value, PDO::PARAM_STR); // Positional parameters start at index 1
+            $stmt->bindValue($index + 1, $value, PDO::PARAM_STR);
         }
-
-        // Execute the query
         $stmt->execute();
-
-        // Fetch all results
         $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         if (!empty($results)) {
-            echo '<div class="container">
-            <ul class="list-group list-group-flush">';
-
+            echo '<div class="container my-3">
+                  <div class="row">';
             foreach ($results as $row) {
-                echo '<li class="list-group-item d-flex align-items-center" style="background-color: #f8f9fa; padding: 15px; border-bottom: 1px solid #ddd;">';
-                echo '<img class="rounded-circle me-3" src="pictures/' . htmlspecialchars($row['profilePic']) . '" width="80" height="80" alt="Profile Picture">';
-                echo '<div>';
-                echo '<h5 class="mb-1">' . htmlspecialchars($row['firstName'] . " " . $row['lastName']) . '</h5>';
-                echo '<p class="mb-1"><strong>ID:</strong> ' . htmlspecialchars($row['veterinarianId']) . '</p>';
-                echo '<p class="mb-1"><strong>Phone:</strong> ' . htmlspecialchars($row['phoneNumber']) . '</p>';
-                echo '<p class="mb-1"><strong>Email:</strong> ' . htmlspecialchars($row['veterinarianMail']) . '</p>';
-                echo '</div>';
-                echo '</li>';
+                echo '<div class="col-md-6 col-lg-4 mb-3">
+                        <div class="card p-3 text-center">
+                            <img src="pictures/' . htmlspecialchars($row['profilePic']) . '" class="rounded-circle img-fluid mx-auto" width="80" height="80" alt="Profile Picture">
+                            <h5 class="mt-2">' . htmlspecialchars($row['firstName'] . " " . $row['lastName']) . '</h5>
+                            <p><strong>ID:</strong> ' . htmlspecialchars($row['veterinarianId']) . '</p>
+                            <p><strong>'.PHONE.':</strong> ' . htmlspecialchars($row['phoneNumber']) . '</p>
+                            <p><strong>'.EMAIL.':</strong> ' . htmlspecialchars($row['veterinarianMail']) . '</p>
+                        </div>
+                      </div>';
             }
-
-            echo '</ul></div>';
+            echo '</div></div>';
         } else {
             $_SESSION['message'] = "<h2 style='color: white'>No result found.</h2>";
         }
-
     } catch (PDOException $e) {
         echo "Error: " . $e->getMessage();
     }
 }
-
 ?>
 </body>
 </html>

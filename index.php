@@ -309,6 +309,13 @@ https://getbootstrap.com/docs/5.3/components/navbar/
 
             }
             else{
+                    echo' <ul class="nav nav-pills nav-flush flex-column text-center"><li>
+            <a href="listVets.php" class="nav-link text-white">
+                <i class="bi bi-file-medical" style="font-size: 24px;"></i>
+                    <span class="visually-hidden">Home</span>
+            </a>
+        </li></ul><br>';
+
                 echo '<div class="d-flex justify-content-center">'; // Center the entire block
                 echo '  <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">';
                 echo '    <img src="pictures/logInPic.png" alt="img" width="32" height="32" class="rounded-circle me-2">';

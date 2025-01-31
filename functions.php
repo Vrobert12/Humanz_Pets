@@ -1056,6 +1056,46 @@ WHERE productId = :productId;
 
     }
 
+    public function modifyForAdmin(string $table, int $id)
+    {
+        $allowedTables = ['user', 'veterinarian'];
+        if (!in_array($table, $allowedTables)) {
+            throw new Exception("Invalid table name.");
+        }
+
+        // Correct query with dynamic table name
+        $sql = "SELECT firstName, lastName, phoneNumber, {$table}Mail FROM {$table} WHERE {$table}Id = :id";
+
+        $stmt = $this->connection->prepare($sql);
+        $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($result) { // Ensure the result is not empty before outputting HTML
+            $mailColumn = ($table === 'user') ? 'userMail' : 'veterinarianMail';
+            echo '<input type="hidden" name="mail" class="form-control" id="mail" value="' . htmlspecialchars($result[$mailColumn]) . '">';
+echo '<input type="hidden" name="table" class="form-control" id="table" value="' . $table . '">';
+            echo '  <div class="mb-3">
+                <label for="knev" class="form-label">' . NAME . ':</label>
+                <input type="text" class="form-control" placeholder="' . NAME . '" value="' . htmlspecialchars($result['firstName']) . '" name="firstName" id="knev">
+            </div>';
+
+            echo ' <div class="mb-3">
+                <label for="vnev" class="form-label">' . LASTNAME . ':</label>
+                <input type="text" class="form-control" placeholder="' . LASTNAME . '" value="' . htmlspecialchars($result['lastName']) . '" name="lastName" id="vnev">
+            </div>';
+
+            echo '<div class="mb-3">
+                <label for="tel" class="form-label">' . PHONE . ':</label>
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="' . PHONE . '" value="' . htmlspecialchars($result['phoneNumber']) . '" name="tel" id="tel2">
+                </div>
+            </div>';
+        } else {
+            echo "<p>No user found with the given ID.</p>";
+        }
+    }
+
     public function registration()
     {
         if (isset($_POST['fname']) && isset($_POST['lname']) && isset($_POST['tel']) && isset($_POST['mail']) && isset($_POST['pass']) && isset($_POST['pass2'])) {
@@ -1224,7 +1264,7 @@ WHERE productId = :productId;
 
     }
 
-    public function userModifyData($fname, $lname, $tel, $location)
+    public function userModifyData($fname, $lname, $tel, $usedLanguage, $location)
     {
         if (empty($fname) || empty($lname) || empty($tel)) {
             $_SESSION['message'] = "The fields <b>has to be filled.</b>";
@@ -1258,6 +1298,13 @@ WHERE productId = :productId;
                 exit();
             }
         }
+        if ($usedLanguage != "SELECT_LANG") {
+            if (strlen($tel) != 10 && strlen($tel) != 11) {
+                $_SESSION['message'] = "You have to select a <b>Language</b>!";
+                header('Location: ' . $location);
+                exit();
+            }
+        }
 
 
     }
@@ -1268,24 +1315,31 @@ WHERE productId = :productId;
         $phoneNumber = $_POST['tel'];
 
         // Check user privilege
-        if ($_SESSION['privilage'] == 'Veterinarian') {
+        if ($_SESSION['privilage'] == 'Veterinarian' || $_POST['table'] == 'veterinarian') {
             $table = 'veterinarian';
-            $sql = $this->connection->prepare("SELECT firstName, lastName, phoneNumber,usedLanguage FROM veterinarian WHERE veterinarianMail = ?");
+            $sql = $this->connection->prepare("SELECT veterinarianID,firstName, lastName, phoneNumber,usedLanguage FROM veterinarian WHERE veterinarianMail = ?");
         } else {
             $table = 'user';
-            $sql = $this->connection->prepare("SELECT firstName, lastName, phoneNumber,usedLanguage privilage FROM user WHERE userMail = ?");
+            $sql = $this->connection->prepare("SELECT userId,firstName, lastName, phoneNumber,usedLanguage privilage FROM user WHERE userMail = ?");
         }
 // Prepare the initial query to retrieve existing user details
 
-        $sql->execute([$_SESSION['email']]);
+        $sql->execute([$_POST['mail']]);
         $result = $sql->fetch(PDO::FETCH_ASSOC);
 
 
 // Calling userModifyData function with posted data
-        $this->userModifyData($_POST['firstName'], $_POST['lastName'], $_POST['tel'], "modify.php");
-
-
-// Check if user data was found and update if necessary
+        if ($_POST['table'] == 'veterinarian') {
+            $this->userModifyData($_POST['firstName'], $_POST['lastName'], $_POST['tel'], $_POST['usedLanguage'], "modify.php?veterinarianId=" . $result['veterinarianID']);
+            $id=$result['veterinarianID'];
+        } elseif ($_POST['table'] == 'user'){
+            $this->userModifyData($_POST['firstName'], $_POST['lastName'], $_POST['tel'], $_POST['usedLanguage'], "modify.php?userId=" . $result['userId']);
+    $id=$result['userId'];
+        }
+        else {
+            $this->userModifyData($_POST['firstName'], $_POST['lastName'], $_POST['tel'], $_POST['usedLanguage'], "modify.php");
+        $id=$_SESSION['userId'];
+        }// Check if user data was found and update if necessary
         if ($result) {
 
             $empty = 0;
@@ -1293,10 +1347,11 @@ WHERE productId = :productId;
             if (!empty($_POST['firstName'])) {
                 $firstName = ucfirst(strtolower($_POST['firstName']));
                 $sql = $this->connection->prepare("UPDATE $table SET firstName = ? WHERE " . $table . "Mail = ?");
-                $sql->execute([$firstName, $_SESSION['email']]);
-
-                $_SESSION['firstName'] = $firstName;
-                $_SESSION['name'] = $_SESSION['firstName'] . " " . $_SESSION['lastName'];
+                $sql->execute([$firstName, $_POST['mail']]);
+                if ($_SESSION['email'] == $_POST['mail']) {
+                    $_SESSION['firstName'] = $firstName;
+                    $_SESSION['name'] = $_SESSION['firstName'] . " " . $_SESSION['lastName'];
+                }
                 $_SESSION['message'] = "First name is modified";
                 $count++;
             }
@@ -1306,10 +1361,11 @@ WHERE productId = :productId;
             if (!empty($_POST['lastName'])) {
                 $lastName = ucfirst(strtolower($_POST['lastName']));
                 $sql = $this->connection->prepare("UPDATE $table SET lastName = ? WHERE " . $table . "Mail = ?");
-                $sql->execute([$lastName, $_SESSION['email']]);
-
-                $_SESSION['lastName'] = $lastName;
-                $_SESSION['name'] = $_SESSION['firstName'] . " " . $_SESSION['lastName'];
+                $sql->execute([$lastName, $_POST['mail']]);
+                if ($_SESSION['email'] == $_POST['mail']) {
+                    $_SESSION['lastName'] = $lastName;
+                    $_SESSION['name'] = $_SESSION['firstName'] . " " . $_SESSION['lastName'];
+                }
                 $_SESSION['message'] = "Last name is modified";
                 $count++;
             }
@@ -1317,17 +1373,19 @@ WHERE productId = :productId;
             // Update phone number if provided
             if (!empty($_POST['tel'])) {
                 $sql = $this->connection->prepare("UPDATE $table SET phoneNumber = ? WHERE " . $table . "Mail = ?");
-                $sql->execute([$phoneNumber, $_SESSION['email']]);
+                $sql->execute([$phoneNumber, $_POST['mail']]);
+
                 $_SESSION['message'] = "Phone number is modified";
                 $_SESSION['phone'] = $phoneNumber;
                 $count++;
             }
-            if (!empty($_POST['usedLanguage'])) {
+            if ($_POST['usedLanguage'] != "SELECT_LANG") {
                 $usedLanguage = $_POST['usedLanguage'];
                 $sql = $this->connection->prepare("UPDATE $table SET usedLanguage = ? WHERE " . $table . "Mail = ?");
-                $sql->execute([$usedLanguage, $_SESSION['email']]);
+                $sql->execute([$usedLanguage, $_POST['mail']]);
                 $_SESSION['message'] = "Language is modified";
-                $_SESSION['userLang'] = $usedLanguage;
+                if ($_SESSION['email'] == $_POST['mail'])
+                    $_SESSION['userLang'] = $usedLanguage;
                 $count++;
             }
 
@@ -1338,18 +1396,18 @@ WHERE productId = :productId;
 
         $stmt = "SELECT firstName, lastName, phoneNumber FROM $table WHERE " . $table . "Id = :Id";
         $stmt = $this->connection->prepare($stmt);
-        $stmt->bindParam(':Id', $_SESSION['userId']);
+        $stmt->bindParam(':Id',  $id);
         $stmt->execute();
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             $_SESSION['qrCodeFile'] = $this->createQrCode($row['firstName'] . ' ' . $row['lastName'], $row['phoneNumber']);
         }
-        if ($_SESSION['privilage'] != 'veterinarian') {
+        if ($_SESSION['privilage'] != 'veterinarian' &&   $_POST['table'] != 'veterinarian') {
             $stmt = "UPDATE qr_code qr
 INNER JOIN $table u ON qr.userId = u.userId
 SET qr.qrCodeName = :qrCodeName
 WHERE u.userId = :userId";
             $stmt = $this->connection->prepare($stmt);
-            $stmt->bindParam(':userId', $_SESSION['userId']);
+            $stmt->bindParam(':userId',  $id);
             $stmt->bindParam(':qrCodeName', $_SESSION['qrCodeFile']);
             $stmt->execute();
         }
