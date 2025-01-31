@@ -127,6 +127,9 @@ class Functions
                 case 'deleteReservationByVet':
                     $this->deleteReservationByVet();
                     break;
+                case 'deletePicture':
+                    $this->deletePicture();
+                    break;
                 default:
                     $_SESSION['message'] = "Something went wrong in switch";
                     header('Location:index.php');
@@ -138,7 +141,25 @@ class Functions
             }
         }
     }
+public function deletePicture()
+{
+    if ( $_POST['table'] == 'veterinarian') {
 
+        $sql = "UPDATE veterinarian SET profilePic=:profilePic WHERE veterinarianID=:veterinarianID";
+        $stmt = $this->connection->prepare($sql);
+        $stmt->bindParam(':veterinarianID', $_POST['veterinarianId']);
+    } else {
+        $sql = "UPDATE user SET profilePic=:profilePic WHERE userID=:userID";
+        $stmt = $this->connection->prepare($sql);
+        $stmt->bindParam(':userID', $_POST['userId']);
+    }
+    $stmt->bindValue(':profilePic', "logInPic.png");
+    if($stmt->execute()){
+        $_SESSION['message'] = "Picture deleted successfully".$_POST['veterinarianId'];
+        header('Location:banSite.php');
+        exit();
+    }
+}
     public function deleteReservationByVet()
     {
         if (!empty($_POST['mailText'])) {

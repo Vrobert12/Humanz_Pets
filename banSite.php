@@ -54,7 +54,7 @@ $autoload->checkAutoLogin();
               Okay
           </a>
       </div>";
-   unset($_SESSION['message']);
+    unset($_SESSION['message']);
     ?>
 
 </body>
@@ -90,7 +90,7 @@ if (isset($_SESSION['email']) && isset($_SESSION['profilePic'])) {
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
         if ($result) {
             $_SESSION['previousPage'] = "banSite.php";
-
+            echo '<hr>';
             echo '<div class="container"><div class="row justify-content-around">';
             foreach ($result as $row) {
                 $fullName = htmlspecialchars($row['firstName'] . ' ' . $row['lastName']);
@@ -99,6 +99,14 @@ if (isset($_SESSION['email']) && isset($_SESSION['profilePic'])) {
                 echo '<div class="col-xl-4 p-3 border bg-dark" style="margin: auto; margin-top:100px; margin-bottom: 50px; width: fit-content;">';
                 echo '<img class="profilePic" src="pictures/' . htmlspecialchars($row['profilePic']) . '" width="250" height="250" alt="Profile Picture">';
                 echo '<label>ID: ' . htmlspecialchars($row['userId']) . '</label><br>';
+
+                echo '<br><form method="post" action="functions.php">';
+                echo '<input type="hidden" name="userId" value="' . htmlspecialchars($row['userId']) . '">';
+                echo '<input type="hidden" name="action" value="deletePicture">';
+                echo '<input type="hidden" name="table" value="user">';
+                echo '<input type="submit" class="btn btn-danger" value="' . ($isBanned ? 'Unban' : 'Ban') . '">';
+
+                echo '</form>';
                 echo '<label>Name: ' . $fullName . '</label><br>';
                 echo '<label>Email: ' . htmlspecialchars($row['userMail']) . '</label><br>';
                 echo '<label>Phone: ' . htmlspecialchars($row['phoneNumber']) . '</label><br>';
@@ -115,6 +123,7 @@ if (isset($_SESSION['email']) && isset($_SESSION['profilePic'])) {
             }
             echo '</div></div>';
         }
+        echo '<hr>';
         $sql = "SELECT * FROM veterinarian";
 //    if ($this->mail) {
 //        $sql .= " AND userMail LIKE :mail";
@@ -137,6 +146,15 @@ if (isset($_SESSION['email']) && isset($_SESSION['profilePic'])) {
                 echo '<div class="col-xl-4 p-3 border bg-dark" style="margin: auto; margin-top:100px; margin-bottom: 50px; width: fit-content;">';
                 echo '<img class="profilePic" src="pictures/' . htmlspecialchars($row['profilePic']) . '" width="250" height="250" alt="Profile Picture">';
                 echo '<label>ID: ' . htmlspecialchars($row['veterinarianId']) . '</label><br>';
+
+                echo '<form method="post" action="functions.php">';
+                echo '<input type="hidden" name="veterinarianId" value="' . htmlspecialchars($row['veterinarianId']) . '">';
+                echo '<input type="hidden" name="action" value="deletePicture">';
+                echo '<input type="hidden" name="table" value="veterinarian">';
+                echo '<br><input type="submit" class="btn btn-danger" value="Delete Picture">';
+
+                echo '</form>';
+
                 echo '<label>Name: ' . $fullName . '</label><br>';
                 echo '<label>Email: ' . htmlspecialchars($row['veterinarianMail']) . '</label><br>';
                 echo '<label>Phone: ' . htmlspecialchars($row['phoneNumber']) . '</label><br>';
@@ -151,7 +169,7 @@ if (isset($_SESSION['email']) && isset($_SESSION['profilePic'])) {
 
                 echo '</form>';
 
-echo '</div>';
+                echo '</div>';
             }
             echo '</div></div>';
         }
