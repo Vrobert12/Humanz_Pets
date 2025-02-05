@@ -7,10 +7,7 @@ include "lang_$lang.php";
 $autoload->checkAutoLogin();
 
 $pdo = $autoload->connect($GLOBALS['dsn'], $_ENV['DB_USER'], $_ENV['DB_PASSWORD'], $GLOBALS['pdoOptions']);
-if ($_SESSION['privilage'] == "Veterinarian") {
-    header("Location:index.php");
-    exit();
-}
+
 
 ?>
 
@@ -105,23 +102,34 @@ if (isset($_SESSION['message']) && $_SESSION['message'] != "")
           </a>
       </div>";
 
-if (isset($_SESSION['email']) && isset($_SESSION['name']) && isset($_SESSION['profilePic'])) {
+if (isset($_SESSION['email']) && isset($_SESSION['name']) && isset($_SESSION['profilePic']) && $_SESSION['privilage']!='Veterinarian') {
     // Set a session variable for returning to tables.php
     $_SESSION['backPic'] = "book_veterinarian.php";
 
     if (isset($_POST['searchAction']) && $_POST['searchAction'] == 'search') {
         $veterinarianLike = "%" . $_POST['searchName'] . "%";
-        users("SELECT * FROM veterinarian WHERE verify=1 and banned!=1 and area LIKE ?", [$veterinarianLike]);
+        users("SELECT * FROM veterinarian WHERE verify=1 and banned!=1 and area LIKE ?","veterinarian", [$veterinarianLike]);
     } else {
-        users("SELECT * FROM veterinarian WHERE verify=1 and banned!=1");
+        users("SELECT * FROM veterinarian WHERE verify=1 and banned!=1","veterinarian");
     }
-} else {
+}
+elseif(isset($_SESSION['email']) && isset($_SESSION['name']) && isset($_SESSION['profilePic']) && $_SESSION['privilage']=='Veterinarian'){
+    $_SESSION['backPic'] = "book_veterinarian.php";
+
+    if (isset($_POST['searchAction']) && $_POST['searchAction'] == 'search') {
+        $userLike = "%" . $_POST['searchName'] . "%";
+        users("SELECT * FROM user WHERE verify=1 and banned!=1 and area LIKE ?","user",[$userLike]);
+    } else {
+        users("SELECT * FROM user WHERE verify=1 and banned!=1","user");
+    }
+}
+else {
     // Redirect to index.php if session variables are not set
     header('Location: index.php');
     exit();
 }
 
-function users($command, $params = [])
+function users($command,$table, $params = [])
 {
     global $pdo;
 
@@ -149,11 +157,11 @@ function users($command, $params = [])
                 echo '<div class="col-xl-4 p-5 border bg-dark" style="margin: auto; margin-top:100px; margin-bottom: 50px; width: fit-content">';
                 echo '<div class="col-xl-4"><img class="profilePic" 
                 src="pictures/' . htmlspecialchars($row['profilePic']) . '" width="250" height="250" alt="Profile Picture"></div>';
-                echo '<label>ID: ' . htmlspecialchars($row['veterinarianId']) . '</label><br>';
+                echo '<label>ID: ' . htmlspecialchars($row[$table.'Id']) . '</label><br>';
                 echo '<label>Name: ' . htmlspecialchars($row['firstName'] . " " . $row['lastName']) . '</label><br>';
                 echo '<label>Phone: ' . htmlspecialchars($row['phoneNumber']) . '</label><br>';
-                echo '<label>Email: ' . htmlspecialchars($row['veterinarianMail']) . '</label><br>';
-                echo '<a class="btn btn-primary" href="book_apointment.php?email=' . $_SESSION['email'] . '&veterinarian=' . htmlspecialchars($row['veterinarianId']) . '">Reserve</a>&nbsp;&nbsp;&nbsp;';
+                echo '<label>Email: ' . htmlspecialchars($row[$table.'Mail']) . '</label><br>';
+                echo '<a class="btn btn-primary" href="book_apointment.php?email=' . $_SESSION['email'] . '&'.$table.'=' . htmlspecialchars($row[$table.'Id']) . '">Reserve</a>&nbsp;&nbsp;&nbsp;';
                 echo '</div>';
             }
             echo '</div></div>';

@@ -8,29 +8,52 @@ $lang=$functions->language();
 include "lang_$lang.php";
 $functions->checkAutoLogin();
 
-if($_SESSION['privilage']=="Veterinarian"){
-    header("Location:index.php");
-    exit();
-}
 
 // Database connection
 $pdo = $functions->connect($GLOBALS['dsn'], $_ENV['DB_USER'], $_ENV['DB_PASSWORD'], $GLOBALS['pdoOptions']);
 
 // Fetch the maximum veterinarian ID
-$sqlMaxVet = $pdo->prepare("SELECT MAX(veterinarianId) AS maxVeterinarianId FROM veterinarian");
-$sqlMaxVet->execute();
-$maxVetResult = $sqlMaxVet->fetch(PDO::FETCH_ASSOC);
-$_SESSION['maxVeterinarianId'] = $maxVetResult['maxVeterinarianId'] ?? null;
-
-// Redirect if veterinarian parameter is invalid
-$veterinarianId = $_GET['veterinarian'] ?? null;
-if (!isset($veterinarianId) || $veterinarianId <= 0 || $veterinarianId > $_SESSION['maxVeterinarianId']) {
+if(isset($_GET['veterinarian'])) {
+    $sqlMaxVet = $pdo->prepare("SELECT veterinarianId FROM veterinarian where veterinarianId = :veterinarianId");
+    $sqlMaxVet->bindValue(':veterinarianId', $_GET['veterinarian']);
+    $sqlMaxVet->execute();
+    $vetResult = $sqlMaxVet->fetch(PDO::FETCH_ASSOC);
+if($vetResult==0){
     header('Location: book_veterinarian.php');
     exit();
 }
+// Redirect if veterinarian parameter is invalid
+    $veterinarianId = $_GET['veterinarian'];
+
+    if ($vetResult['veterinarianId']!=$veterinarianId) {
+        header('Location: book_veterinarian.php');
+        exit();
+    }
+}
+elseif (isset($_GET['user'])){
+    $sqlMaxUser = $pdo->prepare("SELECT userId FROM user where userId=:userId");
+    $sqlMaxUser->bindValue(':userId', $_GET['user']);
+    $sqlMaxUser->execute();
+    $userResult = $sqlMaxUser->fetch(PDO::FETCH_ASSOC);
+    if($userResult==0){
+        header('Location: book_veterinarian.php');
+        exit();
+    }
+    $userId = $_GET['user'];
+    $veterinarianId=$_SESSION['userId'];
+
+    if ($userId!=$userResult['userId']) {
+        header('Location: book_veterinarian.php');
+        exit();
+    }
+}
+if ($_SESSION['privilage'] == "Veterinarian")
+    $userId = $_GET['user'] ?? null;
+else
+    $userId = $_SESSION['userId'] ?? null;
 
 // Fetch user and pet details
-$userId = $_SESSION['userId'] ?? null;
+
 if (!$userId) {
     header('Location: index.php');
     exit();
@@ -63,8 +86,6 @@ $reservedPetStmt->bindParam(":userId", $userId, PDO::PARAM_INT);
 $reservedPetStmt->execute();
 $reservedPets = $reservedPetStmt->fetchAll(PDO::FETCH_ASSOC);
 // Handle reservation submission
-
-
 
 ?>
 <!DOCTYPE html>
@@ -242,6 +263,7 @@ $reservedPets = $reservedPetStmt->fetchAll(PDO::FETCH_ASSOC);
 
                 const response = await fetch(`check_availability.php?date=${selectedDate}&veterinarianId=${veterinarianId}`);
                 const data = await response.json();
+                data.reservedTimes = undefined;
 
                 if (data.isFullyBooked) {
                     alert("This date is fully booked. Please select another date.");
@@ -257,7 +279,7 @@ $reservedPets = $reservedPetStmt->fetchAll(PDO::FETCH_ASSOC);
                             option.hidden = true;
                         } else {
                             option.disabled = false;
-                            option.hidden = option.textContent !== "Select time" ? false : true;
+                            option.hidden = option.textContent === "Select time";
                         }
                     });
                 }
@@ -279,7 +301,11 @@ $reservedPets = $reservedPetStmt->fetchAll(PDO::FETCH_ASSOC);
 </head>
 
 <body class="container py-4" style="background: #659df7">
-<h2 class="text-center mb-4">Reserve Appointment for Veterinarian ID: <?= htmlspecialchars($veterinarianId) ?></h2>
+<?php if($_SESSION['privilage']=="Veterinarian")
+    echo '<h2 class="text-center mb-4">Reserve Appointment for Veterinarian ID: '.$_SESSION['userId'].'</h2>';
+else
+    echo '<h2 class="text-center mb-4">Reserve Appointment for Veterinarian ID: '.$veterinarianId.'</h2>';
+    ?>
 
 <?php if (isset($_SESSION['reservationMessage'])): ?>
     <div class="alert alert-info"> <?= htmlspecialchars($_SESSION['reservationMessage']) ?> </div>
@@ -318,7 +344,12 @@ $reservedPets = $reservedPetStmt->fetchAll(PDO::FETCH_ASSOC);
     </div>
 
     <input type="hidden" value="insertReservation" name="action">
-    <input type="hidden" name="veterinarianId" value="<?= htmlspecialchars($_GET['veterinarian']) ?>">
+    <?php if($_SESSION['privilage']=="Veterinarian")
+        echo ' <input type="hidden" name="veterinarianId" value="'.$_SESSION['userId'].'">';
+    else
+        echo ' <input type="hidden" name="veterinarianId" value="'.$_GET['veterinarian'].'">';
+    ?>
+
 
     <button type="submit" class="btn btn-primary w-100">Reserve</button>
 </form>
@@ -332,12 +363,16 @@ $reservedPets = $reservedPetStmt->fetchAll(PDO::FETCH_ASSOC);
                 <p class="pet-details"> <?= htmlspecialchars($reservedPet['petName']) ?> </p>
                 <p> <?= htmlspecialchars($reservedPet['reservationDay']) ?> </p>
                 <p> <?= htmlspecialchars($reservedPet['reservationTime']) . "-" . htmlspecialchars($reservedPet['period']) ?> </p>
-                <form method="post" action="functions.php">
-                    <input type="hidden" value="<?= $reservedPet['reservationId'] ?>" name="reservationId">
+                <?php if($_SESSION['privilage']!="Veterinarian")
+               echo ' <form method="post" action="functions.php">
+                    <input type="hidden" value="',$reservedPet['reservationId'].'" name="reservationId">
                     <input type="hidden" value="deleteReservation" name="action">
-                    <input type="hidden" value="<?= $_GET['veterinarian'] ?>" name="veterinarian">
+                  
+                         <input type="hidden" value="'. $_GET['veterinarian'] .'" name="veterinarian">
+                    <input type="hidden" value="'. $_SESSION['userId'] .'" name="veterinarian">
+                    
                     <input type="submit" value="Delete" class="btn btn-danger btn-sm" onclick="confirmDeletingApointment(event)">
-                </form>
+                </form>'; ?>
             </label>
         </div>
     <?php endforeach; ?>

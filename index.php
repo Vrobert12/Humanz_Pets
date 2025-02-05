@@ -70,12 +70,8 @@ https://getbootstrap.com/docs/5.3/components/navbar/
 
                 <?php
                 if(isset($_SESSION['privilage'])) {
-                    if ($_SESSION['privilage'] != "Veterinarian")
-                        echo '<li class="nav-item">
-
-                    <a class="nav-link" href="book_veterinarian.php"><i class="bi bi-book-fill fs-3"></i></a>
-                </li>';
-                    else {
+                    if ($_SESSION['privilage'] == "Veterinarian")
+                    {
                         echo ' <li class="nav-item">
                     <a class="nav-link" href="booked_users.php"><i class="bi bi-people-fill fs-3"></i></a>
                 </li>';
@@ -83,6 +79,11 @@ https://getbootstrap.com/docs/5.3/components/navbar/
                     <a class="nav-link" href="petsInfo.php"><i class="fa-solid fa-paw fs-2" style="margin-top: 3px"></i></a>
                 </li>';
                     }
+                        echo '<li class="nav-item">
+
+                    <a class="nav-link" href="book_veterinarian.php"><i class="bi bi-book-fill fs-3"></i></a>
+                </li>';
+
                     if($_SESSION['privilage'] == "Admin"){
                         echo ' <li class="nav-item">
                     <a class="nav-link" href="veterinarianRates.php"><i class="bi bi-star-fill fs-3"></i></a>
