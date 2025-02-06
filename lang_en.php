@@ -1,4 +1,15 @@
 <?php
+define('BACK_TO_VET_SELECTION','Back to Veterinarian Selection');
+define('SELECT_TIME','Select Time');
+define('SELECT_PET','Select Pet:');
+define('RESERVED_VETERINARIAN','Reserve for veterinarian:');
+define('RESERVED_APOINTMENT_TITLE','Reserve Appointment for Veterinarian:');
+define('RESERVED_PETS_TITLE','Reserved Pets');
+define('DELETE_RESERVATION_BUTTON','Delete reservation');
+define('UNBAN_BUTTON','Unban');
+define('BAN_BUTTON','Ban');
+define('DELETE_PICTURE', 'Delete Picture');
+define("RESESEVATION_CANCELED_BY_VET",'Reservation Cancelled');
 define('HERE','here');
 define('BAN','This person is banned:');
 define('UNBAN','This person is unbanned:');

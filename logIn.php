@@ -28,6 +28,10 @@ if (session_status() === PHP_SESSION_NONE) {
     }
     include "lang_$lang.php";
 }
+if(session_status() === PHP_SESSION_ACTIVE){
+    header("Location: index.php");
+    exit();
+}
 if(isset($_SESSION['email']) && isset($_SESSION['registration'])){
     header('Location: index.php');
     exit();

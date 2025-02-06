@@ -3,7 +3,6 @@
 include "functions.php";
 $autoload = new Functions();
 $lang = $autoload->language();
-include "lang_$lang.php";
 
 $pdo = $autoload->connect($GLOBALS['dsn'], $_ENV['DB_USER'], $_ENV['DB_PASSWORD'], $GLOBALS['pdoOptions']);
 

@@ -5,7 +5,6 @@ require 'vendor/autoload.php';
 include "functions.php";
 $functions=new Functions();
 $lang=$functions->language();
-include "lang_$lang.php";
 $functions->checkAutoLogin();
 
 ?>

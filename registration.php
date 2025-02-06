@@ -2,7 +2,6 @@
 include 'functions.php';
 $autoload=new Functions();
 $lang=$autoload->language();
-include "lang_$lang.php";
 if(isset($_SESSION['email'])){
     header('Location: index.php');
     exit();

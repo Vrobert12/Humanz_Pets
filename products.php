@@ -3,7 +3,6 @@ include 'functions.php';
 
 $functions=new Functions();
 $lang=$functions->language();
-include "lang_$lang.php";
 $functions->checkAutoLogin();
 $pdo = $functions->connect($dsn, $_ENV['DB_USER'], $_ENV['DB_PASSWORD'], $pdoOptions);
 $products = $pdo->query("SELECT productId, productName, productPicture,description, productCost FROM product")->fetchAll(PDO::FETCH_ASSOC);

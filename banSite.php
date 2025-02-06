@@ -2,7 +2,6 @@
 include "functions.php";
 $autoload = new Functions();
 $lang = $autoload->language();
-include "lang_$lang.php";
 $autoload->checkAutoLogin();
 ?>
 
@@ -104,18 +103,18 @@ if (isset($_SESSION['email']) && isset($_SESSION['profilePic'])) {
                 echo '<input type="hidden" name="userId" value="' . htmlspecialchars($row['userId']) . '">';
                 echo '<input type="hidden" name="action" value="deletePicture">';
                 echo '<input type="hidden" name="table" value="user">';
-                echo '<input type="submit" class="btn btn-danger" value="Delete Picture">';
+                echo '<input type="submit" class="btn btn-danger" value="'.DELETE_PICTURE.'">';
 
                 echo '</form>';
-                echo '<label>Name: ' . $fullName . '</label><br>';
-                echo '<label>Email: ' . htmlspecialchars($row['userMail']) . '</label><br>';
-                echo '<label>Phone: ' . htmlspecialchars($row['phoneNumber']) . '</label><br>';
+                echo '<label><b>'.NAME.':</b> ' . $fullName . '</label><br>';
+                echo '<label><b>'.EMAIL.':</b><br> ' . htmlspecialchars($row['userMail']) . '</label><br>';
+                echo '<label><b>'.PHONE.':</b> ' . htmlspecialchars($row['phoneNumber']) . '</label><br>';
                 echo $isBanned ? '<label style="color: red;">Banned</label><br>' : '<label style="color: green;">Active</label><br>';
                 echo '<form method="post" action="functions.php">';
                 echo '<input type="hidden" name="userId" value="' . htmlspecialchars($row['userId']) . '">';
                 echo '<input type="hidden" name="ban" value="' . ($isBanned ? 'yes' : 'no') . '">';
                 echo '<input type="hidden" name="action" value="ban">';
-                echo '<input type="submit" class="btn btn-danger" value="' . ($isBanned ? 'Unban' : 'Ban') . '">';
+                echo '<input type="submit" class="btn btn-danger" value="' . ($isBanned ? UNBAN_BUTTON : BAN_BUTTON) . '">';
                 echo ' <a class="btn btn-primary back-button" href="modify.php?userId='.htmlspecialchars($row['userId']).'">'.MODIFY.' </a>';
 
                 echo '</form>';
@@ -151,19 +150,19 @@ if (isset($_SESSION['email']) && isset($_SESSION['profilePic'])) {
                 echo '<input type="hidden" name="veterinarianId" value="' . htmlspecialchars($row['veterinarianId']) . '">';
                 echo '<input type="hidden" name="action" value="deletePicture">';
                 echo '<input type="hidden" name="table" value="veterinarian">';
-                echo '<br><input type="submit" class="btn btn-danger" value="Delete Picture">';
+                echo '<br><input type="submit" class="btn btn-danger" value="'.DELETE_PICTURE.'">';
 
                 echo '</form>';
 
-                echo '<label>Name: ' . $fullName . '</label><br>';
-                echo '<label>Email: ' . htmlspecialchars($row['veterinarianMail']) . '</label><br>';
-                echo '<label>Phone: ' . htmlspecialchars($row['phoneNumber']) . '</label><br>';
+                echo '<label><b>'.NAME.':</b> ' . $fullName . '</label><br>';
+                echo '<label><b>'.EMAIL.':</b><br> ' . htmlspecialchars($row['veterinarianMail']) . '</label><br>';
+                echo '<label><b>'.PHONE.':</b> ' . htmlspecialchars($row['phoneNumber']) . '</label><br>';
                 echo $isBanned ? '<label style="color: red;">Banned</label><br>' : '<label style="color: green;">Active</label><br>';
                 echo '<form method="post" action="functions.php">';
                 echo '<input type="hidden" name="veterinarianId" value="' . htmlspecialchars($row['veterinarianId']) . '">';
                 echo '<input type="hidden" name="ban" value="' . ($isBanned ? 'yes' : 'no') . '">';
                 echo '<input type="hidden" name="action" value="vetBan">';
-                echo '<input type="submit" class="btn btn-danger" value="' . ($isBanned ? 'Unban' : 'Ban') . '">';
+                echo '<input type="submit" class="btn btn-danger" value="' . ($isBanned ? UNBAN_BUTTON : BAN_BUTTON) . '">';
                 echo ' <a class="btn btn-primary back-button" href="modify.php?veterinarianId='.htmlspecialchars($row['veterinarianId']).'">'.MODIFY.' </a>';
 
 

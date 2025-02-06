@@ -3,7 +3,6 @@
 include "functions.php";
 $autoload=new Functions();
 $lang=$autoload->language();
-include "lang_$lang.php";
 $autoload->checkAutoLogin();
 $connection = $autoload->connect($dsn, $_ENV['DB_USER'], $_ENV['DB_PASSWORD'], $pdoOptions);
 if(isset($_SESSION['email'])) {

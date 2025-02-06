@@ -11,7 +11,6 @@ $dotenv = Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 session_start();
 $mail = new PHPMailer(true);
-echo $_SESSION['test'];
 try {
 
     //Server settings
@@ -32,7 +31,6 @@ try {
         include "functions.php";
         $autoload=new Functions();
         $lang=$_SESSION['usedLanguage'];
-        include "lang_$lang.php";
         $mail->setFrom($_SESSION["email"], 'R&D Veterinary');
         $mail->addAddress(  $_SESSION['ownerMail'] ,$_SESSION['ownerMail'] );
         $mail->addReplyTo($_SESSION["email"], 'Reply');

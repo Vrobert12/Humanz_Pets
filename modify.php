@@ -2,7 +2,6 @@
 include "functions.php";
 $autoload = new Functions();
 $lang = $autoload->language();
-include "lang_$lang.php";
 $autoload->checkAutoLogin();
 
 ?>

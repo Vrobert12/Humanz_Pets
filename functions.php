@@ -7,7 +7,10 @@ use PHPMailer\PHPMailer\Exception;
 include "config.php";
 require 'phpqrcode/qrlib.php';
 require "vendor/autoload.php";
+if(isset($_SESSION['lang']))
+include "lang_" . $_SESSION['lang'] . ".php";
 $function = new Functions();
+
 
 class Functions
 {
@@ -156,12 +159,7 @@ class Functions
         }
         $stmt->bindValue(':profilePic', "logInPic.png");
         if ($stmt->execute()) {
-            if ($_SESSION['userLang'] == 'hu')
-                $_SESSION['message'] = 'A kép sikeresen törölve' . $_POST['veterinarianId'];
-            elseif ($_SESSION['userLang'] == 'en')
-                $_SESSION['message'] = 'Picture deleted successfully' . $_POST['veterinarianId'];
-            else
-                $_SESSION['message'] = 'Slika je uspešno izbrisana' . $_POST['veterinarianId'];
+            $_SESSION['message'] = PICSUCCESS;
             header('Location:banSite.php');
             exit();
         }
@@ -181,42 +179,22 @@ WHERE reservationId = :reservationId
             $stmt->execute();
             $result = $stmt->rowCount();
             if ($result) {
-                if ($_SESSION['userLang'] == 'hu')
-                    $_SESSION['message'] = 'Foglalás sikeresen törölve';
-                elseif ($_SESSION['userLang'] == 'en')
-                    $_SESSION['message'] = 'Reservation successfully deleted.';
-                else
-                    $_SESSION['message'] = 'Rezervacija je uspešno obrisana.';
+                $_SESSION['message'] = RESDELSUC;
                 $_SESSION['mailText'] = $_POST['mailText'];
                 $_SESSION['cancelEmail'] = $_POST['cancelEmail'];
 
-                if ($_POST['ownerLanguage'] == "hu")
-                    $_SESSION['cancelSubject'] = "Vizsgálat lemondva";
-
-                if ($_POST['ownerLanguage'] == "sr")
-                    $_SESSION['cancelSubject'] = "Pregled Odkazano";
-
-                if ($_POST['ownerLanguage'] == "en")
-                    $_SESSION['cancelSubject'] = "Reservation Cancelled";
+                $_SESSION['cancelSubject'] = RESESEVATION_CANCELED_BY_VET;
 
                 header('Location:mail.php');
                 exit();
             } else
-                if ($_SESSION['userLang'] == 'hu')
-                    $_SESSION['message'] = 'Nem sikerült törölni a foglalást. Kérjük, próbálja újra.';
-                elseif ($_SESSION['userLang'] == 'en')
-                    $_SESSION['message'] = 'Failed to delete the reservation. Please try again.';
-                else
-                    $_SESSION['message'] = 'Brisanje rezervacije nije uspelo. Pokušajte ponovo.';
+                $_SESSION['message'] = RESDELFAIL;
+
             header('Location:booked_users.php');
             exit();
         } else
-            if ($_SESSION['userLang'] == 'hu')
-                $_SESSION['message'] = 'Töltse ki az üzenetet';
-            elseif ($_SESSION['userLang'] == 'en')
-                $_SESSION['message'] = 'Fill the message out.';
-            else
-                $_SESSION['message'] = 'Popunite poruku';
+            $_SESSION['message'] = FILLMES;
+
         header('Location:booked_users.php');
         exit();
     }
@@ -259,22 +237,12 @@ WHERE reservationId = :reservationId
                 $time = time();
                 $currentTime = date("Y-m-d H:i:s", $time);
                 if ($_POST['ban'] == "yes") {
-                    if ($_SESSION['userLang'] == 'hu')
-                        $_SESSION['message'] = 'Személy tilalma felmentve:' . $_POST['userId'];
-                    elseif ($_SESSION['userLang'] == 'en')
-                        $_SESSION['message'] = 'This person is unbanned:' . $_POST['userId'];
-                    else
-                        $_SESSION['message'] = 'Osoba nije zabranjena' . $_POST['userId'];
+                    $_SESSION['message'] = UNBAN;
 
                     $sql = "UPDATE user SET banned=0 WHERE userId=:userId";
 
                 } else {
-                    if ($_SESSION['userLang'] == 'hu')
-                        $_SESSION['message'] = 'Személy letiltva:' . $_POST['userId'];
-                    elseif ($_SESSION['userLang'] == 'en')
-                        $_SESSION['message'] = 'This person is banned:' . $_POST['userId'];
-                    else
-                        $_SESSION['message'] = 'Osoba je zabranjena:' . $_POST['userId'];
+                    $_SESSION['message'] = UNBAN . ' ' . $_POST['userId'];
 
                     $sql = "UPDATE user SET banned=1 WHERE userId=:userId";
 
@@ -358,7 +326,7 @@ WHERE reservationId = :reservationId
         $stmt2->execute();
         $result2 = $stmt2->fetchAll(PDO::FETCH_ASSOC);
         $date = date("Y-m-d");
-        if ($result2['reservationDay'] <= $date) {
+        if ($result2['reservationDay'] >= $date) {
 
 
             $_SESSION['message'] = "Thank you for your feedback";
@@ -404,7 +372,7 @@ VALUES (:reviewCode,:userId,:veterinarianId)";
             exit();
         } else {
             $_SESSION['message'] = NOCHECK;
-            header('Location:' . $_SESSION['previousPage']);
+            header('Location:booked_users.php');
             exit();
         }
     }
@@ -430,7 +398,7 @@ VALUES (:reviewCode,:userId,:veterinarianId)";
 
             $_SESSION['mailReset'] = $mail;
             $_SESSION['mailResetLink'] = 'http://localhost/Humanz_Pets/resetPassword.php?verification_code='
-                . $verification_code . '&verify_email=' . $mail ;
+                . $verification_code . '&verify_email=' . $mail;
             header('Location: mail.php');
             exit();
         }
@@ -699,7 +667,7 @@ WHERE reservationId = :reservationId
         if ($result)
             $_SESSION['message'] = "Reservation successfully deleted.";
         else
-            $_SESSION['message'] = "Failed to delete the reservation. Please try again.";
+            $_SESSION['message'] = RESDELFAIL;
         header('Location:book_apointment.php?email=' . $_SESSION['email'] . "&veterinarian=" . $_POST['veterinarian']);
 
         exit();
@@ -829,7 +797,7 @@ VALUES (:userId,:productName,:productPicture,:productId,:sum, :price)";
                 $stmt->bindParam(':usedLanguage', $language, PDO::PARAM_STR);
 
                 if ($stmt->execute()) {
-                    $_SESSION['workerLink'] = 'http://localhost/Humanz_Pets/resetPassword.php?verify_email=' . $mail . '&verification_code=' . $verification_code ;
+                    $_SESSION['workerLink'] = 'http://localhost/Humanz_Pets/resetPassword.php?verify_email=' . $mail . '&verification_code=' . $verification_code;
                     $_SESSION['message'] = "Worker added Successfully!";
                     $_SESSION['text'] = "<h2>Registration</h2>";
                     $_SESSION['verification_code'] = $verification_code;
@@ -1225,7 +1193,7 @@ WHERE productId = :productId;
                                 $_SESSION['message'] = "If you think the<b>E-mail</b> address is registered try again.";
                                 $_SESSION['verification_code'] = $verification_code;
                                 $_SESSION['email'] = $mail;
-                                $_SESSION['registrationLink'] = 'http://localhost/Humanz_Pets/email-verification.php?verification_code=' . $verification_code ;
+                                $_SESSION['registrationLink'] = 'http://localhost/Humanz_Pets/email-verification.php?verification_code=' . $verification_code;
                                 header('Location: mail.php');
                                 exit();
                             }
@@ -1312,7 +1280,7 @@ WHERE productId = :productId;
                     $_SESSION['message'] = "We sent an email to you!";
                     $_SESSION['text'] = "<h2>Registration</h2>";
                     $_SESSION['email'] = $mail;
-                    $_SESSION['registrationLink'] = 'http://localhost/Humanz_Pets/email-verification.php?verification_code=' . $verification_code . '&verify_email=' . $mail ;
+                    $_SESSION['registrationLink'] = 'http://localhost/Humanz_Pets/email-verification.php?verification_code=' . $verification_code . '&verify_email=' . $mail;
                     header('Location: mail.php');
                     exit(); // Exit script after redirection
                 } else {
@@ -1382,200 +1350,200 @@ WHERE productId = :productId;
     {
         $count = 0;
         $phoneNumber = $_POST['tel'];
-if(isset($_POST['table'])) {
-    // Check user privilege
-    if ($_SESSION['privilage'] == 'Veterinarian' || $_POST['table'] == 'veterinarian') {
-        $table = 'veterinarian';
-        $sql = $this->connection->prepare("SELECT veterinarianID,firstName, lastName, phoneNumber,usedLanguage FROM veterinarian WHERE veterinarianMail = ?");
-    } else {
-        $table = 'user';
-        $sql = $this->connection->prepare("SELECT userId,firstName, lastName, phoneNumber,usedLanguage privilage FROM user WHERE userMail = ?");
-    }
+        if (isset($_POST['table'])) {
+            // Check user privilege
+            if ($_SESSION['privilage'] == 'Veterinarian' || $_POST['table'] == 'veterinarian') {
+                $table = 'veterinarian';
+                $sql = $this->connection->prepare("SELECT veterinarianID,firstName, lastName, phoneNumber,usedLanguage FROM veterinarian WHERE veterinarianMail = ?");
+            } else {
+                $table = 'user';
+                $sql = $this->connection->prepare("SELECT userId,firstName, lastName, phoneNumber,usedLanguage privilage FROM user WHERE userMail = ?");
+            }
 // Prepare the initial query to retrieve existing user details
 
-    $sql->execute([$_POST['mail']]);
-    $result = $sql->fetch(PDO::FETCH_ASSOC);
+            $sql->execute([$_POST['mail']]);
+            $result = $sql->fetch(PDO::FETCH_ASSOC);
 
 
 // Calling userModifyData function with posted data
-    if ($_POST['table'] == 'veterinarian') {
-        $this->userModifyData($_POST['firstName'], $_POST['lastName'], $_POST['tel'], $_POST['usedLanguage'], "modify.php?veterinarianId=" . $result['veterinarianID']);
-        $id = $result['veterinarianID'];
-    } elseif ($_POST['table'] == 'user') {
-        $this->userModifyData($_POST['firstName'], $_POST['lastName'], $_POST['tel'], $_POST['usedLanguage'], "modify.php?userId=" . $result['userId']);
-        $id = $result['userId'];
-    } else {
-        $this->userModifyData($_POST['firstName'], $_POST['lastName'], $_POST['tel'], $_POST['usedLanguage'], "modify.php");
-        $id = $_SESSION['userId'];
-    }// Check if user data was found and update if necessary
-    if ($result) {
+            if ($_POST['table'] == 'veterinarian') {
+                $this->userModifyData($_POST['firstName'], $_POST['lastName'], $_POST['tel'], $_POST['usedLanguage'], "modify.php?veterinarianId=" . $result['veterinarianID']);
+                $id = $result['veterinarianID'];
+            } elseif ($_POST['table'] == 'user') {
+                $this->userModifyData($_POST['firstName'], $_POST['lastName'], $_POST['tel'], $_POST['usedLanguage'], "modify.php?userId=" . $result['userId']);
+                $id = $result['userId'];
+            } else {
+                $this->userModifyData($_POST['firstName'], $_POST['lastName'], $_POST['tel'], $_POST['usedLanguage'], "modify.php");
+                $id = $_SESSION['userId'];
+            }// Check if user data was found and update if necessary
+            if ($result) {
 
-        $empty = 0;
-        // Update first name if provided
-        if (!empty($_POST['firstName'])) {
-            $firstName = ucfirst(strtolower($_POST['firstName']));
-            $sql = $this->connection->prepare("UPDATE $table SET firstName = ? WHERE " . $table . "Mail = ?");
-            $sql->execute([$firstName, $_POST['mail']]);
-            if ($_SESSION['email'] == $_POST['mail']) {
-                $_SESSION['firstName'] = $firstName;
-                $_SESSION['name'] = $_SESSION['firstName'] . " " . $_SESSION['lastName'];
+                $empty = 0;
+                // Update first name if provided
+                if (!empty($_POST['firstName'])) {
+                    $firstName = ucfirst(strtolower($_POST['firstName']));
+                    $sql = $this->connection->prepare("UPDATE $table SET firstName = ? WHERE " . $table . "Mail = ?");
+                    $sql->execute([$firstName, $_POST['mail']]);
+                    if ($_SESSION['email'] == $_POST['mail']) {
+                        $_SESSION['firstName'] = $firstName;
+                        $_SESSION['name'] = $_SESSION['firstName'] . " " . $_SESSION['lastName'];
+                    }
+                    $_SESSION['message'] = "First name is modified";
+                    $count++;
+                }
+
+
+                // Update last name if provided
+                if (!empty($_POST['lastName'])) {
+                    $lastName = ucfirst(strtolower($_POST['lastName']));
+                    $sql = $this->connection->prepare("UPDATE $table SET lastName = ? WHERE " . $table . "Mail = ?");
+                    $sql->execute([$lastName, $_POST['mail']]);
+                    if ($_SESSION['email'] == $_POST['mail']) {
+                        $_SESSION['lastName'] = $lastName;
+                        $_SESSION['name'] = $_SESSION['firstName'] . " " . $_SESSION['lastName'];
+                    }
+                    $_SESSION['message'] = "Last name is modified";
+                    $count++;
+                }
+
+                // Update phone number if provided
+                if (!empty($_POST['tel'])) {
+                    $sql = $this->connection->prepare("UPDATE $table SET phoneNumber = ? WHERE " . $table . "Mail = ?");
+                    $sql->execute([$phoneNumber, $_POST['mail']]);
+
+                    $_SESSION['message'] = "Phone number is modified";
+                    $_SESSION['phone'] = $phoneNumber;
+                    $count++;
+                }
+                if ($_POST['usedLanguage'] != "SELECT_LANG") {
+                    $usedLanguage = $_POST['usedLanguage'];
+                    $sql = $this->connection->prepare("UPDATE $table SET usedLanguage = ? WHERE " . $table . "Mail = ?");
+                    $sql->execute([$usedLanguage, $_POST['mail']]);
+                    $_SESSION['message'] = "Language is modified";
+                    if ($_SESSION['email'] == $_POST['mail'])
+                        $_SESSION['userLang'] = $usedLanguage;
+                    $count++;
+                }
+
             }
-            $_SESSION['message'] = "First name is modified";
-            $count++;
-        }
-
-
-        // Update last name if provided
-        if (!empty($_POST['lastName'])) {
-            $lastName = ucfirst(strtolower($_POST['lastName']));
-            $sql = $this->connection->prepare("UPDATE $table SET lastName = ? WHERE " . $table . "Mail = ?");
-            $sql->execute([$lastName, $_POST['mail']]);
-            if ($_SESSION['email'] == $_POST['mail']) {
-                $_SESSION['lastName'] = $lastName;
-                $_SESSION['name'] = $_SESSION['firstName'] . " " . $_SESSION['lastName'];
-            }
-            $_SESSION['message'] = "Last name is modified";
-            $count++;
-        }
-
-        // Update phone number if provided
-        if (!empty($_POST['tel'])) {
-            $sql = $this->connection->prepare("UPDATE $table SET phoneNumber = ? WHERE " . $table . "Mail = ?");
-            $sql->execute([$phoneNumber, $_POST['mail']]);
-
-            $_SESSION['message'] = "Phone number is modified";
-            $_SESSION['phone'] = $phoneNumber;
-            $count++;
-        }
-        if ($_POST['usedLanguage'] != "SELECT_LANG") {
-            $usedLanguage = $_POST['usedLanguage'];
-            $sql = $this->connection->prepare("UPDATE $table SET usedLanguage = ? WHERE " . $table . "Mail = ?");
-            $sql->execute([$usedLanguage, $_POST['mail']]);
-            $_SESSION['message'] = "Language is modified";
-            if ($_SESSION['email'] == $_POST['mail'])
-                $_SESSION['userLang'] = $usedLanguage;
-            $count++;
-        }
-
-    }
 
 // Set session message based on whether any changes were made
-    $_SESSION['message'] = $count > 0 ? "Changes saved" : "Empty data cannot be saved!";
+            $_SESSION['message'] = $count > 0 ? "Changes saved" : "Empty data cannot be saved!";
 
-    $stmt = "SELECT firstName, lastName, phoneNumber FROM $table WHERE " . $table . "Id = :Id";
-    $stmt = $this->connection->prepare($stmt);
-    $stmt->bindParam(':Id', $id);
-    $stmt->execute();
-    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-        $_SESSION['qrCodeFile'] = $this->createQrCode($row['firstName'] . ' ' . $row['lastName'], $row['phoneNumber']);
-    }
-    if ($_SESSION['privilage'] != 'veterinarian' && $_POST['table'] != 'veterinarian') {
-        $stmt = "UPDATE qr_code qr
+            $stmt = "SELECT firstName, lastName, phoneNumber FROM $table WHERE " . $table . "Id = :Id";
+            $stmt = $this->connection->prepare($stmt);
+            $stmt->bindParam(':Id', $id);
+            $stmt->execute();
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $_SESSION['qrCodeFile'] = $this->createQrCode($row['firstName'] . ' ' . $row['lastName'], $row['phoneNumber']);
+            }
+            if ($_SESSION['privilage'] != 'veterinarian' && $_POST['table'] != 'veterinarian') {
+                $stmt = "UPDATE qr_code qr
 INNER JOIN $table u ON qr.userId = u.userId
 SET qr.qrCodeName = :qrCodeName
 WHERE u.userId = :userId";
-        $stmt = $this->connection->prepare($stmt);
-        $stmt->bindParam(':userId', $id);
-        $stmt->bindParam(':qrCodeName', $_SESSION['qrCodeFile']);
-        $stmt->execute();
-    }
-}else{
-    if ($_SESSION['privilage'] == 'Veterinarian' ) {
-        $table = 'veterinarian';
-        $sql = $this->connection->prepare("SELECT veterinarianID,firstName, lastName, phoneNumber,usedLanguage FROM veterinarian WHERE veterinarianMail = ?");
-    } else {
-        $table = 'user';
-        $sql = $this->connection->prepare("SELECT userId,firstName, lastName, phoneNumber,usedLanguage privilage FROM user WHERE userMail = ?");
-    }
+                $stmt = $this->connection->prepare($stmt);
+                $stmt->bindParam(':userId', $id);
+                $stmt->bindParam(':qrCodeName', $_SESSION['qrCodeFile']);
+                $stmt->execute();
+            }
+        } else {
+            if ($_SESSION['privilage'] == 'Veterinarian') {
+                $table = 'veterinarian';
+                $sql = $this->connection->prepare("SELECT veterinarianID,firstName, lastName, phoneNumber,usedLanguage FROM veterinarian WHERE veterinarianMail = ?");
+            } else {
+                $table = 'user';
+                $sql = $this->connection->prepare("SELECT userId,firstName, lastName, phoneNumber,usedLanguage privilage FROM user WHERE userMail = ?");
+            }
 // Prepare the initial query to retrieve existing user details
 
-    $sql->execute([$_POST['mail']]);
-    $result = $sql->fetch(PDO::FETCH_ASSOC);
+            $sql->execute([$_POST['mail']]);
+            $result = $sql->fetch(PDO::FETCH_ASSOC);
 
 
 // Calling userModifyData function with posted data
-    if ($_SESSION['privilage'] == 'Veterinarian') {
-        $this->userModifyData($_POST['firstName'], $_POST['lastName'], $_POST['tel'], $_POST['usedLanguage'], "modify.php?veterinarianId=" . $result['veterinarianID']);
-        $id = $result['veterinarianID'];
-    } elseif ($_POST['privilage'] == 'Guest') {
-        $this->userModifyData($_POST['firstName'], $_POST['lastName'], $_POST['tel'], $_POST['usedLanguage'], "modify.php?userId=" . $result['userId']);
-        $id = $result['userId'];
-    } else {
-        $this->userModifyData($_POST['firstName'], $_POST['lastName'], $_POST['tel'], $_POST['usedLanguage'], "modify.php");
-        $id = $_SESSION['userId'];
-    }// Check if user data was found and update if necessary
-    if ($result) {
+            if ($_SESSION['privilage'] == 'Veterinarian') {
+                $this->userModifyData($_POST['firstName'], $_POST['lastName'], $_POST['tel'], $_POST['usedLanguage'], "modify.php?veterinarianId=" . $result['veterinarianID']);
+                $id = $result['veterinarianID'];
+            } elseif ($_POST['privilage'] == 'Guest') {
+                $this->userModifyData($_POST['firstName'], $_POST['lastName'], $_POST['tel'], $_POST['usedLanguage'], "modify.php?userId=" . $result['userId']);
+                $id = $result['userId'];
+            } else {
+                $this->userModifyData($_POST['firstName'], $_POST['lastName'], $_POST['tel'], $_POST['usedLanguage'], "modify.php");
+                $id = $_SESSION['userId'];
+            }// Check if user data was found and update if necessary
+            if ($result) {
 
-        $empty = 0;
-        // Update first name if provided
-        if (!empty($_POST['firstName'])) {
-            $firstName = ucfirst(strtolower($_POST['firstName']));
-            $sql = $this->connection->prepare("UPDATE $table SET firstName = ? WHERE " . $table . "Mail = ?");
-            $sql->execute([$firstName, $_POST['mail']]);
-            if ($_SESSION['email'] == $_POST['mail']) {
-                $_SESSION['firstName'] = $firstName;
-                $_SESSION['name'] = $_SESSION['firstName'] . " " . $_SESSION['lastName'];
+                $empty = 0;
+                // Update first name if provided
+                if (!empty($_POST['firstName'])) {
+                    $firstName = ucfirst(strtolower($_POST['firstName']));
+                    $sql = $this->connection->prepare("UPDATE $table SET firstName = ? WHERE " . $table . "Mail = ?");
+                    $sql->execute([$firstName, $_POST['mail']]);
+                    if ($_SESSION['email'] == $_POST['mail']) {
+                        $_SESSION['firstName'] = $firstName;
+                        $_SESSION['name'] = $_SESSION['firstName'] . " " . $_SESSION['lastName'];
+                    }
+                    $_SESSION['message'] = "First name is modified";
+                    $count++;
+                }
+
+
+                // Update last name if provided
+                if (!empty($_POST['lastName'])) {
+                    $lastName = ucfirst(strtolower($_POST['lastName']));
+                    $sql = $this->connection->prepare("UPDATE $table SET lastName = ? WHERE " . $table . "Mail = ?");
+                    $sql->execute([$lastName, $_POST['mail']]);
+                    if ($_SESSION['email'] == $_POST['mail']) {
+                        $_SESSION['lastName'] = $lastName;
+                        $_SESSION['name'] = $_SESSION['firstName'] . " " . $_SESSION['lastName'];
+                    }
+                    $_SESSION['message'] = "Last name is modified";
+                    $count++;
+                }
+
+                // Update phone number if provided
+                if (!empty($_POST['tel'])) {
+                    $sql = $this->connection->prepare("UPDATE $table SET phoneNumber = ? WHERE " . $table . "Mail = ?");
+                    $sql->execute([$phoneNumber, $_POST['mail']]);
+
+                    $_SESSION['message'] = "Phone number is modified";
+                    $_SESSION['phone'] = $phoneNumber;
+                    $count++;
+                }
+                if ($_POST['usedLanguage'] != "SELECT_LANG") {
+                    $usedLanguage = $_POST['usedLanguage'];
+                    $sql = $this->connection->prepare("UPDATE $table SET usedLanguage = ? WHERE " . $table . "Mail = ?");
+                    $sql->execute([$usedLanguage, $_POST['mail']]);
+                    $_SESSION['message'] = "Language is modified";
+                    if ($_SESSION['email'] == $_POST['mail'])
+                        $_SESSION['userLang'] = $usedLanguage;
+                    $count++;
+                }
+
             }
-            $_SESSION['message'] = "First name is modified";
-            $count++;
-        }
-
-
-        // Update last name if provided
-        if (!empty($_POST['lastName'])) {
-            $lastName = ucfirst(strtolower($_POST['lastName']));
-            $sql = $this->connection->prepare("UPDATE $table SET lastName = ? WHERE " . $table . "Mail = ?");
-            $sql->execute([$lastName, $_POST['mail']]);
-            if ($_SESSION['email'] == $_POST['mail']) {
-                $_SESSION['lastName'] = $lastName;
-                $_SESSION['name'] = $_SESSION['firstName'] . " " . $_SESSION['lastName'];
-            }
-            $_SESSION['message'] = "Last name is modified";
-            $count++;
-        }
-
-        // Update phone number if provided
-        if (!empty($_POST['tel'])) {
-            $sql = $this->connection->prepare("UPDATE $table SET phoneNumber = ? WHERE " . $table . "Mail = ?");
-            $sql->execute([$phoneNumber, $_POST['mail']]);
-
-            $_SESSION['message'] = "Phone number is modified";
-            $_SESSION['phone'] = $phoneNumber;
-            $count++;
-        }
-        if ($_POST['usedLanguage'] != "SELECT_LANG") {
-            $usedLanguage = $_POST['usedLanguage'];
-            $sql = $this->connection->prepare("UPDATE $table SET usedLanguage = ? WHERE " . $table . "Mail = ?");
-            $sql->execute([$usedLanguage, $_POST['mail']]);
-            $_SESSION['message'] = "Language is modified";
-            if ($_SESSION['email'] == $_POST['mail'])
-                $_SESSION['userLang'] = $usedLanguage;
-            $count++;
-        }
-
-    }
 
 // Set session message based on whether any changes were made
-    $_SESSION['message'] = $count > 0 ? "Changes saved" : "Empty data cannot be saved!";
+            $_SESSION['message'] = $count > 0 ? "Changes saved" : "Empty data cannot be saved!";
 
-    $stmt = "SELECT firstName, lastName, phoneNumber FROM $table WHERE " . $table . "Id = :Id";
-    $stmt = $this->connection->prepare($stmt);
-    $stmt->bindParam(':Id', $id);
-    $stmt->execute();
-    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-        $_SESSION['qrCodeFile'] = $this->createQrCode($row['firstName'] . ' ' . $row['lastName'], $row['phoneNumber']);
-    }
-    if ($_SESSION['privilage'] != 'veterinarian' && $_POST['table'] != 'veterinarian') {
-        $stmt = "UPDATE qr_code qr
+            $stmt = "SELECT firstName, lastName, phoneNumber FROM $table WHERE " . $table . "Id = :Id";
+            $stmt = $this->connection->prepare($stmt);
+            $stmt->bindParam(':Id', $id);
+            $stmt->execute();
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $_SESSION['qrCodeFile'] = $this->createQrCode($row['firstName'] . ' ' . $row['lastName'], $row['phoneNumber']);
+            }
+            if ($_SESSION['privilage'] != 'veterinarian' && $_POST['table'] != 'veterinarian') {
+                $stmt = "UPDATE qr_code qr
 INNER JOIN $table u ON qr.userId = u.userId
 SET qr.qrCodeName = :qrCodeName
 WHERE u.userId = :userId";
-        $stmt = $this->connection->prepare($stmt);
-        $stmt->bindParam(':userId', $id);
-        $stmt->bindParam(':qrCodeName', $_SESSION['qrCodeFile']);
-        $stmt->execute();
-    }
-}
+                $stmt = $this->connection->prepare($stmt);
+                $stmt->bindParam(':userId', $id);
+                $stmt->bindParam(':qrCodeName', $_SESSION['qrCodeFile']);
+                $stmt->execute();
+            }
+        }
 // Redirect to index.php
         header('Location: index.php');
         exit();
@@ -1734,9 +1702,12 @@ WHERE u.userId = :userId";
 
     public function logOut()
     {
+        // Clear all session data
         $_SESSION = [];
         session_unset();
         session_destroy();
+
+        // Delete session cookies if set
         if (isset($_SERVER['HTTP_COOKIE'])) {
             $cookies = explode(';', $_SERVER['HTTP_COOKIE']);
             foreach ($cookies as $cookie) {
@@ -1747,10 +1718,11 @@ WHERE u.userId = :userId";
             }
         }
 
-        // Redirect to login page
-        header('Location: index.php');
+        // Force the page to reload and ensure no session data persists
+        header('Location: index.php?refresh=1');
         exit();
     }
+
 
     public function fetchUserByEmail($email)
     {

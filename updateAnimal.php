@@ -4,7 +4,6 @@ include "functions.php";
 $autoload = new Functions();
 $_SESSION['backPic']="updateAnimal.php";
 $lang=$autoload->language();
-include "lang_$lang.php";
 $autoload->checkAutoLogin('updateAnimal.php');
 
 

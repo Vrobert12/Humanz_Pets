@@ -3,7 +3,6 @@
 include "functions.php";
 $autoload = new Functions();
 $lang = $autoload->language();
-include "lang_$lang.php";
 $autoload->checkAutoLogin();
 
 $pdo = $autoload->connect($GLOBALS['dsn'], $_ENV['DB_USER'], $_ENV['DB_PASSWORD'], $GLOBALS['pdoOptions']);
@@ -158,10 +157,10 @@ function users($command,$table, $params = [])
                 echo '<div class="col-xl-4"><img class="profilePic" 
                 src="pictures/' . htmlspecialchars($row['profilePic']) . '" width="250" height="250" alt="Profile Picture"></div>';
                 echo '<label>ID: ' . htmlspecialchars($row[$table.'Id']) . '</label><br>';
-                echo '<label>Name: ' . htmlspecialchars($row['firstName'] . " " . $row['lastName']) . '</label><br>';
-                echo '<label>Phone: ' . htmlspecialchars($row['phoneNumber']) . '</label><br>';
-                echo '<label>Email: ' . htmlspecialchars($row[$table.'Mail']) . '</label><br>';
-                echo '<a class="btn btn-primary" href="book_apointment.php?email=' . $_SESSION['email'] . '&'.$table.'=' . htmlspecialchars($row[$table.'Id']) . '">Reserve</a>&nbsp;&nbsp;&nbsp;';
+                echo '<label>'.NAME.': ' . htmlspecialchars($row['firstName'] . " " . $row['lastName']) . '</label><br>';
+                echo '<label>'.PHONE.': ' . htmlspecialchars($row['phoneNumber']) . '</label><br>';
+                echo '<label>'.EMAIL.': ' . htmlspecialchars($row[$table.'Mail']) . '</label><br>';
+                echo '<a class="btn btn-primary" href="book_apointment.php?email=' . $_SESSION['email'] . '&'.$table.'=' . htmlspecialchars($row[$table.'Id']) . '">'.RESERVE.'</a>&nbsp;&nbsp;&nbsp;';
                 echo '</div>';
             }
             echo '</div></div>';

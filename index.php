@@ -1,8 +1,14 @@
 <?php
+
 include "functions.php";
 $autoload=new Functions();
 $lang=$autoload->language();
-include "lang_$lang.php";
+if(isset($_GET['refresh']) && $_GET['refresh'] == '1'){
+    header('Refresh:0;url=index.php');
+    exit();
+}
+if(!isset($_SESSION['lang']))
+    include "lang_$lang.php";
 $autoload->checkAutoLogin();
 ?>
 

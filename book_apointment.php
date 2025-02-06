@@ -5,7 +5,6 @@ require 'vendor/autoload.php';
 include "functions.php";
 $functions=new Functions();
 $lang=$functions->language();
-include "lang_$lang.php";
 $functions->checkAutoLogin();
 
 
@@ -73,9 +72,10 @@ $petStmt->bindParam(":userId", $userId, PDO::PARAM_INT);
 $petStmt->execute();
 $pets = $petStmt->fetchAll(PDO::FETCH_ASSOC);
 
-$petQuery = "SELECT p.petId, p.petName, p.bred, p.petSpecies, p.petPicture, r.reservationDay, r.reservationTime, r.period,r.reservationId
+$petQuery = "SELECT v.veterinarianMail, p.petId, p.petName, p.bred, p.petSpecies, p.petPicture, r.reservationDay, r.reservationTime, r.period,r.reservationId
 FROM pet p
-LEFT JOIN reservation r ON p.petId = r.petId
+LEFT JOIN reservation r ON p.petId = r.petId 
+INNER JOIN veterinarian v ON r.veterinarianId = v.veterinarianId
 WHERE p.userId = :userId
 AND (r.reservationDay IS NOT NULL AND r.reservationDay >= CURDATE() AND r.animalChecked=0)
 
@@ -202,9 +202,7 @@ $reservedPets = $reservedPetStmt->fetchAll(PDO::FETCH_ASSOC);
                 max-width: 800px;
             }
 
-            .pet-card {
-                max-width: 200px;
-            }
+
         }
     </style>
     <script>
@@ -222,7 +220,7 @@ $reservedPets = $reservedPetStmt->fetchAll(PDO::FETCH_ASSOC);
             function populateTimeOptions() {
                 const times = [];
                 let currentTime = 9;
-                times.push("Select time");
+                times.push(<?php echo json_encode(SELECT_TIME); ?>);
 
                 while (currentTime <= 20) {
                     const timeString = (currentTime < 10 ? '0' : '') + currentTime + ":00";
@@ -236,7 +234,7 @@ $reservedPets = $reservedPetStmt->fetchAll(PDO::FETCH_ASSOC);
                     startOption.textContent = time;
 
                     if (index === 0) {
-                        startOption.textContent = "Select time";
+                        startOption.textContent = <?php echo json_encode(SELECT_TIME); ?>;
                         startOption.selected = true;
                         startOption.disabled = true;
                         startOption.hidden = true;
@@ -258,7 +256,7 @@ $reservedPets = $reservedPetStmt->fetchAll(PDO::FETCH_ASSOC);
                     return;
                 }
 
-                reservationTimeStart.value = "Select time";
+                reservationTimeStart.value = <?php echo json_encode(SELECT_TIME); ?>;
                 reservationTimeStart.disabled = true;
 
                 const response = await fetch(`check_availability.php?date=${selectedDate}&veterinarianId=${veterinarianId}`);
@@ -279,7 +277,7 @@ $reservedPets = $reservedPetStmt->fetchAll(PDO::FETCH_ASSOC);
                             option.hidden = true;
                         } else {
                             option.disabled = false;
-                            option.hidden = option.textContent === "Select time";
+                            option.hidden = option.textContent === <?php echo json_encode(SELECT_TIME); ?>;
                         }
                     });
                 }
@@ -301,11 +299,18 @@ $reservedPets = $reservedPetStmt->fetchAll(PDO::FETCH_ASSOC);
 </head>
 
 <body class="container py-4" style="background: #659df7">
+<a href="book_veterinarian.php" class="btn btn-success mt-4"><?php echo BACK_TO_VET_SELECTION;?></a>
 <?php if($_SESSION['privilage']=="Veterinarian")
-    echo '<h2 class="text-center mb-4">Reserve Appointment for Veterinarian ID: '.$_SESSION['userId'].'</h2>';
-else
-    echo '<h2 class="text-center mb-4">Reserve Appointment for Veterinarian ID: '.$veterinarianId.'</h2>';
-    ?>
+    echo '<h2 class="text-center mb-4">'.RESERVED_APOINTMENT_TITLE.' '.$_SESSION['userMail'].'</h2>';
+else {
+    $sql="SELECT veterinarianMail FROM veterinarian WHERE veterinarianId=:veterinarianId";
+    $sql=$pdo->prepare($sql);
+    $sql->bindValue(':veterinarianId',$_GET['veterinarian']);
+    $sql->execute();
+    $result=$sql->fetch();
+
+    echo '<h2 class="text-center mb-4">' . RESERVED_APOINTMENT_TITLE . ' ' . $result['veterinarianMail'] . '</h2>';
+}?>
 
 <?php if (isset($_SESSION['reservationMessage'])): ?>
     <div class="alert alert-info"> <?= htmlspecialchars($_SESSION['reservationMessage']) ?> </div>
@@ -313,7 +318,10 @@ else
 
 <form method="POST" action="functions.php">
     <div class="mb-3">
-        <label for="pet" class="form-label">Select Pet:</label>
+        <?php if (!empty($pets))
+            echo' <h4 for="pet" class="form-label">'.SELECT_PET.'</h4>';
+            ?>
+
         <div class="profile-section">
             <?php foreach ($pets as $pet): ?>
                 <div class="pet-card">
@@ -329,17 +337,17 @@ else
     </div>
 
     <div class="mb-3">
-        <label for="day" class="form-label">Reservation Date:</label>
+        <label for="day" class="form-label"><?php echo RESERVATION3;?></label>
         <input type="date" class="form-control" name="day" required>
     </div>
 
     <div class="mb-3">
-        <label for="reservationTimeStart" class="form-label">Start Time:</label>
+        <label for="reservationTimeStart" class="form-label"><?php echo RESERVATION;?></label>
         <select class="form-select" name="reservationTimeStart" required disabled></select>
     </div>
 
     <div class="mb-3">
-        <label for="reservationTimeEnd" class="form-label">End Time:</label>
+        <label for="reservationTimeEnd" class="form-label"><?php echo RESERVATION2;?></label>
         <input type="text" class="form-control" name="reservationTimeEnd" readonly>
     </div>
 
@@ -351,15 +359,17 @@ else
     ?>
 
 
-    <button type="submit" class="btn btn-primary w-100">Reserve</button>
+    <button type="submit" class="btn btn-primary w-100"><?php echo RESERVE;?></button>
 </form>
 
-<h3 class="mt-5">Reserved Pets</h3>
+<h3 class="mt-5"><?php echo RESERVED_PETS_TITLE; ?></h3>
 <div class="profile-section">
     <?php foreach ($reservedPets as $reservedPet): ?>
         <div class="pet-card">
             <label>
                 <img alt="Pet Picture" src="pictures/<?= htmlspecialchars($reservedPet['petPicture']) ?>">
+                <p class="pet-details"> <?php echo RESERVED_VETERINARIAN; ?> </p>
+                <p class="pet-details"> <?= htmlspecialchars($reservedPet['veterinarianMail']) ?> </p>
                 <p class="pet-details"> <?= htmlspecialchars($reservedPet['petName']) ?> </p>
                 <p> <?= htmlspecialchars($reservedPet['reservationDay']) ?> </p>
                 <p> <?= htmlspecialchars($reservedPet['reservationTime']) . "-" . htmlspecialchars($reservedPet['period']) ?> </p>
@@ -371,13 +381,11 @@ else
                          <input type="hidden" value="'. $_GET['veterinarian'] .'" name="veterinarian">
                     <input type="hidden" value="'. $_SESSION['userId'] .'" name="veterinarian">
                     
-                    <input type="submit" value="Delete" class="btn btn-danger btn-sm" onclick="confirmDeletingApointment(event)">
+                    <input type="submit" value="'.DELETE_RESERVATION_BUTTON.'" class="btn btn-danger btn-sm" onclick="confirmDeletingApointment(event)">
                 </form>'; ?>
             </label>
         </div>
     <?php endforeach; ?>
 </div>
-
-<a href="book_veterinarian.php" class="btn btn-secondary mt-4">Back to Veterinarian Selection</a>
 </body>
 </html>

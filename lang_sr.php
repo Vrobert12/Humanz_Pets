@@ -1,4 +1,15 @@
 <?php
+define('BACK_TO_VET_SELECTION','Nazad na stranicu za veterinara');
+define('SELECT_TIME','Izaberite Vreme');
+define('SELECT_PET','Izaberite ljubimca:');
+define('RESERVED_VETERINARIAN','Zakazan termin kod veterinara:');
+define('RESERVED_APOINTMENT_TITLE','Yakayani termini kod veterinara:');
+define('RESERVED_PETS_TITLE','Zakazani termini');
+define('DELETE_RESERVATION_BUTTON','Odkaži termin');
+define('UNBAN_BUTTON','Otključavanje');
+define('BAN_BUTTON','Zabrani');
+define('DELETE_PICTURE', 'Izbirišite profil sliku');
+define("RESESEVATION_CANCELED_BY_VET",'Pregled Odkazano');
 define('HERE','ovde');
 define('BAN','Osoba je zabranjena:');
 define('UNBAN','Osoba nije zabranjena:');

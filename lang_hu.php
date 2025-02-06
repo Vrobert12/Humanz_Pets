@@ -1,4 +1,15 @@
 <?php
+define('BACK_TO_VET_SELECTION','Vissza az állatorvos választáshoz');
+define('SELECT_TIME','Válassza ki az időpontot');
+define('SELECT_PET','Válassza ki házikedvencét:');
+define('RESERVED_VETERINARIAN','Lefoglat időpont az állatorvosnál:');
+define('RESERVED_APOINTMENT_TITLE','Az állatorvosnál lefoglalt időpontok:');
+define('RESERVED_PETS_TITLE','Lefoglalt időpontok');
+define('DELETE_RESERVATION_BUTTON','Foglalás törlése');
+define('UNBAN_BUTTON','Feloldás');
+define('BAN_BUTTON','Tiltás');
+define('DELETE_PICTURE', 'Profilkép törlése');
+define("RESESEVATION_CANCELED_BY_VET",'Vizsgálat lemondva');
 define('HERE','itt');
 define('BAN','Személy letiltva:');
 define('UNBAN','Személy tilalma felmentve:');
