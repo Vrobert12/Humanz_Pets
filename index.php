@@ -7,6 +7,10 @@ if(isset($_GET['refresh']) && $_GET['refresh'] == '1'){
     header('Refresh:0;url=index.php');
     exit();
 }
+if(isset($_GET['lang'])){
+    header('Refresh:0;url=index.php');
+    exit();
+}
 if(!isset($_SESSION['lang']))
     include "lang_$lang.php";
 $autoload->checkAutoLogin();

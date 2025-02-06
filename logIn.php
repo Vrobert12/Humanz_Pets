@@ -28,11 +28,7 @@ if (session_status() === PHP_SESSION_NONE) {
     }
     include "lang_$lang.php";
 }
-if(session_status() === PHP_SESSION_ACTIVE){
-    header("Location: index.php");
-    exit();
-}
-if(isset($_SESSION['email']) && isset($_SESSION['registration'])){
+if(isset($_SESSION['email'])){
     header('Location: index.php');
     exit();
 }
@@ -55,12 +51,12 @@ if(isset($_SESSION['email']) && isset($_SESSION['registration'])){
     $_SESSION['previousPage']="logIn.php";
     echo'  <a href="resetPassword-mail.php?logToken='. $_SESSION['token'].'">Forgot your password? </a><br><br>'; ?>
 
-<?php
-if(isset($_SESSION['message'])){
-    echo $_SESSION['message'];
-    unset($_SESSION['message']);
-}
-?>
+    <?php
+    if(isset($_SESSION['message'])){
+        echo $_SESSION['message'];
+        unset($_SESSION['message']);
+    }
+    ?>
 </form>
 
 </body>

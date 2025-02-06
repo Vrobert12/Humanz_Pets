@@ -5,7 +5,7 @@ use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
 use Dotenv\Dotenv;
-
+include "functions.php";
 require 'vendor/autoload.php';
 $dotenv = Dotenv::createImmutable(__DIR__);
 $dotenv->load();
@@ -28,7 +28,6 @@ try {
     if(isset($_SESSION['ownerMail']))
     {
         echo $_SESSION['usedLanguage'];
-        include "functions.php";
         $autoload=new Functions();
         $lang=$_SESSION['usedLanguage'];
         $mail->setFrom($_SESSION["email"], 'R&D Veterinary');

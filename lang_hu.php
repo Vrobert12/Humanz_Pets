@@ -1,4 +1,17 @@
 <?php
+define('RESCRSUC','Foglalás sikeresen létrehozva.');
+define('DATAMIS','Hiányos adat');
+define('ERROR','Hiba a rendszerben');
+define('PASSUPDF','Jelszóváltoztatás sikertelen');
+define('PASSUPD','Jelszó sikeresen megváltoztatva');
+define('PASSNOEIGHT', 'A jelszó legalább 8 karakterből kell hogy álljon');
+define('PASSNONUM', 'A jelszónak tartalmaznia kell számokat');
+define('PASSNOUP', 'A jelszónak tartalmaznia kell nagy betűket');
+define('PASSNOLOW', 'A jelszónak tartalmaznia kell kis betűket');
+define('PASSMATCH','A jelszavak nem egyezik');
+define('PASSFILL','A jelszavas mezők nincsennek kitöltve');
+define('NOEX','Ilyen email cím nem létezik');
+define('FB','Köszönjük a visszajelzést');
 define('BACK_TO_VET_SELECTION','Vissza az állatorvos választáshoz');
 define('SELECT_TIME','Válassza ki az időpontot');
 define('SELECT_PET','Válassza ki házikedvencét:');

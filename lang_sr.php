@@ -1,4 +1,16 @@
 <?php
+define('RESCRSUC','Rezervacija je uspešno napravljena.');
+define('DATAMIS','Podaci nedostaju');
+define('ERROR','Greške u sistemu');
+define('PASSUPDF', 'Promena lozinka nije nije bila uspešna');
+define('PASSUPD', 'Lozinka je uspešno izmenjena');
+define('PASSNONUM', 'Lozinka mora da sadrži brojeve');
+define('PASSNOUP', 'Lozinka mora da sadrži velika slova');
+define('PASSNOLOW', 'Lozinka mora da sadrži mala slova');
+define('PASSMATCH','Lozinke se ne poklapaju');
+define('PASSFILL','Polja za lozinku nisu popunjena');
+define('NOEX','Ova email addressa ne postoji');
+define('FB','Hvala za povratne informacije');
 define('BACK_TO_VET_SELECTION','Nazad na stranicu za veterinara');
 define('SELECT_TIME','Izaberite Vreme');
 define('SELECT_PET','Izaberite ljubimca:');

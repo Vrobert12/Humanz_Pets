@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 29, 2025 at 08:34 PM
+-- Generation Time: Feb 06, 2025 at 08:26 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -205,7 +205,56 @@ INSERT INTO `errorlog` (`errorLogId`, `errorType`, `errorMail`, `errorText`, `er
 (163, 'Log in', 'dominikhupko143@gmail.com', 'The E-mail is not in our database', '2025-01-27 21:59:22.000000'),
 (164, 'Log in', 'hupkodominik143@gmail.com', 'The password was not valid!', '2025-01-27 22:00:36.000000'),
 (165, 'Log in', 'hupkodominik143@gmail.com', 'The password was not valid!', '2025-01-27 22:00:47.000000'),
-(166, 'Log in', 'robertvarro12@gmail.com', 'The password was not valid!', '2025-01-28 17:48:04.000000');
+(166, 'Log in', 'robertvarro12@gmail.com', 'The password was not valid!', '2025-01-28 17:48:04.000000'),
+(167, 'Log in', 'hupkodominik143@gmail.com', 'The password was not valid!', '2025-01-29 15:00:46.000000'),
+(168, 'Log in', 'varrorobert03@gmail.com', 'The password was not valid!', '2025-01-29 23:51:45.000000'),
+(169, 'Log in', 'varrorobert03@gmail.com', 'The E-mail is not in our database', '2025-01-29 23:54:07.000000'),
+(170, 'Log in', 'varrorobert03@gmail.com', 'The password was not valid!', '2025-01-30 01:01:32.000000'),
+(171, 'Log in', 'varrorobert03@gmail.com', 'The password was not valid!', '2025-01-30 01:01:36.000000'),
+(172, 'Log in', 'varrorobert03@gmail.com', 'The password was not valid!', '2025-01-30 01:01:45.000000'),
+(173, 'Log in', 'varrorobert03@gmail.com', 'The password was not valid!', '2025-01-30 01:01:49.000000'),
+(174, 'E-mail validation', 'varrorobert03@gmail.com', 'The validation code is not correct!', '2025-01-30 01:09:14.000000'),
+(175, 'Log in', 'varrorobert03@gmail.com', 'The password was not valid!', '2025-01-30 01:19:12.000000'),
+(176, 'Log in', 'varrorobert03@gmail.com', 'The password was not valid!', '2025-01-30 01:19:57.000000'),
+(177, 'Log in', 'varrorobert03@gmail.com', 'The password was not valid!', '2025-01-30 01:23:34.000000'),
+(178, 'Log in', 'varrorobert03@gmail.com', 'The password was not valid!', '2025-01-30 01:25:11.000000'),
+(179, 'Log in', 'varrorobert03@gmail.com', 'The password was not valid!', '2025-01-30 01:27:35.000000'),
+(180, 'Log in', 'varrorobert03@gmail.com', 'The password was not valid!', '2025-01-30 01:28:10.000000'),
+(181, 'E-mail validation', 'varrorobert03@gmail.com', 'The validation code is not correct!', '2025-01-30 01:28:27.000000'),
+(182, 'Log in', 'varrorobert03@gmail.com', 'The password was not valid!', '2025-01-30 01:28:40.000000'),
+(183, 'Log in', 'varrorobert03@gmail.com', 'The password was not valid!', '2025-01-30 01:28:44.000000'),
+(184, 'Log in', 'varrorobert03@gmail.com', 'The password was not valid!', '2025-01-30 01:30:59.000000'),
+(185, 'E-mail validation', 'varrorobert03@gmail.com', 'Time for validation has expired', '2025-01-30 01:31:14.000000'),
+(186, 'Log in', 'varrorobert03@gmail.com', 'The password was not valid!', '2025-01-30 01:31:25.000000'),
+(187, 'Log in', 'varrorobert03@gmail.com', 'The password was not valid!', '2025-01-30 01:32:39.000000'),
+(188, 'Log in', 'varrorobert03@gmail.com', 'The password was not valid!', '2025-01-30 01:37:23.000000'),
+(189, 'Log in', 'robertvarro12@gmail.com', 'The password was not valid!', '2025-01-30 01:41:53.000000'),
+(190, 'Log in', 'varrorobert03@gmail.com', 'The password was not valid!', '2025-01-30 01:47:29.000000'),
+(191, 'Log in', 'varrorobert03@gmail.com', 'The password was not valid!', '2025-01-30 01:48:49.000000'),
+(192, 'Log in', 'robertvarro12@gmail.com', 'The password was not valid!', '2025-01-30 01:50:13.000000'),
+(193, 'Log in', 'robertvarro12@gmail.com', 'The password was not valid!', '2025-01-30 01:53:41.000000'),
+(194, 'Log in', 'varrorobert03@gmail.com', 'The password was not valid!', '2025-01-30 01:57:47.000000'),
+(195, 'Log in', 'varrorobert03@gmail.com', 'The password was not valid!', '2025-01-30 01:59:06.000000'),
+(196, 'E-mail validation', 'varrorobert03@gmail.com', 'Time for validation has expired', '2025-01-30 01:59:20.000000'),
+(197, 'Log in', 'varrorobert03@gmail.com', 'The password was not valid!', '2025-01-30 02:03:02.000000'),
+(198, 'Log in', 'varrorobert03@gmail.com', 'The password was not valid!', '2025-01-30 02:03:16.000000'),
+(199, 'Log in', 'varrorobert03@gmail.com', 'The password was not valid!', '2025-01-30 02:03:21.000000'),
+(200, 'Log in', 'varrorobert03@gmail.com', 'The password was not valid!', '2025-01-30 02:03:38.000000'),
+(201, 'E-mail validation', 'varrorobert03@gmail.com', 'Time for validation has expired', '2025-01-30 02:04:14.000000'),
+(202, 'E-mail validation', 'varrorobert03@gmail.com', 'The validation code is not correct!', '2025-01-30 02:04:37.000000'),
+(203, 'Log in', 'varrorobert03@gmail.com', 'The password was not valid!', '2025-01-30 02:06:10.000000'),
+(204, 'Log in', 'varrorobert03@gmail.com', 'The password was not valid!', '2025-01-30 02:07:19.000000'),
+(205, 'E-mail validation', 'varrorobert03@gmail.com', 'Time for validation has expired', '2025-01-30 02:07:33.000000'),
+(206, 'E-mail validation', 'varrorobert03@gmail.com', 'The validation code is not correct!', '2025-01-30 02:08:00.000000'),
+(207, 'E-mail validation', 'varrorobert03@gmail.com', 'The validation code is not correct!', '2025-01-30 02:11:15.000000'),
+(208, 'E-mail validation', 'varrorobert03@gmail.com', 'The validation code is not correct!', '2025-01-30 02:12:05.000000'),
+(209, 'E-mail validation', 'varrorobert03@gmail.com', 'The validation code is not correct!', '2025-01-30 02:14:39.000000'),
+(210, 'Log in', 'asf@gmail.com', 'The E-mail is not in our database', '2025-01-30 02:19:16.000000'),
+(211, 'E-mail validation', 'varrorobert03@gmail.com', 'Time for validation has expired', '2025-01-30 02:23:08.000000'),
+(212, 'Log in', 'varrorobert03@gmail.com', 'The password was not valid!', '2025-01-30 02:23:21.000000'),
+(213, 'Log in', 'robertvrro12@gmail.com', 'The E-mail is not in our database', '2025-01-31 14:05:21.000000'),
+(214, 'Log in', 'robertvarro12@gmail.com', 'The password was not valid!', '2025-01-31 14:46:41.000000'),
+(215, 'Log in', 'varrorobert03@gmail.com', 'The password was not valid!', '2025-01-31 21:24:31.000000');
 
 -- --------------------------------------------------------
 
@@ -276,7 +325,8 @@ INSERT INTO `pet` (`petId`, `petName`, `bred`, `petSpecies`, `petPicture`, `user
 (14, 'Zizi2', 'Pug', 'Dog', '20241215190624.png', 25, 1),
 (15, 'Tigrincs', 'Mixed', 'Cat', '20241221144748.png', 28, 1),
 (40, 'Buksi', 'Tiszta', 'Dog  ', '20241223000554.png', 29, 1),
-(44, 'Tigrincs', 'Mixed', 'Dog ', '20241223140237.png', 29, 1);
+(44, 'Tigrincs', 'Mixed', 'Dog ', '20241223140237.png', 29, 1),
+(52, 'Tigrincs', 'Mixed', 'Parrot', '20250206190202.png', 19, 3);
 
 -- --------------------------------------------------------
 
@@ -319,12 +369,12 @@ CREATE TABLE `qr_code` (
 --
 
 INSERT INTO `qr_code` (`qr_code_id`, `qrCodeName`, `userId`, `generated_at`, `updated_at`) VALUES
-(1, 'QRcodes/qrcode_67992231b109e.png', 19, '2024-11-11 19:47:18', '2025-01-28 18:30:10'),
+(1, 'QRcodes/qrcode_679d2d0a5948c.png', 19, '2024-11-11 19:47:18', '2025-01-31 20:05:30'),
 (2, 'QRcodes/qrcode_675da53946388.png', 26, '2024-12-14 16:33:13', '2024-12-14 15:33:13'),
 (3, 'QRcodes/qrcode_675e00a3bfff4.png', 27, '2024-12-14 23:03:15', '2024-12-14 22:03:15'),
 (4, 'QRcodes/qrcode_675ef571ca9a1.png', 25, '2024-12-15 16:27:46', '2024-12-15 15:27:46'),
 (5, 'QRcodes/qrcode_6766c7046bb35.png', 28, '2024-12-21 14:47:48', '2024-12-21 13:47:48'),
-(6, 'QRcodes/qrcode_676857dc08696.png', 29, '2024-12-22 19:18:04', '2024-12-22 18:18:04');
+(6, 'QRcodes/qrcode_679d2d240e4ee.png', 29, '2024-12-22 19:18:04', '2025-01-31 20:05:56');
 
 -- --------------------------------------------------------
 
@@ -348,14 +398,16 @@ CREATE TABLE `reservation` (
 
 INSERT INTO `reservation` (`reservationId`, `reservationDay`, `reservationTime`, `period`, `animalChecked`, `veterinarianId`, `petId`) VALUES
 (1, '2025-01-13', '09:00:00', '10:00:00', 0, 3, 1),
-(2, '2025-01-31', '17:00:00', '18:00:00', 0, 3, 40),
+(2, '2025-01-31', '17:00:00', '18:00:00', 1, 3, 40),
 (4, '2025-01-12', '17:00:00', '18:00:00', 0, 3, 1),
 (9, '2025-01-14', '18:00:00', '19:00:00', 0, 3, 2),
 (20, '2025-01-27', '13:00:00', '14:00:00', 1, 3, 1),
 (21, '2025-01-27', '14:00:00', '15:00:00', 1, 3, 2),
 (22, '2025-01-30', '10:00:00', '11:00:00', 0, 3, 44),
-(39, '2025-02-01', '10:00:00', '11:00:00', 0, 3, 2),
-(40, '2025-02-08', '13:00:00', '14:00:00', 0, 1, 13);
+(54, '2025-02-08', '18:00:00', '19:00:00', 1, 3, 2),
+(55, '2025-02-07', '17:00:00', '18:00:00', 1, 3, 1),
+(59, '2025-02-13', '09:00:00', '10:00:00', 1, 3, 1),
+(66, '2025-02-15', '11:00:00', '12:00:00', 1, 3, 2);
 
 -- --------------------------------------------------------
 
@@ -383,7 +435,14 @@ INSERT INTO `review` (`reviewId`, `review`, `reviewTime`, `reviewCode`, `userId`
 (4, 5, '2025-01-27 21:38:54', 23267100, 19, 3),
 (5, 3, '2025-01-27 21:44:42', 36928989, 19, 3),
 (6, NULL, '2025-01-27 21:56:11', 33457626, 19, 3),
-(7, 1, '2025-01-27 22:37:57', 31477648, 19, 3);
+(7, 1, '2025-01-27 22:37:57', 31477648, 19, 3),
+(8, NULL, '2025-01-31 21:36:10', 11786383, 19, 3),
+(9, 3, '2025-01-31 21:39:35', 27507225, 19, 3),
+(10, NULL, '2025-01-31 21:40:01', 43924278, 29, 3),
+(11, 5, '2025-01-31 21:53:24', 39183049, 19, 3),
+(12, 5, '2025-01-31 21:53:47', 34245328, 19, 3),
+(13, NULL, '2025-02-06 01:50:41', 27877141, 19, 3),
+(14, NULL, '2025-02-06 01:53:06', 24483357, 19, 3);
 
 -- --------------------------------------------------------
 
@@ -399,7 +458,7 @@ CREATE TABLE `user` (
   `userMail` varchar(100) NOT NULL,
   `userPassword` varchar(60) NOT NULL,
   `profilePic` varchar(100) DEFAULT NULL,
-  `privilage` enum('Guest','Admin','','') NOT NULL,
+  `privilage` enum('User','Admin','','') NOT NULL,
   `registrationTime` timestamp NOT NULL DEFAULT current_timestamp(),
   `verification_code` int(50) DEFAULT NULL,
   `verify` int(11) NOT NULL,
@@ -416,14 +475,14 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`userId`, `firstName`, `lastName`, `phoneNumber`, `userMail`, `userPassword`, `profilePic`, `privilage`, `registrationTime`, `verification_code`, `verify`, `verification_time`, `banned`, `banned_time`, `passwordValidation`, `passwordValidationTime`, `usedLanguage`) VALUES
-(6, 'Nikoletta', 'Varro', '0', 'nikolettavarro12@gmail.com', '$2y$10$ZJtAXGLi1y8Y7VlLzE4Ru.nH.SbV5pbDRtoQTlOv88WgemWiSIrB2', 'logInPic.png', 'Guest', '0000-00-00 00:00:00', 401081, 0, '2024-04-29 22:00:00', 0, '0000-00-00 00:00:00', 0, '2024-04-23 09:54:10', 'en'),
-(7, 'Nikoletta', 'Varro', '0', 'nikolettavarro@gmail.com', '$2y$10$GZ9eslD9.lWIwuBi0by.sunJYqe1s8Jn8K2eX4CefmMN/LOnyRNua', 'logInPic.png', 'Guest', '0000-00-00 00:00:00', 102107, 0, '2024-04-29 22:00:00', 0, '0000-00-00 00:00:00', 0, '2024-04-23 09:54:10', 'en'),
-(19, 'Robert', 'Varro', '0649420637', 'robertvarro12@gmail.com', '$2y$10$sZKeBUr3S43dBnkiLkzP..1SJCekw6MqWlEpwwqj1puauC2HzEQ0O', '20250104204023.png', 'Admin', '0000-00-00 00:00:00', 229527, 1, '2024-04-29 22:00:00', 1, '0000-00-00 00:00:00', 167710, '2025-01-03 23:15:50', 'hu'),
+(6, 'Nikoletta', 'Varro', '0', 'nikolettavarro12@gmail.com', '$2y$10$ZJtAXGLi1y8Y7VlLzE4Ru.nH.SbV5pbDRtoQTlOv88WgemWiSIrB2', 'logInPic.png', 'User', '0000-00-00 00:00:00', 401081, 0, '2024-04-29 22:00:00', 0, '0000-00-00 00:00:00', 0, '2024-04-23 09:54:10', 'en'),
+(7, 'Nikoletta', 'Varro', '0649420637', 'nikolettavarro@gmail.com', '$2y$10$GZ9eslD9.lWIwuBi0by.sunJYqe1s8Jn8K2eX4CefmMN/LOnyRNua', 'logInPic.png', 'User', '0000-00-00 00:00:00', 102107, 0, '2024-04-29 22:00:00', 0, '0000-00-00 00:00:00', 0, '2024-04-23 09:54:10', 'en'),
+(19, 'Sherlock', 'Varro', '0649420637', 'robertvarro12@gmail.com', '$2y$10$DLmuSbN32LHROGmHLo07fOteS915gYkqo7Op5l6WOfg5CyD2DY8Sa', '20250104204023.png', 'Admin', '0000-00-00 00:00:00', 229527, 1, '2024-04-29 22:00:00', 0, '0000-00-00 00:00:00', 122127, '2025-02-06 18:09:13', 'hu'),
 (25, 'Dominik', 'Hupko', '628277140', 'hupkodominik143@gmail.com', '$2y$10$B1cB9B1pWGshgJPbFbUBleB3yicBi3cILKWBT2DAkDbz5kDoLhtuC', 'logInPic.png', 'Admin', '2024-06-03 12:23:54', 2047970, 1, '2024-06-03 12:33:54', 0, '0000-00-00 00:00:00', 173548, '2025-01-27 15:31:17', 'hu'),
-(26, 'Robert', 'Varro', '0649420637', 'varrorobert03@gmail.coml', '$2y$10$T5p19yMDoZ0EKiRXocAjJuNmNFK8INcDDWFkyC97i5rB6rODkLO82', 'logInPic.png', 'Guest', '2024-12-14 15:32:29', 1740492, 1, '2024-12-14 15:42:29', 0, '2024-12-14 15:32:29', NULL, '2024-12-14 15:32:29', 'en'),
-(27, 'Robert', 'Varro', '0649420637', 'varro7robert03@gmail.com', '$2y$10$7.Vqm7RZ7EaQISuO6xdo3OcNPbEAERoUAJF8hsBBxD8mCAvaH5Bpi', 'logInPic.png', 'Guest', '2024-12-14 22:01:34', 3299090, 1, '2024-12-14 22:11:34', 0, '2024-12-14 22:01:34', NULL, '2024-12-14 22:01:34', 'en'),
-(28, 'Robert', 'Varro', '0649420637', 'varkrorobert03@gmail.com', '$2y$10$WuiMPKYoHYmik23BpzphiuOlUZIL.pVOsGDkuUl.zzW.csVbAaaCG', 'logInPic.png', 'Guest', '2024-12-21 13:46:39', 1176453, 1, '2024-12-21 13:56:39', 0, '2024-12-21 13:46:39', NULL, '2024-12-21 13:46:39', 'en'),
-(29, 'Robert', 'Varro', '0649420637', 'varrorobert03@gmail.comj', '$2y$10$eQ64rp7wa7khUMrxClHZxOjSnZKmL57c6ZlP84OWG.YeKAbgRAdji', 'logInPic.png', 'Guest', '2024-12-22 18:15:01', 2028307, 1, '2024-12-22 18:25:01', 0, '2024-12-22 18:15:01', NULL, '2024-12-22 18:15:01', 'en');
+(26, 'Sherlock', 'Holmes', '0649420637', 'varrorobert03@gmail.coml', '$2y$10$T5p19yMDoZ0EKiRXocAjJuNmNFK8INcDDWFkyC97i5rB6rODkLO82', 'logInPic.png', 'User', '2024-12-14 15:32:29', 1740492, 1, '2024-12-14 15:42:29', 0, '2024-12-14 15:32:29', NULL, '2024-12-14 15:32:29', 'sr'),
+(27, 'Nemen', 'Varro', '0649420637', 'varro7robert03@gmail.com', '$2y$10$7.Vqm7RZ7EaQISuO6xdo3OcNPbEAERoUAJF8hsBBxD8mCAvaH5Bpi', 'logInPic.png', 'User', '2024-12-14 22:01:34', 3299090, 1, '2024-12-14 22:11:34', 0, '2024-12-14 22:01:34', NULL, '2024-12-14 22:01:34', 'en'),
+(28, 'Robert', 'Varro', '0649420637', 'varkrorobert03@gmail.com', '$2y$10$WuiMPKYoHYmik23BpzphiuOlUZIL.pVOsGDkuUl.zzW.csVbAaaCG', 'logInPic.png', 'User', '2024-12-21 13:46:39', 1176453, 1, '2024-12-21 13:56:39', 0, '2024-12-21 13:46:39', NULL, '2024-12-21 13:46:39', 'en'),
+(29, 'Grom', 'Lock', '0649420637', 'varrokrobert03@gmail.com', '$2y$10$eQ64rp7wa7khUMrxClHZxOjSnZKmL57c6ZlP84OWG.YeKAbgRAdji', 'logInPic.png', 'User', '2024-12-22 18:15:01', 2028307, 1, '2024-12-22 18:25:01', 0, '2024-12-22 18:15:01', NULL, '2024-12-22 18:15:01', 'en');
 
 -- --------------------------------------------------------
 
@@ -496,7 +555,7 @@ CREATE TABLE `veterinarian` (
 
 INSERT INTO `veterinarian` (`veterinarianId`, `firstName`, `lastName`, `phoneNumber`, `veterinarianMail`, `veterinarianPassword`, `profilePic`, `registrationTime`, `verification_code`, `verify`, `verification_time`, `banned`, `banned_time`, `passwordValidation`, `passwordValidationTime`, `workAddressId`, `usedLanguage`) VALUES
 (1, 'Robert', 'Varro', '0649420637', 'varrorobejrt03@gmail.com', '$2y$10$kDYqhdUxCiKKb86iW8vGIe6yi.8fmADky4QYmpcOXlV3Fh8hN1jOq', 'logInPic.png', '2024-12-14 13:02:10', NULL, 1, '2024-12-14 13:02:10', 0, '2025-01-28 16:53:53', 1, '2024-12-14 13:02:10', 1, 'en'),
-(3, 'Robert', 'Varro', '0649420637', 'varrorobert03@gmail.com', '$2y$10$u1KvS5Nh7JQBo89d7jM9yeFVAS6rrfptOrHum0v/KLNYPRfs60W/2', '20250124221618.jpg', '2025-01-04 18:44:36', 3296064, 1, '2025-01-04 18:54:36', 0, '2025-01-28 16:53:53', NULL, '2025-01-04 18:44:36', 0, 'sr');
+(3, 'Domi', 'Kiraly', '0649420637', 'varrorobert03@gmail.com', '$2y$10$u1KvS5Nh7JQBo89d7jM9yeFVAS6rrfptOrHum0v/KLNYPRfs60W/2', '20250131210757.png', '2025-01-04 18:44:36', 3296064, 1, '2025-01-04 18:54:36', 0, '2025-01-28 16:53:53', NULL, '2025-01-04 18:44:36', 0, 'sr');
 
 -- --------------------------------------------------------
 
@@ -635,7 +694,7 @@ ALTER TABLE `work_address`
 -- AUTO_INCREMENT for table `errorlog`
 --
 ALTER TABLE `errorlog`
-  MODIFY `errorLogId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=167;
+  MODIFY `errorLogId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=216;
 
 --
 -- AUTO_INCREMENT for table `log`
@@ -647,7 +706,7 @@ ALTER TABLE `log`
 -- AUTO_INCREMENT for table `pet`
 --
 ALTER TABLE `pet`
-  MODIFY `petId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
+  MODIFY `petId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
 
 --
 -- AUTO_INCREMENT for table `product`
@@ -665,19 +724,19 @@ ALTER TABLE `qr_code`
 -- AUTO_INCREMENT for table `reservation`
 --
 ALTER TABLE `reservation`
-  MODIFY `reservationId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+  MODIFY `reservationId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=67;
 
 --
 -- AUTO_INCREMENT for table `review`
 --
 ALTER TABLE `review`
-  MODIFY `reviewId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `reviewId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `userId` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `userId` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 
 --
 -- AUTO_INCREMENT for table `user_product_relation`
@@ -695,7 +754,7 @@ ALTER TABLE `user_review_relation`
 -- AUTO_INCREMENT for table `veterinarian`
 --
 ALTER TABLE `veterinarian`
-  MODIFY `veterinarianId` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `veterinarianId` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `veterinar_review_relation`
