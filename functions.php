@@ -1809,7 +1809,7 @@ WHERE u.userId = :userId";
                                 if (isset($_SESSION['registration']))
                                     unset($_SESSION['registration']);
                                 setcookie("last_activity", time(), time() + 10 * 60, "/");
-                                header('Location: index.php');
+                                header('Location: index.php?refresh=1');
                                 exit();
                             }
                         } else {
@@ -2047,8 +2047,9 @@ WHERE u.userId = :userId";
                 exit();
 
             } elseif (isset($_SESSION['email'])) {
+                session_unset();
                 session_destroy();
-                header('Location: logIn.php');
+                header('Location: logIn.php?refresh=1');
                 exit();
                 // No valid cookies or session
             }

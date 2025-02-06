@@ -19,7 +19,10 @@
 <body style="background: #659df7">
 
 <?php
-
+if(isset($_GET['refresh']) && $_GET['refresh'] == '1'){
+    header('Refresh:0;url=logIn.php');
+    exit();
+}
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
     $lang = $_GET['lang'] ?? $_SESSION['lang'] ?? 'en';
