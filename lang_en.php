@@ -1,4 +1,16 @@
 <?php
+define('DATAMIS','Data missing');
+define('ERROR','An error occurred');
+define('PASSUPDF','Failed to update password!');
+define('PASSUPD','Password updated successfully!');
+define('PASSNOEIGHT', 'Password must be at least 8 characters long');
+define('PASSNONUM', 'Password must contain numbers');
+define('PASSNOUP', 'Password must contain upper case letters');
+define('PASSNOLOW', 'Password must contain lower case letters');
+define('PASSMATCH','The passwords do not match');
+define('PASSFILL','The password fields are not filled out');
+define('NOEX','This email address doesnt exist');
+define('FB','Thank you for your feedback');
 define('BACK_TO_VET_SELECTION','Back to Veterinarian Selection');
 define('SELECT_TIME','Select Time');
 define('SELECT_PET','Select Pet:');
@@ -15,6 +27,7 @@ define('BAN','This person is banned:');
 define('UNBAN','This person is unbanned:');
 define('FILLMES','Fill the message out.');
 define('RESDELFAIL','Failed to delete the reservation. Please try again.');
+define('RESCRSUC','Reservation successfully created.');
 define('RESDELSUC','Reservation successfully deleted.');
 define('PICSUCCESS','Picture deleted successfully');
 define('VERFAIL','Verification failed');
