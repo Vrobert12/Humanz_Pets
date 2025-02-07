@@ -6,8 +6,8 @@ export default function Settings() {
     const [loading, setLoading] = useState(true);
     const [updating, setUpdating] = useState(false);
 
-    const userId = 19; // Hardcoded for now
-    const apiUrl = `http://192.168.43.125/Humanz_Pets/getPets/user/${userId}`; // Correct API URL to fetch user data
+    const userId = 25; // Hardcoded for now
+    const apiUrl = `http://192.168.1.7/Humanz_Pets/getPets/user/${userId}`; // Correct API URL to fetch user data
 
     // Fetch user data
     useEffect(() => {

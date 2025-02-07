@@ -1,17 +1,21 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, Image, ActivityIndicator, StyleSheet } from 'react-native';
+import { View, Text, Image, ActivityIndicator, StyleSheet, TouchableOpacity } from 'react-native';
 
-export default function Profile() {
+export default function Profile({ route }) {
     const [userData, setUserData] = useState(null);
     const [loading, setLoading] = useState(true);
-    const userId = 19; // Change this if needed
+    const userId = 25;
+
+    // Extract onLogout from params
+    const { onLogout } = route.params || {}; // ✅ This ensures there's no undefined error
 
     useEffect(() => {
-        fetch(`http://192.168.43.125/Humanz_Pets/getPets/user/19`)
+        fetch(`http://192.168.1.7/Humanz_Pets/getPets/user/${userId}`)
             .then((response) => response.json())
             .then((data) => {
+                console.log(data);
                 if (data.status === 200) {
-                    setUserData(data.data[0]); // Assuming only one user is returned
+                    setUserData(data.data[0]);
                 }
                 setLoading(false);
             })
@@ -41,14 +45,21 @@ export default function Profile() {
     return (
         <View style={styles.container}>
             <Image
-                source={{ uri: `http://192.168.43.125/Humanz_Pets/pictures/${userData.profilePic}` }} // Update path if needed
+                source={{ uri: `http://192.168.43.124/Humanz_Pets/pictures/${String(userData.profilePic)}` }}
                 style={styles.profileImage}
             />
-            <Text style={styles.userName}>{userData.firstName} {userData.lastName}</Text>
-            <Text style={styles.info}>📧 {userData.userMail}</Text>
-            <Text style={styles.info}>📞 {userData.phoneNumber}</Text>
-            <Text style={styles.info}>🌐 Language: {userData.usedLanguage}</Text>
-            <Text style={styles.info}>🔒 Privilege: {userData.privilage}</Text>
+            <Text style={styles.userName}>{String(userData.firstName)} {String(userData.lastName)}</Text>
+            <Text style={styles.info}>📧 {String(userData.userMail)}</Text>
+            <Text style={styles.info}>📞 {String(userData.phoneNumber)}</Text>
+            <Text style={styles.info}>🌐 Language: {String(userData.usedLanguage)}</Text>
+            <Text style={styles.info}>🔒 Privilege: {String(userData.privilage)}</Text>
+
+            {/* Logout Button */}
+            {onLogout && ( // ✅ Ensure onLogout is defined before using it
+                <TouchableOpacity onPress={onLogout} style={styles.logoutButton}>
+                    <Text style={styles.logoutText}>Log Out</Text>
+                </TouchableOpacity>
+            )}
         </View>
     );
 }
@@ -83,5 +94,15 @@ const styles = StyleSheet.create({
     errorText: {
         fontSize: 18,
         color: 'red',
+    },
+    logoutButton: {
+        backgroundColor: 'red',
+        padding: 10,
+        borderRadius: 5,
+        marginTop: 20,
+    },
+    logoutText: {
+        color: 'white',
+        fontWeight: 'bold',
     },
 });
