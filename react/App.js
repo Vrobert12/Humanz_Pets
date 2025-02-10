@@ -6,6 +6,7 @@ import LoginScreen from './screens/LoginScreen';
 import Home from './screens/Home';
 import Profile from './screens/Profile';
 import Settings from './screens/Settings';
+import RegisterPet from "./screens/RegisterPet";
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 const Tab = createBottomTabNavigator();
@@ -18,6 +19,7 @@ const MainApp = ({ onLogout }) => (
                 if (route.name === 'Home') iconName = 'home';
                 else if (route.name === 'Profile') iconName = 'user';
                 else if (route.name === 'Settings') iconName = 'cog';
+                else if (route.name === 'RegisterPet') iconName = 'paw';
                 return <Icon name={iconName} size={size} color={color} />;
             },
             tabBarActiveTintColor: '#007bff',
@@ -30,6 +32,7 @@ const MainApp = ({ onLogout }) => (
             {(props) => <Profile {...props} onLogout={onLogout} />}  {/* Pass handleLogout to Profile */}
         </Tab.Screen>
         <Tab.Screen name="Settings" component={Settings} />
+        <Tab.Screen name="RegisterPet" component={RegisterPet} />
     </Tab.Navigator>
 );
 
@@ -59,6 +62,7 @@ export default function App() {
                             if (route.name === 'Home') iconName = 'home';
                             else if (route.name === 'Profile') iconName = 'user';
                             else if (route.name === 'Settings') iconName = 'cog';
+                            else if (route.name === 'RegisterPet') iconName = 'paw';
                             return <Icon name={iconName} size={size} color={color} />;
                         },
                         tabBarActiveTintColor: '#007bff',
@@ -73,6 +77,7 @@ export default function App() {
                         initialParams={{ onLogout: handleLogout }} // ✅ Pass the function as an initialParam
                     />
                     <Tab.Screen name="Settings" component={Settings} />
+                    <Tab.Screen name="RegisterPet" component={RegisterPet} />
                 </Tab.Navigator>
             ) : (
                 <LoginScreen navigation={{ replace: setIsLoggedIn }} />
@@ -80,5 +85,4 @@ export default function App() {
         </NavigationContainer>
     );
 }
-
 

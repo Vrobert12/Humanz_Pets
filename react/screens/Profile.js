@@ -13,7 +13,6 @@ export default function Profile({ route }) {
         fetch(`http://192.168.1.7/Humanz_Pets/getPets/user/${userId}`)
             .then((response) => response.json())
             .then((data) => {
-                console.log(data);
                 if (data.status === 200) {
                     setUserData(data.data[0]);
                 }

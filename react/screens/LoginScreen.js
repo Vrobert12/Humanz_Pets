@@ -31,9 +31,9 @@ const LoginScreen = ({ navigation }) => {
         try {
             const response = await axios.post(API_URL, { email, password });
             setLoading(false);
-            console.log(response.data);
             if (response.data.success) {
                 await AsyncStorage.setItem('session_token', response.data.token);
+                await AsyncStorage.setItem('user_id', response.data.user_id.toString());
                 Alert.alert('Success', 'Login successful');
                 navigation.replace('Main');
             } else {
