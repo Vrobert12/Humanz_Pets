@@ -61,6 +61,7 @@ if (isset($_SESSION['title'])) {
 }
 $_SESSION['backPic']='selectVeterinarian.php';
 echo "<form action='updateAnimal.php'class='mainForm' method='get'>";
+$_SESSION['backPage']='pet.php';
 if(isset($_SESSION['message'])) {
     echo "<p class='warning'>" .$_SESSION['message']."</p>";
     unset($_SESSION['message']);

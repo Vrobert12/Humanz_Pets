@@ -1,4 +1,10 @@
 <?php
+define('DOWNLOAD_QRCODE','QRCode letöltése');
+define("TIME",'Időpont:');
+define('DATE','Dátum:');
+define('PET_RESERVATION'," időpontot foglalt a házikedvencednek: ");
+define('RESERVED_APOINTMENT_TITLE_VET','Az felhasználónál lefoglalt időpontok:');
+define('PETS_VETERINARIAN','A kedvencnek az állatorvosa: ');
 define('RESCRSUC','Foglalás sikeresen létrehozva.');
 define('DATAMIS','Hiányos adat');
 define('ERROR','Hiba a rendszerben');

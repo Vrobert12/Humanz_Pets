@@ -7,8 +7,10 @@ use PHPMailer\PHPMailer\Exception;
 include "config.php";
 require 'phpqrcode/qrlib.php';
 require "vendor/autoload.php";
-if(isset($_SESSION['lang']))
+if (isset($_SESSION['lang']))
     include "lang_" . $_SESSION['lang'] . ".php";
+else
+    include "lang_en.php";
 $function = new Functions();
 
 
@@ -168,36 +170,73 @@ class Functions
     public function deleteReservationByVet()
     {
         if (!empty($_POST['mailText'])) {
+            // Prepare and execute the query to get user and pet details
+            $sql = "SELECT u.userMail, u.usedLanguage, p.petName
+                FROM user u
+                INNER JOIN pet p ON u.userId = p.userId
+                INNER JOIN reservation r ON p.petId = r.petId
+                WHERE r.reservationId = :reservationId";
+
+            $stmt2 = $this->connection->prepare($sql);
+            $stmt2->bindValue(':reservationId', $_POST['reservationId']);
+            $stmt2->execute();
+
+            // Fetch the result and check if it's valid
+            $resultLang = $stmt2->fetch();
+            // Prepare and execute the deletion query
             $sql = 'DELETE FROM reservation
-WHERE reservationId = :reservationId
-  AND (
-      reservationDay > CURDATE() 
-      OR (reservationDay = CURDATE() AND reservationTime > ADDTIME(NOW(), "01:00:00"))
-  );';
+                WHERE reservationId = :reservationId
+                AND (
+                    reservationDay > CURDATE() 
+                    OR (reservationDay = CURDATE() AND reservationTime > ADDTIME(NOW(), "01:00:00"))
+                );';
+
             $stmt = $this->connection->prepare($sql);
             $stmt->bindValue(':reservationId', $_POST['reservationId']);
             $stmt->execute();
             $result = $stmt->rowCount();
-            if ($result) {
-                $_SESSION['message'] = RESDELSUC;
+
+
+
+            if ($resultLang === false) {
+                // Handle the case where no results are found
+                $_SESSION['message'] = "No reservation found for the given ID.";
+                header('Location: booked_users.php');
+                exit();
+            }
+
+            if ($result && $resultLang) {  // Ensure both the deletion and the resultLang are valid
+                // Set cancel subject based on language
+                if ($resultLang['usedLanguage'] == "en") {
+                    $_SESSION['cancelSubject'] = 'Reservation Cancelled';
+                } elseif ($resultLang['usedLanguage'] == "hu") {
+                    $_SESSION['cancelSubject'] = 'Vizsgálat lemondva';
+                } else {
+                    $_SESSION['cancelSubject'] = 'Pregled Otkazan';
+                }
+
+                // Store other session variables
                 $_SESSION['mailText'] = $_POST['mailText'];
                 $_SESSION['cancelEmail'] = $_POST['cancelEmail'];
+                $_SESSION['message'] = RESDELSUC;
 
-                $_SESSION['cancelSubject'] = RESESEVATION_CANCELED_BY_VET;
-
-                header('Location:mail.php');
+                // Redirect to mail.php
+                header('Location: mail.php');
                 exit();
-            } else
+            } else {
+                // Handle failure case for reservation deletion
                 $_SESSION['message'] = RESDELFAIL;
-
-            header('Location:booked_users.php');
-            exit();
-        } else
+                header('Location: booked_users.php');
+                exit();
+            }
+        } else {
+            // Handle the case when mailText is empty
             $_SESSION['message'] = FILLMES;
-
-        header('Location:booked_users.php');
-        exit();
+            header('Location: booked_users.php');
+            exit();
+        }
     }
+
 
     public function vetBan()
     {
@@ -456,7 +495,7 @@ VALUES (:reviewCode,:userId,:veterinarianId)";
                 exit();
             }
             if ($pass !== $pass2) {
-                $_SESSION['message'] =  PASSMATCH;
+                $_SESSION['message'] = PASSMATCH;
                 header('Location: ' . $_SESSION['backPic']);
                 exit();
             }
@@ -533,7 +572,7 @@ VALUES (:reviewCode,:userId,:veterinarianId)";
                 exit();
             }
         } else {
-            $_SESSION['message'] =  DATAMIS;
+            $_SESSION['message'] = DATAMIS;
             header('Location: ' . $_SESSION['backPic']);
             exit();
         }
@@ -605,11 +644,17 @@ VALUES (:reviewCode,:userId,:veterinarianId)";
     public function insertReservation()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $veterinarianId = $_POST['veterinarianId'];
+
             $selectedPetId = $_POST['petId'] ?? null;
             $reservationDate = $_POST['day'] ?? null;
             $reservationStart = $_POST['reservationTimeStart'] ?? null;
             $reservationEnd = $_POST['reservationTimeEnd'] ?? null;
+            $sql = "SELECT veterinarianId FROM veterinarian v inner join pet p ON v.veterinarianId=p.veterinarId WHERE petId=:petId";
+            $sql = $this->connection->prepare($sql);
+            $sql->bindValue(':petId', $selectedPetId);
+            $sql->execute();
+            $result = $sql->fetch();
+            $veterinarianId = $result['veterinarianId'];
 
             if ($selectedPetId && $reservationDate && $reservationStart && $reservationEnd) {
                 // Check if the pet already has 5 reservations for the day
@@ -639,6 +684,32 @@ VALUES (:reviewCode,:userId,:veterinarianId)";
                     ]);
 
                     $_SESSION['message'] = RESCRSUC;
+                    if ($_SESSION['privilage'] == "Veterinarian") {
+                        $sql = "SELECT u.userMail,u.usedLanguage,p.petName from user u inner join pet p ON u.userId=p.userId where p.petId=:petId";
+                        $sql = $this->connection->prepare($sql);
+                        $sql->bindValue(':petId', $selectedPetId);
+                        $sql->execute();
+                        $result = $sql->fetch();
+                        if ($result['usedLanguage'] == "en") {
+                            $pet_reservation = "made a reservation for yor pet named:";
+                            $date = 'Date';
+                            $time = 'Time';
+                        } elseif ($result['usedLanguage'] == "hu") {
+                            $pet_reservation = "időpontot foglalt a házikedvencednek:";
+                            $date = 'Dátum';
+                            $time = 'Időpont';
+                        } else {
+                            $pet_reservation = "je zakazao termin za pregled ljubimca:";
+                            $date = 'Datum';
+                            $time = "Vreme";
+                        }
+
+                        $_SESSION['reservationMail'] = $result['userMail'];
+                        $_SESSION['petReservation'] = $_SESSION['firstName'] . " " . $_SESSION['lastName'] . " " . $pet_reservation . " " . $result['petName'];
+                        $_SESSION['mailText'] = $date . " " . $reservationDate . "<br>" . $time . " " . $reservationStart . " - " . $reservationEnd;
+                        header('Location:mail.php');
+                        exit();
+                    }
                 } else {
                     $_SESSION['message'] = "You already have too many reservations for this pet.";
                 }
@@ -646,7 +717,7 @@ VALUES (:reviewCode,:userId,:veterinarianId)";
                 $_SESSION['message'] = "All fields are required.";
             }
         }
-        header('Location:book_apointment.php?email=' . $_SESSION['email'] . "&veterinarian=" . $_POST['veterinarian']);
+        header('Location:book_apointment.php');
 
     }
 
@@ -668,7 +739,7 @@ WHERE reservationId = :reservationId
             $_SESSION['message'] = RESDELSUC;
         else
             $_SESSION['message'] = RESDELFAIL;
-        header('Location:book_apointment.php?email=' . $_SESSION['email'] . "&veterinarian=" . $_POST['veterinarian']);
+        header('Location:book_apointment.php');
 
         exit();
     }
@@ -1931,14 +2002,13 @@ WHERE u.userId = :userId";
                     $stmt = $this->connection->prepare($sql);
                     $stmt->bindValue(":mail", $_SESSION['email']);
                     $stmt->execute();
-                    $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                    $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-                    if (!empty($results)&& $currentPage!="selectVeterinarian.php") { // Check if there are any results
+                    if (!empty($result) && $currentPage != "selectVeterinarian.php" && $currentPage != "updateAnimal.php") { // Check if there are any results
                         $_SESSION['message'] = '<br>You have to <b>choose a veterinarian</b> to use this account further!<br><br><a href="functions.php?action=logOut">Log out</a>';
                         header('Location: selectVeterinarian.php');
                         exit();
-                    }
-                    elseif(!empty($result) && $currentPage=="selectVeterinarian.php")
+                    } elseif (!empty($result) && $currentPage == "selectVeterinarian.php")
                         $_SESSION['message'] = '<br>You have to <b>choose a veterinarian</b> to use this account further!<br><br><a href="functions.php?action=logOut">Log out</a>';
 
                 }
@@ -2021,7 +2091,7 @@ WHERE u.userId = :userId";
                         $result = $stmt->fetch(PDO::FETCH_ASSOC);
                         if ($result == 0 && $_SESSION['privilage'] != 'Admin') {
                             $_SESSION['message'] = '<br>You have to <b>chose a veterinarian</b> to use this account further!<br><br><a href="functions.php?action=logOut">Log out</a>';
-                            if ($currentPage != 'selectVeterinarian.php' && $currentPage != 'registerAnimal.php') {
+                            if ($currentPage != 'selectVeterinarian.php' && $currentPage != 'registerAnimal.php' && $currentPage != 'updateAnimal.php') {
                                 header('Location: selectVeterinarian.php');
                                 exit();
                             }
@@ -2033,12 +2103,11 @@ WHERE u.userId = :userId";
                     $stmt->execute();
                     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-                    if (!empty($result) && $currentPage!="selectVeterinarian.php") { // Check if there are any results
+                    if (!empty($result) && $currentPage != "selectVeterinarian.php" && $currentPage != "updateAnimal.php") { // Check if there are any results
                         $_SESSION['message'] = '<br>You have to <b>choose a veterinarian</b> to use this account further!<br><br><a href="functions.php?action=logOut">Log out</a>';
                         header('Location: selectVeterinarian.php');
                         exit();
-                    }
-                    elseif(!empty($result) && $currentPage=="selectVeterinarian.php")
+                    } elseif (!empty($result) && $currentPage == "selectVeterinarian.php")
                         $_SESSION['message'] = '<br>You have to <b>choose a veterinarian</b> to use this account further!<br><br><a href="functions.php?action=logOut">Log out</a>';
 
 

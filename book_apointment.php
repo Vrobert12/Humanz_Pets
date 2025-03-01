@@ -11,26 +11,9 @@ $functions->checkAutoLogin();
 // Database connection
 $pdo = $functions->connect($GLOBALS['dsn'], $_ENV['DB_USER'], $_ENV['DB_PASSWORD'], $GLOBALS['pdoOptions']);
 
-// Fetch the maximum veterinarian ID
-if(isset($_GET['veterinarian'])) {
-    $sqlMaxVet = $pdo->prepare("SELECT veterinarianId FROM veterinarian where veterinarianId = :veterinarianId");
-    $sqlMaxVet->bindValue(':veterinarianId', $_GET['veterinarian']);
-    $sqlMaxVet->execute();
-    $vetResult = $sqlMaxVet->fetch(PDO::FETCH_ASSOC);
-if($vetResult==0){
-    header('Location: book_veterinarian.php');
-    exit();
-}
-// Redirect if veterinarian parameter is invalid
-    $veterinarianId = $_GET['veterinarian'];
 
-    if ($vetResult['veterinarianId']!=$veterinarianId) {
-        header('Location: book_veterinarian.php');
-        exit();
-    }
-}
-elseif (isset($_GET['user'])){
-    $sqlMaxUser = $pdo->prepare("SELECT userId FROM user where userId=:userId");
+if (isset($_GET['user'])){
+    $sqlMaxUser = $pdo->prepare("SELECT userId, userMail FROM user where userId=:userId");
     $sqlMaxUser->bindValue(':userId', $_GET['user']);
     $sqlMaxUser->execute();
     $userResult = $sqlMaxUser->fetch(PDO::FETCH_ASSOC);
@@ -57,8 +40,8 @@ if (!$userId) {
     header('Location: index.php');
     exit();
 }
-
-$petQuery = "SELECT p.petId, p.petName, p.bred, p.petSpecies, p.petPicture
+if($_SESSION['privilage']!="Veterinarian") {
+    $petQuery = "SELECT p.petId, p.petName, p.bred, p.petSpecies, p.petPicture, p.veterinarId
 FROM pet p
 WHERE p.userId = :userId
 AND p.petId NOT IN (
@@ -67,12 +50,12 @@ AND p.petId NOT IN (
     WHERE r.reservationDay >= CURDATE() AND r.animalChecked=0
 )
 ";
-$petStmt = $pdo->prepare($petQuery);
-$petStmt->bindParam(":userId", $userId, PDO::PARAM_INT);
-$petStmt->execute();
-$pets = $petStmt->fetchAll(PDO::FETCH_ASSOC);
+    $petStmt = $pdo->prepare($petQuery);
+    $petStmt->bindParam(":userId", $userId, PDO::PARAM_INT);
+    $petStmt->execute();
+    $pets = $petStmt->fetchAll(PDO::FETCH_ASSOC);
 
-$petQuery = "SELECT v.veterinarianMail, p.petId, p.petName, p.bred, p.petSpecies, p.petPicture, r.reservationDay, r.reservationTime, r.period,r.reservationId
+    $petQuery = "SELECT v.veterinarianId, v.veterinarianMail, p.petId, p.petName, p.bred, p.petSpecies, p.petPicture, r.reservationDay, r.reservationTime, r.period,r.reservationId
 FROM pet p
 LEFT JOIN reservation r ON p.petId = r.petId 
 INNER JOIN veterinarian v ON r.veterinarianId = v.veterinarianId
@@ -81,12 +64,45 @@ AND (r.reservationDay IS NOT NULL AND r.reservationDay >= CURDATE() AND r.animal
 
 ";
 
-$reservedPetStmt = $pdo->prepare($petQuery);
-$reservedPetStmt->bindParam(":userId", $userId, PDO::PARAM_INT);
-$reservedPetStmt->execute();
-$reservedPets = $reservedPetStmt->fetchAll(PDO::FETCH_ASSOC);
+    $reservedPetStmt = $pdo->prepare($petQuery);
+    $reservedPetStmt->bindParam(":userId", $userId, PDO::PARAM_INT);
+    $reservedPetStmt->execute();
+    $reservedPets = $reservedPetStmt->fetchAll(PDO::FETCH_ASSOC);
+// Handle reservation submission
+}
+else{
+    $petQuery = "SELECT p.petId, p.petName, p.bred, p.petSpecies, p.petPicture, p.veterinarId
+FROM pet p
+WHERE p.userId = :userId
+AND p.petId NOT IN (
+    SELECT r.petId
+    FROM reservation r
+    WHERE r.reservationDay >= CURDATE() AND r.animalChecked=0
+) AND veterinarId = :veterinarianId
+";
+    $petStmt = $pdo->prepare($petQuery);
+    $petStmt->bindParam(":userId", $userId, PDO::PARAM_INT);
+    $petStmt->bindParam(":veterinarianId", $_SESSION['userId'], PDO::PARAM_INT);
+    $petStmt->execute();
+    $pets = $petStmt->fetchAll(PDO::FETCH_ASSOC);
+
+    $petQuery = "SELECT v.veterinarianId, v.veterinarianMail, p.petId, p.petName, p.bred, p.petSpecies, p.petPicture, r.reservationDay, r.reservationTime, r.period,r.reservationId
+FROM pet p
+LEFT JOIN reservation r ON p.petId = r.petId 
+INNER JOIN veterinarian v ON r.veterinarianId = v.veterinarianId
+WHERE p.userId = :userId
+AND (r.reservationDay IS NOT NULL AND r.reservationDay >= CURDATE() AND r.animalChecked=0) AND veterinarId = :veterinarianId
+
+";
+
+    $reservedPetStmt = $pdo->prepare($petQuery);
+    $reservedPetStmt->bindParam(":userId", $userId, PDO::PARAM_INT);
+    $reservedPetStmt->bindParam(":veterinarianId", $_SESSION['userId'], PDO::PARAM_INT);
+    $reservedPetStmt->execute();
+    $reservedPets = $reservedPetStmt->fetchAll(PDO::FETCH_ASSOC);
 // Handle reservation submission
 
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -104,7 +120,27 @@ $reservedPets = $reservedPetStmt->fetchAll(PDO::FETCH_ASSOC);
         const lang = '<?php echo $lang; ?>';
     </script>
     <script src="sureCheck.js"></script>
+
     <style>
+        .popup-message {
+            display: none;
+            position: fixed;
+            top: 100px; /* Initially off-screen */
+            left: 50%;
+            transform: translateX(-50%); /* Center horizontally */
+            background-color: #212529;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            font-size: 16px;
+            z-index: 9999;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            width: auto;
+            max-width: 80%;
+            min-width: 300px;
+            animation: slideInOut 10s ease-in-out;
+        }
         .pet-card {
             border: 1px solid #ddd;
             border-radius: 8px;
@@ -210,44 +246,45 @@ $reservedPets = $reservedPetStmt->fetchAll(PDO::FETCH_ASSOC);
             const today = new Date().toISOString().split('T')[0];
             const reservationDate = document.querySelector('[name="day"]');
             const reservationTimeStart = document.querySelector('[name="reservationTimeStart"]');
-            const veterinarianId = <?= htmlspecialchars($veterinarianId) ?>;
+            const reservationTimeEnd = document.querySelector('[name="reservationTimeEnd"]');
+            const petRadios = document.querySelectorAll('[name="petId"]');
 
-            const allowedStartTime = "09:00";
-            const allowedEndTime = "20:00";
+            let selectedVeterinarianId = null;
 
-            reservationTimeStart.disabled = true;
+            function getAllowedHours(dayOfWeek) {
+                return (dayOfWeek >= 1 && dayOfWeek <= 5) ? { start: 8, end: 20 } : { start: 8, end: 12 };
+            }
 
-            function populateTimeOptions() {
-                const times = [];
-                let currentTime = 9;
-                times.push(<?php echo json_encode(SELECT_TIME); ?>);
+            function populateTimeOptions(startHour, endHour) {
+                reservationTimeStart.innerHTML = "";
+                reservationTimeEnd.value = ""; // Clear end time when options are updated
+                const times = [<?php echo json_encode(SELECT_TIME); ?>];
 
-                while (currentTime <= 20) {
-                    const timeString = (currentTime < 10 ? '0' : '') + currentTime + ":00";
+                for (let hour = startHour; hour <= endHour; hour++) {
+                    const timeString = (hour < 10 ? '0' : '') + hour + ":00";
                     times.push(timeString);
-                    currentTime++;
                 }
 
                 times.forEach((time, index) => {
-                    const startOption = document.createElement("option");
-                    startOption.value = time;
-                    startOption.textContent = time;
+                    const option = document.createElement("option");
+                    option.value = time;
+                    option.textContent = time;
 
                     if (index === 0) {
-                        startOption.textContent = <?php echo json_encode(SELECT_TIME); ?>;
-                        startOption.selected = true;
-                        startOption.disabled = true;
-                        startOption.hidden = true;
+                        option.selected = true;
+                        option.disabled = true;
+                        option.hidden = true;
                     }
 
-                    reservationTimeStart.appendChild(startOption);
+                    reservationTimeStart.appendChild(option);
                 });
             }
 
-            populateTimeOptions();
-
-            reservationDate.addEventListener("change", async function () {
+            async function fetchAvailableTimes() {
                 const selectedDate = reservationDate.value;
+                reservationTimeEnd.value = ""; // Clear end time when date changes
+
+                if (!selectedVeterinarianId || !selectedDate) return;
 
                 if (selectedDate <= today) {
                     alert("You cannot select a past date.");
@@ -256,61 +293,143 @@ $reservedPets = $reservedPetStmt->fetchAll(PDO::FETCH_ASSOC);
                     return;
                 }
 
-                reservationTimeStart.value = <?php echo json_encode(SELECT_TIME); ?>;
-                reservationTimeStart.disabled = true;
+                const dateObject = new Date(selectedDate);
+                const dayOfWeek = dateObject.getDay();
+                const { start, end } = getAllowedHours(dayOfWeek);
 
-                const response = await fetch(`check_availability.php?date=${selectedDate}&veterinarianId=${veterinarianId}`);
-                const data = await response.json();
-                data.reservedTimes = undefined;
+                populateTimeOptions(start, end);
 
-                if (data.isFullyBooked) {
-                    alert("This date is fully booked. Please select another date.");
-                    reservationDate.value = '';
-                    reservationTimeStart.disabled = true;
-                } else {
+                try {
+                    const response = await fetch(`check_availability.php?date=${selectedDate}&veterinarianId=${selectedVeterinarianId}`);
+                    const data = await response.json();
+
+                    if (data.isFullyBooked) {
+                        alert("This date is fully booked. Please select another date.");
+                        reservationDate.value = '';
+                        reservationTimeStart.disabled = true;
+                        return;
+                    }
+
                     reservationTimeStart.disabled = false;
-                    const reservedTimes = data.reservedTimes;
 
-                    Array.from(reservationTimeStart.options).forEach(option => {
-                        if (reservedTimes.includes(option.value)) {
-                            option.disabled = true;
-                            option.hidden = true;
-                        } else {
-                            option.disabled = false;
-                            option.hidden = option.textContent === <?php echo json_encode(SELECT_TIME); ?>;
-                        }
-                    });
+                    if (data.reservedTimes) {
+                        Array.from(reservationTimeStart.options).forEach(option => {
+                            if (data.reservedTimes.includes(option.value)) {
+                                option.disabled = true;
+                                option.hidden = true;
+                            } else {
+                                option.disabled = false;
+                                option.hidden = option.textContent === <?php echo json_encode(SELECT_TIME); ?>;
+                            }
+                        });
+                    }
+                } catch (error) {
+                    console.error("Error fetching availability:", error);
                 }
+            }
+
+            petRadios.forEach(radio => {
+                radio.addEventListener("change", async function () {
+                    if (this.checked) {
+                        const petId = this.value;
+                        reservationTimeEnd.value = ""; // Clear end time when pet changes
+
+                        // Fetch veterinarian ID for the selected pet
+                        try {
+                            const response = await fetch(`get_veterinarian.php?petId=${petId}`);
+                            const data = await response.json();
+
+                            if (data.veterinarianId) {
+                                selectedVeterinarianId = data.veterinarianId;
+                                console.log("Selected Veterinarian:", selectedVeterinarianId);
+
+                                reservationDate.disabled = false;
+
+                                if (reservationDate.value) {
+                                    fetchAvailableTimes();
+                                }
+                            } else {
+                                alert("No veterinarian assigned to this pet.");
+                            }
+                        } catch (error) {
+                            console.error("Error fetching veterinarian:", error);
+                        }
+                    }
+                });
             });
+
+            reservationDate.addEventListener("change", fetchAvailableTimes);
 
             reservationTimeStart.addEventListener("change", function () {
                 const startTime = reservationTimeStart.value;
+                reservationTimeEnd.value = ""; // Clear end time when start time changes
 
-                if (startTime && startTime >= allowedStartTime && startTime <= allowedEndTime) {
-                    let endHour = parseInt(startTime.split(":")[0]) + 1;
-                    if (endHour > 20) endHour = 20;
+                if (!startTime) return;
 
-                    const endTime = (endHour < 10 ? '0' : '') + endHour + ":00";
-                    document.querySelector('[name="reservationTimeEnd"]').value = endTime;
-                }
+                let endHour = parseInt(startTime.split(":")[0]) + 1;
+                const selectedDate = reservationDate.value;
+                const dayOfWeek = new Date(selectedDate).getDay();
+                const { end } = getAllowedHours(dayOfWeek);
+
+                if (endHour > end) endHour = end;
+
+                const endTime = (endHour < 10 ? '0' : '') + endHour + ":00";
+                reservationTimeEnd.value = endTime;
             });
         });
+
     </script>
 </head>
 
 <body class="container py-4" style="background: #659df7">
-<a href="book_veterinarian.php" class="btn btn-success mt-4"><?php echo BACK_TO_VET_SELECTION;?></a>
-<?php if($_SESSION['privilage']=="Veterinarian")
-    echo '<h2 class="text-center mb-4">'.RESERVED_APOINTMENT_TITLE.' '.$_SESSION['userMail'].'</h2>';
-else {
-    $sql="SELECT veterinarianMail FROM veterinarian WHERE veterinarianId=:veterinarianId";
-    $sql=$pdo->prepare($sql);
-    $sql->bindValue(':veterinarianId',$_GET['veterinarian']);
-    $sql->execute();
-    $result=$sql->fetch();
 
-    echo '<h2 class="text-center mb-4">' . RESERVED_APOINTMENT_TITLE . ' ' . $result['veterinarianMail'] . '</h2>';
-}?>
+<!-- Show popup message if session message is set -->
+<?php if (isset($_SESSION['message'])): ?>
+<div class="popup-message" id="popupMessage">
+    <?php echo $_SESSION['message']; ?>
+</div>
+<?php unset($_SESSION['message']); // Clear message after it's displayed ?>
+<?php endif; ?>
+
+<script>
+
+    // Show the popup message and hide it after 5 seconds
+    window.onload = function () {
+        var popupMessage = document.getElementById('popupMessage');
+        if (popupMessage) {
+            popupMessage.style.display = 'block';  // Show the popup
+
+            // Hide the popup after 5 seconds
+            setTimeout(function () {
+                popupMessage.style.display = 'none';
+            }, 5000);
+        }
+    };
+</script>
+<!--
+https://getbootstrap.com/docs/5.3/components/navbar/
+-->
+<?php
+if($_SESSION['privilage']=="Veterinarian")
+    echo '<a href="book_veterinarian.php" class="btn btn-success mt-4">BACK</a>';
+
+else
+echo '<a href="index.php" class="btn btn-success mt-4"> BACK</a>';
+if (isset($_SESSION['message']) && $_SESSION['message'] != "")
+    echo "<div class='mainBlock rounded bg-dark text-white' style='text-align: center; margin-top: 100px;'>
+          <h1 style='margin: auto;'>
+              " . $_SESSION['message'] . "
+          </h1>
+          <a class='inputok' onclick='refreshPage()' style='display: inline-block; padding: 10px 20px; 
+             background-color: #19451e; color: white; text-decoration: none; border-radius: 5px; 
+             cursor: pointer; transition: background-color 0.3s ease; margin-top: 20px;'>
+              Okay
+          </a>
+      </div>";
+if($_SESSION['privilage']=="Veterinarian")
+    echo '<h2 class="text-center mb-4">'.RESERVED_APOINTMENT_TITLE_VET.' '. $userResult['userMail'] .'</h2>';
+
+?>
 
 <?php if (isset($_SESSION['reservationMessage'])): ?>
     <div class="alert alert-info"> <?= htmlspecialchars($_SESSION['reservationMessage']) ?> </div>
@@ -320,13 +439,21 @@ else {
     <div class="mb-3">
         <?php if (!empty($pets))
             echo' <h4 for="pet" class="form-label">'.SELECT_PET.'</h4>';
-            ?>
+        ?>
 
         <div class="profile-section">
             <?php foreach ($pets as $pet): ?>
                 <div class="pet-card">
                     <input type="radio" id="pet-<?= htmlspecialchars($pet['petId']) ?>" name="petId" value="<?= htmlspecialchars($pet['petId']) ?>" required>
                     <label for="pet-<?= htmlspecialchars($pet['petId']) ?>">
+                        <?php
+                        $sql="SELECT veterinarianMail,veterinarianId FROM veterinarian v inner join pet p ON v.veterinarianId=p.veterinarId WHERE petId=:petId";
+                        $sql=$pdo->prepare($sql);
+                        $sql->bindValue(':petId',$pet['petId']);
+                        $sql->execute();
+                        $result=$sql->fetch();
+if($_SESSION['privilage']!="Veterinarian")
+                        echo '<h5 class="text-center mb-4">' . PETS_VETERINARIAN . ' ' . $result['veterinarianMail'] . '</h5>';?>
                         <span class="custom-radio"></span>
                         <img alt="Pet Picture" src="pictures/<?= htmlspecialchars($pet['petPicture']) ?>">
                         <p class="pet-details"> <?= htmlspecialchars($pet['petName']) ?> </p>
@@ -354,8 +481,6 @@ else {
     <input type="hidden" value="insertReservation" name="action">
     <?php if($_SESSION['privilage']=="Veterinarian")
         echo ' <input type="hidden" name="veterinarianId" value="'.$_SESSION['userId'].'">';
-    else
-        echo ' <input type="hidden" name="veterinarianId" value="'.$_GET['veterinarian'].'">';
     ?>
 
 
@@ -368,17 +493,21 @@ else {
         <div class="pet-card">
             <label>
                 <img alt="Pet Picture" src="pictures/<?= htmlspecialchars($reservedPet['petPicture']) ?>">
-                <p class="pet-details"> <?php echo RESERVED_VETERINARIAN; ?> </p>
-                <p class="pet-details"> <?= htmlspecialchars($reservedPet['veterinarianMail']) ?> </p>
+
+                <?php
+                if($_SESSION['privilage']!="Veterinarian")
+                    echo '   <p class="pet-details"> <?php echo RESERVED_VETERINARIAN; ?> </p><p class="pet-details">'.$reservedPet['veterinarianMail'] .'</p>';
+                ?>
+
                 <p class="pet-details"> <?= htmlspecialchars($reservedPet['petName']) ?> </p>
                 <p> <?= htmlspecialchars($reservedPet['reservationDay']) ?> </p>
                 <p> <?= htmlspecialchars($reservedPet['reservationTime']) . "-" . htmlspecialchars($reservedPet['period']) ?> </p>
                 <?php if($_SESSION['privilage']!="Veterinarian")
-               echo ' <form method="post" action="functions.php">
+                    echo ' <form method="post" action="functions.php">
                     <input type="hidden" value="',$reservedPet['reservationId'].'" name="reservationId">
                     <input type="hidden" value="deleteReservation" name="action">
                   
-                         <input type="hidden" value="'. $_GET['veterinarian'] .'" name="veterinarian">
+                         <input type="hidden" value="'.$reservedPet['veterinarianId'] .'" name="veterinarian">
                     <input type="hidden" value="'. $_SESSION['userId'] .'" name="veterinarian">
                     
                     <input type="submit" value="'.DELETE_RESERVATION_BUTTON.'" class="btn btn-danger btn-sm" onclick="confirmDeletingApointment(event)">
