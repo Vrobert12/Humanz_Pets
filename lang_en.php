@@ -1,4 +1,7 @@
 <?php
+define('DESCRIPTION_VET_UPDATED','Your description has been updated.');
+define('DESCRIPTION_VET','Your description');
+define('ADD_DESCRIPTION_VET','Add or modify your description');
 define('DOWNLOAD_QRCODE','Download QRCode');
 define("TIME",'Time:');
 define('DATE','Date:');

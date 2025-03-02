@@ -1,4 +1,7 @@
 <?php
+define('DESCRIPTION_VET_UPDATED','A leírásod módosítva lett.');
+define('DESCRIPTION_VET','A leírásod');
+define('ADD_DESCRIPTION_VET','Ad meg vagy módosítva a leírásod');
 define('DOWNLOAD_QRCODE','QRCode letöltése');
 define("TIME",'Időpont:');
 define('DATE','Dátum:');

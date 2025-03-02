@@ -1,4 +1,7 @@
 <?php
+define('DESCRIPTION_VET_UPDATED','Tvoj opis je modifikovan.');
+define('DESCRIPTION_VET','Tvoj opis');
+define('ADD_DESCRIPTION_VET','Daj ili modifikovanj tvoj opis');
 define('DOWNLOAD_QRCODE','Preuzimanje QRCode slike');
 define("TIME",'Vreme:');
 define('DATE','Datum:');

@@ -176,7 +176,17 @@ https://getbootstrap.com/docs/5.3/components/navbar/
               '.PRODUCT.'
             </a>
         </li>';
-                }   if ($_SESSION['privilage'] == 'Admin') {
+                }
+            if ($_SESSION['privilage'] == "Veterinarian")
+            {
+                echo'  <li>
+            <a href="addDescription.php" class="nav-link text-white">
+                <svg class="bi me-2" width="16" height="16"><use xlink:href="#grid"/></svg>
+                '.DESCRIPTION_VET.'
+            </a>
+        </li>';
+            }
+                if ($_SESSION['privilage'] == 'Admin') {
                     echo'  <li>
             <a href="veterinarians.php" class="nav-link text-white">
                 <svg class="bi me-2" width="16" height="16"><use xlink:href="#grid"/></svg>

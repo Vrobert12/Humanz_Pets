@@ -28,9 +28,73 @@ $backgroundImage = "pictures/background.jpg";
     <script src="indexJS.js"></script>
     <link rel="stylesheet" href="style.css">
     <style>
+        /* General Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            padding: 20px;
+        }
+
+        /* Card Styles */
+        .card {
+            background-color: #ffffff;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .card img.profile-pic {
+            width: 80px;
+            height: 80px;
+            border: 4px solid #007bff;
+        }
+
+        .card h5 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .card p {
+            color: #666;
+            font-size: 1rem;
+        }
+
+        .card p strong {
+            color: #333;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .card {
+                margin-bottom: 15px;
+            }
+
+            .container {
+                padding: 10px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .card {
+                padding: 15px;
+            }
+        }
+
         body {
             background: #659df7;
         }
+
         .popup-message {
             position: fixed;
             top: 20px;
@@ -43,6 +107,7 @@ $backgroundImage = "pictures/background.jpg";
             display: none;
             z-index: 1000;
         }
+
         .list-group-item {
             display: flex;
             flex-wrap: wrap;
@@ -50,6 +115,7 @@ $backgroundImage = "pictures/background.jpg";
             text-align: center;
             justify-content: center;
         }
+
         .list-group-item img {
             max-width: 100%;
             height: auto;
@@ -104,21 +170,27 @@ function users($command, $params = [])
         $stmt->execute();
         $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+
         if (!empty($results)) {
-            echo '<div class="container my-3">
-                  <div class="row">';
+            echo '<div class="container my-5">
+            <div class="row">';
             foreach ($results as $row) {
-                echo '<div class="col-md-6 col-lg-4 mb-3">
-                        <div class="card p-3 text-center">
-                            <img src="pictures/' . htmlspecialchars($row['profilePic']) . '" class="rounded-circle img-fluid mx-auto" width="80" height="80" alt="Profile Picture">
-                            <h5 class="mt-2">' . htmlspecialchars($row['firstName'] . " " . $row['lastName']) . '</h5>
-                            <p><strong>ID:</strong> ' . htmlspecialchars($row['veterinarianId']) . '</p>
-                            <p><strong>'.PHONE.':</strong> ' . htmlspecialchars($row['phoneNumber']) . '</p>
-                            <p><strong>'.EMAIL.':</strong> ' . htmlspecialchars($row['veterinarianMail']) . '</p>
-                        </div>
-                      </div>';
+                echo '<div class="col-md-6 col-lg-4 mb-4">
+                <div class="card shadow-sm border-light rounded p-4 text-center">
+                    <img src="pictures/' . htmlspecialchars($row['profilePic']) . '" class="rounded-circle img-fluid mx-auto mb-3 profile-pic" alt="Profile Picture">
+                    <h5 class="mt-2 mb-3">' . htmlspecialchars($row['firstName'] . " " . $row['lastName']) . '</h5>
+                    <p><strong>ID:</strong> ' . htmlspecialchars($row['veterinarianId']) . '</p>
+                    <p><strong>' . PHONE . ':</strong> ' . htmlspecialchars($row['phoneNumber']) . '</p>
+                    <p><strong>' . EMAIL . ':</strong> ' . htmlspecialchars($row['veterinarianMail']) . '</p>';
+
+                if ($row['veterinarianDescription'] != NULL) {
+                    echo '  <p class="mt-3 text-muted"> ' . htmlspecialchars($row['veterinarianDescription']) . '</p>';
+                }
+                echo '  </div>
+              </div>';
             }
-            echo '</div></div>';
+            echo '</div>
+        </div>';
         } else {
             $_SESSION['message'] = "<h2 style='color: white'>No result found.</h2>";
         }
@@ -126,6 +198,7 @@ function users($command, $params = [])
         echo "Error: " . $e->getMessage();
     }
 }
+
 ?>
 </body>
 </html>

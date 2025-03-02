@@ -135,6 +135,9 @@ class Functions
                 case 'deletePicture':
                     $this->deletePicture();
                     break;
+                case 'insertDescription':
+                    $this->insertDescription();
+                    break;
                 default:
                     $_SESSION['message'] = ERROR;
                     header('Location:index.php');
@@ -147,6 +150,81 @@ class Functions
         }
     }
 
+    public function blurSwearWords($text) {
+        $swearWords = [
+            // **Hungarian**
+            'bazdmeg', 'kurva', 'geci', 'fasz', 'buzi', 'picsa', 'szar', 'seggfej', 'faszfej', 'balfasz',
+            'csicska', 'szopás', 'szopni', 'buzeráns', 'rohadt', 'szemét', 'mocskos', 'dögölj', 'dög',
+            'kibaszott', 'kibaszás', 'kibaszni', 'megduglak', 'baszódj meg', 'rohadj meg', 'nyomorult',
+            'kretén', 'idióta', 'hülye', 'dögvész', 'fostenger', 'fosch', 'szardarab', 'pöcs',
+            'lúzer', 'nyomorék', 'segg', 'seggdugasz', 'köcsög', 'tahó', 'barmok', 'ostoba', 'szarházi',
+            'patkány', 'paraszt', 'seggfej', 'anyád', 'anyád picsája', 'kurvapecér', 'féreg', 'ostoba állat',
+
+            // **Serbian (Latin)**
+            'jebem', 'pička', 'kurac', 'govno', 'majku ti', 'sisaš', 'picka materina', 'smrad', 'peder',
+            'jebote', 'kurvina', 'kurvetina', 'pičketina', 'govnara', 'jebiga', 'crkni', 'jebote bog',
+            'jebem ti mater', 'puši kurac', 'mamu ti jebem', 'smradu', 'guzica', 'jebanje', 'jebati',
+            'krmak', 'čmar', 'đubre', 'stoko', 'seljačina', 'bolesnik', 'retard', 'glupson', 'idiot',
+            'budalo', 'majmune', 'konju', 'svinjo', 'kretenčino', 'kurvinski sin', 'jebote pas',
+            'pička materina', 'bog te jebo', 'kurvin sin', 'balvan', 'govnjar', 'smrdljivi idiot',
+            'konjska kurčina', 'jebem ti sve po spisku', 'crkni smrade', 'mamu ti razvalim',
+            'usmrđena pičko', 'jebem ti sunce', 'siso', 'degeneriku', 'glupane', 'majmunče',
+            'smeće', 'kretenu', 'kurvica', 'proklet bio', 'jebeni konj', 'pičko', 'šupak', 'mrš u pičku materinu',
+
+            // **English**
+            'fuck', 'shit', 'bitch', 'asshole', 'bastard', 'cunt', 'dick', 'motherfucker', 'prick',
+            'whore', 'slut', 'fucker', 'son of a bitch', 'cock', 'piss', 'damn', 'douchebag',
+            'dumbass', 'jackass', 'retard', 'bullshit', 'dipshit', 'twat', 'wanker', 'dickhead',
+            'arsehole', 'scumbag', 'bloody hell', 'goddamn', 'hell', 'dumbfuck', 'shithead',
+            'fuckface', 'nutjob', 'pisshead', 'jerkoff', 'cocksucker', 'fucked up', 'motherfucking',
+            'cockface', 'dumbshit', 'asshat', 'buttmunch', 'crapface', 'shitfaced', 'twatface',
+            'fucktard', 'wankstain', 'shiteater', 'cumdumpster', 'cockgobbler', 'bitchass',
+            'dickbag', 'assclown', 'cumbucket', 'cumstain', 'fuckwad', 'dickweasel', 'horseshit',
+            'pissflaps', 'cuntface', 'dickhole', 'fuckwhit', 'shitlord', 'shitbag', 'cockmuncher',
+            'cockwomble', 'twatwaffle', 'arsewipe', 'knobhead', 'wankpuffin', 'asswipe',
+            'cocknugget', 'clusterfuck', 'shitgibbon', 'fucknut', 'fuckstick', 'bitchtits',
+            'assgoblin', 'knobjockey', 'dickcheese', 'fuckbucket', 'wankshaft', 'bellend',
+            'twatknuckle', 'shitstorm', 'shitehawk', 'fuckpuddle', 'shitbrick', 'fuckmonkey',
+            'twunt', 'fuckrag', 'shitstain', 'titsucker', 'cuntmuffin', 'pissguzzler',
+            'cockwrench', 'shitwhistle', 'dickfuck', 'shitblimp', 'fuckmuppet', 'jizzstain',
+            'spunktrumpet', 'cockrocket', 'fuckcannon'
+        ];
+
+        $textLower = strtolower($text); // Convert text to lowercase for case-insensitive checking
+
+        foreach ($swearWords as $word) {
+            // Case-insensitive word boundary match, looking for individual characters
+            $pattern = '/(?<=^|\s|\b|\W)' . preg_quote($word, '/') . '(?=\s|\b|\W|$)/i';
+
+            // Replace with stars, preserving the first and last characters
+            $replacement = function ($matches) use ($word) {
+                $match = $matches[0];
+                return $word[0] . str_repeat('*', strlen($match) - 2) . $word[strlen($match) - 1];
+            };
+
+            // Apply replacement
+            $text = preg_replace_callback($pattern, $replacement, $text);
+        }
+
+        return $text;
+    }
+
+
+
+    public function insertDescription()
+{
+    if(isset($_POST['vetDescription'])) {
+        $vetDescription = $this->blurSwearWords($_POST['vetDescription']);
+        $sql = 'UPDATE veterinarian set veterinarianDescription=:description WHERE veterinarianId = :veterinarianID';
+        $stmt = $this->connection->prepare($sql);
+        $stmt->bindParam(':description', $vetDescription);
+        $stmt->bindParam(':veterinarianID', $_SESSION['userId']);
+        $stmt->execute();
+        $_SESSION['message'] = DESCRIPTION_VET_UPDATED;
+        header('Location:addDescription.php');
+        exit();
+    }
+}
     public function deletePicture()
     {
         if ($_POST['table'] == 'veterinarian') {
@@ -623,8 +701,8 @@ VALUES (:reviewCode,:userId,:veterinarianId)";
                 unset($_SESSION['message']);
             }
         }
-        $petName = ucfirst(strtolower($_POST['petName']));
-        $bred = ucfirst(strtolower($_POST['bred']));
+        $petName = ucfirst(strtolower($this->blurSwearWords($_POST['petName'])));
+        $bred = ucfirst(strtolower($this->blurSwearWords($_POST['bred'])));
         $specie = ucfirst(strtolower($_POST['specie']));
         $sql = 'Update pet set petName=:petName,bred=:bred,petSpecies=:petSpecies,petPicture=:petPicture where petId="' . $_SESSION['petId'] . '"';
         $stmt = $this->connection->prepare($sql);
@@ -802,8 +880,8 @@ VALUES (:userId,:productName,:productPicture,:productId,:sum, :price)";
     {
         if (isset($_POST['fname']) && isset($_POST['lname']) && isset($_POST['tel']) && isset($_POST['mail'])) {
 
-            $fname = $_POST['fname'];
-            $lname = $_POST['lname'];
+            $fname = $this->blurSwearWords($_POST['fname']);
+            $lname = $this->blurSwearWords($_POST['lname']);
             $tel = $_POST['tel'];
             $mail = $_POST['mail'];
             $language = $_POST['lang'];
@@ -938,8 +1016,8 @@ VALUES (:userId,:productName,:productPicture,:productId,:sum, :price)";
                 }
 
                 // Prepare and sanitize the pet data
-                $petName = ucfirst(strtolower(trim($_POST["petName"])));
-                $bred = ucfirst(strtolower(trim($_POST["bred"])));
+                $petName = ucfirst(strtolower(trim($this->blurSwearWords($_POST["petName"]))));
+                $bred = ucfirst(strtolower(trim($this->blurSwearWords($_POST["bred"]))));
                 $specie = ucfirst(strtolower(trim($_POST["specie"])));
                 $_SESSION['petPicture'] = $this->picture($_SESSION['backPic']);
                 if ($specie == "Specie") {
@@ -990,14 +1068,14 @@ VALUES (:userId,:productName,:productPicture,:productId,:sum, :price)";
 
         try {
             $productId = ucfirst(strtolower(trim($_POST["productId"])));
-            $productName = ucfirst(strtolower(trim($_POST["productName"])));
+            $productName = ucfirst(strtolower(trim($this->blurSwearWords($_POST["productName"]))));
             $price = ucfirst(strtolower(trim($_POST["price"])));
 
             $picture = $this->picture($_SESSION['backPic']);
             if ($picture == 4) {
                 $picture = $_SESSION['updateProductPicture'];
             }
-            $description = ucfirst(strtolower(trim($_POST["productDescription"])));
+            $description = ucfirst(strtolower(trim($this->blurSwearWords($_POST["productDescription"]))));
 
             // Insert the pet data into the database
             $stmt = "UPDATE product 
@@ -1033,10 +1111,10 @@ WHERE productId = :productId;
     {
         if (isset($_POST['productName']) && isset($_POST['price']) && isset($_POST['productDescription']) && isset($_SESSION['backPic'])) {
             try {
-                $productName = ucfirst(strtolower(trim($_POST["productName"])));
+                $productName = ucfirst(strtolower(trim($this->blurSwearWords($_POST["productName"]))));
                 $price = ucfirst(strtolower(trim($_POST["price"])));
                 $picture = $this->picture($_SESSION['backPic']);
-                $description = ucfirst(strtolower(trim($_POST["productDescription"])));
+                $description = ucfirst(strtolower(trim($this->blurSwearWords($_POST["productDescription"]))));
 
                 // Insert the pet data into the database
                 $stmt = "INSERT INTO product (productName, productCost, productPicture, description, productRelease)
@@ -1185,12 +1263,12 @@ WHERE productId = :productId;
             echo '<input type="hidden" name="table" class="form-control" id="table" value="' . $table . '">';
             echo '  <div class="mb-3">
                 <label for="knev" class="form-label">' . NAME . ':</label>
-                <input type="text" class="form-control" placeholder="' . NAME . '" value="' . htmlspecialchars($result['firstName']) . '" name="firstName" id="knev">
+                <input type="text" class="form-control" placeholder="' . NAME . '" value="' . htmlspecialchars($this->blurSwearWords($result['firstName'])) . '" name="firstName" id="knev">
             </div>';
 
             echo ' <div class="mb-3">
                 <label for="vnev" class="form-label">' . LASTNAME . ':</label>
-                <input type="text" class="form-control" placeholder="' . LASTNAME . '" value="' . htmlspecialchars($result['lastName']) . '" name="lastName" id="vnev">
+                <input type="text" class="form-control" placeholder="' . LASTNAME . '" value="' . htmlspecialchars($this->blurSwearWords($result['lastName'])) . '" name="lastName" id="vnev">
             </div>';
 
             echo '<div class="mb-3">
@@ -1209,8 +1287,8 @@ WHERE productId = :productId;
         if (isset($_POST['fname']) && isset($_POST['lname']) && isset($_POST['tel']) && isset($_POST['mail']) && isset($_POST['pass']) && isset($_POST['pass2'])) {
 
             $_SESSION['registration'] = true;
-            $fname = $_POST['fname'];
-            $lname = $_POST['lname'];
+            $fname = $this->blurSwearWords($_POST['fname']);
+            $lname = $this->blurSwearWords($_POST['lname']);
             $tel = $_POST['tel'];
 
             $usedLanguage = $_POST['lang'];
@@ -1452,7 +1530,7 @@ WHERE productId = :productId;
                 $empty = 0;
                 // Update first name if provided
                 if (!empty($_POST['firstName'])) {
-                    $firstName = ucfirst(strtolower($_POST['firstName']));
+                    $firstName = ucfirst(strtolower($this->blurSwearWords($_POST['firstName'])));
                     $sql = $this->connection->prepare("UPDATE $table SET firstName = ? WHERE " . $table . "Mail = ?");
                     $sql->execute([$firstName, $_POST['mail']]);
                     if ($_SESSION['email'] == $_POST['mail']) {
@@ -1466,7 +1544,7 @@ WHERE productId = :productId;
 
                 // Update last name if provided
                 if (!empty($_POST['lastName'])) {
-                    $lastName = ucfirst(strtolower($_POST['lastName']));
+                    $lastName = ucfirst(strtolower($this->blurSwearWords($_POST['lastName'])));
                     $sql = $this->connection->prepare("UPDATE $table SET lastName = ? WHERE " . $table . "Mail = ?");
                     $sql->execute([$lastName, $_POST['mail']]);
                     if ($_SESSION['email'] == $_POST['mail']) {
@@ -1548,7 +1626,7 @@ WHERE u.userId = :userId";
                 $empty = 0;
                 // Update first name if provided
                 if (!empty($_POST['firstName'])) {
-                    $firstName = ucfirst(strtolower($_POST['firstName']));
+                    $firstName = ucfirst(strtolower($this->blurSwearWords($_POST['firstName'])));
                     $sql = $this->connection->prepare("UPDATE $table SET firstName = ? WHERE " . $table . "Mail = ?");
                     $sql->execute([$firstName, $_POST['mail']]);
                     if ($_SESSION['email'] == $_POST['mail']) {
@@ -1562,7 +1640,7 @@ WHERE u.userId = :userId";
 
                 // Update last name if provided
                 if (!empty($_POST['lastName'])) {
-                    $lastName = ucfirst(strtolower($_POST['lastName']));
+                    $lastName = ucfirst(strtolower($this->blurSwearWords($_POST['lastName'])));
                     $sql = $this->connection->prepare("UPDATE $table SET lastName = ? WHERE " . $table . "Mail = ?");
                     $sql->execute([$lastName, $_POST['mail']]);
                     if ($_SESSION['email'] == $_POST['mail']) {
@@ -1604,7 +1682,7 @@ WHERE u.userId = :userId";
             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                 $_SESSION['qrCodeFile'] = $this->createQrCode($row['firstName'] . ' ' . $row['lastName'], $row['phoneNumber']);
             }
-            if ($_SESSION['privilage'] != 'veterinarian' && $_POST['table'] != 'veterinarian') {
+            if ($_SESSION['privilage'] != 'Veterinarian' && $_POST['table'] != 'veterinarian') {
                 $stmt = "UPDATE qr_code qr
 INNER JOIN $table u ON qr.userId = u.userId
 SET qr.qrCodeName = :qrCodeName
