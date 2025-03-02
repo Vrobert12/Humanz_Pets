@@ -43,6 +43,20 @@ try {
         unset($_SESSION['reviewLink']);
         header('Location:booked_users.php');
     }
+    if(isset($_SESSION['petReservation'])){
+        $mail->setFrom($_SESSION["email"], 'R&D Veterinary');
+        $mail->addAddress( $_SESSION['reservationMail'], $_SESSION['reservationMail']);
+        $mail->addReplyTo($_SESSION["email"], 'Reply');
+        $mail->Subject =  $_SESSION['petReservation'];
+        $mail->Body = $_SESSION['mailText'];
+        $mail->AltBody = $_SESSION['mailText'];
+
+        $_SESSION['message'] = RESCRSUC;
+        unset( $_SESSION['petReservation']);
+        unset( $_SESSION['reservationMail']);
+        unset($_SESSION['mailText']);
+        header('Location:book_veterinarian.php');
+    }
     if(isset($_SESSION['mailText']) && isset($_SESSION['cancelEmail'])){
         $mail->setFrom($_SESSION["email"], 'R&D Veterinary');
         $mail->addAddress($_SESSION['cancelEmail'],$_SESSION['cancelEmail']);
@@ -53,6 +67,7 @@ try {
         unset($_SESSION['mailText']);
         unset($_SESSION['cancelMail']);
         unset($_SESSION['cancelSubject']);
+
         header('Location:booked_users.php');
     }
     if (isset($_SESSION['email']) && !empty($_SESSION['email']) && isset($_SESSION['registrationLink'] ) && !isset($_SESSION["workerEmail"])) {

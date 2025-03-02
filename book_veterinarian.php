@@ -6,7 +6,10 @@ $lang = $autoload->language();
 $autoload->checkAutoLogin();
 
 $pdo = $autoload->connect($GLOBALS['dsn'], $_ENV['DB_USER'], $_ENV['DB_PASSWORD'], $GLOBALS['pdoOptions']);
-
+if($_SESSION['privilage']!='Veterinarian'){
+    header('Location:index.php');
+    exit();
+}
 
 ?>
 
@@ -59,17 +62,6 @@ $pdo = $autoload->connect($GLOBALS['dsn'], $_ENV['DB_USER'], $_ENV['DB_PASSWORD'
 
 <script>
 
-</script>
-
-<!-- Show popup message if session message is set -->
-<?php if (isset($_SESSION['message'])): ?>
-    <div class="popup-message" id="popupMessage">
-        <?php echo $_SESSION['message']; ?>
-    </div>
-    <?php unset($_SESSION['message']); // Clear message after it's displayed ?>
-<?php endif; ?>
-
-<script>
     // Show the popup message and hide it after 5 seconds
     window.onload = function () {
         var popupMessage = document.getElementById('popupMessage');
@@ -101,25 +93,29 @@ if (isset($_SESSION['message']) && $_SESSION['message'] != "")
           </a>
       </div>";
 
-if (isset($_SESSION['email']) && isset($_SESSION['name']) && isset($_SESSION['profilePic']) && $_SESSION['privilage']!='Veterinarian') {
-    // Set a session variable for returning to tables.php
-    $_SESSION['backPic'] = "book_veterinarian.php";
-
-    if (isset($_POST['searchAction']) && $_POST['searchAction'] == 'search') {
-        $veterinarianLike = "%" . $_POST['searchName'] . "%";
-        users("SELECT * FROM veterinarian WHERE verify=1 and banned!=1 and area LIKE ?","veterinarian", [$veterinarianLike]);
-    } else {
-        users("SELECT * FROM veterinarian WHERE verify=1 and banned!=1","veterinarian");
-    }
-}
-elseif(isset($_SESSION['email']) && isset($_SESSION['name']) && isset($_SESSION['profilePic']) && $_SESSION['privilage']=='Veterinarian'){
+if(isset($_SESSION['email']) && isset($_SESSION['name']) && isset($_SESSION['profilePic']) && $_SESSION['privilage']=='Veterinarian'){
     $_SESSION['backPic'] = "book_veterinarian.php";
 
     if (isset($_POST['searchAction']) && $_POST['searchAction'] == 'search') {
         $userLike = "%" . $_POST['searchName'] . "%";
-        users("SELECT * FROM user WHERE verify=1 and banned!=1 and area LIKE ?","user",[$userLike]);
+        users("SELECT u.userId, u.*, GROUP_CONCAT(p.petId) AS petIds, GROUP_CONCAT(p.petName) AS petNames
+FROM user u
+INNER JOIN pet p ON p.userId = u.userId
+WHERE u.verify = 1
+  AND u.banned != 1
+  AND p.veterinarId = :veterinarianId and area LIKE ?
+GROUP BY u.userId
+ORDER BY u.userId AS",[$userLike]);
     } else {
-        users("SELECT * FROM user WHERE verify=1 and banned!=1","user");
+        users("SELECT u.userId, u.*, GROUP_CONCAT(p.petId) AS petIds, GROUP_CONCAT(p.petName) AS petNames
+FROM user u
+INNER JOIN pet p ON p.userId = u.userId
+WHERE u.verify = 1
+  AND u.banned != 1
+  AND p.veterinarId = :veterinarianId
+GROUP BY u.userId
+ORDER BY u.userId ASC;
+",);
     }
 }
 else {
@@ -128,7 +124,7 @@ else {
     exit();
 }
 
-function users($command,$table, $params = [])
+function users($command, $params = [])
 {
     global $pdo;
 
@@ -137,7 +133,7 @@ function users($command,$table, $params = [])
     try {
         // Prepare the SQL query
         $stmt = $pdo->prepare($command);
-
+$stmt->BindValue(":veterinarianId", $_SESSION['userId']);
         // Bind parameters dynamically
         foreach ($params as $index => $value) {
             $stmt->bindValue($index + 1, $value, PDO::PARAM_STR); // Positional parameters start at index 1
@@ -156,11 +152,11 @@ function users($command,$table, $params = [])
                 echo '<div class="col-xl-4 p-5 border bg-dark" style="margin: auto; margin-top:100px; margin-bottom: 50px; width: fit-content">';
                 echo '<div class="col-xl-4"><img class="profilePic" 
                 src="pictures/' . htmlspecialchars($row['profilePic']) . '" width="250" height="250" alt="Profile Picture"></div>';
-                echo '<label>ID: ' . htmlspecialchars($row[$table.'Id']) . '</label><br>';
+                echo '<label>ID: ' . htmlspecialchars($row['userId']) . '</label><br>';
                 echo '<label>'.NAME.': ' . htmlspecialchars($row['firstName'] . " " . $row['lastName']) . '</label><br>';
                 echo '<label>'.PHONE.': ' . htmlspecialchars($row['phoneNumber']) . '</label><br>';
-                echo '<label>'.EMAIL.': ' . htmlspecialchars($row[$table.'Mail']) . '</label><br>';
-                echo '<a class="btn btn-primary" href="book_apointment.php?email=' . $_SESSION['email'] . '&'.$table.'=' . htmlspecialchars($row[$table.'Id']) . '">'.RESERVE.'</a>&nbsp;&nbsp;&nbsp;';
+                echo '<label>'.EMAIL.': ' . htmlspecialchars($row['userMail']) . '</label><br>';
+                echo '<a class="btn btn-primary" href="book_apointment.php?user=' . htmlspecialchars($row['userId']) . '">'.RESERVE.'</a>&nbsp;&nbsp;&nbsp;';
                 echo '</div>';
             }
             echo '</div></div>';

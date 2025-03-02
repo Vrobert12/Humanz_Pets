@@ -29,5 +29,7 @@ $reservedTimes = $stmt->fetchAll(PDO::FETCH_COLUMN);
 // If there are any reserved times, return them as an array
 echo json_encode([
     'reservedTimes' => $reservedTimes,
-    'isFullyBooked' => count($reservedTimes) >= 12 // Adjust the number based on your reservation capacity
+    'isFullyBooked' => count($reservedTimes) >= 12
 ]);
+exit; // Fontos, hogy ne fusson tovább a kód
+

@@ -1,4 +1,10 @@
 <?php
+define('DOWNLOAD_QRCODE','Preuzimanje QRCode slike');
+define("TIME",'Vreme:');
+define('DATE','Datum:');
+define('PET_RESERVATION'," je zakazao termin za pregled ljubimca: ");
+define('RESERVED_APOINTMENT_TITLE_VET','Zakazani termini kod korisnika:');
+define('PETS_VETERINARIAN','Veterinar ljubimca: ');
 define('RESCRSUC','Rezervacija je uspešno napravljena.');
 define('DATAMIS','Podaci nedostaju');
 define('ERROR','Greške u sistemu');
@@ -15,7 +21,7 @@ define('BACK_TO_VET_SELECTION','Nazad na stranicu za veterinara');
 define('SELECT_TIME','Izaberite Vreme');
 define('SELECT_PET','Izaberite ljubimca:');
 define('RESERVED_VETERINARIAN','Zakazan termin kod veterinara:');
-define('RESERVED_APOINTMENT_TITLE','Yakayani termini kod veterinara:');
+define('RESERVED_APOINTMENT_TITLE','Zakazani termini kod veterinara:');
 define('RESERVED_PETS_TITLE','Zakazani termini');
 define('DELETE_RESERVATION_BUTTON','Odkaži termin');
 define('UNBAN_BUTTON','Otključavanje');

@@ -55,14 +55,14 @@ if (isset($_SESSION['title'])) {
 $_SESSION['backPic'] = 'registerAnimal.php';
 
 
-if (isset($_GET['petUpdate'])){
-    echo '<input type="hidden"  name="petUpdate" id="petName" value="'. $_GET['petUpdate'].'"><br>';
+if (isset($_GET['petId'])){
+    echo '<input type="hidden"  name="petUpdate" id="petName" value="'. $_GET['petId'].'"><br>';
     $_SESSION['petId'] = $_GET['petId'];
     $_SESSION['petPicture'] = $_GET['petPicture'];
-    echo '<a class="btn btn-secondary" href="pet.php?email='.$_SESSION['email'].'"> '.BACK.'</a><br><br>';
+    echo '<a class="btn btn-secondary" href="'.$_SESSION['backPage'].'"> '.BACK.'</a><br><br>';
 }
 else
-    echo '<a class="btn btn-secondary" href="index.php"> '.BACK.'</a><br><br>';
+    echo '<a class="btn btn-secondary" href="'.$_SESSION['backPage'].'"> '.BACK.'</a><br><br>';
 ?>
 
 <label for="petName"><?php echo NAME?>:</label><br>

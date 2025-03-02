@@ -1,4 +1,10 @@
 <?php
+define('DOWNLOAD_QRCODE','Download QRCode');
+define("TIME",'Time:');
+define('DATE','Date:');
+define('PET_RESERVATION'," made a reservation for yor pet named: ");
+define('RESERVED_APOINTMENT_TITLE_VET','Reserve Appointment for User:');
+define('PETS_VETERINARIAN','The pets veterinarian is: ');
 define('DATAMIS','Data missing');
 define('ERROR','An error occurred');
 define('PASSUPDF','Failed to update password!');

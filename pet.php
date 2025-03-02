@@ -61,6 +61,15 @@ $_SESSION['backPic']="pet.php";
                 echo '<p><strong>' . BREED . ':</strong> ' . $typeOfAnimal . '</p>';
                 echo '<p><strong>' . SPECIES . ':</strong> ' . $petSpecies . '</p>';
                 echo '<p><strong>' . EMAIL . ':</strong> ' . $userMail . '</p>';
+                echo "<form action='updateAnimal.php'class='mainForm' method='get'>";
+                echo "<input type='hidden' name='petId' value='" . $row['petId'] . "'>
+                <input type='hidden' name='petName' value='" . $row['petName'] . "'>
+<input type='hidden' name='bred' value='" . $row['bred'] . "'>
+<input type='hidden' name='petSpecies' value='" . $row['petSpecies'] . "'>
+<input type='hidden' name='petPicture' value='" . $row['petPicture'] . "'>";
+                $_SESSION['petId'] = $row['petId'];
+                $_SESSION['backPage']='pet.php?email='.$_SESSION['email'];
+                echo "<td colspan='2'> <input type='submit' class='btn btn-success' value='".UPDATE_PET."'></td></tr></form>";
 
                 echo '</div>';
                 echo '</div>';
@@ -84,10 +93,12 @@ $_SESSION['backPic']="pet.php";
                 echo '<p>' . INFO . '</p>';
                 echo ' <form action="generate_pdf.php" method="POST">
         <input type="hidden" name="qrImage" value="'.$qrPicture.'">
-
         <button type="submit" class="btn btn-primary">'.GENPDF.'</button>
-    </form>
-</div>';
+    </form>';
+// Button to download the QR code image
+                echo '<a href="'.$qrPicture.'" download class="btn btn-secondary mt-3">'.DOWNLOAD_QRCODE.'</a>';
+                echo '</div>';
+
                 echo '</div>';
             }
         }
