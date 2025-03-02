@@ -4,14 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2367ab9a-341c-4300-a7ed-72f717181f7d" name="Changes" comment="DB 2">
+    <list default="true" id="2367ab9a-341c-4300-a7ed-72f717181f7d" name="Changes" comment="App pet register v1">
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2_7_2025_4_31_PM_[Changes]/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2_7_2025_4_31_PM__Changes_.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/applogIn.php" beforeDir="false" afterPath="$PROJECT_DIR$/applogIn.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/react/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/react/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/react/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/react/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/react/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/react/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/react/screens/LoginScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/react/screens/LoginScreen.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/react/screens/Profile.js" beforeDir="false" afterPath="$PROJECT_DIR$/react/screens/Profile.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/react/screens/RegisterPet.js" beforeDir="false" afterPath="$PROJECT_DIR$/react/screens/RegisterPet.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/react/screens/Settings.js" beforeDir="false" afterPath="$PROJECT_DIR$/react/screens/Settings.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -112,7 +114,8 @@
       <workItem from="1738864239062" duration="1499000" />
       <workItem from="1738942261238" duration="13346000" />
       <workItem from="1739203701526" duration="302000" />
-      <workItem from="1739204304711" duration="6389000" />
+      <workItem from="1739204304711" duration="6508000" />
+      <workItem from="1740919065015" duration="5623000" />
     </task>
     <task id="LOCAL-00001" summary="Responsivity">
       <option name="closed" value="true" />
@@ -226,7 +229,15 @@
       <option name="project" value="LOCAL" />
       <updated>1738957771217</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="App pet register v1">
+      <option name="closed" value="true" />
+      <created>1739210855977</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1739210855978</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -258,6 +269,7 @@
     <MESSAGE value="Expanding translation" />
     <MESSAGE value="React login and logout" />
     <MESSAGE value="DB 2" />
-    <option name="LAST_COMMIT_MESSAGE" value="DB 2" />
+    <MESSAGE value="App pet register v1" />
+    <option name="LAST_COMMIT_MESSAGE" value="App pet register v1" />
   </component>
 </project>

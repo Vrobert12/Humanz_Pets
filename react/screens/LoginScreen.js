@@ -3,7 +3,7 @@ import { View, Text, TextInput, TouchableOpacity, Alert, ActivityIndicator } fro
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 
-const API_URL = 'http://192.168.1.7/Humanz2.0/Humanz_Pets/applogIn.php';
+const API_URL = 'http://192.168.1.8/Humanz2.0/Humanz_Pets/applogIn.php';
 
 const LoginScreen = ({ navigation }) => {
     const [email, setEmail] = useState('');
@@ -33,7 +33,7 @@ const LoginScreen = ({ navigation }) => {
             setLoading(false);
             if (response.data.success) {
                 await AsyncStorage.setItem('session_token', response.data.token);
-                await AsyncStorage.setItem('user_id', response.data.user_id.toString());
+                await AsyncStorage.setItem('user_id', response.data.userid.toString());
                 Alert.alert('Success', 'Login successful');
                 navigation.replace('Main');
             } else {

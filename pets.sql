@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 07, 2025 at 08:48 PM
+-- Generation Time: Mar 02, 2025 at 03:12 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -326,7 +326,8 @@ INSERT INTO `pet` (`petId`, `petName`, `bred`, `petSpecies`, `petPicture`, `user
 (15, 'Tigrincs', 'Mixed', 'Cat', '20241221144748.png', 28, 1),
 (40, 'Buksi', 'Tiszta', 'Dog  ', '20241223000554.png', 29, 1),
 (44, 'Tigrincs', 'Mixed', 'Dog ', '20241223140237.png', 29, 1),
-(52, 'Tigrincs', 'Mixed', 'Parrot', '20250206190202.png', 19, 3);
+(52, 'Tigrincs', 'Mixed', 'Parrot', '20250206190202.png', 19, 3),
+(60, 'Zizi4', 'Pug', 'Dog', '', 25, NULL);
 
 -- --------------------------------------------------------
 
@@ -479,7 +480,7 @@ INSERT INTO `user` (`userId`, `session_token`, `firstName`, `lastName`, `phoneNu
 (6, '', 'Nikoletta', 'Varro', '0', 'nikolettavarro12@gmail.com', '$2y$10$ZJtAXGLi1y8Y7VlLzE4Ru.nH.SbV5pbDRtoQTlOv88WgemWiSIrB2', 'logInPic.png', 'User', '0000-00-00 00:00:00', 401081, 0, '2024-04-29 22:00:00', 0, '0000-00-00 00:00:00', 0, '2024-04-23 09:54:10', 'en'),
 (7, '', 'Nikoletta', 'Varro', '0649420637', 'nikolettavarro@gmail.com', '$2y$10$GZ9eslD9.lWIwuBi0by.sunJYqe1s8Jn8K2eX4CefmMN/LOnyRNua', 'logInPic.png', 'User', '0000-00-00 00:00:00', 102107, 0, '2024-04-29 22:00:00', 0, '0000-00-00 00:00:00', 0, '2024-04-23 09:54:10', 'en'),
 (19, '', 'Sherlock', 'Varro', '0649420637', 'robertvarro12@gmail.com', '$2y$10$DLmuSbN32LHROGmHLo07fOteS915gYkqo7Op5l6WOfg5CyD2DY8Sa', '20250104204023.png', 'Admin', '0000-00-00 00:00:00', 229527, 1, '2024-04-29 22:00:00', 0, '0000-00-00 00:00:00', 122127, '2025-02-06 18:09:13', 'hu'),
-(25, 'a7052c4fee0988cacc05e7eee56de92d53900c330a0ae0587bfa28e2ed4a3c74', 'Dominik', 'Hupko', '628277140', 'hupkodominik143@gmail.com', '$2y$10$B1cB9B1pWGshgJPbFbUBleB3yicBi3cILKWBT2DAkDbz5kDoLhtuC', 'logInPic.png', 'Admin', '2024-06-03 12:23:54', 2047970, 1, '2024-06-03 12:33:54', 0, '0000-00-00 00:00:00', 173548, '2025-01-27 15:31:17', 'hu'),
+(25, '5a77afff1db179ede1703e1ca578b921f525eb45deef77b2610fc241bd2bdcb1', 'Dominik', 'Hupko', '628277140', 'hupkodominik143@gmail.com', '$2y$10$cwXNCYfK1vhGb5RUWvDyTuUX5upzI0zBcYdpugE.JWib.HGy1xgga', 'logInPic.png', 'Admin', '2024-06-03 12:23:54', 2047970, 1, '2024-06-03 12:33:54', 0, '0000-00-00 00:00:00', 173548, '2025-01-27 15:31:17', 'hu'),
 (26, '', 'Sherlock', 'Holmes', '0649420637', 'varrorobert03@gmail.coml', '$2y$10$T5p19yMDoZ0EKiRXocAjJuNmNFK8INcDDWFkyC97i5rB6rODkLO82', 'logInPic.png', 'User', '2024-12-14 15:32:29', 1740492, 1, '2024-12-14 15:42:29', 0, '2024-12-14 15:32:29', NULL, '2024-12-14 15:32:29', 'sr'),
 (27, '', 'Nemen', 'Varro', '0649420637', 'varro7robert03@gmail.com', '$2y$10$7.Vqm7RZ7EaQISuO6xdo3OcNPbEAERoUAJF8hsBBxD8mCAvaH5Bpi', 'logInPic.png', 'User', '2024-12-14 22:01:34', 3299090, 1, '2024-12-14 22:11:34', 0, '2024-12-14 22:01:34', NULL, '2024-12-14 22:01:34', 'en'),
 (28, '', 'Robert', 'Varro', '0649420637', 'varkrorobert03@gmail.com', '$2y$10$WuiMPKYoHYmik23BpzphiuOlUZIL.pVOsGDkuUl.zzW.csVbAaaCG', 'logInPic.png', 'User', '2024-12-21 13:46:39', 1176453, 1, '2024-12-21 13:56:39', 0, '2024-12-21 13:46:39', NULL, '2024-12-21 13:46:39', 'en'),
@@ -707,7 +708,7 @@ ALTER TABLE `log`
 -- AUTO_INCREMENT for table `pet`
 --
 ALTER TABLE `pet`
-  MODIFY `petId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
+  MODIFY `petId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
 
 --
 -- AUTO_INCREMENT for table `product`

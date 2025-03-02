@@ -40,7 +40,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $updateStmt->bindParam(":id", $user["userId"], PDO::PARAM_INT);
             $updateStmt->execute();
 
-            echo json_encode(["success" => true, "message" => "Login successful", "user_id" => $userId, "token" => $token]);
+            echo json_encode(["success" => true, "message" => "Login successful", "userid" => $userId, "token" => $token]);
         } else {
             echo json_encode(["success" => false, "message" => "Invalid credentials"]);
         }
