@@ -41,7 +41,7 @@ $functions->checkAutoLogin();
 $_SESSION['backPic']="pet.php";
         // Fetch pet details
         echo '<div class="col-lg-8 order-lg-2 profile-section">';
-        $sql = "SELECT p.petId,p.petName, p.bred, p.petSpecies, u.userMail, p.petPicture FROM user u 
+        $sql = "SELECT p.petId,p.petName, p.bred, p.petSpecies, u.userMail, p.profilePic FROM user u 
                 INNER JOIN pet p ON u.userId = p.userId WHERE u.userId = :userId";
         $stmt = $connection->prepare($sql);
         $stmt->bindParam(":userId", $userID, PDO::PARAM_INT);
@@ -52,7 +52,7 @@ $_SESSION['backPic']="pet.php";
                 $typeOfAnimal = htmlspecialchars($row['bred']);
                 $petSpecies = htmlspecialchars($row['petSpecies']);
                 $userMail = htmlspecialchars($row['userMail']);
-                $petPicture = htmlspecialchars($row['petPicture']);
+                $petPicture = htmlspecialchars($row['profilePic']);
                 $_SESSION['petId'] = $row['petId'];
                 echo '<div class="row mb-4">';
                 echo '<div class="col-md-4 text-center"><img class="profile-image" alt="Pet Picture" src="pictures/' . $petPicture . '"></div>';
@@ -66,7 +66,7 @@ $_SESSION['backPic']="pet.php";
                 <input type='hidden' name='petName' value='" . $row['petName'] . "'>
 <input type='hidden' name='bred' value='" . $row['bred'] . "'>
 <input type='hidden' name='petSpecies' value='" . $row['petSpecies'] . "'>
-<input type='hidden' name='petPicture' value='" . $row['petPicture'] . "'>";
+<input type='hidden' name='petPicture' value='" . $row['profilePic'] . "'>";
                 $_SESSION['petId'] = $row['petId'];
                 $_SESSION['backPage']='pet.php?email='.$_SESSION['email'];
                 echo "<td colspan='2'> <input type='submit' class='btn btn-success' value='".UPDATE_PET."'></td></tr></form>";

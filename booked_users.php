@@ -13,7 +13,7 @@ if($_SESSION['privilage'] != 'Veterinarian'){
 $veterinarianId=$_SESSION['userId'];
 $pdo = $autoload->connect($GLOBALS['dsn'], $_ENV['DB_USER'], $_ENV['DB_PASSWORD'], $GLOBALS['pdoOptions']);
 
-$petQuery = "SELECT u.userMail,u.userId,u.usedLanguage,p.petId, p.petName, p.bred, p.petSpecies, p.petPicture, r.reservationDay, r.reservationTime, r.period,r.reservationId
+$petQuery = "SELECT u.userMail,u.userId,u.usedLanguage,p.petId, p.petName, p.bred, p.petSpecies, p.profilePic, r.reservationDay, r.reservationTime, r.period,r.reservationId
 FROM pet p
 LEFT JOIN reservation r ON p.petId = r.petId INNER JOIN user u ON p.userId = u.userId
 WHERE r.veterinarianId=:veterinarianId AND r.animalChecked=0
@@ -165,7 +165,7 @@ $reservedPets = $reservedPetStmt->fetchAll(PDO::FETCH_ASSOC);
                    href="petsInfo.php?petId=<?= htmlspecialchars($reservedPet['petId']) ?>">More Details</a><br>
 
                 <label for="pet-<?= htmlspecialchars($reservedPet['petId']) ?>">
-                    <img alt="Pet Picture" src="pictures/<?= htmlspecialchars($reservedPet['petPicture']) ?>">
+                    <img alt="Pet Picture" src="pictures/<?= htmlspecialchars($reservedPet['profilePic']) ?>">
                     <p class="pet-details"><?= htmlspecialchars($reservedPet['userMail']) ?></p>
                     <p class="pet-details"><?= htmlspecialchars($reservedPet['petName']) ?></p>
                     <p class="pet-details"><?= htmlspecialchars($language) ?></p>

@@ -41,7 +41,7 @@ if (!$userId) {
     exit();
 }
 if($_SESSION['privilage']!="Veterinarian") {
-    $petQuery = "SELECT p.petId, p.petName, p.bred, p.petSpecies, p.petPicture, p.veterinarId
+    $petQuery = "SELECT p.petId, p.petName, p.bred, p.petSpecies, p.profilePic, p.veterinarId
 FROM pet p
 WHERE p.userId = :userId
 AND p.petId NOT IN (
@@ -55,7 +55,7 @@ AND p.petId NOT IN (
     $petStmt->execute();
     $pets = $petStmt->fetchAll(PDO::FETCH_ASSOC);
 
-    $petQuery = "SELECT v.veterinarianId, v.veterinarianMail, p.petId, p.petName, p.bred, p.petSpecies, p.petPicture, r.reservationDay, r.reservationTime, r.period,r.reservationId
+    $petQuery = "SELECT v.veterinarianId, v.veterinarianMail, p.petId, p.petName, p.bred, p.petSpecies, p.profilePic, r.reservationDay, r.reservationTime, r.period,r.reservationId
 FROM pet p
 LEFT JOIN reservation r ON p.petId = r.petId 
 INNER JOIN veterinarian v ON r.veterinarianId = v.veterinarianId
@@ -71,7 +71,7 @@ AND (r.reservationDay IS NOT NULL AND r.reservationDay >= CURDATE() AND r.animal
 // Handle reservation submission
 }
 else{
-    $petQuery = "SELECT p.petId, p.petName, p.bred, p.petSpecies, p.petPicture, p.veterinarId
+    $petQuery = "SELECT p.petId, p.petName, p.bred, p.petSpecies, p.profilePic, p.veterinarId
 FROM pet p
 WHERE p.userId = :userId
 AND p.petId NOT IN (
@@ -86,7 +86,7 @@ AND p.petId NOT IN (
     $petStmt->execute();
     $pets = $petStmt->fetchAll(PDO::FETCH_ASSOC);
 
-    $petQuery = "SELECT v.veterinarianId, v.veterinarianMail, p.petId, p.petName, p.bred, p.petSpecies, p.petPicture, r.reservationDay, r.reservationTime, r.period,r.reservationId
+    $petQuery = "SELECT v.veterinarianId, v.veterinarianMail, p.petId, p.petName, p.bred, p.petSpecies, p.profilePic, r.reservationDay, r.reservationTime, r.period,r.reservationId
 FROM pet p
 LEFT JOIN reservation r ON p.petId = r.petId 
 INNER JOIN veterinarian v ON r.veterinarianId = v.veterinarianId
@@ -455,7 +455,7 @@ if($_SESSION['privilage']=="Veterinarian")
 if($_SESSION['privilage']!="Veterinarian")
                         echo '<h5 class="text-center mb-4">' . PETS_VETERINARIAN . ' ' . $result['veterinarianMail'] . '</h5>';?>
                         <span class="custom-radio"></span>
-                        <img alt="Pet Picture" src="pictures/<?= htmlspecialchars($pet['petPicture']) ?>">
+                        <img alt="Pet Picture" src="pictures/<?= htmlspecialchars($pet['profilePic']) ?>">
                         <p class="pet-details"> <?= htmlspecialchars($pet['petName']) ?> </p>
                     </label>
                 </div>
@@ -492,7 +492,7 @@ if($_SESSION['privilage']!="Veterinarian")
     <?php foreach ($reservedPets as $reservedPet): ?>
         <div class="pet-card">
             <label>
-                <img alt="Pet Picture" src="pictures/<?= htmlspecialchars($reservedPet['petPicture']) ?>">
+                <img alt="Pet Picture" src="pictures/<?= htmlspecialchars($reservedPet['profilePic']) ?>">
 
                 <?php
                 if($_SESSION['privilage']!="Veterinarian")

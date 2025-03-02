@@ -704,7 +704,7 @@ VALUES (:reviewCode,:userId,:veterinarianId)";
         $petName = ucfirst(strtolower($this->blurSwearWords($_POST['petName'])));
         $bred = ucfirst(strtolower($this->blurSwearWords($_POST['bred'])));
         $specie = ucfirst(strtolower($_POST['specie']));
-        $sql = 'Update pet set petName=:petName,bred=:bred,petSpecies=:petSpecies,petPicture=:petPicture where petId="' . $_SESSION['petId'] . '"';
+        $sql = 'Update pet set petName=:petName,bred=:bred,petSpecies=:petSpecies,profilePic=:petPicture where petId="' . $_SESSION['petId'] . '"';
         $stmt = $this->connection->prepare($sql);
         $stmt->bindParam(':petName', $petName);
         $stmt->bindParam(':bred', $bred);
@@ -1031,7 +1031,7 @@ VALUES (:userId,:productName,:productPicture,:productId,:sum, :price)";
                     exit();
                 }
                 // Insert the pet data into the database
-                $petStmt = "INSERT INTO pet (petName, bred, petSpecies, petPicture, userId)
+                $petStmt = "INSERT INTO pet (petName, bred, petSpecies, profilePic, userId)
                     VALUES (:petName, :bred, :specie, :petPicture, :userId)";
                 $petQuery = $this->connection->prepare($petStmt);
                 $petQuery->bindParam(':petName', $petName, PDO::PARAM_STR);

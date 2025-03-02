@@ -9,7 +9,7 @@ $_SESSION['backPic'] = "selectVeterinarian.php";
 $functions = new Functions();
 $connection = $functions->connect($dsn, $_ENV['DB_USER'], $_ENV['DB_PASSWORD'], $pdoOptions);
 
-$sql = "SELECT p.petId, p.petName, p.bred, p.petSpecies, u.userMail, p.petPicture 
+$sql = "SELECT p.petId, p.petName, p.bred, p.petSpecies, u.userMail, p.profilePic
         FROM user u
         INNER JOIN pet p ON u.userId = p.userId 
         WHERE u.userId = :userId AND veterinarId IS NULL";
@@ -69,7 +69,7 @@ if(isset($_SESSION['message'])) {
 $userID = $_SESSION['userId'];
 $functions = new Functions();
 
-$sql = "SELECT p.petId,p.petName, p.bred, p.petSpecies, u.userMail, p.petPicture FROM user u
+$sql = "SELECT p.petId,p.petName, p.bred, p.petSpecies, u.userMail, p.profilePic FROM user u
     inner join pet p on u.userId =p.userId where u.userId= :userId and veterinarId is NULL";
 
 $stmt = $connection->prepare($sql);
@@ -81,17 +81,17 @@ $stmt->execute();
         echo "<input type='hidden' name='petName' value='" . $row['petName'] . "'>
 <input type='hidden' name='bred' value='" . $row['bred'] . "'>
 <input type='hidden' name='petSpecies' value='" . $row['petSpecies'] . "'>
-<input type='hidden' name='petPicture' value='" . $row['petPicture'] . "'>
+<input type='hidden' name='petPicture' value='" . $row['profilePic'] . "'>
 <h1 style='color: #2a7e2a'>Select your veterinar for " . $row['petName'] . "</h1>";
         echo "<table class='profile-table'>";
         $_SESSION['petId'] = $row['petId'];
         echo "<tr><td rowspan='4' style='padding: 20px; text-align: center;'>
-            <img alt='Profile Picture' width='200' height='200' src='pictures/" . $row['petPicture'] . "'>
+            <img alt='Profile Picture' width='200' height='200' src='pictures/" . $row['profilePic'] . "'>
         </td></tr>";
         echo "<tr><td>".NAME.": " . $row['petName'] . "</td></tr>";
         echo "<tr><td>".BREED.": " . $row['bred'] . "</td></tr>";
         echo "<tr><td>".SPECIES.": " . $row['petSpecies'] . "</td></tr>";
-$_SESSION['petPicture']=$row['petPicture'];
+$_SESSION['petPicture']=$row['profilePic'];
         echo "<td colspan='2'> <input type='submit' class='btn btn-success' value='".UPDATE_PET."'></td></tr></form>";
 
         echo "<tr><td colspan='2'><form action='registerAnimal.php' method='post'>

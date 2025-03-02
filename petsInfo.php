@@ -40,7 +40,7 @@ if ($_SESSION['privilage'] != "Veterinarian") {
         echo '<div class="row">';
         echo '<div class="col-lg-8 mx-auto">';
 
-        $query = "SELECT u.firstName, u.lastName, u.userMail, u.phoneNumber, p.petId, p.petName, p.bred, p.petSpecies, p.petPicture, r.reservationDay, r.reservationTime, r.period 
+        $query = "SELECT u.firstName, u.lastName, u.userMail, u.phoneNumber, p.petId, p.petName, p.bred, p.petSpecies, p.profilePic, r.reservationDay, r.reservationTime, r.period 
                   FROM veterinarian v 
                   INNER JOIN pet p ON v.veterinarianId = p.veterinarId 
                   INNER JOIN reservation r ON r.petId = p.petId 
@@ -61,7 +61,7 @@ if ($_SESSION['privilage'] != "Veterinarian") {
             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                 echo '<div class="row mb-4 p-3 bg-light rounded shadow-sm">';
                 echo '<div class="col-md-4 text-center">';
-                echo '<img class="profile-image" alt="Pet Picture" src="pictures/' . htmlspecialchars($row['petPicture']) . '">';
+                echo '<img class="profile-image" alt="Pet Picture" src="pictures/' . htmlspecialchars($row['profilePic']) . '">';
                 echo '</div>';
                 echo '<div class="col-md-8">';
                 echo '<h5>' . htmlspecialchars($row['petName']) . '</h5>';
