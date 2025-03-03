@@ -182,7 +182,7 @@ $products = $pdo->query("SELECT productId, productName, productPicture,descripti
 <div class="d-flex flex-wrap justify-content-center">
     <?php foreach ($products as $product): ?>
         <div class="product">
-            <img src="pictures/<?php echo htmlspecialchars($product['productPicture']); ?>"
+            <img src="pictures/products/<?php echo htmlspecialchars($product['productPicture']); ?>"
                  alt="<?php echo htmlspecialchars($product['productName']); ?>">
             <h2><?php echo htmlspecialchars($product['productName']); ?></h2>
             <p><?php echo PRICE ?>: €<?php echo number_format($product['productCost'], 2); ?></p>
@@ -225,7 +225,7 @@ foreach ($cartItems as $price) {
     <ul id="cart-list">
         <?php foreach ($cartItems as $item): ?>
             <li class="cart-item">
-                <img  src="pictures/<?php echo htmlspecialchars($item['productPicture']); ?>"
+                <img  src="pictures/products/<?php echo htmlspecialchars($item['productPicture']); ?>"
                      alt="<?php echo htmlspecialchars($item['productName']); ?>">
                 <div class="cart-item-details">
                     <h3><?php echo htmlspecialchars($item['productName']); ?></h3>

@@ -5,7 +5,7 @@ $autoload = new Functions();
 $pdo = $autoload->connect($GLOBALS['dsn'], $_ENV['DB_USER'], $_ENV['DB_PASSWORD'], $GLOBALS['pdoOptions']);
 
 // Function to delete files that are no longer referenced in the database
-function deleteUnreferencedFiles($directory, $columnName, $tables) {
+function deleteUnreferencedProfilePictrures($directory, $columnName, $tables) {
     global $pdo;
 
     // Initialize an array to hold all referenced files
@@ -32,29 +32,28 @@ function deleteUnreferencedFiles($directory, $columnName, $tables) {
     foreach ($files as $file) {
         $filePath = $directory . DIRECTORY_SEPARATOR . $file;
 
-        // Check if the file is not referenced in any of the tables
-        if (!in_array($file, $referencedFiles)) {
-            if (file_exists($filePath)) {
-                unlink($filePath); // Delete the file if not referenced
-                echo "Deleted: $file\n";
-            }
+        // Ensure it's a file and not a directory before checking
+        if (is_file($filePath) && !in_array($file, $referencedFiles)) {
+            unlink($filePath); // Delete the file if not referenced
+            echo "Deleted: $file\n";
         }
     }
 }
 
 // Directories for profilePic and qrCodeName
 $profilePicDirectory = 'pictures';
-$qrCodeDirectory = 'QRcodes';
+$productsDirectory = 'pictures/products';
+$qrCodeDirectory = 'pictures/QRcodes';
 
 // Tables to check for referenced files
 $tablesForProfilePic = ['user', 'veterinarian','pet'];
 $tablesForQrCode = ['qr_code'];
 
 // Delete unreferenced profile pictures from both tables (user and veterinarian)
-deleteUnreferencedFiles($profilePicDirectory, 'profilePic', $tablesForProfilePic);
+deleteUnreferencedProfilePictrures($profilePicDirectory, 'profilePic', $tablesForProfilePic);
 
 // Delete unreferenced QR code files from qr_code table (since QR codes are stored in QRcodes/ folder)
-function deleteUnreferencedQRCodeFiles($directory, $columnName, $table) {
+function deleteUnreferencedFiles($directory, $columnName, $table) {
     global $pdo;
 
     // Query to get all qrCodeName values from the qr_code table
@@ -79,12 +78,13 @@ function deleteUnreferencedQRCodeFiles($directory, $columnName, $table) {
         if (!in_array($file, $referencedFiles)) {
             if (file_exists($filePath)) {
                 unlink($filePath); // Delete the file if not referenced
-                echo "Deleted QR Code: $file\n";
+                echo "Deleted asset picture: $file\n";
             }
         }
     }
 }
 
 // Delete unreferenced QR code files
-deleteUnreferencedQRCodeFiles($qrCodeDirectory, 'qrCodeName', 'qr_code');
+deleteUnreferencedFiles($qrCodeDirectory, 'qrCodeName', 'qr_code');
+deleteUnreferencedFiles($productsDirectory, 'productPicture', 'product');
 ?>

@@ -51,8 +51,8 @@ if (!$userId) {
 <body style="background: #659df7">
 <a class="btn btn-secondary" href="products.php"><?php echo BACK ?></a><br><br>
 <div class="details">
-    <img src="pictures/<?php echo htmlspecialchars($product['productPicture']); ?>"
-         alt="<?php echo htmlspecialchars($product['productName']); ?>">
+    <img src="pictures/products/<?php echo htmlspecialchars($product['productPicture']); ?>"
+         alt="<?php echo htmlspecialchars($product['productName']); ?>" height="300" width="300">
     <div class="details-content">
         <h1><?php echo htmlspecialchars($product['productName']); ?></h1>
         <p><?php echo PRICE ?>: €<?php echo number_format($product['productCost'], 2); ?></p>

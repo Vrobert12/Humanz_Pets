@@ -669,7 +669,7 @@ VALUES (:reviewCode,:userId,:veterinarianId)";
      */
     public function createQrCode(string $name, string $phone): string
     {
-        $saveDir = 'QRcodes/';
+        $saveDir = 'pictures/QRcodes/';
         if (!is_dir($saveDir)) {
             mkdir($saveDir, 0777, true);
         }
@@ -1070,11 +1070,12 @@ VALUES (:userId,:productName,:productPicture,:productId,:sum, :price)";
             $productId = ucfirst(strtolower(trim($_POST["productId"])));
             $productName = ucfirst(strtolower(trim($this->blurSwearWords($_POST["productName"]))));
             $price = ucfirst(strtolower(trim($_POST["price"])));
-
+$_SESSION['product']=true;
             $picture = $this->picture($_SESSION['backPic']);
             if ($picture == 4) {
                 $picture = $_SESSION['updateProductPicture'];
             }
+            unset($_SESSION['product']);
             $description = ucfirst(strtolower(trim($this->blurSwearWords($_POST["productDescription"]))));
 
             // Insert the pet data into the database
@@ -1113,9 +1114,10 @@ WHERE productId = :productId;
             try {
                 $productName = ucfirst(strtolower(trim($this->blurSwearWords($_POST["productName"]))));
                 $price = ucfirst(strtolower(trim($_POST["price"])));
+                $_SESSION['product']=true;
                 $picture = $this->picture($_SESSION['backPic']);
                 $description = ucfirst(strtolower(trim($this->blurSwearWords($_POST["productDescription"]))));
-
+                unset($_SESSION['product']);
                 // Insert the pet data into the database
                 $stmt = "INSERT INTO product (productName, productCost, productPicture, description, productRelease)
                     VALUES (:productName, :price,:productPicture,:productDescription, NOW())";
@@ -1703,6 +1705,9 @@ WHERE u.userId = :userId";
     {
 
         if (isset($_FILES['picture'])) {
+            if(isset($_SESSION['product']))
+            $target_dir = "pictures/products/";
+            else
             $target_dir = "pictures/";  // Local directory for storing uploaded files
             $target_file = $target_dir . basename($_FILES["picture"]["name"]);
             $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
