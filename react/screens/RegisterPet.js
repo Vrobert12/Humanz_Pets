@@ -4,8 +4,8 @@ import * as ImagePicker from 'expo-image-picker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 
-// const API_URL = 'http://192.168.1.8/Humanz2.0/Humanz_Pets/register_pet.php';
-const API_URL = 'http://192.168.43.125/Humanz2.0/Humanz_Pets/register_pet.php';
+const API_URL = 'http://192.168.1.8/Humanz2.0/Humanz_Pets/register_pet.php';
+//const API_URL = 'http://192.168.43.125/Humanz2.0/Humanz_Pets/register_pet.php';
 
 const RegisterPet = ({ navigation }) => {
     const [name, setName] = useState('');
@@ -21,8 +21,9 @@ const RegisterPet = ({ navigation }) => {
             aspect: [4, 3],
             quality: 1,
         });
-        if (!result.canceled) {
-            setImage(result.uri);
+        if (!result.canceled && result.assets.length > 0) {
+            setImage(result.assets[0].uri);
+            console.log("Image:", result.assets[0].uri);
         }
     };
 
@@ -45,6 +46,7 @@ const RegisterPet = ({ navigation }) => {
         formData.append('name', name);
         formData.append('breed', breed);
         formData.append('species', species);
+        console.log(image);
         if (image) {
             formData.append('image', {
                 uri: image,

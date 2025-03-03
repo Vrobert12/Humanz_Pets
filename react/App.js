@@ -7,6 +7,7 @@ import Home from './screens/Home';
 import Profile from './screens/Profile';
 import Settings from './screens/Settings';
 import RegisterPet from "./screens/RegisterPet";
+import BookAppointment from "./screens/BookAppointment";
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 const Tab = createBottomTabNavigator();
@@ -20,6 +21,7 @@ const MainApp = ({ onLogout }) => (
                 else if (route.name === 'Profile') iconName = 'user';
                 else if (route.name === 'Settings') iconName = 'cog';
                 else if (route.name === 'RegisterPet') iconName = 'paw';
+                else if (route.name === 'BookAppointment') iconName = 'book';
                 return <Icon name={iconName} size={size} color={color} />;
             },
             tabBarActiveTintColor: '#007bff',
@@ -33,6 +35,7 @@ const MainApp = ({ onLogout }) => (
         </Tab.Screen>
         <Tab.Screen name="Settings" component={Settings} />
         <Tab.Screen name="RegisterPet" component={RegisterPet} />
+        <Tab.Screen name="BookAppointment" component={BookAppointment} />
     </Tab.Navigator>
 );
 
@@ -63,6 +66,7 @@ export default function App() {
                             else if (route.name === 'Profile') iconName = 'user';
                             else if (route.name === 'Settings') iconName = 'cog';
                             else if (route.name === 'RegisterPet') iconName = 'paw';
+                            else if (route.name === 'BookAppointment') iconName = 'book';
                             return <Icon name={iconName} size={size} color={color} />;
                         },
                         tabBarActiveTintColor: '#007bff',
@@ -78,6 +82,7 @@ export default function App() {
                     />
                     <Tab.Screen name="Settings" component={Settings} />
                     <Tab.Screen name="RegisterPet" component={RegisterPet} />
+                    <Tab.Screen name="BookAppointment" component={BookAppointment} />
                 </Tab.Navigator>
             ) : (
                 <LoginScreen navigation={{ replace: setIsLoggedIn }} />

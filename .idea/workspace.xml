@@ -4,16 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2367ab9a-341c-4300-a7ed-72f717181f7d" name="Changes" comment="App pet register v1">
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2_7_2025_4_31_PM_[Changes]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2_7_2025_4_31_PM__Changes_.xml" beforeDir="false" />
+    <list default="true" id="2367ab9a-341c-4300-a7ed-72f717181f7d" name="Changes" comment="React QR code display">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/applogIn.php" beforeDir="false" afterPath="$PROJECT_DIR$/applogIn.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/react/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/react/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/react/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/react/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/react/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/react/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/react/screens/LoginScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/react/screens/LoginScreen.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/react/screens/Profile.js" beforeDir="false" afterPath="$PROJECT_DIR$/react/screens/Profile.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/react/screens/RegisterPet.js" beforeDir="false" afterPath="$PROJECT_DIR$/react/screens/RegisterPet.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/react/screens/Settings.js" beforeDir="false" afterPath="$PROJECT_DIR$/react/screens/Settings.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/register_pet.php" beforeDir="false" afterPath="$PROJECT_DIR$/register_pet.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -115,7 +116,8 @@
       <workItem from="1738942261238" duration="13346000" />
       <workItem from="1739203701526" duration="302000" />
       <workItem from="1739204304711" duration="6508000" />
-      <workItem from="1740919065015" duration="5623000" />
+      <workItem from="1740919065015" duration="6092000" />
+      <workItem from="1741003681531" duration="10705000" />
     </task>
     <task id="LOCAL-00001" summary="Responsivity">
       <option name="closed" value="true" />
@@ -237,7 +239,15 @@
       <option name="project" value="LOCAL" />
       <updated>1739210855978</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="React QR code display">
+      <option name="closed" value="true" />
+      <created>1740924971648</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1740924971648</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -270,6 +280,7 @@
     <MESSAGE value="React login and logout" />
     <MESSAGE value="DB 2" />
     <MESSAGE value="App pet register v1" />
-    <option name="LAST_COMMIT_MESSAGE" value="App pet register v1" />
+    <MESSAGE value="React QR code display" />
+    <option name="LAST_COMMIT_MESSAGE" value="React QR code display" />
   </component>
 </project>

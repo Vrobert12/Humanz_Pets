@@ -12,10 +12,11 @@ export default function Profile({ route }) {
         const fetchUserData = async () => {
             try {
                 const userId = await AsyncStorage.getItem("user_id");
+                console.log(userId);
                 if (!userId) throw new Error("User ID not found");
 
-                // const response = await fetch(`http://192.168.1.8/Humanz_Pets/getPets/user/${userId}`);
-                const response = await fetch(`http://192.168.43.125/Humanz_Pets/getPets/user/${userId}`);
+                const response = await fetch(`http://192.168.1.8/Humanz2.0/Humanz_Pets/getPets/user/${userId}`);
+                //const response = await fetch(`http://192.168.43.125/Humanz_Pets/getPets/user/${userId}`);
                 const data = await response.json();
 
                 if (data.status === 200) {
@@ -37,15 +38,15 @@ export default function Profile({ route }) {
             const userId = await AsyncStorage.getItem("user_id");
             if (!userId) throw new Error("User ID not found");
 
-            // const response = await fetch(`http://192.168.1.8/Humanz_Pets/getQrCode.php?user=${userId}`);
-            const response = await fetch(`http://192.168.43.125/Humanz_Pets/getQrCode.php?user=${userId}`);
+            const response = await fetch(`http://192.168.1.8/Humanz2.0/Humanz_Pets/getQrCode.php?user=${userId}`);
+            //const response = await fetch(`http://192.168.43.125/Humanz_Pets/getQrCode.php?user=${userId}`);
             const text = await response.text(); // ✅ Log raw response
             console.log("Raw Response:", text);
 
             const data = JSON.parse(text);
             if (data.status === 200) {
-                // setQrCodePath(`http://192.168.1.8/Humanz_Pets/${data.data.path}`); // ✅ Ensure full path
-                setQrCodePath(`http://192.168.43.125/Humanz_Pets/${data.data.path}`); // ✅ Ensure full path
+                setQrCodePath(`http://192.168.1.8/Humanz_Pets/${data.data.path}`); // ✅ Ensure full path
+                //setQrCodePath(`http://192.168.43.125/Humanz_Pets/${data.data.path}`); // ✅ Ensure full path
             } else {
                 setQrCodePath(""); // No QR code found
             }
@@ -74,8 +75,8 @@ export default function Profile({ route }) {
     return (
         <View style={styles.container}>
             <Image
-                // source={{ uri: `http://192.168.2.6/Humanz_Pets/pictures/${String(userData.profilePic)}` }}
-                source={{ uri: `http://192.168.43.125/Humanz_Pets/pictures/${String(userData.profilePic)}` }}
+                source={{ uri: `http://192.168.1.8/Humanz2.0/Humanz_Pets/pictures/${String(userData.profilePic)}` }}
+                //source={{ uri: `http://192.168.43.125/Humanz_Pets/pictures/${String(userData.profilePic)}` }}
                 style={styles.profileImage}
             />
             <Text style={styles.userName}>{String(userData.firstName)} {String(userData.lastName)}</Text>

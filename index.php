@@ -388,7 +388,7 @@ https://getbootstrap.com/docs/5.3/components/navbar/
             <!-- Book Appointments -->
             <div class="row">
                 <div class="col-md-6 order-md-2">
-                    <img src="pictures/vet.jpg" alt="Book Appointment" class="img-fluid rounded">
+                    <img src="assets/vet.jpg" alt="Book Appointment" class="img-fluid rounded">
                 </div>
                 <div class="col-md-6 order-md-1">
                     <h4><i class="bi bi-calendar-check"></i> <?php echo BOOK1?></h4>

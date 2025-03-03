@@ -1,56 +1,74 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, TextInput, Button, ActivityIndicator, Alert } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function Settings() {
     const [userData, setUserData] = useState(null);
     const [loading, setLoading] = useState(true);
     const [updating, setUpdating] = useState(false);
+    const [userId, setUserId] = useState(null); // State for user ID
 
-    const userId = 25; // Hardcoded for now
-    // const apiUrl = `http://192.168.1.8/Humanz_Pets/getPets/user/${userId}`; // Correct API URL to fetch user data
-    const apiUrl = `http://192.168.43.125/Humanz_Pets/getPets/user/${userId}`; // Correct API URL to fetch user data
-
-    // Fetch user data
     useEffect(() => {
-        console.log("Fetching user data from API:", apiUrl); // Log the URL for debugging
+        const fetchUserId = async () => {
+            try {
+                const storedUserId = await AsyncStorage.getItem("user_id");
+                if (storedUserId) {
+                    setUserId(storedUserId);
+                } else {
+                    Alert.alert("Error", "User not logged in.");
+                }
+            } catch (error) {
+                console.error("Error fetching user ID:", error);
+            }
+        };
+
+        fetchUserId();
+    }, []);
+
+    useEffect(() => {
+        if (!userId) return; // Only fetch data when userId is available
+
+        const apiUrl = `http://192.168.1.8/Humanz2.0/Humanz_Pets/getPets/user/${userId}`;
+
+        console.log("Fetching user data from API:", apiUrl);
 
         fetch(apiUrl)
             .then((response) => response.json())
             .then((data) => {
-                console.log("User data response:", data); // Log the response data
+                console.log("User data response:", data);
                 if (data.status === 200) {
-                    setUserData(data.data[0]); // Assuming data array has one user
+                    setUserData(data.data[0]); // Assuming the data array has one user
                 } else {
                     Alert.alert("Error", "Failed to load user data.");
                 }
             })
             .catch((error) => {
-                console.error("Error fetching data:", error); // Log the error message
+                console.error("Error fetching data:", error);
                 Alert.alert("Error", `Failed to fetch data: ${error.message}`);
             })
             .finally(() => setLoading(false));
-    }, []); // Empty dependency array means this effect runs once when the component mounts
+    }, [userId]); // Re-run the effect when userId is set
 
-    // Handle update
     const handleUpdate = () => {
+        if (!userId || !userData) return;
+
         setUpdating(true);
+        const updatedUserData = { ...userData, id: userId };
 
-        // Optimistic UI update: update the UI before making the network request
-        const updatedUserData = { ...userData, id: userId }; // Ensure the id is included
-
-        console.log("Sending PUT request to:", apiUrl); // Log the URL being used for PUT
-        console.log("Request Body:", JSON.stringify(updatedUserData)); // Log the request body
+        const apiUrl = `http://192.168.1.8/Humanz2.0/Humanz_Pets/getPets/user/${userId}`;
+        console.log("Sending PATCH request to:", apiUrl);
+        console.log("Request Body:", JSON.stringify(updatedUserData));
 
         fetch(apiUrl, {
-            method: "PATCH", // Use PUT method to update
+            method: "PATCH",
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify(updatedUserData), // Send updated user data, including userId
+            body: JSON.stringify(updatedUserData),
         })
             .then((response) => response.json())
             .then((data) => {
-                console.log("Response Data:", data); // Log the response body
+                console.log("Response Data:", data);
                 if (data.status === 200) {
                     Alert.alert("Success", "User data updated successfully!");
                 } else {
@@ -58,7 +76,7 @@ export default function Settings() {
                 }
             })
             .catch((error) => {
-                console.error("Error updating data:", error); // Log the error message
+                console.error("Error updating data:", error);
                 Alert.alert("Error", `Update request failed: ${error.message}`);
             })
             .finally(() => setUpdating(false));

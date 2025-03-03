@@ -27,13 +27,22 @@ if (!$user_id || !$name || !$breed || !$species) {
 }
 
 if (isset($_FILES['image'])) {
-    $target_dir = "uploads/";
-    $image_path = $target_dir . basename($_FILES["image"]["name"]);
-    move_uploaded_file($_FILES["image"]["tmp_name"], $image_path);
+    $target_dir = __DIR__ . "/pictures/"; // ✅ Ensure this folder exists
+    if (!file_exists($target_dir)) {
+        mkdir($target_dir, 0777, true); // ✅ Create directory if it doesn't exist
+    }
+
+    $file_name = time() . "_" . basename($_FILES["image"]["name"]); // ✅ Prevent overwriting
+    $image_path = $file_name; // ✅ Relative path for database
+    $full_path = $target_dir . $file_name; // ✅ Absolute path for moving the file
+
+    if (!move_uploaded_file($_FILES["image"]["tmp_name"], $full_path)) {
+        die(json_encode(["success" => false, "message" => "Failed to save the image"]));
+    }
 }
 
 try {
-    $stmt = $pdo->prepare("INSERT INTO pet (userId, petName, bred, petSpecies, petPicture) VALUES (:user_id, :name, :breed, :species, :image_path)");
+    $stmt = $pdo->prepare("INSERT INTO pet (userId, petName, bred, petSpecies, profilePic) VALUES (:user_id, :name, :breed, :species, :image_path)");
     $stmt->execute([
         ':user_id' => $user_id,
         ':name' => $name,
@@ -42,8 +51,7 @@ try {
         ':image_path' => $image_path,
     ]);
 
-    echo json_encode(["success" => true, "message" => "Pet registered successfully"]);
+    echo json_encode(["success" => true, "message" => "Pet registered successfully", "image" => $image_path]);
 } catch (PDOException $e) {
     echo json_encode(["success" => false, "message" => "Failed to register pet: " . $e->getMessage()]);
 }
-
