@@ -1,97 +1,118 @@
 import React, { useState } from 'react';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Alert, Text, View, TextInput, TouchableOpacity } from 'react-native'; // Use TouchableOpacity for buttons
-import CalendarComponent from '../CalendarComponent'; // Assuming this component is correct
+import {View, Text, TextInput, TouchableOpacity, ScrollView, Alert} from 'react-native';
+import { Calendar } from 'react-native-calendars';
+import { Picker } from "@react-native-picker/picker";
+import axios from "axios"; // Install this package
+//import CalendarComponent from '../CalendarComponent'; // Updated component
 
 const API_URL = 'http://192.168.1.8/Humanz2.0/Humanz_Pets/bookReact.php';
-// const API_URL = 'http://192.168.43.125/Humanz2.0/Humanz_Pets/bookReact.php';
+const API_URL2 = 'http://192.168.1.8/Humanz2.0/Humanz_Pets/getPets2.php';
 
-const ReservationForm = () => {
+
+const ReservationForm = ({navigation}) => {
     const [petId, setPetId] = useState('');
     const [userId, setUserId] = useState('');
     const [reservationDate, setReservationDate] = useState('');
     const [reservationStart, setReservationStart] = useState('');
     const [reservationEnd, setReservationEnd] = useState('');
     const [loading, setLoading] = useState(false);
-    const [selectedDate, setSelectedDate] = useState(null);
+    const [selected, setSelected] = useState('');
+    const [selectedValue, setSelectedValue] = useState("");
+    let selectedDate = new Date();
 
-    // Handle the date select in Calendar
-    const handleDateSelect = (date) => {
-        setSelectedDate(date);
-        setReservationDate(date.toDateString()); // Update reservation date with the selected date
+    const ComboBox = ({ options, selectedValue, onChange }) => {
+        return (
+            <View>
+                <Text>Choose an option:</Text>
+                <Picker selectedValue={selectedValue} onValueChange={onChange}>
+                    <Picker.Item label="Select..." value="" />
+                    {options.map((option) => (
+                        <Picker.Item key={option.value} label={option.label} value={option.value} />
+                    ))}
+                </Picker>
+            </View>
+        );
     };
 
-    // Handle form submission
-    const handleSubmit = async () => {
-        // You can make your API call here to submit the reservation.
-        if (petId && userId && reservationDate && reservationStart && reservationEnd) {
+    const HandleDateSelect = (date) => {
+        console.log(date.dateString);
+        selectedDate = date.dateString;
+        console.log('selected: ', selectedDate);
+        setReservationDate(date);
+
+    };
+
+    const options = [
+        { value: "12:00", label: "12:00" },
+        { value: "option2", label: "Option 2" },
+        { value: "option3", label: "Option 3" },
+    ];
+
+    const HandleSubmit = async () => {
+        if (1===1) {
+            console.log(petId);
+            console.log(selected);
+            console.log(reservationStart);
+            console.log(reservationEnd);
             setLoading(true);
+
+            let formData = new FormData();
+            formData.append('pet_id', petId);
+            formData.append('date', selected);
+            formData.append('start', reservationStart);
+            formData.append('end', reservationEnd);
             try {
-                // Example API call logic
-                const response = await fetch(API_URL, {
-                    method: 'POST',
-                    body: JSON.stringify({
-                        petId,
-                        userId,
-                        reservationDate,
-                        reservationStart,
-                        reservationEnd,
-                    }),
+                const response = await axios.post(API_URL, formData, {
+                    headers: { 'Content-Type': 'multipart/form-data' },
                 });
-                const data = await response.json();
-                if (data.success) {
-                    Alert.alert('Reservation Successful', 'Your reservation was successfully made!');
-                } else {
-                    Alert.alert('Error', 'There was an issue with your reservation.');
-                }
-            } catch (error) {
-                Alert.alert('Error', 'Something went wrong, please try again later.');
-            } finally {
                 setLoading(false);
+                Alert.alert('Success', response.data.message);
+                navigation.goBack();
+            } catch (error) {
+                setLoading(false);
+                Alert.alert('Error', 'An error occurred. Please try again later.');
             }
         } else {
-            Alert.alert('Error', 'Please fill all the fields.');
+            window.alert('Error: Please fill all the fields.');
         }
     };
 
     return (
-        <View style={{ padding: 20 }}>
-            <Text style={{ fontSize: 24, fontWeight: 'bold', marginBottom: 20 }}>Book a Reservation</Text>
+        <ScrollView style={{ padding: 20 }}>
+            <Calendar
+                onDayPress={day => {setSelected(day.dateString), HandleDateSelect}}
+                minDate={new Date().toISOString().split('T')[0]} // Disable past dates
+                markedDates={{
+                    [selected]: { selected: true, selectedColor: '#007bff' },
+                }}
+            />
+            <Text>You've selected: {selected.toString()}</Text>
 
-            {/* Calendar Component */}
-            <CalendarComponent onDateSelect={handleDateSelect} />
-            {selectedDate && <Text>You've selected: {selectedDate.toDateString()}</Text>}
-
-            {/* Form to fill other reservation details */}
             <View>
                 <TextInput
-                    style={{ height: 40, borderColor: 'gray', borderWidth: 1, marginBottom: 10, paddingLeft: 8 }}
+                    style={{height: 40, borderColor: 'gray', borderWidth: 1, marginBottom: 10, paddingLeft: 8}}
                     placeholder="Pet ID"
                     value={petId}
                     onChangeText={(text) => setPetId(text)}
                 />
-                <TextInput
-                    style={{ height: 40, borderColor: 'gray', borderWidth: 1, marginBottom: 10, paddingLeft: 8 }}
-                    placeholder="User ID"
-                    value={userId}
-                    onChangeText={(text) => setUserId(text)}
-                />
+
                 <TextInput
                     style={{ height: 40, borderColor: 'gray', borderWidth: 1, marginBottom: 10, paddingLeft: 8 }}
                     placeholder="Start Time"
                     value={reservationStart}
                     onChangeText={(text) => setReservationStart(text)}
                 />
+                {/*<ComboBox options={options} selectedValue={selectedValue} onChange={setSelectedValue} />*/}
+
                 <TextInput
-                    style={{ height: 40, borderColor: 'gray', borderWidth: 1, marginBottom: 10, paddingLeft: 8 }}
+                    style={{height: 40, borderColor: 'gray', borderWidth: 1, marginBottom: 10, paddingLeft: 8}}
                     placeholder="End Time"
                     value={reservationEnd}
                     onChangeText={(text) => setReservationEnd(text)}
                 />
 
-                {/* Replaced <button> with <TouchableOpacity> */}
                 <TouchableOpacity
-                    onPress={handleSubmit}
+                    onPress={HandleSubmit}
                     style={{
                         backgroundColor: '#007bff',
                         paddingVertical: 10,
@@ -101,12 +122,13 @@ const ReservationForm = () => {
                     }}
                     disabled={loading}
                 >
-                    <Text style={{ color: '#fff', fontSize: 16 }}>
+                    <Text style={{color: '#fff', fontSize: 16}}>
                         {loading ? 'Submitting...' : 'Book Reservation'}
                     </Text>
                 </TouchableOpacity>
             </View>
-        </View>
+        </ScrollView>
+
     );
 };
 

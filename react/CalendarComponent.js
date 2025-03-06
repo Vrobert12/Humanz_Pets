@@ -1,26 +1,26 @@
-// CalendarComponent.js
 import React, { useState } from 'react';
-import Calendar from 'react-calendar';
-import 'react-calendar/dist/Calendar.css';
-import {Text, View} from "react-native"; // Import the default styles
+import { Calendar } from 'react-native-calendars';
+import { Text, View } from 'react-native-web';
 
 const CalendarComponent = ({ onDateSelect }) => {
-    const [date, setDate] = useState(new Date()); // Default to current date
+    const [selectedDate, setSelectedDate] = useState('');
 
-    const handleDateChange = (selectedDate) => {
-        setDate(selectedDate);
-        onDateSelect(selectedDate); // Pass selected date to the parent component
+    const handleDateSelect = (date) => {
+        setSelectedDate(date.dateString);
+        onDateSelect(new Date(date.dateString)); // Pass selected date to the parent component
     };
 
     return (
         <View>
             <Text>Select a Reservation Date</Text>
             <Calendar
-                onChange={handleDateChange}
-                value={date}
-                minDate={new Date()} // Disable past dates
+                onDayPress={handleDateSelect}
+                minDate={new Date().toISOString().split('T')[0]} // Disable past dates
+                markedDates={{
+                    [selectedDate]: { selected: true, selectedColor: '#007bff' },
+                }}
             />
-            <Text>Selected Date: {date.toDateString()}</Text>
+            <Text>Selected Date: {selectedDate}</Text>
         </View>
     );
 };

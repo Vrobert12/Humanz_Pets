@@ -4,17 +4,22 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2367ab9a-341c-4300-a7ed-72f717181f7d" name="Changes" comment="React QR code display">
+    <list default="true" id="2367ab9a-341c-4300-a7ed-72f717181f7d" name="Changes" comment="Fixes">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bookReact.php" beforeDir="false" afterPath="$PROJECT_DIR$/bookReact.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/react/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/react/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/react/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/react/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/react/CalendarComponent.js" beforeDir="false" afterPath="$PROJECT_DIR$/react/CalendarComponent.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/react/app.json" beforeDir="false" afterPath="$PROJECT_DIR$/react/app.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/react/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/react/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/react/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/react/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/react/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/react/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/react/screens/BookAppointment.js" beforeDir="false" afterPath="$PROJECT_DIR$/react/screens/BookAppointment.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/react/screens/Home.js" beforeDir="false" afterPath="$PROJECT_DIR$/react/screens/Home.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/react/screens/LoginScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/react/screens/LoginScreen.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/react/screens/Profile.js" beforeDir="false" afterPath="$PROJECT_DIR$/react/screens/Profile.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/react/screens/RegisterPet.js" beforeDir="false" afterPath="$PROJECT_DIR$/react/screens/RegisterPet.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/react/screens/Settings.js" beforeDir="false" afterPath="$PROJECT_DIR$/react/screens/Settings.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/register_pet.php" beforeDir="false" afterPath="$PROJECT_DIR$/register_pet.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,6 +40,7 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="UPDATE_TYPE" value="REBASE" />
   </component>
   <component name="PhpWorkspaceProjectConfiguration" interpreter_name="C:\xampp\php\php.exe">
     <include_path>
@@ -117,7 +123,9 @@
       <workItem from="1739203701526" duration="302000" />
       <workItem from="1739204304711" duration="6508000" />
       <workItem from="1740919065015" duration="6092000" />
-      <workItem from="1741003681531" duration="10705000" />
+      <workItem from="1741003681531" duration="10954000" />
+      <workItem from="1741263660976" duration="2326000" />
+      <workItem from="1741266543341" duration="19186000" />
     </task>
     <task id="LOCAL-00001" summary="Responsivity">
       <option name="closed" value="true" />
@@ -247,7 +255,15 @@
       <option name="project" value="LOCAL" />
       <updated>1740924971648</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="Fixes">
+      <option name="closed" value="true" />
+      <created>1741018927275</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1741018927275</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -281,6 +297,7 @@
     <MESSAGE value="DB 2" />
     <MESSAGE value="App pet register v1" />
     <MESSAGE value="React QR code display" />
-    <option name="LAST_COMMIT_MESSAGE" value="React QR code display" />
+    <MESSAGE value="Fixes" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixes" />
   </component>
 </project>
