@@ -19,14 +19,37 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $date = $_POST['date'] ?? null;
     $start = $_POST['start'] ?? null;
     $end = $_POST['end'] ?? null;
-    $veterinarianId = 3;
+    $veterinarianId = $_POST['vet_id'] ?? null;
 
     if ($pet_id && $date && $start && $end) {
-        // Database logic goes here...
+        // Check if the requested time slot is already taken
+        $checkQuery = $pdo->prepare(
+            "SELECT COUNT(*) FROM reservation 
+             WHERE reservationDay = :reservationDay 
+             AND reservationTime = :reservationStart
+             AND period = :reservationEnd"
+        );
+        $checkQuery->execute([
+            ':reservationDay' => $date,
+            ':reservationStart' => $start,
+            ':reservationEnd' => $end
+        ]);
 
+        $existingReservations = $checkQuery->fetchColumn();
+
+        // If there is an existing reservation for that time, return an error
+        if ($existingReservations > 0) {
+            $response = [
+                'message' => 'The selected time slot is already booked. Please choose another time.'
+            ];
+            echo json_encode($response);
+            exit; // Exit after returning the response to avoid inserting the reservation
+        }
+
+        // If the time slot is available, insert the new reservation
         $insertQuery = $pdo->prepare(
             "INSERT INTO reservation (petId, veterinarianId, reservationDay, reservationTime, period) 
-                 VALUES (:petId, :veterinarianId, :reservationDay, :reservationStart, :reservationEnd)"
+             VALUES (:petId, :veterinarianId, :reservationDay, :reservationStart, :reservationEnd)"
         );
         $insertQuery->execute([
             ':petId' => $pet_id,
@@ -36,12 +59,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             ':reservationEnd' => $end
         ]);
 
-
         // If everything is okay
         $response = [
             'message' => 'Reservation successful!'
         ];
         echo json_encode($response);
+
     } else {
         // Handle errors
         $response = [
@@ -55,5 +78,3 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $response = ['message' => 'Method Not Allowed'];
     echo json_encode($response);
 }
-
-

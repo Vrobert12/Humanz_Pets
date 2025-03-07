@@ -1,66 +1,85 @@
-import React, { useState } from 'react';
-import {View, Text, TextInput, TouchableOpacity, ScrollView, Alert} from 'react-native';
-import { Calendar } from 'react-native-calendars';
-import { Picker } from "@react-native-picker/picker";
-import axios from "axios"; // Install this package
-//import CalendarComponent from '../CalendarComponent'; // Updated component
+import React, { useEffect, useState } from 'react';
+import { View, Text, TouchableOpacity, Alert, ScrollView } from 'react-native';
+import { Picker } from '@react-native-picker/picker';
+import { Calendar } from "react-native-calendars";
+import axios from 'axios'; // Install this package
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const API_URL = 'http://192.168.1.8/Humanz2.0/Humanz_Pets/bookReact.php';
 const API_URL2 = 'http://192.168.1.8/Humanz2.0/Humanz_Pets/getPets2.php';
+const API_URL_CHECK_AVAILABILITY = 'http://192.168.1.8/Humanz2.0/Humanz_Pets/checkAvailability.php'; // Add this URL
 
-
-const ReservationForm = ({navigation}) => {
+const ReservationForm = ({ navigation }) => {
     const [petId, setPetId] = useState('');
-    const [userId, setUserId] = useState('');
+    const [vetId, setVetId] = useState('');
     const [reservationDate, setReservationDate] = useState('');
     const [reservationStart, setReservationStart] = useState('');
     const [reservationEnd, setReservationEnd] = useState('');
     const [loading, setLoading] = useState(false);
-    const [selected, setSelected] = useState('');
-    const [selectedValue, setSelectedValue] = useState("");
-    let selectedDate = new Date();
+    const [availableStartTimes, setAvailableStartTimes] = useState([]);
+    const [selectedValue, setSelectedValue] = useState('');
+    const [petOptions, setPetOptions] = useState([]);
+    const [selectedDate, setSelectedDate] = useState('');
+    let selectedDate2 = new Date();
 
-    const ComboBox = ({ options, selectedValue, onChange }) => {
-        return (
-            <View>
-                <Text>Choose an option:</Text>
-                <Picker selectedValue={selectedValue} onValueChange={onChange}>
-                    <Picker.Item label="Select..." value="" />
-                    {options.map((option) => (
-                        <Picker.Item key={option.value} label={option.label} value={option.value} />
-                    ))}
-                </Picker>
-            </View>
-        );
+    useEffect(() => {
+        const loadPets = async () => {
+            try {
+                const storedPets = await AsyncStorage.getItem('pets');
+                if (storedPets) {
+                    const parsedPets = JSON.parse(storedPets);
+
+                    const options = parsedPets.map((pet) => ({
+                        value: pet.petId.toString(),
+                        label: pet.petName,
+                        vetId: pet.veterinarId
+                    }));
+
+                    setPetOptions(options);
+                }
+            } catch (error) {
+                console.error('Error loading pets:', error);
+            }
+        };
+
+        loadPets();
+    }, []);
+
+    // Function to load available start times
+    const loadAvailableStartTimes = async (selectedDate) => {
+        try {
+            const response = await axios.post(API_URL_CHECK_AVAILABILITY, {
+                date: selectedDate,
+            });
+
+            if (response.data.availableStartTimes) {
+                setAvailableStartTimes(response.data.availableStartTimes);
+            } else {
+                Alert.alert('Error', 'No available time slots for this date.');
+            }
+        } catch (error) {
+            console.error('Error checking availability:', error);
+            Alert.alert('Error', 'There was an error checking availability.');
+        }
     };
 
     const HandleDateSelect = (date) => {
-        console.log(date.dateString);
-        selectedDate = date.dateString;
-        console.log('selected: ', selectedDate);
-        setReservationDate(date);
-
+        setSelectedDate(date.dateString);
+        setReservationDate(date.dateString);
+        loadAvailableStartTimes(date.dateString); // Load available start times when a date is selected
     };
 
-    const options = [
-        { value: "12:00", label: "12:00" },
-        { value: "option2", label: "Option 2" },
-        { value: "option3", label: "Option 3" },
-    ];
-
     const HandleSubmit = async () => {
-        if (1===1) {
-            console.log(petId);
-            console.log(selected);
-            console.log(reservationStart);
-            console.log(reservationEnd);
+        if (petId && vetId && reservationDate && reservationStart && reservationEnd) {
             setLoading(true);
 
             let formData = new FormData();
             formData.append('pet_id', petId);
-            formData.append('date', selected);
+            formData.append('vet_id', vetId);
+            formData.append('date', reservationDate);
             formData.append('start', reservationStart);
             formData.append('end', reservationEnd);
+
             try {
                 const response = await axios.post(API_URL, formData, {
                     headers: { 'Content-Type': 'multipart/form-data' },
@@ -73,43 +92,64 @@ const ReservationForm = ({navigation}) => {
                 Alert.alert('Error', 'An error occurred. Please try again later.');
             }
         } else {
-            window.alert('Error: Please fill all the fields.');
+            Alert.alert('Error', 'Please fill all the fields.');
         }
+    };
+
+    const HandlePetSelection = (petId) => {
+        setPetId(petId);
+        // Find the selected pet and set the vetId
+        const selectedPet = petOptions.find((pet) => pet.value === petId);
+        console.log(selectedPet);
+        setVetId(selectedPet ? selectedPet.vetId : null);
     };
 
     return (
         <ScrollView style={{ padding: 20 }}>
-            <Calendar
-                onDayPress={day => {setSelected(day.dateString), HandleDateSelect}}
-                minDate={new Date().toISOString().split('T')[0]} // Disable past dates
-                markedDates={{
-                    [selected]: { selected: true, selectedColor: '#007bff' },
-                }}
-            />
-            <Text>You've selected: {selected.toString()}</Text>
-
             <View>
-                <TextInput
-                    style={{height: 40, borderColor: 'gray', borderWidth: 1, marginBottom: 10, paddingLeft: 8}}
-                    placeholder="Pet ID"
-                    value={petId}
-                    onChangeText={(text) => setPetId(text)}
+                <Text>Select a Date:</Text>
+                <Calendar
+                    onDayPress={HandleDateSelect}
+                    minDate={new Date().toISOString().split('T')[0]} // Disable past dates
+                    markedDates={{
+                        [selectedDate]: {
+                            selected: true,
+                            selectedColor: '#007bff', // Highlight color
+                            selectedTextColor: '#fff', // Text color when selected
+                        },
+                    }}
                 />
+                <Text>You've selected: {reservationDate}</Text>
 
-                <TextInput
-                    style={{ height: 40, borderColor: 'gray', borderWidth: 1, marginBottom: 10, paddingLeft: 8 }}
-                    placeholder="Start Time"
-                    value={reservationStart}
-                    onChangeText={(text) => setReservationStart(text)}
-                />
-                {/*<ComboBox options={options} selectedValue={selectedValue} onChange={setSelectedValue} />*/}
+                {/* Pet Selection ComboBox */}
+                <Text>Choose your pet:</Text>
+                <Picker
+                    selectedValue={petId}
+                    onValueChange={HandlePetSelection}
+                >
+                    <Picker.Item label="Select Pet..." value="" />
+                    {petOptions.map((pet) => (
+                        <Picker.Item key={pet.value} label={pet.label} value={pet.value} />
+                    ))}
+                </Picker>
 
-                <TextInput
-                    style={{height: 40, borderColor: 'gray', borderWidth: 1, marginBottom: 10, paddingLeft: 8}}
-                    placeholder="End Time"
-                    value={reservationEnd}
-                    onChangeText={(text) => setReservationEnd(text)}
-                />
+                {/* Reservation Start Time ComboBox */}
+                <Text>Choose start time:</Text>
+                <Picker
+                    selectedValue={reservationStart}
+                    onValueChange={(itemValue) => {
+                        setReservationStart(itemValue);
+                        setReservationEnd(`${parseInt(itemValue.split(':')[0]) + 1}:00`); // Auto-set end time by adding 1 hour
+                    }}
+                >
+                    <Picker.Item label="Select Start Time..." value="" />
+                    {availableStartTimes.map((time) => (
+                        <Picker.Item key={time} label={time} value={time} />
+                    ))}
+                </Picker>
+
+                {/* Reservation End Time will be auto-set based on Start */}
+                <Text>End Time: {reservationEnd}</Text>
 
                 <TouchableOpacity
                     onPress={HandleSubmit}
@@ -119,16 +159,16 @@ const ReservationForm = ({navigation}) => {
                         paddingHorizontal: 20,
                         borderRadius: 5,
                         alignItems: 'center',
+                        marginBottom: 30
                     }}
                     disabled={loading}
                 >
-                    <Text style={{color: '#fff', fontSize: 16}}>
+                    <Text style={{ color: '#fff', fontSize: 16 }}>
                         {loading ? 'Submitting...' : 'Book Reservation'}
                     </Text>
                 </TouchableOpacity>
             </View>
         </ScrollView>
-
     );
 };
 

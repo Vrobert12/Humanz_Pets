@@ -44,8 +44,9 @@ export default function Profile({ route }) {
             console.log("Raw Response:", text);
 
             const data = JSON.parse(text);
+            console.log('this path',data.data.path);
             if (data.status === 200) {
-                setQrCodePath(`http://192.168.1.8/Humanz_Pets/${data.data.path}`); // ✅ Ensure full path
+                setQrCodePath(`http://192.168.1.8/Humanz2.0/Humanz_Pets/pictures/${data.data.path}`); // ✅ Ensure full path
                 //setQrCodePath(`http://192.168.43.125/Humanz_Pets/${data.data.path}`); // ✅ Ensure full path
             } else {
                 setQrCodePath(""); // No QR code found
