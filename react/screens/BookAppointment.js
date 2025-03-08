@@ -6,8 +6,9 @@ import axios from 'axios'; // Install this package
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const API_URL = 'http://192.168.1.8/Humanz2.0/Humanz_Pets/bookReact.php';
-const API_URL2 = 'http://192.168.1.8/Humanz2.0/Humanz_Pets/getPets2.php';
-const API_URL_CHECK_AVAILABILITY = 'http://192.168.1.8/Humanz2.0/Humanz_Pets/checkAvailability.php'; // Add this URL
+// const API_URL = 'http://192.168.43.125/Humanz_Pets/bookReact.php';
+const API_URL_CHECK_AVAILABILITY = 'http://192.168.1.8/Humanz2.0/Humanz_Pets/checkAvailability.php';
+//const API_URL_CHECK_AVAILABILITY = 'http://192.168.43.125/Humanz_Pets/checkAvailability.php';
 
 const ReservationForm = ({ navigation }) => {
     const [petId, setPetId] = useState('');
@@ -48,14 +49,25 @@ const ReservationForm = ({ navigation }) => {
     // Function to load available start times
     const loadAvailableStartTimes = async (selectedDate) => {
         try {
-            const response = await axios.post(API_URL_CHECK_AVAILABILITY, {
-                date: selectedDate,
-            });
+            // Get the day of the week (0 = Sunday, 6 = Saturday)
+            const selectedDay = new Date(selectedDate).getDay();
 
-            if (response.data.availableStartTimes) {
-                setAvailableStartTimes(response.data.availableStartTimes);
+            // Check if the selected date is a Saturday (6) or Sunday (0)
+            if (selectedDay === 0 || selectedDay === 6) {
+                // If it's a weekend, restrict to time slots between 8 AM and 12 PM
+                const availableTimes = ['08:00', '09:00', '10:00', '11:00', '12:00'];
+                setAvailableStartTimes(availableTimes);
             } else {
-                Alert.alert('Error', 'No available time slots for this date.');
+                // Otherwise, load all available times (this could be adjusted based on your needs)
+                const response = await axios.post(API_URL_CHECK_AVAILABILITY, {
+                    date: selectedDate,
+                });
+
+                if (response.data.availableStartTimes) {
+                    setAvailableStartTimes(response.data.availableStartTimes);
+                } else {
+                    Alert.alert('Error', 'No available time slots for this date.');
+                }
             }
         } catch (error) {
             console.error('Error checking availability:', error);
@@ -73,20 +85,26 @@ const ReservationForm = ({ navigation }) => {
         if (petId && vetId && reservationDate && reservationStart && reservationEnd) {
             setLoading(true);
 
-            let formData = new FormData();
-            formData.append('pet_id', petId);
-            formData.append('vet_id', vetId);
-            formData.append('date', reservationDate);
-            formData.append('start', reservationStart);
-            formData.append('end', reservationEnd);
-
             try {
+                let formData = new FormData();
+                formData.append('pet_id', petId);
+                formData.append('date', reservationDate);
+                formData.append('start', reservationStart);
+                formData.append('end', reservationEnd);
+                formData.append('veterinarianId', vetId);
+
                 const response = await axios.post(API_URL, formData, {
                     headers: { 'Content-Type': 'multipart/form-data' },
                 });
+
                 setLoading(false);
-                Alert.alert('Success', response.data.message);
-                navigation.goBack();
+
+                if (response.data.message === 'This pet already has an appointment.') {
+                    Alert.alert('Error', 'This pet already has an appointment.');
+                } else {
+                    Alert.alert('Success', response.data.message);
+                    navigation.goBack();
+                }
             } catch (error) {
                 setLoading(false);
                 Alert.alert('Error', 'An error occurred. Please try again later.');
@@ -95,6 +113,7 @@ const ReservationForm = ({ navigation }) => {
             Alert.alert('Error', 'Please fill all the fields.');
         }
     };
+
 
     const HandlePetSelection = (petId) => {
         setPetId(petId);

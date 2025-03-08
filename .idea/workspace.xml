@@ -4,13 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2367ab9a-341c-4300-a7ed-72f717181f7d" name="Changes" comment="react reservation v1 + DB">
+    <list default="true" id="2367ab9a-341c-4300-a7ed-72f717181f7d" name="Changes" comment="react reservation v2">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/applogIn.php" beforeDir="false" afterPath="$PROJECT_DIR$/applogIn.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bookReact.php" beforeDir="false" afterPath="$PROJECT_DIR$/bookReact.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/react/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/react/App.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/react/screens/BookAppointment.js" beforeDir="false" afterPath="$PROJECT_DIR$/react/screens/BookAppointment.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/react/screens/LoginScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/react/screens/LoginScreen.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/react/screens/Profile.js" beforeDir="false" afterPath="$PROJECT_DIR$/react/screens/Profile.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -117,7 +115,8 @@
       <workItem from="1741003681531" duration="10954000" />
       <workItem from="1741263660976" duration="2326000" />
       <workItem from="1741266543341" duration="19466000" />
-      <workItem from="1741350483767" duration="11913000" />
+      <workItem from="1741350483767" duration="12055000" />
+      <workItem from="1741437315645" duration="5346000" />
     </task>
     <task id="LOCAL-00001" summary="Responsivity">
       <option name="closed" value="true" />
@@ -263,7 +262,15 @@
       <option name="project" value="LOCAL" />
       <updated>1741287203390</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="react reservation v2">
+      <option name="closed" value="true" />
+      <created>1741362576550</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1741362576550</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -299,6 +306,7 @@
     <MESSAGE value="React QR code display" />
     <MESSAGE value="Fixes" />
     <MESSAGE value="react reservation v1 + DB" />
-    <option name="LAST_COMMIT_MESSAGE" value="react reservation v1 + DB" />
+    <MESSAGE value="react reservation v2" />
+    <option name="LAST_COMMIT_MESSAGE" value="react reservation v2" />
   </component>
 </project>

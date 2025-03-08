@@ -12,41 +12,67 @@ $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $username, $passw
 $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Get the POST data
     $data = json_decode(file_get_contents('php://input'), true);
 
     $pet_id = $_POST['pet_id'] ?? null;
     $date = $_POST['date'] ?? null;
     $start = $_POST['start'] ?? null;
     $end = $_POST['end'] ?? null;
-    $veterinarianId = $_POST['vet_id'] ?? null;
+    $veterinarianId = $_POST['veterinarianId'] ?? null;
 
-    if ($pet_id && $date && $start && $end) {
-        // Check if the requested time slot is already taken
-        $checkQuery = $pdo->prepare(
-            "SELECT COUNT(*) FROM reservation 
-             WHERE reservationDay = :reservationDay 
-             AND reservationTime = :reservationStart
-             AND period = :reservationEnd"
+    if ($pet_id && $date && $start && $end && $veterinarianId) {
+
+        // Check if the pet already has an overlapping reservation with the same veterinarian
+        $checkOverlapQuery = $pdo->prepare(
+            "SELECT COUNT(*) 
+             FROM reservation 
+             WHERE petId = :petId 
+             OR reservationDay = :date 
+             AND veterinarianId = :veterinarianId
+             AND (
+                 (reservationTime BETWEEN :start AND :end) 
+                 OR (reservationTime < :start AND period > :end)
+             )"
         );
-        $checkQuery->execute([
-            ':reservationDay' => $date,
-            ':reservationStart' => $start,
-            ':reservationEnd' => $end
+        $checkOverlapQuery->execute([
+            ':petId' => $pet_id,
+            ':date' => $date,
+            ':start' => $start,
+            ':end' => $end,
+            ':veterinarianId' => $veterinarianId
         ]);
+        $existingReservationCount = $checkOverlapQuery->fetchColumn();
 
-        $existingReservations = $checkQuery->fetchColumn();
-
-        // If there is an existing reservation for that time, return an error
-        if ($existingReservations > 0) {
-            $response = [
-                'message' => 'The selected time slot is already booked. Please choose another time.'
-            ];
-            echo json_encode($response);
-            exit; // Exit after returning the response to avoid inserting the reservation
+        if ($existingReservationCount > 0) {
+            echo json_encode(['message' => 'This pet/veterinarian already has an appointment at the selected time.']);
+            exit;
         }
 
-        // If the time slot is available, insert the new reservation
+        // Check if the selected time slot is already taken by another veterinarian for the same pet
+        $checkTimeQuery = $pdo->prepare(
+            "SELECT COUNT(*) 
+             FROM reservation 
+             WHERE petId = :petId
+             AND reservationDay = :date 
+             AND (
+                 (reservationTime BETWEEN :start AND :end) 
+                 OR (reservationTime < :start AND period > :start)
+             )"
+        );
+        $checkTimeQuery->execute([
+            ':date' => $date,
+            ':start' => $start,
+            ':end' => $end,
+            ':petId' => $pet_id
+        ]);
+        $existingTimeCount = $checkTimeQuery->fetchColumn();
+
+        if ($existingTimeCount > 0) {
+            echo json_encode(['message' => 'This pet already has an appointment at the selected time.']);
+            exit;
+        }
+
+        // Insert the new reservation
         $insertQuery = $pdo->prepare(
             "INSERT INTO reservation (petId, veterinarianId, reservationDay, reservationTime, period) 
              VALUES (:petId, :veterinarianId, :reservationDay, :reservationStart, :reservationEnd)"
@@ -59,22 +85,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             ':reservationEnd' => $end
         ]);
 
-        // If everything is okay
-        $response = [
-            'message' => 'Reservation successful!'
-        ];
-        echo json_encode($response);
-
+        echo json_encode(['message' => 'Reservation successful!']);
     } else {
-        // Handle errors
-        $response = [
-            'message' => 'All fields are required.'
-        ];
-        echo json_encode($response);
+        echo json_encode(['message' => 'All fields are required.']);
     }
 } else {
-    // If not POST request
     http_response_code(405);
-    $response = ['message' => 'Method Not Allowed'];
-    echo json_encode($response);
+    echo json_encode(['message' => 'Method Not Allowed']);
 }
+?>
