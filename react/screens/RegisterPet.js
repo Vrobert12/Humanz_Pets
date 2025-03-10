@@ -5,8 +5,11 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Picker } from '@react-native-picker/picker';
 import axios from 'axios';
 
-const API_URL = 'http://192.168.1.8/Humanz2.0/Humanz_Pets/register_pet.php';
-const VETS_API_URL = 'http://192.168.1.8/Humanz2.0/Humanz_Pets/veterinariansReact.php';
+// const API_URL = 'http://192.168.1.8/Humanz2.0/Humanz_Pets/register_pet.php';
+// const VETS_API_URL = 'http://192.168.1.8/Humanz2.0/Humanz_Pets/veterinariansReact.php';
+
+const API_URL = 'http://192.168.43.125/Humanz_Pets/register_pet.php';
+const VETS_API_URL = 'http://192.168.43.125/Humanz_Pets/veterinariansReact.php';
 
 const RegisterPet = ({ navigation }) => {
     const [name, setName] = useState('');

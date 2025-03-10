@@ -5,10 +5,11 @@ import { Calendar } from "react-native-calendars";
 import axios from 'axios'; // Install this package
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
- const API_URL = 'http://192.168.1.8/Humanz2.0/Humanz_Pets/bookReact.php';
-//const API_URL = 'http://192.168.43.125/Humanz_Pets/bookReact.php';
- const API_URL_CHECK_AVAILABILITY = 'http://192.168.1.8/Humanz2.0/Humanz_Pets/checkAvailability.php';
-//const API_URL_CHECK_AVAILABILITY = 'http://192.168.43.125/Humanz_Pets/checkAvailability.php';
+ // const API_URL = 'http://192.168.1.8/Humanz2.0/Humanz_Pets/bookReact.php';
+// const API_URL_CHECK_AVAILABILITY = 'http://192.168.1.8/Humanz2.0/Humanz_Pets/checkAvailability.php';
+
+const API_URL = 'http://192.168.43.125/Humanz_Pets/bookReact.php';
+const API_URL_CHECK_AVAILABILITY = 'http://192.168.43.125/Humanz_Pets/checkAvailability.php';
 
 const ReservationForm = ({ navigation }) => {
     const [petId, setPetId] = useState('');

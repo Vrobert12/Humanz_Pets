@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 06, 2025 at 07:51 PM
+-- Generation Time: Mar 10, 2025 at 10:54 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -254,7 +254,10 @@ INSERT INTO `errorlog` (`errorLogId`, `errorType`, `errorMail`, `errorText`, `er
 (212, 'Log in', 'varrorobert03@gmail.com', 'The password was not valid!', '2025-01-30 02:23:21.000000'),
 (213, 'Log in', 'robertvrro12@gmail.com', 'The E-mail is not in our database', '2025-01-31 14:05:21.000000'),
 (214, 'Log in', 'robertvarro12@gmail.com', 'The password was not valid!', '2025-01-31 14:46:41.000000'),
-(215, 'Log in', 'varrorobert03@gmail.com', 'The password was not valid!', '2025-01-31 21:24:31.000000');
+(215, 'Log in', 'varrorobert03@gmail.com', 'The password was not valid!', '2025-01-31 21:24:31.000000'),
+(216, 'Log in', 'robertvarro12@gmail.com', 'The password was not valid!', '2025-03-10 13:57:20.000000'),
+(217, 'Log in', 'robertvarro12@gmail.com', 'The password was not valid!', '2025-03-10 16:01:57.000000'),
+(218, 'Picture', 'robertvarro12@gmail.com', 'The file is bigger than 300KB', '2025-03-10 19:12:53.000000');
 
 -- --------------------------------------------------------
 
@@ -290,7 +293,18 @@ INSERT INTO `log` (`id_log`, `user_agent`, `ip_address`, `country`, `date_time`,
 (10, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36', '119.14', 'Taiwan', '2024-10-16 11:18:26', 'computer', 0, 'KE-ING'),
 (11, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36', '119.14', 'Taiwan', '2024-10-16 11:19:03', 'computer', 0, 'KE-ING'),
 (12, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36', '119.14', 'Taiwan', '2024-10-16 11:30:16', 'computer', 0, 'KE-ING'),
-(13, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36', '119.14', 'Taiwan', '2024-10-16 11:39:32', 'computer', 0, 'KE-ING');
+(13, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36', '119.14', 'Taiwan', '2024-10-16 11:39:32', 'computer', 0, 'KE-ING'),
+(14, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36', '::1', 'Unknown', '2025-03-10 12:41:39', 'Desktop', 0, 'Unknown ISP'),
+(15, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36', '::1', 'Unknown', '2025-03-10 12:43:58', 'Desktop', 0, 'Unknown ISP'),
+(16, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36', '::1', 'Unknown', '2025-03-10 12:45:28', 'Desktop', 0, 'Unknown ISP'),
+(17, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36', '::1', 'Unknown', '2025-03-10 12:48:55', 'Desktop', 0, 'Unknown ISP'),
+(18, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36', '::1', 'Unknown', '2025-03-10 12:49:31', 'Desktop', 0, 'Unknown ISP'),
+(19, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36', '::1', 'Unknown', '2025-03-10 12:57:31', 'Desktop', 0, 'Unknown ISP'),
+(20, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36', '::1', 'Unknown', '2025-03-10 14:30:37', 'Desktop', 0, 'Unknown ISP'),
+(21, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36', '::1', 'Unknown', '2025-03-10 14:58:40', 'Desktop', 0, 'Unknown ISP'),
+(22, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36', '::1', 'Unknown', '2025-03-10 15:02:12', 'Desktop', 0, 'Unknown ISP'),
+(23, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36', '::1', 'Unknown', '2025-03-10 15:04:28', 'Desktop', 0, 'Unknown ISP'),
+(24, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36', '::1', 'Unknown', '2025-03-10 15:06:13', 'Desktop', 0, 'Unknown ISP');
 
 -- --------------------------------------------------------
 
@@ -327,7 +341,7 @@ INSERT INTO `pet` (`petId`, `petName`, `bred`, `petSpecies`, `profilePic`, `user
 (40, 'Buksi', 'Tiszta', 'Dog  ', '20241223000554.png', 29, 1),
 (44, 'Tigrincs', 'Mixed', 'Dog ', '20241223140237.png', 29, 1),
 (52, 'Godzilla', 'Mixed', 'Cat', '20250301231702.png', 19, 3),
-(59, 'Batcat', 'Mixed', 'Cat  ', '20250303000202.png', 19, 3),
+(59, 'Batcat', 'Mixed', 'Dog', '20250303000202.png', 19, 3),
 (68, 'Zizi3', 'Pug', 'Dog', '1741006928_pet.jpg', 25, 3);
 
 -- --------------------------------------------------------
@@ -350,7 +364,8 @@ CREATE TABLE `product` (
 --
 
 INSERT INTO `product` (`productId`, `productName`, `productPicture`, `description`, `productCost`, `productRelease`) VALUES
-(11, 'Asd', '20250128161408.png', 'Da vidiomo', 23.99, '2025-01-28 16:14:08');
+(11, 'Tej', '20250310191833.jpg', 'Sima tej', 23.99, '2025-03-10 19:18:33'),
+(12, 'Nyakörv macskáknak', '20250310191358.jpg', 'Ez egy átlagos macska nyakörv', 3.00, '2025-03-10 19:18:45');
 
 -- --------------------------------------------------------
 
@@ -412,8 +427,11 @@ INSERT INTO `reservation` (`reservationId`, `reservationDay`, `reservationTime`,
 (66, '2025-02-15', '11:00:00', '12:00:00', 1, 3, 2),
 (67, '2025-03-02', '09:00:00', '10:00:00', 0, 1, 2),
 (69, '2025-03-03', '16:00:00', '17:00:00', 0, 3, 52),
-(71, '2025-03-18', '16:00:00', '17:00:00', 0, 3, 59),
-(72, '2025-03-29', '12:00:00', '13:00:00', 0, 3, 68);
+(72, '2025-03-29', '12:00:00', '13:00:00', 0, 3, 68),
+(95, '2025-03-20', '14:00:00', '15:00:00', 0, 3, 59),
+(102, '2025-03-20', '13:00:00', '14:00:00', 0, 1, 2),
+(103, '2025-03-20', '19:00:00', '20:00:00', 0, 1, 1),
+(110, '2025-03-27', '15:00:00', '16:00:00', 0, 3, 52);
 
 -- --------------------------------------------------------
 
@@ -484,7 +502,7 @@ CREATE TABLE `user` (
 INSERT INTO `user` (`userId`, `session_token`, `firstName`, `lastName`, `phoneNumber`, `userMail`, `userPassword`, `profilePic`, `privilage`, `registrationTime`, `verification_code`, `verify`, `verification_time`, `banned`, `banned_time`, `passwordValidation`, `passwordValidationTime`, `usedLanguage`) VALUES
 (6, '', 'Nikoletta', 'Varro', '0', 'nikolettavarro12@gmail.com', '$2y$10$ZJtAXGLi1y8Y7VlLzE4Ru.nH.SbV5pbDRtoQTlOv88WgemWiSIrB2', 'logInPic.png', 'User', '0000-00-00 00:00:00', 401081, 0, '2024-04-29 22:00:00', 0, '0000-00-00 00:00:00', 0, '2024-04-23 09:54:10', 'en'),
 (7, '', 'Nikoletta', 'Varro', '0649420637', 'nikolettavarro@gmail.com', '$2y$10$GZ9eslD9.lWIwuBi0by.sunJYqe1s8Jn8K2eX4CefmMN/LOnyRNua', 'logInPic.png', 'User', '0000-00-00 00:00:00', 102107, 0, '2024-04-29 22:00:00', 0, '0000-00-00 00:00:00', 0, '2024-04-23 09:54:10', 'en'),
-(19, '42c65f9b45f787a447716643d3a6e5656c9cfae6e31e2b8ddcaa1d870c9ca8d8', 'Sherlock', 'Varro', '0649420637', 'robertvarro12@gmail.com', '$2y$10$DLmuSbN32LHROGmHLo07fOteS915gYkqo7Op5l6WOfg5CyD2DY8Sa', '20250104204023.png', 'Admin', '0000-00-00 00:00:00', 229527, 1, '2024-04-29 22:00:00', 0, '0000-00-00 00:00:00', 122127, '2025-02-06 18:09:13', 'hu'),
+(19, 'cf81bd58ce263fc1f249c755b14d8c5c7131f331672dfa0731145d27a7a1432b', 'Robert ', 'Varro', '0649420637', 'robertvarro12@gmail.com', '$2y$10$DLmuSbN32LHROGmHLo07fOteS915gYkqo7Op5l6WOfg5CyD2DY8Sa', '20250310214321.jpg', 'Admin', '0000-00-00 00:00:00', 229527, 1, '2024-04-29 22:00:00', 0, '0000-00-00 00:00:00', 122127, '2025-02-06 18:09:13', 'hu'),
 (25, 'a7052c4fee0988cacc05e7eee56de92d53900c330a0ae0587bfa28e2ed4a3c74', 'Dominik', 'Hupko', '628277140', 'hupkodominik143@gmail.com', '$2y$10$B1cB9B1pWGshgJPbFbUBleB3yicBi3cILKWBT2DAkDbz5kDoLhtuC', 'logInPic.png', 'Admin', '2024-06-03 12:23:54', 2047970, 1, '2024-06-03 12:33:54', 0, '0000-00-00 00:00:00', 173548, '2025-01-27 15:31:17', 'hu'),
 (26, '', 'Sherlock', 'Holmes', '0649420637', 'varrorobert03@gmail.coml', '$2y$10$T5p19yMDoZ0EKiRXocAjJuNmNFK8INcDDWFkyC97i5rB6rODkLO82', 'logInPic.png', 'User', '2024-12-14 15:32:29', 1740492, 1, '2024-12-14 15:42:29', 0, '2024-12-14 15:32:29', NULL, '2024-12-14 15:32:29', 'sr'),
 (27, '', 'Nemen', 'Varro', '0649420637', 'varro7robert03@gmail.com', '$2y$10$7.Vqm7RZ7EaQISuO6xdo3OcNPbEAERoUAJF8hsBBxD8mCAvaH5Bpi', 'logInPic.png', 'User', '2024-12-14 22:01:34', 3299090, 1, '2024-12-14 22:11:34', 0, '2024-12-14 22:01:34', NULL, '2024-12-14 22:01:34', 'en'),
@@ -504,19 +522,22 @@ CREATE TABLE `user_product_relation` (
   `productPicture` varchar(100) NOT NULL,
   `productId` int(11) DEFAULT NULL,
   `sum` int(11) NOT NULL,
-  `price` decimal(6,2) NOT NULL
+  `price` decimal(6,2) NOT NULL,
+  `productPayed` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `user_product_relation`
 --
 
-INSERT INTO `user_product_relation` (`userProductRelationId`, `userId`, `productName`, `productPicture`, `productId`, `sum`, `price`) VALUES
-(5, 28, '', '', NULL, 2, 11.00),
-(9, 25, '', '', NULL, 1, 7.99),
-(10, 25, '', '', NULL, 1, 6.99),
-(11, 25, '', '', NULL, 1, 7.99),
-(17, 19, 'Cica', '20250127230916.png', NULL, 1, 23.34);
+INSERT INTO `user_product_relation` (`userProductRelationId`, `userId`, `productName`, `productPicture`, `productId`, `sum`, `price`, `productPayed`) VALUES
+(5, 28, '', '', NULL, 2, 11.00, 0),
+(9, 25, '', '', NULL, 1, 7.99, 1),
+(10, 25, '', '', NULL, 1, 6.99, 1),
+(11, 25, '', '', NULL, 1, 7.99, 1),
+(17, 19, 'Cica', '20250127230916.png', NULL, 1, 23.34, 1),
+(18, 19, 'Nyakörv macskáknak', '20250310191358.jpg', 12, 2, 3.00, 1),
+(19, 19, 'Tej', '20250310191833.jpg', 11, 1, 23.99, 1);
 
 -- --------------------------------------------------------
 
@@ -702,25 +723,25 @@ ALTER TABLE `work_address`
 -- AUTO_INCREMENT for table `errorlog`
 --
 ALTER TABLE `errorlog`
-  MODIFY `errorLogId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=216;
+  MODIFY `errorLogId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=219;
 
 --
 -- AUTO_INCREMENT for table `log`
 --
 ALTER TABLE `log`
-  MODIFY `id_log` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id_log` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT for table `pet`
 --
 ALTER TABLE `pet`
-  MODIFY `petId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69;
+  MODIFY `petId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=74;
 
 --
 -- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
-  MODIFY `productId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `productId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `qr_code`
@@ -732,7 +753,7 @@ ALTER TABLE `qr_code`
 -- AUTO_INCREMENT for table `reservation`
 --
 ALTER TABLE `reservation`
-  MODIFY `reservationId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
+  MODIFY `reservationId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=111;
 
 --
 -- AUTO_INCREMENT for table `review`
@@ -750,7 +771,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `user_product_relation`
 --
 ALTER TABLE `user_product_relation`
-  MODIFY `userProductRelationId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `userProductRelationId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `user_review_relation`

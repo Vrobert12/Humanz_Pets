@@ -59,7 +59,7 @@ $_SESSION['backPic']='addProduct.php';
 <label for="bred"><?php echo PRICE?>(€):</label><br>
 <input type="text" class="inputok" placeholder="<?php echo PRICE?>" name="price" id="price" ><br>
 <label for="bred"><?php echo PRODUCTDESCRIPTION?>:</label><br>
-<input type='text' class="inputok"placeholder="<?php echo PRODUCTDESCRIPTION?>"  name='productDescription' id='productDescription'><br>
+<textarea type='text' class="inputok" name='productDescription' id='productDescription'><?php echo PRODUCTDESCRIPTION?></textarea><br>
 <img id="productImage"  src="pictures/logInPic.png"
      alt="Product Image" width="150" height="150" onclick="document.getElementById('pictureInput').click();"
      style="cursor: pointer; opacity: 0.7; transition: opacity 0.3s;"

@@ -52,6 +52,42 @@ function confirmDeletingProduct(event) {
         event.target.closest("form").submit(); // Submit the form programmatically
     }
 }
+function confirmAllProductIsPayed(event) {
+    event.preventDefault();
+    let isConfirmed;
+    console.log("confirmCheck function triggered");
+    if (lang === 'en') {
+        isConfirmed = confirm("Are you sure you want to book all the products as payed?");
+    } else if (lang === 'sr') {
+        isConfirmed = confirm("Da li ste sigurni da želite da stavite svaki proizvod u plaćenu kategoriju?");
+    } else if (lang === 'hu') {
+        isConfirmed = confirm("Biztos, hogy ki el akarja könyvelni az összes terméket, hogy ki lett fizetve?");
+    } else {
+        isConfirmed = confirm("Are you sure you want to log out?");
+    }
+
+    if (isConfirmed) {
+        event.target.closest("form").submit(); // Submit the form programmatically
+    }
+}
+function confirmProductIsPayed(event) {
+    event.preventDefault();
+    let isConfirmed;
+    console.log("confirmCheck function triggered");
+    if (lang === 'en') {
+        isConfirmed = confirm("Are you sure you want to book the product as payed?");
+    } else if (lang === 'sr') {
+        isConfirmed = confirm("Da li ste sigurni da želite da stavite proizvod u plaćenu kategoriju?");
+    } else if (lang === 'hu') {
+        isConfirmed = confirm("Biztos, hogy ki el akarja könyvelni a terméket, hogy ki lett fizetve?");
+    } else {
+        isConfirmed = confirm("Are you sure you want to log out?");
+    }
+
+    if (isConfirmed) {
+        event.target.closest("form").submit(); // Submit the form programmatically
+    }
+}
 function confirmDeletingCart(event) {
     event.preventDefault();
     let isConfirmed;

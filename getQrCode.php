@@ -34,7 +34,7 @@ try {
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if ($row) {
-        echo json_encode(["status" => 200, "data" => ["path" => 'pictures/'.$row['qrCodeName']]]);
+        echo json_encode(["status" => 200, "data" => ["path" => $row['qrCodeName']]]);
     } else {
         echo json_encode(["status" => 404, "message" => "QR Code not found"]);
     }

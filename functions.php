@@ -138,6 +138,12 @@ class Functions
                 case 'insertDescription':
                     $this->insertDescription();
                     break;
+                case 'PayFromCart':
+                    $this->payProduct();
+                    break;
+                case 'PayAllFromCart':
+                    $this->payAllProduct();
+                    break;
                 default:
                     $_SESSION['message'] = ERROR;
                     header('Location:index.php');
@@ -149,7 +155,24 @@ class Functions
             }
         }
     }
-
+    public function payAllProduct()
+    {
+        $stmt="UPDATE user_product_relation SET productPayed=1 WHERE userId=:userId AND productPayed=0";
+        $stmt = $this->connection->prepare($stmt);
+        $stmt->bindParam(':userId', $_POST['userId']);
+        $stmt->execute();
+        header('Location:usersProducts.php?user='.$_POST['userId']);
+        exit();
+    }
+public function payProduct()
+{
+    $stmt="UPDATE user_product_relation SET productPayed=1 WHERE userProductRelationId=:userProductRelationId";
+    $stmt = $this->connection->prepare($stmt);
+    $stmt->bindParam(':userProductRelationId', $_POST['cartId']);
+    $stmt->execute();
+    header('Location:usersProducts.php?user='.$_POST['userId']);
+    exit();
+}
     public function blurSwearWords($text) {
         $swearWords = [
             // **Hungarian**
@@ -845,6 +868,7 @@ WHERE reservationId = :reservationId
             $productPicture = $_POST['productPicture'] ?? null;
             $userId = $_SESSION['userId'] ?? null;
             $sum = $_POST['quantity'] ?? null;
+            $payed=0;
 
             $sql2 = "SELECT * FROM product WHERE productId = :productId AND productName = :productName AND productCost = :productPrice";
             $stmt2 = $this->connection->prepare($sql2);
@@ -855,8 +879,8 @@ WHERE reservationId = :reservationId
 
             if ($stmt2->rowCount() > 0) {
 
-                $sql = "INSERT INTO user_product_relation( userId, productName,productPicture,productId,sum, price) 
-VALUES (:userId,:productName,:productPicture,:productId,:sum, :price)";
+                $sql = "INSERT INTO user_product_relation( userId, productName,productPicture,productId,sum, price,productPayed) 
+VALUES (:userId,:productName,:productPicture,:productId,:sum, :price,:productPayed)";
                 $stmt = $this->connection->prepare($sql);
                 $stmt->bindParam(':userId', $userId);
                 $stmt->bindParam(':productName', $productName);
@@ -864,6 +888,7 @@ VALUES (:userId,:productName,:productPicture,:productId,:sum, :price)";
                 $stmt->bindParam(':productId', $productId);
                 $stmt->bindParam(':sum', $sum);
                 $stmt->bindParam(':price', $productPrice);
+                $stmt->bindParam(':productPayed', $payed);
                 $stmt->execute();
 
             } else {
@@ -1844,7 +1869,11 @@ WHERE u.userId = :userId";
         } elseif (isset($_SESSION['get_lang'])) {
             $lang = $_SESSION['get_lang'];
             $_SESSION['lang'] = $lang;
-        } else {
+        }elseif (isset($_COOKIE['userLang'])) {
+            $lang = $_COOKIE['userLang'];
+            $_SESSION['lang'] = $lang;
+        }
+        else {
             $lang = $_SESSION['userLang'] ?? 'en'; // Default to userLang or 'en'
             $_SESSION['lang'] = $lang; // Set session language to default
         }
@@ -1867,10 +1896,15 @@ WHERE u.userId = :userId";
             foreach ($cookies as $cookie) {
                 $parts = explode('=', $cookie);
                 $name = trim($parts[0]);
-                setcookie($name, '', time() - 3600, '/');
-                unset($_COOKIE[$name]);
+
+                // Check if the 'device_check' cookie exists before comparing
+                if (!isset($_COOKIE['device_check']) || $name !== 'device_check') {
+                    setcookie($name, '', time() - 3600, '/'); // Expire the cookie
+                    unset($_COOKIE[$name]); // Remove from $_COOKIE array
+                }
             }
         }
+
 
         // Force the page to reload and ensure no session data persists
         header('Location: index.php?refresh=1');
@@ -2038,20 +2072,28 @@ WHERE u.userId = :userId";
                                     // Get ISP information (using ipinfo.io or another service)
                                     $isp = $this->getISPFromIP($ip_address);  // Use the function from earlier
 
-                                    // Database connection (Assume $conn is your DB connection)
-                                    $sql = "INSERT INTO log(user_agent, ip_address, country, date_time, device_type, proxy, isp) 
-            VALUES ('$user_agent', '$ip_address', '$country', '$date_time', '$device_type', '$proxy', '$isp')";
+                                    // Database connection (Assume $this->connection is your DB connection)
+                                    $sql = "INSERT INTO log (user_agent, ip_address, country, date_time, device_type, proxy, isp) 
+            VALUES (:user_agent, :ip_address, :country, :date_time, :device_type, :proxy, :isp)";
 
                                     $stmt = $this->connection->prepare($sql);
-                                    $stmt->execute();
+                                    $stmt->execute([
+                                        ':user_agent' => $user_agent,
+                                        ':ip_address' => $ip_address,
+                                        ':country' => $country,
+                                        ':date_time' => $date_time,
+                                        ':device_type' => $device_type,
+                                        ':proxy' => $proxy,
+                                        ':isp' => $isp
+                                    ]);
                                 } else {
-                                    // Optionally, you can check if the cookie is still within the 24-hour duration
-                                    $cookie_time = $_COOKIE['device_check'];
-                                    if (time() - $cookie_time > 24 * 60 * 60) {
-                                        // Cookie has expired, so reset it
+                                    // Check if the cookie has expired (older than 24 hours)
+                                    if (time() - $_COOKIE['device_check'] > 24 * 60 * 60) {
+                                        // Cookie has expired, reset it
                                         setcookie("device_check", time(), time() + 24 * 60 * 60, "/");
                                     }
                                 }
+
 
 
                                 header('Location: index.php?refresh=1');
@@ -2102,10 +2144,15 @@ WHERE u.userId = :userId";
                         foreach ($cookies as $cookie) {
                             $parts = explode('=', $cookie);
                             $name = trim($parts[0]);
-                            setcookie($name, '', time() - 3600, '/');
-                            unset($_COOKIE[$name]);
+
+                            // Check if the 'device_check' cookie exists before comparing
+                            if (!isset($_COOKIE['device_check']) || $name !== 'device_check') {
+                                setcookie($name, '', time() - 3600, '/'); // Expire the cookie
+                                unset($_COOKIE[$name]); // Remove from $_COOKIE array
+                            }
                         }
                     }
+
 
                     // Redirect to login page
                     header('Location: index.php');
@@ -2135,6 +2182,7 @@ WHERE u.userId = :userId";
                 unset($_COOKIE['userId']);
                 unset($_COOKIE['phone']);
                 unset($_COOKIE['privilage']);
+                unset($_COOKIE['userLang']);
 
                 setcookie("email", $_SESSION['email'], time() + 10 * 60, "/");
                 setcookie("name", $_SESSION['name'], time() + 10 * 60, "/");
@@ -2142,7 +2190,9 @@ WHERE u.userId = :userId";
                 setcookie("userId", $_SESSION['userId'], time() + 10 * 60, "/");
                 setcookie("phone", $_SESSION['phone'], time() + 10 * 60, "/");
                 setcookie("privilage", $_SESSION['privilage'], time() + 10 * 60, "/");
+                setcookie("userLang",$_SESSION['userLang'] ,  time() + 10 * 60, "/");
                 setcookie("last_activity", time(), time() + 10 * 60, "/");
+
                 if ($_SESSION['privilage'] == 'User' || $_SESSION['privilage'] == 'Admin') {
 
                     $sql = "SELECT p.petId FROM  pet p  inner join user u   on p.userId=u.userId  where u.userMail = :mail";
@@ -2198,10 +2248,15 @@ WHERE u.userId = :userId";
                         foreach ($cookies as $cookie) {
                             $parts = explode('=', $cookie);
                             $name = trim($parts[0]);
-                            setcookie($name, '', time() - 3600, '/');
-                            unset($_COOKIE[$name]);
+
+                            // Check if the 'device_check' cookie exists before comparing
+                            if (!isset($_COOKIE['device_check']) || $name !== 'device_check') {
+                                setcookie($name, '', time() - 3600, '/'); // Expire the cookie
+                                unset($_COOKIE[$name]); // Remove from $_COOKIE array
+                            }
                         }
                     }
+
 
                     // Redirect to login page
                     header('Location: index.php');
@@ -2213,6 +2268,8 @@ WHERE u.userId = :userId";
                 $_SESSION['userId'] = $_COOKIE['userId'];
                 $_SESSION['phone'] = $_COOKIE['phone'];
                 $_SESSION['privilage'] = $_COOKIE['privilage'];
+                $_SESSION['userLang'] = $_COOKIE['userLang'];
+
                 $mail = $_SESSION['email'];
                 $sql = "select petId from pet where userId=:userId and veterinarId is NULL";
                 $stmt = $this->connection->prepare($sql);
@@ -2234,6 +2291,7 @@ WHERE u.userId = :userId";
                 unset($_COOKIE['userId']);
                 unset($_COOKIE['phone']);
                 unset($_COOKIE['privilage']);
+                unset($_COOKIE['userLang']);
 
                 setcookie("email", $_SESSION['email'], time() + 10 * 60, "/");
                 setcookie("name", $_SESSION['name'], time() + 10 * 60, "/");
@@ -2241,7 +2299,9 @@ WHERE u.userId = :userId";
                 setcookie("userId", $_SESSION['userId'], time() + 10 * 60, "/");
                 setcookie("phone", $_SESSION['phone'], time() + 10 * 60, "/");
                 setcookie("privilage", $_SESSION['privilage'], time() + 10 * 60, "/");
+                setcookie("userLang",$_SESSION['userLang'] ,  time() + 10 * 60, "/");
                 setcookie("last_activity", time(), time() + 10 * 60, "/");
+
                 if ($_SESSION['privilage'] == 'User' || $_SESSION['privilage'] == 'Admin') {
 
                     $sql = "SELECT p.petId FROM  pet p  inner join user u   on p.userId=u.userId  where u.userMail = :mail";

@@ -48,7 +48,7 @@ $products = $pdo->query("SELECT productId, productName, productPicture,descripti
             border-radius: 10px;
             padding: 15px;
             margin: 10px;
-            width: 220px; /* Set a fixed width */
+            width: 320px; /* Set a fixed width */
             text-align: center;
             background-color: #fff;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);

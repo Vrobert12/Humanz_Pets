@@ -113,6 +113,9 @@ https://getbootstrap.com/docs/5.3/components/navbar/
                       echo ' <li class="nav-item">
                     <a class="nav-link" href="banSite.php"><i class="bi bi-ban fs-3"></i></a>
                 </li>';
+                        echo ' <li class="nav-item">
+                    <a class="nav-link" href="checkProducts.php"><i class="bi bi-bag-check-fill fs-3"></i></a>
+                </li>';
                     }
                 }
                     ?>
