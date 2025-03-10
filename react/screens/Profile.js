@@ -5,7 +5,6 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 export default function Profile({ route }) {
     const [userData, setUserData] = useState(null);
     const [loading, setLoading] = useState(true);
-    const [qrCodePath, setQrCodePath] = useState(""); // State for QR Code
     const { onLogout } = route.params || {};
 
     useEffect(() => {
@@ -15,8 +14,8 @@ export default function Profile({ route }) {
                 console.log(userId);
                 if (!userId) throw new Error("User ID not found");
 
-                const response = await fetch(`http://192.168.1.8/Humanz2.0/Humanz_Pets/getPets/user/${userId}`);
-                //const response = await fetch(`http://192.168.43.125/Humanz_Pets/getPets/user/${userId}`);
+                //const response = await fetch(`http://192.168.1.8/Humanz2.0/Humanz_Pets/getPets/user/${userId}`);
+                const response = await fetch(`http://192.168.43.125/Humanz_Pets/getPets/user/${userId}`);
                 const data = await response.json();
 
                 if (data.status === 200) {
@@ -32,29 +31,6 @@ export default function Profile({ route }) {
         fetchUserData();
     }, []);
 
-    // ✅ Define fetchQRCode inside useEffect
-    const fetchQRCode = async () => {
-        try {
-            const userId = await AsyncStorage.getItem("user_id");
-            if (!userId) throw new Error("User ID not found");
-
-            const response = await fetch(`http://192.168.1.8/Humanz2.0/Humanz_Pets/getQrCode.php?user=${userId}`);
-            //const response = await fetch(`http://192.168.43.125/Humanz_Pets/getQrCode.php?user=${userId}`);
-            const text = await response.text(); // ✅ Log raw response
-            console.log("Raw Response:", text);
-
-            const data = JSON.parse(text);
-            console.log('this path',data.data.path);
-            if (data.status === 200) {
-                setQrCodePath(`http://192.168.1.8/Humanz2.0/Humanz_Pets/pictures/${data.data.path}`); // ✅ Ensure full path
-                //setQrCodePath(`http://192.168.43.125/Humanz_Pets/${data.data.path}`); // ✅ Ensure full path
-            } else {
-                setQrCodePath(""); // No QR code found
-            }
-        } catch (error) {
-            console.error("Error fetching QR code:", error);
-        }
-    };
 
     if (loading) {
         return (
@@ -76,8 +52,8 @@ export default function Profile({ route }) {
     return (
         <View style={styles.container}>
             <Image
-                source={{ uri: `http://192.168.1.8/Humanz2.0/Humanz_Pets/pictures/${String(userData.profilePic)}` }}
-                //source={{ uri: `http://192.168.43.125/Humanz_Pets/pictures/${String(userData.profilePic)}` }}
+                //source={{ uri: `http://192.168.1.8/Humanz2.0/Humanz_Pets/pictures/${String(userData.profilePic)}` }}
+                source={{ uri: `http://192.168.43.125/Humanz_Pets/pictures/${String(userData.profilePic)}` }}
                 style={styles.profileImage}
             />
             <Text style={styles.userName}>{String(userData.firstName)} {String(userData.lastName)}</Text>
@@ -86,15 +62,9 @@ export default function Profile({ route }) {
             <Text style={styles.info}>🌐 Language: {String(userData.usedLanguage)}</Text>
             <Text style={styles.info}>🔒 Privilege: {String(userData.privilage)}</Text>
 
-            {/* ✅ QR Code Button */}
-            <TouchableOpacity onPress={fetchQRCode} style={styles.qrButton}>
-                <Text style={styles.qrText}>Show QR Code</Text>
-            </TouchableOpacity>
 
-            {/* ✅ Show QR Code if available */}
-            {qrCodePath ? (
-                <Image source={{ uri: qrCodePath }} style={styles.qrImage} />
-            ) : null}
+
+
 
             {/* Logout Button */}
             {onLogout && (
@@ -132,23 +102,6 @@ const styles = StyleSheet.create({
         fontSize: 16,
         color: "#555",
         marginBottom: 5,
-    },
-    qrButton: {
-        backgroundColor: "#28a745",
-        padding: 10,
-        borderRadius: 5,
-        marginTop: 20,
-    },
-    qrText: {
-        color: "white",
-        fontWeight: "bold",
-    },
-    qrImage: {
-        width: 150,
-        height: 150,
-        marginTop: 10,
-        borderWidth: 1,
-        borderColor: "#ddd",
     },
     logoutButton: {
         backgroundColor: "red",

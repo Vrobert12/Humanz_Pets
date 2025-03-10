@@ -27,19 +27,19 @@ if (!$user_id || !$name || !$breed || !$species) {
 }
 
 if (isset($_FILES['image'])) {
-    $target_dir = "uploads/";
+    $target_dir = "pictures/";
     $image_path = $target_dir . basename($_FILES["image"]["name"]);
     move_uploaded_file($_FILES["image"]["tmp_name"], $image_path);
 }
 
 try {
-    $stmt = $pdo->prepare("INSERT INTO pet (userId, petName, bred, petSpecies, petPicture) VALUES (:user_id, :name, :breed, :species, :image_path)");
+    $stmt = $pdo->prepare("INSERT INTO pet (userId, petName, bred, petSpecies, profilePic) VALUES (:user_id, :name, :breed, :species, :image_path)");
     $stmt->execute([
         ':user_id' => $user_id,
         ':name' => $name,
         ':breed' => $breed,
         ':species' => $species,
-        ':image_path' => $image_path,
+        ':image_path' => basename($_FILES["image"]["name"]),
     ]);
 
     echo json_encode(["success" => true, "message" => "Pet registered successfully"]);

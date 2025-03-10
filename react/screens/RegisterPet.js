@@ -4,8 +4,8 @@ import * as ImagePicker from 'expo-image-picker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 
-const API_URL = 'http://192.168.1.8/Humanz2.0/Humanz_Pets/register_pet.php';
-//const API_URL = 'http://192.168.43.125/Humanz2.0/Humanz_Pets/register_pet.php';
+//const API_URL = 'http://192.168.1.8/Humanz2.0/Humanz_Pets/register_pet.php';
+const API_URL = 'http://192.168.43.125/Humanz_Pets/register_pet.php';
 
 const RegisterPet = ({ navigation }) => {
     const [name, setName] = useState('');
@@ -46,12 +46,18 @@ const RegisterPet = ({ navigation }) => {
         formData.append('name', name);
         formData.append('breed', breed);
         formData.append('species', species);
-        console.log(image);
+
+        // Generate the current date and time as the file name
+        const currentDate = new Date();
+        const newFileName = `${currentDate.getFullYear()}${(currentDate.getMonth() + 1).toString().padStart(2, '0')}${currentDate.getDate().toString().padStart(2, '0')}${currentDate.getHours().toString().padStart(2, '0')}${currentDate.getMinutes().toString().padStart(2, '0')}${currentDate.getSeconds().toString().padStart(2, '0')}.png`;
+
+        console.log("Generated Image Name:", newFileName);
+
         if (image) {
             formData.append('image', {
                 uri: image,
-                name: 'pet.jpg',
-                type: 'image/jpeg',
+                name: newFileName,
+                type: 'image/png',
             });
         }
 

@@ -1878,6 +1878,7 @@ WHERE u.userId = :userId";
     }
 
 
+
     public function fetchUserByEmail($email)
     {
         try {
@@ -1921,6 +1922,49 @@ WHERE u.userId = :userId";
             return null;
         }
     }
+    public function checkForProxy() {
+        $proxyHeaders = [
+            'HTTP_X_FORWARDED_FOR',
+            'HTTP_X_FORWARDED',
+            'HTTP_VIA',
+            'HTTP_PROXY_CONNECTION'
+        ];
+
+        foreach ($proxyHeaders as $header) {
+            if (isset($_SERVER[$header])) {
+                return 'Proxy Detected';
+            }
+        }
+
+        return 'No Proxy';
+    }
+    public function getISPFromIP($ip_address) {
+        $access_key = 'your_access_key';
+        $url = "http://ipinfo.io/{$ip_address}/json?token={$access_key}";
+
+        // Suppress errors and check if the URL can be fetched successfully
+        $response = @file_get_contents($url);
+        if ($response === FALSE) {
+            return 'Unknown ISP';
+        }
+
+        $data = json_decode($response, true);
+        return isset($data['org']) ? $data['org'] : 'Unknown ISP';  // 'org' contains ISP info
+    }
+
+    public function getCountryFromIP($ip_address) {
+        $access_key = 'your_access_key';
+        $url = "http://ipinfo.io/{$ip_address}/json?token={$access_key}";
+
+        // Suppress errors and check if the URL can be fetched successfully
+        $response = @file_get_contents($url);
+        if ($response === FALSE) {
+            return 'Unknown';
+        }
+
+        $data = json_decode($response, true);
+        return isset($data['country']) ? $data['country'] : 'Unknown';
+    }
 
 
     public function login()
@@ -1963,6 +2007,53 @@ WHERE u.userId = :userId";
                                 if (isset($_SESSION['registration']))
                                     unset($_SESSION['registration']);
                                 setcookie("last_activity", time(), time() + 10 * 60, "/");
+                                if (!isset($_COOKIE['device_check'])) {
+                                    // Set the device_check cookie for 24 hours
+                                    setcookie("device_check", time(), time() + 24 * 60 * 60, "/");
+
+                                    // Capture the user agent
+                                    $user_agent = $_SERVER['HTTP_USER_AGENT'];
+
+                                    // Capture the IP address
+                                    $ip_address = $_SERVER['REMOTE_ADDR'];
+
+                                    // Get the country (you need to implement this or use a service like ipinfo.io)
+                                    $country = $this->getCountryFromIP($ip_address);  // Use the function from earlier
+
+                                    // Capture the current date and time
+                                    $date_time = date("Y-m-d H:i:s");
+
+                                    // Detect device type
+                                    if (strpos($user_agent, 'Mobile') !== false) {
+                                        $device_type = 'Mobile';
+                                    } elseif (strpos($user_agent, 'Tablet') !== false) {
+                                        $device_type = 'Tablet';
+                                    } else {
+                                        $device_type = 'Desktop';
+                                    }
+
+                                    // Check if the IP is using a proxy
+                                    $proxy = $this->checkForProxy();
+
+                                    // Get ISP information (using ipinfo.io or another service)
+                                    $isp = $this->getISPFromIP($ip_address);  // Use the function from earlier
+
+                                    // Database connection (Assume $conn is your DB connection)
+                                    $sql = "INSERT INTO log(user_agent, ip_address, country, date_time, device_type, proxy, isp) 
+            VALUES ('$user_agent', '$ip_address', '$country', '$date_time', '$device_type', '$proxy', '$isp')";
+
+                                    $stmt = $this->connection->prepare($sql);
+                                    $stmt->execute();
+                                } else {
+                                    // Optionally, you can check if the cookie is still within the 24-hour duration
+                                    $cookie_time = $_COOKIE['device_check'];
+                                    if (time() - $cookie_time > 24 * 60 * 60) {
+                                        // Cookie has expired, so reset it
+                                        setcookie("device_check", time(), time() + 24 * 60 * 60, "/");
+                                    }
+                                }
+
+
                                 header('Location: index.php?refresh=1');
                                 exit();
                             }

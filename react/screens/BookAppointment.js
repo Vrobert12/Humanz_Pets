@@ -5,10 +5,10 @@ import { Calendar } from "react-native-calendars";
 import axios from 'axios'; // Install this package
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const API_URL = 'http://192.168.1.8/Humanz2.0/Humanz_Pets/bookReact.php';
-// const API_URL = 'http://192.168.43.125/Humanz_Pets/bookReact.php';
-const API_URL_CHECK_AVAILABILITY = 'http://192.168.1.8/Humanz2.0/Humanz_Pets/checkAvailability.php';
-//const API_URL_CHECK_AVAILABILITY = 'http://192.168.43.125/Humanz_Pets/checkAvailability.php';
+// const API_URL = 'http://192.168.1.8/Humanz2.0/Humanz_Pets/bookReact.php';
+const API_URL = 'http://192.168.43.125/Humanz_Pets/bookReact.php';
+// const API_URL_CHECK_AVAILABILITY = 'http://192.168.1.8/Humanz2.0/Humanz_Pets/checkAvailability.php';
+const API_URL_CHECK_AVAILABILITY = 'http://192.168.43.125/Humanz_Pets/checkAvailability.php';
 
 const ReservationForm = ({ navigation }) => {
     const [petId, setPetId] = useState('');
@@ -23,28 +23,35 @@ const ReservationForm = ({ navigation }) => {
     const [selectedDate, setSelectedDate] = useState('');
     let selectedDate2 = new Date();
 
-    useEffect(() => {
-        const loadPets = async () => {
-            try {
-                const storedPets = await AsyncStorage.getItem('pets');
-                if (storedPets) {
-                    const parsedPets = JSON.parse(storedPets);
+    const [isLoadingPets, setIsLoadingPets] = useState(true);
 
-                    const options = parsedPets.map((pet) => ({
-                        value: pet.petId.toString(),
-                        label: pet.petName,
-                        vetId: pet.veterinarId
-                    }));
-
-                    setPetOptions(options);
-                }
-            } catch (error) {
-                console.error('Error loading pets:', error);
+    const loadPets = async () => {
+        try {
+            const storedPets = await AsyncStorage.getItem('pets');
+            console.log("asd",storedPets);
+            if (storedPets) {
+                const parsedPets = JSON.parse(storedPets);
+                const options = parsedPets.map((pet) => ({
+                    value: pet.petId.toString(),
+                    label: pet.petName,
+                    vetId: pet.veterinarId
+                }));
+                setPetOptions(options);
             }
-        };
+        } catch (error) {
+            console.error('Error loading pets:', error);
+        } finally {
+            setIsLoadingPets(false);  // Set loading to false when done
+        }
+    };
 
+    useEffect(() => {
         loadPets();
     }, []);
+
+    if (isLoadingPets) {
+        return <Text>Loading pets...</Text>;
+    }
 
     // Function to load available start times
     const loadAvailableStartTimes = async (selectedDate) => {
@@ -99,10 +106,11 @@ const ReservationForm = ({ navigation }) => {
 
                 setLoading(false);
 
-                if (response.data.message === 'This pet already has an appointment.') {
-                    Alert.alert('Error', 'This pet already has an appointment.');
-                } else {
+                if (response.data.message == 'Reservation successful!') {
                     Alert.alert('Success', response.data.message);
+                    navigation.goBack();
+                } else {
+                    Alert.alert('Reservation has failed', response.data.message);
                     navigation.goBack();
                 }
             } catch (error) {
@@ -147,10 +155,15 @@ const ReservationForm = ({ navigation }) => {
                     onValueChange={HandlePetSelection}
                 >
                     <Picker.Item label="Select Pet..." value="" />
-                    {petOptions.map((pet) => (
-                        <Picker.Item key={pet.value} label={pet.label} value={pet.value} />
-                    ))}
+                    {petOptions.length > 0 ? (
+                        petOptions.map((pet) => (
+                            <Picker.Item key={pet.value} label={pet.label} value={pet.value} />
+                        ))
+                    ) : (
+                        <Picker.Item label="No pets available" value="" />
+                    )}
                 </Picker>
+
 
                 {/* Reservation Start Time ComboBox */}
                 <Text>Choose start time:</Text>
