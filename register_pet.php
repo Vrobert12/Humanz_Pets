@@ -17,6 +17,7 @@ try {
 }
 
 $user_id = $_POST['user_id'] ?? null;
+$vet_id = $_POST['veterinarian_id'] ?? null;
 $name = $_POST['name'] ?? null;
 $breed = $_POST['breed'] ?? null;
 $species = $_POST['species'] ?? null;
@@ -33,12 +34,13 @@ if (isset($_FILES['image'])) {
 }
 
 try {
-    $stmt = $pdo->prepare("INSERT INTO pet (userId, petName, bred, petSpecies, profilePic) VALUES (:user_id, :name, :breed, :species, :image_path)");
+    $stmt = $pdo->prepare("INSERT INTO pet (userId, petName, bred, petSpecies, profilePic, veterinarId) VALUES (:user_id, :name, :breed, :species, :image_path, :vetId)");
     $stmt->execute([
         ':user_id' => $user_id,
         ':name' => $name,
         ':breed' => $breed,
         ':species' => $species,
+        ':vetId' => $vet_id,
         ':image_path' => basename($_FILES["image"]["name"]),
     ]);
 

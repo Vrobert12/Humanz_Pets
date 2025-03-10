@@ -1,18 +1,49 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, Button, Image, TouchableOpacity, Alert, ActivityIndicator } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Picker } from '@react-native-picker/picker';
 import axios from 'axios';
 
-//const API_URL = 'http://192.168.1.8/Humanz2.0/Humanz_Pets/register_pet.php';
-const API_URL = 'http://192.168.43.125/Humanz_Pets/register_pet.php';
+const API_URL = 'http://192.168.1.8/Humanz2.0/Humanz_Pets/register_pet.php';
+const VETS_API_URL = 'http://192.168.1.8/Humanz2.0/Humanz_Pets/veterinariansReact.php';
 
 const RegisterPet = ({ navigation }) => {
     const [name, setName] = useState('');
     const [breed, setBreed] = useState('');
-    const [species, setSpecies] = useState('');
+    const [species, setSpecies] = useState('Dog');
+    const [veterinarian, setVeterinarian] = useState('');
+    const [veterinarians, setVeterinarians] = useState([]);
     const [image, setImage] = useState(null);
+    const [vetOptions, setVetOptions] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [isLoadingVets, setIsLoadingVets] = useState(true);
+
+    const loadVets = async () => {
+        try {
+            const response = await axios.get(VETS_API_URL);
+            if (response.data) {
+                console.log("Fetched Veterinarians:", response.data);
+
+                const options = response.data.map((vet) => ({
+                    value: vet.veterinarianId.toString(),
+                    label: `${vet.firstName} ${vet.lastName}`,
+                }));
+
+                setVeterinarians(response.data);  // Store the actual array of vets
+                setVetOptions(options);
+            }
+        } catch (error) {
+            console.error("Error loading veterinarians:", error);
+        } finally {
+            setIsLoadingVets(false);
+        }
+    };
+
+
+    useEffect(() => {
+        loadVets();
+    }, []);
 
     const pickImage = async () => {
         let result = await ImagePicker.launchImageLibraryAsync({
@@ -23,18 +54,16 @@ const RegisterPet = ({ navigation }) => {
         });
         if (!result.canceled && result.assets.length > 0) {
             setImage(result.assets[0].uri);
-            console.log("Image:", result.assets[0].uri);
         }
     };
 
     const handleRegister = async () => {
         const userId = await AsyncStorage.getItem('user_id');
-        console.log(userId);
         if (!userId) {
             Alert.alert('Error', 'User not logged in');
             return;
         }
-        if (!name || !breed || !species) {
+        if (!name || !breed || !species || !veterinarian) {
             Alert.alert('Error', 'Please fill in all fields');
             return;
         }
@@ -46,12 +75,10 @@ const RegisterPet = ({ navigation }) => {
         formData.append('name', name);
         formData.append('breed', breed);
         formData.append('species', species);
+        formData.append('veterinarian_id', veterinarian);
 
-        // Generate the current date and time as the file name
         const currentDate = new Date();
         const newFileName = `${currentDate.getFullYear()}${(currentDate.getMonth() + 1).toString().padStart(2, '0')}${currentDate.getDate().toString().padStart(2, '0')}${currentDate.getHours().toString().padStart(2, '0')}${currentDate.getMinutes().toString().padStart(2, '0')}${currentDate.getSeconds().toString().padStart(2, '0')}.png`;
-
-        console.log("Generated Image Name:", newFileName);
 
         if (image) {
             formData.append('image', {
@@ -81,7 +108,27 @@ const RegisterPet = ({ navigation }) => {
             <Text>Breed:</Text>
             <TextInput value={breed} onChangeText={setBreed} style={{ borderWidth: 1, marginBottom: 10 }} />
             <Text>Species:</Text>
-            <TextInput value={species} onChangeText={setSpecies} style={{ borderWidth: 1, marginBottom: 10 }} />
+            <Picker selectedValue={species} onValueChange={(itemValue) => setSpecies(itemValue)} style={{ borderWidth: 1, marginBottom: 10 }}>
+                <Picker.Item label="Dog" value="Dog" />
+                <Picker.Item label="Cat" value="Cat" />
+                <Picker.Item label="Parrot" value="Parrot" />
+                <Picker.Item label="Rabbit" value="Rabbit" />
+                <Picker.Item label="Pig" value="Pig" />
+            </Picker>
+            <Text>Choose Veterinarian:</Text>
+            <Picker
+                selectedValue={veterinarian}
+                onValueChange={(itemValue) => setVeterinarian(itemValue)}
+                style={{ borderWidth: 1, marginBottom: 10 }}
+            >
+                {veterinarians.map(vet => (
+                    <Picker.Item
+                        key={vet.veterinarianId}
+                        label={`${vet.firstName} ${vet.lastName}`}
+                        value={vet.veterinarianId}
+                    />
+                ))}
+            </Picker>
             <TouchableOpacity onPress={pickImage}>
                 <Text>Select Image</Text>
             </TouchableOpacity>

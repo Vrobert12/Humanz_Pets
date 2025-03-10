@@ -4,11 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2367ab9a-341c-4300-a7ed-72f717181f7d" name="Changes" comment="react reservation v2">
+    <list default="true" id="2367ab9a-341c-4300-a7ed-72f717181f7d" name="Changes" comment="react reservation done">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bookReact.php" beforeDir="false" afterPath="$PROJECT_DIR$/bookReact.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/react/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/react/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/getQrCode.php" beforeDir="false" afterPath="$PROJECT_DIR$/getQrCode.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/react/screens/BookAppointment.js" beforeDir="false" afterPath="$PROJECT_DIR$/react/screens/BookAppointment.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/react/screens/LoginScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/react/screens/LoginScreen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/react/screens/Profile.js" beforeDir="false" afterPath="$PROJECT_DIR$/react/screens/Profile.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/react/screens/QrCode.js" beforeDir="false" afterPath="$PROJECT_DIR$/react/screens/QrCode.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/react/screens/RegisterPet.js" beforeDir="false" afterPath="$PROJECT_DIR$/react/screens/RegisterPet.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/react/screens/ReservationsScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/react/screens/ReservationsScreen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/react/screens/Settings.js" beforeDir="false" afterPath="$PROJECT_DIR$/react/screens/Settings.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/register_pet.php" beforeDir="false" afterPath="$PROJECT_DIR$/register_pet.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -116,7 +122,8 @@
       <workItem from="1741263660976" duration="2326000" />
       <workItem from="1741266543341" duration="19466000" />
       <workItem from="1741350483767" duration="12055000" />
-      <workItem from="1741437315645" duration="5346000" />
+      <workItem from="1741437315645" duration="5430000" />
+      <workItem from="1741610978398" duration="10879000" />
     </task>
     <task id="LOCAL-00001" summary="Responsivity">
       <option name="closed" value="true" />
@@ -270,7 +277,15 @@
       <option name="project" value="LOCAL" />
       <updated>1741362576550</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="react reservation done">
+      <option name="closed" value="true" />
+      <created>1741442740853</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1741442740854</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -307,6 +322,7 @@
     <MESSAGE value="Fixes" />
     <MESSAGE value="react reservation v1 + DB" />
     <MESSAGE value="react reservation v2" />
-    <option name="LAST_COMMIT_MESSAGE" value="react reservation v2" />
+    <MESSAGE value="react reservation done" />
+    <option name="LAST_COMMIT_MESSAGE" value="react reservation done" />
   </component>
 </project>
