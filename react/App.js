@@ -12,6 +12,7 @@ import RegisterPet from './screens/RegisterPet';
 import BookAppointment from './screens/BookAppointment';
 import ReservationScreen from './screens/ReservationsScreen';
 import QrCode from './screens/QrCode.js';
+import RatingsScreen from "./screens/RatingsScreen";
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 const Tab = createBottomTabNavigator();
@@ -45,6 +46,7 @@ const ProfileStack = ({ onLogout }) => (
         <Drawer.Screen name="QrCode" component={QrCode} />
         <Drawer.Screen name="Settings" component={Settings} />
         <Drawer.Screen name="RegisterPet" component={RegisterPet} />
+        <Drawer.Screen name="RatingsScreen" component={RatingsScreen} />
         {/* Custom Logout Screen with Red Button */}
         <Drawer.Screen
             name="Logout"

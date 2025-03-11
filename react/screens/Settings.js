@@ -28,9 +28,9 @@ export default function Settings() {
     useEffect(() => {
         if (!userId) return; // Only fetch data when userId is available
 
-        //const apiUrl = `http://192.168.1.8/Humanz2.0/Humanz_Pets/getPets/user/${userId}`;
+        const apiUrl = `http://192.168.1.8/Humanz2.0/Humanz_Pets/getPets/user/${userId}`;
 
-        const apiUrl = `http://192.168.43.125/Humanz_Pets/getPets/user/${userId}`;
+        //const apiUrl = `http://192.168.43.125/Humanz_Pets/getPets/user/${userId}`;
 
         console.log("Fetching user data from API:", apiUrl);
 

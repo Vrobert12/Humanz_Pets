@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 10, 2025 at 10:54 PM
+-- Generation Time: Mar 11, 2025 at 04:28 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -257,7 +257,10 @@ INSERT INTO `errorlog` (`errorLogId`, `errorType`, `errorMail`, `errorText`, `er
 (215, 'Log in', 'varrorobert03@gmail.com', 'The password was not valid!', '2025-01-31 21:24:31.000000'),
 (216, 'Log in', 'robertvarro12@gmail.com', 'The password was not valid!', '2025-03-10 13:57:20.000000'),
 (217, 'Log in', 'robertvarro12@gmail.com', 'The password was not valid!', '2025-03-10 16:01:57.000000'),
-(218, 'Picture', 'robertvarro12@gmail.com', 'The file is bigger than 300KB', '2025-03-10 19:12:53.000000');
+(218, 'Picture', 'robertvarro12@gmail.com', 'The file is bigger than 300KB', '2025-03-10 19:12:53.000000'),
+(219, 'Log in', 'nickvalami@gmail.com', 'The password was not valid!', '2025-03-11 14:21:37.000000'),
+(220, 'Log in', 'nickvalami@gmail.com', 'The password was not valid!', '2025-03-11 14:23:49.000000'),
+(221, 'Picture', 'hupkodominik143@gmail.com', 'The file is bigger than 300KB', '2025-03-11 14:56:10.000000');
 
 -- --------------------------------------------------------
 
@@ -342,7 +345,8 @@ INSERT INTO `pet` (`petId`, `petName`, `bred`, `petSpecies`, `profilePic`, `user
 (44, 'Tigrincs', 'Mixed', 'Dog ', '20241223140237.png', 29, 1),
 (52, 'Godzilla', 'Mixed', 'Cat', '20250301231702.png', 19, 3),
 (59, 'Batcat', 'Mixed', 'Dog', '20250303000202.png', 19, 3),
-(68, 'Zizi3', 'Pug', 'Dog', '1741006928_pet.jpg', 25, 3);
+(68, 'Zizi3', 'Pug', 'Dog', '1741006928_pet.jpg', 25, 3),
+(75, 'Zizi4', 'Pug', 'Dog', '20250311145638.png', 25, 9);
 
 -- --------------------------------------------------------
 
@@ -427,11 +431,11 @@ INSERT INTO `reservation` (`reservationId`, `reservationDay`, `reservationTime`,
 (66, '2025-02-15', '11:00:00', '12:00:00', 1, 3, 2),
 (67, '2025-03-02', '09:00:00', '10:00:00', 0, 1, 2),
 (69, '2025-03-03', '16:00:00', '17:00:00', 0, 3, 52),
-(72, '2025-03-29', '12:00:00', '13:00:00', 0, 3, 68),
 (95, '2025-03-20', '14:00:00', '15:00:00', 0, 3, 59),
 (102, '2025-03-20', '13:00:00', '14:00:00', 0, 1, 2),
 (103, '2025-03-20', '19:00:00', '20:00:00', 0, 1, 1),
-(110, '2025-03-27', '15:00:00', '16:00:00', 0, 3, 52);
+(110, '2025-03-27', '15:00:00', '16:00:00', 0, 3, 52),
+(112, '2025-03-11', '14:00:00', '15:00:00', 0, 9, 75);
 
 -- --------------------------------------------------------
 
@@ -584,7 +588,8 @@ CREATE TABLE `veterinarian` (
 
 INSERT INTO `veterinarian` (`veterinarianId`, `firstName`, `lastName`, `phoneNumber`, `veterinarianDescription`, `veterinarianMail`, `veterinarianPassword`, `profilePic`, `registrationTime`, `verification_code`, `verify`, `verification_time`, `banned`, `banned_time`, `passwordValidation`, `passwordValidationTime`, `workAddressId`, `usedLanguage`) VALUES
 (1, 'Robert', 'Varro', '0649420637', '', 'varrorobejrt03@gmail.com', '$2y$10$kDYqhdUxCiKKb86iW8vGIe6yi.8fmADky4QYmpcOXlV3Fh8hN1jOq', 'logInPic.png', '2024-12-14 13:02:10', NULL, 1, '2024-12-14 13:02:10', 0, '2025-01-28 16:53:53', 1, '2024-12-14 13:02:10', 1, 'en'),
-(3, 'Domi', 'Doktor', '0649420637', '            Dali ti se sviđa ova funkcija, nadam se da je dobro i da cemo da dobiti 10', 'varrorobert03@gmail.com', '$2y$10$u1KvS5Nh7JQBo89d7jM9yeFVAS6rrfptOrHum0v/KLNYPRfs60W/2', '20250131210757.png', '2025-01-04 18:44:36', 3296064, 1, '2025-01-04 18:54:36', 0, '2025-01-28 16:53:53', NULL, '2025-01-04 18:44:36', 0, 'sr');
+(3, 'Domi', 'Doktor', '0649420637', '            Dali ti se sviđa ova funkcija, nadam se da je dobro i da cemo da dobiti 10', 'varrorobert03@gmail.com', '$2y$10$u1KvS5Nh7JQBo89d7jM9yeFVAS6rrfptOrHum0v/KLNYPRfs60W/2', '20250131210757.png', '2025-01-04 18:44:36', 3296064, 1, '2025-01-04 18:54:36', 0, '2025-01-28 16:53:53', NULL, '2025-01-04 18:44:36', 0, 'sr'),
+(9, 'Nick', 'Doctor', '0628388150', '', 'nickvalami@gmail.com', '$2y$10$B1cB9B1pWGshgJPbFbUBleB3yicBi3cILKWBT2DAkDbz5kDoLhtuC', 'logInPic.png', '2025-03-11 13:19:31', 9740873, 1, '2025-03-11 13:29:31', 0, '2025-03-11 13:19:31', NULL, '2025-03-11 13:19:31', 0, 'en');
 
 -- --------------------------------------------------------
 
@@ -723,7 +728,7 @@ ALTER TABLE `work_address`
 -- AUTO_INCREMENT for table `errorlog`
 --
 ALTER TABLE `errorlog`
-  MODIFY `errorLogId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=219;
+  MODIFY `errorLogId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=222;
 
 --
 -- AUTO_INCREMENT for table `log`
@@ -735,7 +740,7 @@ ALTER TABLE `log`
 -- AUTO_INCREMENT for table `pet`
 --
 ALTER TABLE `pet`
-  MODIFY `petId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=74;
+  MODIFY `petId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=76;
 
 --
 -- AUTO_INCREMENT for table `product`
@@ -753,13 +758,13 @@ ALTER TABLE `qr_code`
 -- AUTO_INCREMENT for table `reservation`
 --
 ALTER TABLE `reservation`
-  MODIFY `reservationId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=111;
+  MODIFY `reservationId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=113;
 
 --
 -- AUTO_INCREMENT for table `review`
 --
 ALTER TABLE `review`
-  MODIFY `reviewId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `reviewId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `user`
@@ -783,7 +788,7 @@ ALTER TABLE `user_review_relation`
 -- AUTO_INCREMENT for table `veterinarian`
 --
 ALTER TABLE `veterinarian`
-  MODIFY `veterinarianId` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `veterinarianId` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `veterinar_review_relation`
