@@ -3,9 +3,9 @@ import { View, Text, TextInput, TouchableOpacity, Alert, ActivityIndicator } fro
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 
-const API_URL = 'http://192.168.1.8/Humanz2.0/Humanz_Pets/applogIn.php';
+// const API_URL = 'http://192.168.1.8/Humanz2.0/Humanz_Pets/applogIn.php';
 
-//const API_URL = 'http://192.168.43.125/Humanz_Pets/applogIn.php';
+const API_URL = 'http://192.168.43.125/Humanz_Pets/applogIn.php';
 const LoginScreen = ({ navigation }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');

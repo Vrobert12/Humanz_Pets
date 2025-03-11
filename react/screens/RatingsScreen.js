@@ -4,30 +4,41 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import StarRating from 'react-native-star-rating-widget';
 
-const API_URL = 'http://192.168.1.8/Humanz2.0/Humanz_Pets/check_reviews.php';
-const SUBMIT_URL = 'http://192.168.1.8/Humanz2.0/Humanz_Pets/submit_review.php';
+const API_URL = 'http://192.168.43.125/Humanz_Pets/check_reviews.php';
+const SUBMIT_URL = 'http://192.168.43.125/Humanz_Pets/submit_review.php';
 
-const RatingsScreen = () => {
+const RatingsScreen = ({ fetchReviewCount }) => { // Receive fetchReviewCount as a prop
     const [reviews, setReviews] = useState([]);
     const [loading, setLoading] = useState(true);
-
-    // State to hold temporarily selected rating for submission
     const [tempRatings, setTempRatings] = useState({});
+    const [userId, setUserId] = useState(null);
 
     useEffect(() => {
-        fetchReviews();
+        fetchUserId();
     }, []);
 
-    const fetchReviews = async () => {
-        const storedUserId = await AsyncStorage.getItem('user_id');
-        if (!storedUserId) {
-            Alert.alert("Error", "User not logged in.");
-            return;
+    useEffect(() => {
+        if (userId) {
+            fetchReviews(userId);
         }
+    }, [userId]);
 
+    const fetchUserId = async () => {
         try {
-            const response = await axios.post(API_URL, { user_id: storedUserId });
-            console.log(response.data.reviews);
+            const storedUserId = await AsyncStorage.getItem('user_id');
+            if (!storedUserId) {
+                Alert.alert("Error", "User not logged in.");
+            } else {
+                setUserId(storedUserId);
+            }
+        } catch (error) {
+            console.error("Error fetching user ID:", error);
+        }
+    };
+
+    const fetchReviews = async (userId) => {
+        try {
+            const response = await axios.post(API_URL, { user_id: userId });
             setReviews(response.data.reviews);
         } catch (error) {
             console.error("Error fetching reviews:", error);
@@ -37,7 +48,6 @@ const RatingsScreen = () => {
     };
 
     const handleSubmitRating = async (reviewId) => {
-        console.log(reviewId);
         const rating = tempRatings[reviewId];
         if (rating == null) {
             Alert.alert("Error", "Please select a rating.");
@@ -47,7 +57,8 @@ const RatingsScreen = () => {
         try {
             await axios.post(SUBMIT_URL, { review_id: reviewId, rating: rating });
             Alert.alert("Success", "Rating submitted!");
-            fetchReviews(); // Re-fetch reviews after submission
+            fetchReviews(userId); // Re-fetch reviews after submission
+            fetchReviewCount(userId); // Update the review count after submission
         } catch (error) {
             console.error("Error submitting rating:", error);
             Alert.alert("Error", "Could not submit rating.");
@@ -58,21 +69,23 @@ const RatingsScreen = () => {
 
     return (
         <View style={{ flex: 1, padding: 20 }}>
-            <Text style={{ fontSize: 20, fontWeight: 'bold' }}>Rate Veterinarians</Text>
+            <Text style={{ fontSize: 26, fontWeight: 'bold' }}>Rate Veterinarians</Text>
             {reviews.length === 0 ? (
                 <Text>No pending reviews.</Text>
             ) : (
                 reviews.map((review, index) => (
                     <View key={review.reviewId || index} style={{ marginBottom: 20 }}>
-                        <Text>Veterinarian: {review.veterinarian_name}</Text>
+                        <Text style={{ fontSize: 24 }}>Veterinarian: {review.veterinarian_name}</Text>
+                        <Text style={{ fontSize: 20 }}>Checked time: {review.reviewTime}</Text>
                         <StarRating
-                            rating={tempRatings[review.reviewId] || review.review || 0} // Show temporary rating or stored rating
+                            rating={tempRatings[review.reviewId] || review.review || 0}
                             onChange={(newRating) => {
                                 setTempRatings((prevRatings) => ({
                                     ...prevRatings,
-                                    [review.reviewId]: newRating, // Save temporarily selected rating
+                                    [review.reviewId]: newRating,
                                 }));
                             }}
+                            starSize={60}
                         />
                         <Button
                             title="Submit Rating"
@@ -86,3 +99,4 @@ const RatingsScreen = () => {
 };
 
 export default RatingsScreen;
+
