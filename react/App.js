@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage'; // Ensure AsyncStorage is imported
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createDrawerNavigator } from '@react-navigation/drawer';
+import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+
 import Profile from './screens/Profile';
 import QrCode from './screens/QrCode';
 import Settings from './screens/Settings';
@@ -14,15 +16,16 @@ import LoginScreen from './screens/LoginScreen';
 import Home from './screens/Home';
 import BookAppointment from './screens/BookAppointment';
 import ReservationScreen from './screens/ReservationsScreen';
+import ProductDetails from './screens/ProductDetails';
 
-// Your API URL
-const API_URL = 'http://192.168.43.125/Humanz_Pets/check_reviews.php';
+// API URL for checking reviews
+const API_URL = 'http://192.168.1.8/Humanz2.0/Humanz_Pets/check_reviews.php';
 
 const Tab = createBottomTabNavigator();
 const Drawer = createDrawerNavigator();
+const Stack = createStackNavigator();
 
-// Profile Stack with dynamic user_id and review count fetch
-// In ProfileStack Component
+// Profile Stack with Drawer Navigation
 const ProfileStack = ({ onLogout }) => {
     const [reviewCount, setReviewCount] = useState(0);
     const [loading, setLoading] = useState(true);
@@ -34,15 +37,14 @@ const ProfileStack = ({ onLogout }) => {
                 const storedUserId = await AsyncStorage.getItem('user_id');
                 if (storedUserId) {
                     setUserId(storedUserId);
-                    fetchReviewCount(storedUserId); // Fetch reviews for specific user
+                    fetchReviewCount(storedUserId);
                 } else {
-                    console.error('User ID is not available');
+                    console.error('User ID not found');
                 }
             } catch (error) {
                 console.error('Error fetching user ID:', error);
             }
         };
-
         getUserId();
     }, []);
 
@@ -58,7 +60,7 @@ const ProfileStack = ({ onLogout }) => {
             if (data.ReviewCount !== undefined) {
                 setReviewCount(data.ReviewCount);
             } else {
-                console.error('ReviewCount is undefined or not returned');
+                console.error('ReviewCount not returned');
             }
         } catch (error) {
             console.error('Error fetching review count:', error);
@@ -69,58 +71,28 @@ const ProfileStack = ({ onLogout }) => {
 
     return (
         <Drawer.Navigator>
-            <Drawer.Screen
-                name="Profile"
-                component={Profile}
-                options={{
-                    drawerLabel: () => (
-                        <Text style={{ fontSize: 20,  }}>Profile</Text>
-                    )
-                }}
-            />
-            <Drawer.Screen name="QrCode" component={QrCode}
-                           options={{
-                               drawerLabel: () => (
-                                   <Text style={{ fontSize: 20,  }}>QrCode</Text>
-                               )
-                           }}
-            />
-            <Drawer.Screen name="Settings" component={Settings}
-                           options={{
-                               drawerLabel: () => (
-                                   <Text style={{ fontSize: 20,  }}>Settings</Text>
-                               )
-                           }}
-            />
-
-            <Drawer.Screen name="RegisterPet" component={RegisterPet}
-                           options={{
-                               drawerLabel: () => (
-                                   <Text style={{ fontSize: 20,  }}>RegisterPet</Text>
-                               )
-                           }}
-            />
-
+            <Drawer.Screen name="Profile" component={Profile} />
+            <Drawer.Screen name="QrCode" component={QrCode} />
+            <Drawer.Screen name="Settings" component={Settings} />
+            <Drawer.Screen name="RegisterPet" component={RegisterPet} />
             <Drawer.Screen
                 name="RatingsScreen"
                 component={() => <RatingsScreen fetchReviewCount={fetchReviewCount} />}
                 options={{
                     drawerLabel: () => (
                         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                            <Text style={{ fontSize: 20,  }}>Ratings</Text>
-                            {reviewCount > 0 && (  // Only show rating number and circle if reviewCount > 0
-                                <View
-                                    style={{
-                                        backgroundColor: 'red',
-                                        borderRadius: 30,
-                                        width: 30,
-                                        height: 30,
-                                        justifyContent: 'center',
-                                        alignItems: 'center',
-                                        marginLeft: 10,
-                                    }}
-                                >
-                                    <Text style={{ color: 'white',  fontSize: 20 }}>
+                            <Text style={{ fontSize: 20 }}>Ratings</Text>
+                            {reviewCount > 0 && (
+                                <View style={{
+                                    backgroundColor: 'red',
+                                    borderRadius: 30,
+                                    width: 30,
+                                    height: 30,
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    marginLeft: 10,
+                                }}>
+                                    <Text style={{ color: 'white', fontSize: 16 }}>
                                         {loading ? '...' : reviewCount}
                                     </Text>
                                 </View>
@@ -129,34 +101,26 @@ const ProfileStack = ({ onLogout }) => {
                     ),
                 }}
             />
-
             <Drawer.Screen
                 name="Logout"
                 component={LogoutScreen}
-                options={{
-                    drawerLabel: () => (
-                        <Text style={{ color: 'red',  fontSize: 20 }}>Log Out</Text>
-                    ),
-                }}
+                options={{ drawerLabel: () => <Text style={{ color: 'red', fontSize: 20 }}>Log Out</Text> }}
             />
         </Drawer.Navigator>
     );
 };
 
-
-
 // Logout Screen
 const LogoutScreen = ({ navigation, onLogout }) => {
     const handleLogoutPress = async () => {
-        await AsyncStorage.removeItem('session_token');
-        await AsyncStorage.removeItem('user_id'); // Remove user_id on logout
+        await AsyncStorage.multiRemove(['session_token', 'user_id']); // Remove user session data
         onLogout();
-        navigation.replace('Login'); // Navigate to login screen after logout
+        navigation.replace('Login');
     };
 
     return (
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <Text style={{ fontSize: 18, marginBottom: 20 }}>Biztosan ki szeretnél jelentkezni?</Text>
+            <Text style={{ fontSize: 18, marginBottom: 20 }}>Are you sure you want to log out?</Text>
             <TouchableOpacity
                 onPress={handleLogoutPress}
                 style={{ backgroundColor: 'red', padding: 10, borderRadius: 5 }}
@@ -167,16 +131,24 @@ const LogoutScreen = ({ navigation, onLogout }) => {
     );
 };
 
-// MainApp with Bottom Tab Navigation
+// Shop Stack (for Home & Product Details)
+const ShopStack = () => (
+    <Stack.Navigator>
+        <Stack.Screen name="Home" component={Home} options={{ headerShown: false }} />
+        <Stack.Screen name="ProductDetails" component={ProductDetails} />
+    </Stack.Navigator>
+);
+
+// Main App with Bottom Tab Navigation
 const MainApp = ({ onLogout }) => (
     <Tab.Navigator
         screenOptions={({ route }) => ({
             tabBarIcon: ({ color, size }) => {
                 let iconName;
                 if (route.name === 'Shop') iconName = 'shopping-cart';
-                else if (route.name === 'ProfileMenu') iconName = 'user';
                 else if (route.name === 'BookAppointment') iconName = 'book';
                 else if (route.name === 'Reservations') iconName = 'clipboard';
+                else if (route.name === 'ProfileMenu') iconName = 'user';
                 return <Icon name={iconName} size={size} color={color} />;
             },
             tabBarActiveTintColor: '#007bff',
@@ -184,7 +156,7 @@ const MainApp = ({ onLogout }) => (
             tabBarStyle: { backgroundColor: '#fff', paddingBottom: 5 },
         })}
     >
-        <Tab.Screen name="Shop" component={Home} />
+        <Tab.Screen name="Shop" component={ShopStack} options={{ headerShown: false }} />
         <Tab.Screen name="BookAppointment" component={BookAppointment} />
         <Tab.Screen name="Reservations" component={ReservationScreen} />
         <Tab.Screen name="ProfileMenu">
@@ -193,7 +165,7 @@ const MainApp = ({ onLogout }) => (
     </Tab.Navigator>
 );
 
-// App Component (Main Entry Point)
+// Main App Component (Entry Point)
 export default function App() {
     const [isLoggedIn, setIsLoggedIn] = useState(null);
 
@@ -207,7 +179,7 @@ export default function App() {
 
     const handleLogout = async () => {
         await AsyncStorage.removeItem('session_token');
-        setIsLoggedIn(false); // Update login state after logout
+        setIsLoggedIn(false);
     };
 
     return (
@@ -215,7 +187,7 @@ export default function App() {
             {isLoggedIn ? (
                 <MainApp onLogout={handleLogout} />
             ) : (
-                <LoginScreen navigation={{ replace: setIsLoggedIn }} />  // Make sure LoginScreen has a way to set the login state
+                <LoginScreen onLogin={() => setIsLoggedIn(true)} />
             )}
         </NavigationContainer>
     );

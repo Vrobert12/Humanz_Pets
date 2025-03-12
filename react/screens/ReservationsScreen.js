@@ -4,10 +4,10 @@ import { View, Text, FlatList, TouchableOpacity, Alert } from 'react-native';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-//const API_URL_GET = 'http://192.168.1.8/Humanz2.0/Humanz_Pets/getReservations.php';
-//const API_URL_DELETE = 'http://192.168.1.8/Humanz2.0/Humanz_Pets/deleteReservation.php';
-const API_URL_GET = 'http://192.168.43.125/Humanz_Pets/getReservations.php';
-const API_URL_DELETE = 'http://192.168.43.125/Humanz_Pets/deleteReservation.php';
+const API_URL_GET = 'http://192.168.1.8/Humanz2.0/Humanz_Pets/phpForReact/getReservations.php';
+const API_URL_DELETE = 'http://192.168.1.8/Humanz2.0/Humanz_Pets/phpForReact/deleteReservation.php';
+//const API_URL_GET = 'http://192.168.43.125/Humanz_Pets/phpForReact/getReservations.php';
+//const API_URL_DELETE = 'http://192.168.43.125/Humanz_Pets/phpForReact/deleteReservation.php';
 
 const ReservationsScreen = () => {
     const [reservations, setReservations] = useState([]);

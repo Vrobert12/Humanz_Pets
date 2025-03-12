@@ -4,20 +4,30 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2367ab9a-341c-4300-a7ed-72f717181f7d" name="Changes" comment="Register pet react v3">
+    <list default="true" id="2367ab9a-341c-4300-a7ed-72f717181f7d" name="Changes" comment="Ratings react v1 + DB">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pictures/pet.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/applogIn.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bookReact.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/check_availability.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/check_reviews.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/deleteReservation.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/getPets.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/getQrCode.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/getReservations.php" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/picturespet.jpg" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/react/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/react/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/react/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/react/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/react/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/react/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/react/screens/BookAppointment.js" beforeDir="false" afterPath="$PROJECT_DIR$/react/screens/BookAppointment.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/react/screens/Home.js" beforeDir="false" afterPath="$PROJECT_DIR$/react/screens/Home.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/react/screens/LoginScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/react/screens/LoginScreen.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/react/screens/Profile.js" beforeDir="false" afterPath="$PROJECT_DIR$/react/screens/Profile.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/react/screens/QrCode.js" beforeDir="false" afterPath="$PROJECT_DIR$/react/screens/QrCode.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/react/screens/RatingsScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/react/screens/RatingsScreen.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/react/screens/RegisterPet.js" beforeDir="false" afterPath="$PROJECT_DIR$/react/screens/RegisterPet.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/react/screens/ReservationsScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/react/screens/ReservationsScreen.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/react/screens/Settings.js" beforeDir="false" afterPath="$PROJECT_DIR$/react/screens/Settings.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/register_pet.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/submit_review.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/veterinariansReact.php" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -67,24 +77,24 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "DefaultHtmlFileTemplate": "HTML File",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "main",
-    "last_opened_file_path": "C:/xampp/htdocs/Humanz2.0/Humanz_Pets",
-    "list.type.of.created.stylesheet": "CSS",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.stylelint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.stylelint": "",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "ts.external.directory.path": "C:\\Program Files\\JetBrains\\PhpStorm 2024.1\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/xampp/htdocs/Humanz2.0/Humanz_Pets&quot;,
+    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.stylelint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.stylelint&quot;: &quot;&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;C:\\Program Files\\JetBrains\\PhpStorm 2024.1\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -129,7 +139,8 @@
       <workItem from="1741350483767" duration="12055000" />
       <workItem from="1741437315645" duration="5430000" />
       <workItem from="1741610978398" duration="11238000" />
-      <workItem from="1741693690721" duration="10774000" />
+      <workItem from="1741693690721" duration="10922000" />
+      <workItem from="1741780036743" duration="9595000" />
     </task>
     <task id="LOCAL-00001" summary="Responsivity">
       <option name="closed" value="true" />
@@ -299,7 +310,15 @@
       <option name="project" value="LOCAL" />
       <updated>1741626875990</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="Ratings react v1 + DB">
+      <option name="closed" value="true" />
+      <created>1741706945713</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1741706945713</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -338,6 +357,7 @@
     <MESSAGE value="react reservation v2" />
     <MESSAGE value="react reservation done" />
     <MESSAGE value="Register pet react v3" />
-    <option name="LAST_COMMIT_MESSAGE" value="Register pet react v3" />
+    <MESSAGE value="Ratings react v1 + DB" />
+    <option name="LAST_COMMIT_MESSAGE" value="Ratings react v1 + DB" />
   </component>
 </project>
