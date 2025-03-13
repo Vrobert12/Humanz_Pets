@@ -1,9 +1,12 @@
 <?php
 header('Content-Type: application/json');
 
-include 'config.php';
+$host = "localhost";
+$dbname = "pets";
+$username = "root";
+$password = "";
 
-$pdo = new PDO("mysql:host=localhost;dbname=pets;charset=utf8", "root", "");
+$pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $username, $password);
 $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -30,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $interval = $currentDateTime->diff($reservationDateTime);
 
     // Prevent deletion if the reservation is in 1 hour or less
-    if ($reservationDateTime <= $currentDateTime || ($interval->h == 0 && $interval->i <= 60)) {
+    if ($reservationDateTime <= $currentDateTime && ($interval->h == 0 && $interval->i <= 60)) {
         echo json_encode(['message' => 'Cannot delete reservation within 1 hour of appointment.']);
         exit;
     }

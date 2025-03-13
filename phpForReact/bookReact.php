@@ -1,7 +1,6 @@
 <?php
 header('Content-Type: application/json');
 
-include 'config.php';
 
 $host = "localhost";
 $dbname = "pets";
@@ -107,11 +106,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Query to get pets that don't have appointments for today or the following days
     $petsQuery = $pdo->prepare(
-        "SELECT p.id, p.name 
-         FROM pets p
+        "SELECT p.petId, p.petName 
+         FROM pet p
          WHERE NOT EXISTS (
              SELECT 1 FROM reservation r
-             WHERE r.petId = p.id
+             WHERE r.petId = p.petId
              AND r.reservationDay >= :currentDate
              AND r.reservationDay <= :nextDate
          )"

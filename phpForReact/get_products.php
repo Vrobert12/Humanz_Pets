@@ -1,6 +1,4 @@
 <?php
-require 'config.php'; // Ensure you have a database connection file
-
 
 header('Content-Type: application/json');
 

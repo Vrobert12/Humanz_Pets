@@ -1,5 +1,4 @@
 <?php
-require_once 'config.php'; // Adjust to your database config
 
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json");

@@ -57,8 +57,8 @@ export default function Settings() {
         setUpdating(true);
         const updatedUserData = { ...userData, id: userId };
 
-        const apiUrl = `http://192.168.1.8/Humanz2.0/Humanz_Pets/getPets/user/${userId}`;
-        //const apiUrl = `http://192.168.43.125/Humanz_Pets/getPets/user/${userId}`;
+        //const apiUrl = `http://192.168.1.8/Humanz2.0/Humanz_Pets/phpForReact/getPets/user/${userId}`;
+        const apiUrl = `http://192.168.43.125/Humanz_Pets/phpForReact/getPets/user/${userId}`;
         console.log("Sending PATCH request to:", apiUrl);
         console.log("Request Body:", JSON.stringify(updatedUserData));
 

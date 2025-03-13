@@ -19,7 +19,8 @@ import ReservationScreen from './screens/ReservationsScreen';
 import ProductDetails from './screens/ProductDetails';
 
 // API URL for checking reviews
-const API_URL = 'http://192.168.1.8/Humanz2.0/Humanz_Pets/check_reviews.php';
+const API_URL = 'http://192.168.43.125/Humanz_Pets/phpForReact/check_reviews.php';
+//const API_URL = 'http://192.168.1.8/Humanz2.0/Humanz_Pets/phpForReact/check_reviews.php';
 
 const Tab = createBottomTabNavigator();
 const Drawer = createDrawerNavigator();

@@ -6,7 +6,7 @@ export default function ProductDetails({ route }) {
     const [product, setProduct] = useState(null);
 
     useEffect(() => {
-        fetch(`http://192.168.1.8/Humanz2.0/Humanz_Pets/phpForReact/get_product_details.php?id=${productId}`)
+        fetch(`http://192.168.43.125/Humanz_Pets/phpForReact/get_product_details.php?id=${productId}`)
             .then(response => response.json())
             .then(data => setProduct(data))
             .catch(error => console.error('Error fetching product details:', error));
@@ -20,7 +20,7 @@ export default function ProductDetails({ route }) {
 
     return (
         <View style={styles.container}>
-            <Image source={{ uri: 'http://192.168.1.8/Humanz2.0/Humanz_Pets/pictures/products/' + product.productPicture }} style={styles.image} />
+            <Image source={{ uri: 'http://192.168.43.125Humanz_Pets/pictures/products/' + product.productPicture }} style={styles.image} />
             <Text style={styles.name}>{product.productName}</Text>
             <Text style={styles.price}>${product.productCost}</Text>
             <Text style={styles.description}>{product.description}</Text>
