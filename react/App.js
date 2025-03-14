@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { createStackNavigator } from '@react-navigation/stack';
-import { NavigationContainer } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 import Profile from './screens/Profile';
@@ -17,96 +16,27 @@ import Home from './screens/Home';
 import BookAppointment from './screens/BookAppointment';
 import ReservationScreen from './screens/ReservationsScreen';
 import ProductDetails from './screens/ProductDetails';
+import RegisterScreen from "./screens/RegisterScreen";
+import {TouchableOpacity, View, Text} from "react-native";
 
-// API URL for checking reviews
-const API_URL = 'http://192.168.43.125/Humanz_Pets/phpForReact/check_reviews.php';
-//const API_URL = 'http://192.168.1.8/Humanz2.0/Humanz_Pets/phpForReact/check_reviews.php';
-
+// Navigation Stacks
 const Tab = createBottomTabNavigator();
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
+const AuthStack = createStackNavigator();
 
 // Profile Stack with Drawer Navigation
 const ProfileStack = ({ onLogout }) => {
-    const [reviewCount, setReviewCount] = useState(0);
-    const [loading, setLoading] = useState(true);
-    const [userId, setUserId] = useState(null);
-
-    useEffect(() => {
-        const getUserId = async () => {
-            try {
-                const storedUserId = await AsyncStorage.getItem('user_id');
-                if (storedUserId) {
-                    setUserId(storedUserId);
-                    fetchReviewCount(storedUserId);
-                } else {
-                    console.error('User ID not found');
-                }
-            } catch (error) {
-                console.error('Error fetching user ID:', error);
-            }
-        };
-        getUserId();
-    }, []);
-
-    const fetchReviewCount = async (userId) => {
-        try {
-            const response = await fetch(API_URL, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ user_id: userId })
-            });
-
-            const data = await response.json();
-            if (data.ReviewCount !== undefined) {
-                setReviewCount(data.ReviewCount);
-            } else {
-                console.error('ReviewCount not returned');
-            }
-        } catch (error) {
-            console.error('Error fetching review count:', error);
-        } finally {
-            setLoading(false);
-        }
-    };
-
     return (
         <Drawer.Navigator>
             <Drawer.Screen name="Profile" component={Profile} />
             <Drawer.Screen name="QrCode" component={QrCode} />
             <Drawer.Screen name="Settings" component={Settings} />
             <Drawer.Screen name="RegisterPet" component={RegisterPet} />
-            <Drawer.Screen
-                name="RatingsScreen"
-                component={() => <RatingsScreen fetchReviewCount={fetchReviewCount} />}
-                options={{
-                    drawerLabel: () => (
-                        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                            <Text style={{ fontSize: 20 }}>Ratings</Text>
-                            {reviewCount > 0 && (
-                                <View style={{
-                                    backgroundColor: 'red',
-                                    borderRadius: 30,
-                                    width: 30,
-                                    height: 30,
-                                    justifyContent: 'center',
-                                    alignItems: 'center',
-                                    marginLeft: 10,
-                                }}>
-                                    <Text style={{ color: 'white', fontSize: 16 }}>
-                                        {loading ? '...' : reviewCount}
-                                    </Text>
-                                </View>
-                            )}
-                        </View>
-                    ),
-                }}
-            />
-            <Drawer.Screen
-                name="Logout"
-                component={LogoutScreen}
-                options={{ drawerLabel: () => <Text style={{ color: 'red', fontSize: 20 }}>Log Out</Text> }}
-            />
+            <Drawer.Screen name="RatingsScreen" component={RatingsScreen} />
+            <Drawer.Screen name="Logout">
+                {(props) => <LogoutScreen {...props} onLogout={onLogout} />}
+            </Drawer.Screen>
         </Drawer.Navigator>
     );
 };
@@ -114,9 +44,8 @@ const ProfileStack = ({ onLogout }) => {
 // Logout Screen
 const LogoutScreen = ({ navigation, onLogout }) => {
     const handleLogoutPress = async () => {
-        await AsyncStorage.multiRemove(['session_token', 'user_id']); // Remove user session data
-        onLogout();
-        navigation.replace('Login');
+        await AsyncStorage.multiRemove(['session_token', 'user_id']);
+        onLogout();  // Update App state to re-render
     };
 
     return (
@@ -132,7 +61,7 @@ const LogoutScreen = ({ navigation, onLogout }) => {
     );
 };
 
-// Shop Stack (for Home & Product Details)
+// Shop Stack (Home & Product Details)
 const ShopStack = () => (
     <Stack.Navigator>
         <Stack.Screen name="Home" component={Home} options={{ headerShown: false }} />
@@ -166,7 +95,17 @@ const MainApp = ({ onLogout }) => (
     </Tab.Navigator>
 );
 
-// Main App Component (Entry Point)
+// Authentication Stack (Login Screen)
+const AuthStackScreen = ({ onLogin }) => (
+    <AuthStack.Navigator>
+        <AuthStack.Screen name="Login">
+            {(props) => <LoginScreen {...props} onLogin={onLogin} />}
+        </AuthStack.Screen>
+        <AuthStack.Screen name="Register" component={RegisterScreen} />
+    </AuthStack.Navigator>
+);
+
+// Main App Component
 export default function App() {
     const [isLoggedIn, setIsLoggedIn] = useState(null);
 
@@ -178,17 +117,15 @@ export default function App() {
         checkLoginStatus();
     }, []);
 
-    const handleLogout = async () => {
-        await AsyncStorage.removeItem('session_token');
-        setIsLoggedIn(false);
-    };
+    const handleLogin = () => setIsLoggedIn(true);
+    const handleLogout = () => setIsLoggedIn(false);
 
     return (
         <NavigationContainer>
             {isLoggedIn ? (
                 <MainApp onLogout={handleLogout} />
             ) : (
-                <LoginScreen onLogin={() => setIsLoggedIn(true)} />
+                <AuthStackScreen onLogin={handleLogin} />
             )}
         </NavigationContainer>
     );

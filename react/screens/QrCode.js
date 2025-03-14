@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Image } from 'react-native'; // Add the necessary imports
+import {View, Text, Image, Alert} from 'react-native'; // Add the necessary imports
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const QrCode = () => {
@@ -15,12 +15,12 @@ const QrCode = () => {
                 throw new Error("User ID not found");
             }
 
-            const response = await fetch(`http://192.168.43.125/Humanz_Pets/phpForReact/getQrCode.php?user=${userId}`);
+            //const response = await fetch(`http://192.168.43.125/Humanz_Pets/phpForReact/getQrCode.php?user=${userId}`);
 
-            //const response = await fetch(`http://192.168.1.8/Humanz2.0/Humanz_Pets/phpForReact/getQrCode.php?user=${userId}`);
+            const response = await fetch(`http://192.168.1.8/Humanz2.0/Humanz_Pets/phpForReact/getQrCode.php?user=${userId}`);
 
             // Check if the response is okay
-            if (!response.ok) {
+            if (!response.ok || response.status === 404) {
                 throw new Error(`Failed to fetch QR code: ${response.statusText}`);
             }
 
@@ -28,14 +28,15 @@ const QrCode = () => {
             console.log("Raw Response:", text);
 
             const data = JSON.parse(text);
-            console.log('QR Code Path:', data.data.path);
+            //console.log('QR Code Path:', data.data.path);
 
             if (data.status === 200) {
                 // Update the QR code path with the full URL
-                setQrCodePath(`http://192.168.43.125/Humanz_Pets/${data.data.path}`);
-                //setQrCodePath(`http://192.168.1.8/Humanz2.0/Humanz_Pets/${data.data.path}`);
+                //setQrCodePath(`http://192.168.43.125/Humanz_Pets/${data.data.path}`);
+                setQrCodePath(`http://192.168.1.8/Humanz2.0/Humanz_Pets/pictures/${data.data.path}`);
             } else {
-                setQrCodePath(""); // No QR code found
+                setQrCodePath(" "); // No QR code found
+                Alert.alert(data.message);
             }
         } catch (error) {
             console.error("Error fetching QR code:", error);

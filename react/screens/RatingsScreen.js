@@ -4,10 +4,10 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import StarRating from 'react-native-star-rating-widget';
 
-const API_URL = 'http://192.168.43.125/Humanz_Pets/phpForReact/check_reviews.php';
-const SUBMIT_URL = 'http://192.168.43.125/Humanz_Pets/phpForReact/submit_review.php';
-//const API_URL = 'http://192.168.1.8/Humanz2.0/Humanz_Pets/phpForReact/check_reviews.php';
-//const SUBMIT_URL = 'http://192.168.1.8/Humanz2.0/Humanz_Pets/phpForReact/submit_review.php';
+//const API_URL = 'http://192.168.43.125/Humanz_Pets/phpForReact/check_reviews.php';
+//const SUBMIT_URL = 'http://192.168.43.125/Humanz_Pets/phpForReact/submit_review.php';
+const API_URL = 'http://192.168.1.8/Humanz2.0/Humanz_Pets/phpForReact/check_reviews.php';
+const SUBMIT_URL = 'http://192.168.1.8/Humanz2.0/Humanz_Pets/phpForReact/submit_review.php';
 
 const RatingsScreen = ({ fetchReviewCount }) => { // Receive fetchReviewCount as a prop
     const [reviews, setReviews] = useState([]);
