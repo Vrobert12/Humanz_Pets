@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 11, 2025 at 04:28 PM
+-- Generation Time: Mar 15, 2025 at 11:28 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -307,7 +307,8 @@ INSERT INTO `log` (`id_log`, `user_agent`, `ip_address`, `country`, `date_time`,
 (21, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36', '::1', 'Unknown', '2025-03-10 14:58:40', 'Desktop', 0, 'Unknown ISP'),
 (22, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36', '::1', 'Unknown', '2025-03-10 15:02:12', 'Desktop', 0, 'Unknown ISP'),
 (23, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36', '::1', 'Unknown', '2025-03-10 15:04:28', 'Desktop', 0, 'Unknown ISP'),
-(24, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36', '::1', 'Unknown', '2025-03-10 15:06:13', 'Desktop', 0, 'Unknown ISP');
+(24, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36', '::1', 'Unknown', '2025-03-10 15:06:13', 'Desktop', 0, 'Unknown ISP'),
+(25, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36', '::1', 'Unknown', '2025-03-15 20:12:05', 'Desktop', 0, 'Unknown ISP');
 
 -- --------------------------------------------------------
 
@@ -360,16 +361,18 @@ CREATE TABLE `product` (
   `productPicture` varchar(100) NOT NULL,
   `description` varchar(255) NOT NULL,
   `productCost` decimal(6,2) NOT NULL,
-  `productRelease` datetime NOT NULL DEFAULT current_timestamp()
+  `productRelease` datetime NOT NULL DEFAULT current_timestamp(),
+  `productLanguage` enum('en','hu','sr','') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `product`
 --
 
-INSERT INTO `product` (`productId`, `productName`, `productPicture`, `description`, `productCost`, `productRelease`) VALUES
-(11, 'Tej', '20250310191833.jpg', 'Sima tej', 23.99, '2025-03-10 19:18:33'),
-(12, 'Nyakörv macskáknak', '20250310191358.jpg', 'Ez egy átlagos macska nyakörv', 3.00, '2025-03-10 19:18:45');
+INSERT INTO `product` (`productId`, `productName`, `productPicture`, `description`, `productCost`, `productRelease`, `productLanguage`) VALUES
+(11, 'Tej', '20250310191833.jpg', 'Sima tej', 23.99, '2025-03-10 19:18:33', 'sr'),
+(12, 'Nyakörv macskáknak', '20250310191358.jpg', 'Ez egy átlagos macska nyakörv', 3.00, '2025-03-10 19:18:45', 'hu'),
+(13, 'Domi', '20250315224019.jpg', 'Profi sőför, szereti a kutyákat.', 0.01, '2025-03-15 22:40:19', 'en');
 
 -- --------------------------------------------------------
 
@@ -390,7 +393,7 @@ CREATE TABLE `qr_code` (
 --
 
 INSERT INTO `qr_code` (`qr_code_id`, `qrCodeName`, `userId`, `generated_at`, `updated_at`) VALUES
-(1, 'QRcodes/qrcode_679d2d0a5948c.png', 19, '2024-11-11 19:47:18', '2025-01-31 20:05:30'),
+(1, 'pictures/QRcodes/qrcode_67d5feac05b8b.png', 19, '2024-11-11 19:47:18', '2025-03-15 22:26:52'),
 (2, 'QRcodes/qrcode_675da53946388.png', 26, '2024-12-14 16:33:13', '2024-12-14 15:33:13'),
 (3, 'QRcodes/qrcode_675e00a3bfff4.png', 27, '2024-12-14 23:03:15', '2024-12-14 22:03:15'),
 (4, 'QRcodes/qrcode_675ef571ca9a1.png', 25, '2024-12-15 16:27:46', '2024-12-15 15:27:46'),
@@ -431,11 +434,11 @@ INSERT INTO `reservation` (`reservationId`, `reservationDay`, `reservationTime`,
 (66, '2025-02-15', '11:00:00', '12:00:00', 1, 3, 2),
 (67, '2025-03-02', '09:00:00', '10:00:00', 0, 1, 2),
 (69, '2025-03-03', '16:00:00', '17:00:00', 0, 3, 52),
-(95, '2025-03-20', '14:00:00', '15:00:00', 0, 3, 59),
 (102, '2025-03-20', '13:00:00', '14:00:00', 0, 1, 2),
-(103, '2025-03-20', '19:00:00', '20:00:00', 0, 1, 1),
-(110, '2025-03-27', '15:00:00', '16:00:00', 0, 3, 52),
-(112, '2025-03-11', '14:00:00', '15:00:00', 0, 9, 75);
+(112, '2025-03-11', '14:00:00', '15:00:00', 0, 9, 75),
+(114, '2025-03-27', '12:00:00', '13:00:00', 0, 1, 1),
+(118, '2025-03-28', '16:00:00', '17:00:00', 0, 3, 59),
+(119, '2025-03-28', '17:00:00', '18:00:00', 0, 3, 52);
 
 -- --------------------------------------------------------
 
@@ -445,7 +448,7 @@ INSERT INTO `reservation` (`reservationId`, `reservationDay`, `reservationTime`,
 
 CREATE TABLE `review` (
   `reviewId` int(11) NOT NULL,
-  `review` int(11) DEFAULT NULL,
+  `review` decimal(5,1) DEFAULT NULL,
   `reviewTime` datetime NOT NULL DEFAULT current_timestamp(),
   `reviewCode` int(11) NOT NULL,
   `userId` int(11) NOT NULL,
@@ -457,20 +460,20 @@ CREATE TABLE `review` (
 --
 
 INSERT INTO `review` (`reviewId`, `review`, `reviewTime`, `reviewCode`, `userId`, `veterinarianId`) VALUES
-(1, 3, '2025-01-24 23:03:59', 2147483647, 19, 3),
-(2, 4, '2025-01-24 23:05:33', 1471108962, 19, 3),
+(1, 4.5, '2025-01-24 23:03:59', 2147483647, 19, 3),
+(2, 0.9, '2025-01-24 23:05:33', 1471108962, 19, 3),
 (3, NULL, '2025-01-27 21:36:34', 78591095, 29, 3),
-(4, 5, '2025-01-27 21:38:54', 23267100, 19, 3),
-(5, 3, '2025-01-27 21:44:42', 36928989, 19, 3),
-(6, NULL, '2025-01-27 21:56:11', 33457626, 19, 3),
-(7, 1, '2025-01-27 22:37:57', 31477648, 19, 3),
-(8, NULL, '2025-01-31 21:36:10', 11786383, 19, 3),
-(9, 3, '2025-01-31 21:39:35', 27507225, 19, 3),
+(4, 0.9, '2025-01-27 21:38:54', 23267100, 19, 3),
+(5, 0.9, '2025-01-27 21:44:42', 36928989, 19, 3),
+(6, 5.0, '2025-01-27 21:56:11', 33457626, 19, 3),
+(7, 3.5, '2025-01-27 22:37:57', 31477648, 19, 3),
+(8, 3.5, '2025-01-31 21:36:10', 11786383, 19, 3),
+(9, 4.0, '2025-01-31 21:39:35', 27507225, 19, 3),
 (10, NULL, '2025-01-31 21:40:01', 43924278, 29, 3),
-(11, 5, '2025-01-31 21:53:24', 39183049, 19, 3),
-(12, 5, '2025-01-31 21:53:47', 34245328, 19, 3),
-(13, NULL, '2025-02-06 01:50:41', 27877141, 19, 3),
-(14, NULL, '2025-02-06 01:53:06', 24483357, 19, 3);
+(11, 4.5, '2025-01-31 21:53:24', 39183049, 19, 1),
+(12, 3.0, '2025-01-31 21:53:47', 34245328, 19, 3),
+(13, 2.5, '2025-02-06 01:50:41', 27877141, 19, 3),
+(14, 2.5, '2025-02-06 01:53:06', 24483357, 19, 3);
 
 -- --------------------------------------------------------
 
@@ -506,7 +509,7 @@ CREATE TABLE `user` (
 INSERT INTO `user` (`userId`, `session_token`, `firstName`, `lastName`, `phoneNumber`, `userMail`, `userPassword`, `profilePic`, `privilage`, `registrationTime`, `verification_code`, `verify`, `verification_time`, `banned`, `banned_time`, `passwordValidation`, `passwordValidationTime`, `usedLanguage`) VALUES
 (6, '', 'Nikoletta', 'Varro', '0', 'nikolettavarro12@gmail.com', '$2y$10$ZJtAXGLi1y8Y7VlLzE4Ru.nH.SbV5pbDRtoQTlOv88WgemWiSIrB2', 'logInPic.png', 'User', '0000-00-00 00:00:00', 401081, 0, '2024-04-29 22:00:00', 0, '0000-00-00 00:00:00', 0, '2024-04-23 09:54:10', 'en'),
 (7, '', 'Nikoletta', 'Varro', '0649420637', 'nikolettavarro@gmail.com', '$2y$10$GZ9eslD9.lWIwuBi0by.sunJYqe1s8Jn8K2eX4CefmMN/LOnyRNua', 'logInPic.png', 'User', '0000-00-00 00:00:00', 102107, 0, '2024-04-29 22:00:00', 0, '0000-00-00 00:00:00', 0, '2024-04-23 09:54:10', 'en'),
-(19, 'cf81bd58ce263fc1f249c755b14d8c5c7131f331672dfa0731145d27a7a1432b', 'Robert ', 'Varro', '0649420637', 'robertvarro12@gmail.com', '$2y$10$DLmuSbN32LHROGmHLo07fOteS915gYkqo7Op5l6WOfg5CyD2DY8Sa', '20250310214321.jpg', 'Admin', '0000-00-00 00:00:00', 229527, 1, '2024-04-29 22:00:00', 0, '0000-00-00 00:00:00', 122127, '2025-02-06 18:09:13', 'hu'),
+(19, '97bb39dfb2148b9f6c8e9ea51d9da32be96fe397f58769663da52bd9fd09ccb6', 'Robert', 'Varro', '0649420637', 'robertvarro12@gmail.com', '$2y$10$DLmuSbN32LHROGmHLo07fOteS915gYkqo7Op5l6WOfg5CyD2DY8Sa', '20250310214321.jpg', 'Admin', '0000-00-00 00:00:00', 229527, 1, '2024-04-29 22:00:00', 0, '0000-00-00 00:00:00', 122127, '2025-02-06 18:09:13', 'hu'),
 (25, 'a7052c4fee0988cacc05e7eee56de92d53900c330a0ae0587bfa28e2ed4a3c74', 'Dominik', 'Hupko', '628277140', 'hupkodominik143@gmail.com', '$2y$10$B1cB9B1pWGshgJPbFbUBleB3yicBi3cILKWBT2DAkDbz5kDoLhtuC', 'logInPic.png', 'Admin', '2024-06-03 12:23:54', 2047970, 1, '2024-06-03 12:33:54', 0, '0000-00-00 00:00:00', 173548, '2025-01-27 15:31:17', 'hu'),
 (26, '', 'Sherlock', 'Holmes', '0649420637', 'varrorobert03@gmail.coml', '$2y$10$T5p19yMDoZ0EKiRXocAjJuNmNFK8INcDDWFkyC97i5rB6rODkLO82', 'logInPic.png', 'User', '2024-12-14 15:32:29', 1740492, 1, '2024-12-14 15:42:29', 0, '2024-12-14 15:32:29', NULL, '2024-12-14 15:32:29', 'sr'),
 (27, '', 'Nemen', 'Varro', '0649420637', 'varro7robert03@gmail.com', '$2y$10$7.Vqm7RZ7EaQISuO6xdo3OcNPbEAERoUAJF8hsBBxD8mCAvaH5Bpi', 'logInPic.png', 'User', '2024-12-14 22:01:34', 3299090, 1, '2024-12-14 22:11:34', 0, '2024-12-14 22:01:34', NULL, '2024-12-14 22:01:34', 'en'),
@@ -527,21 +530,26 @@ CREATE TABLE `user_product_relation` (
   `productId` int(11) DEFAULT NULL,
   `sum` int(11) NOT NULL,
   `price` decimal(6,2) NOT NULL,
-  `productPayed` tinyint(1) NOT NULL
+  `productPayed` tinyint(1) NOT NULL,
+  `boughtDay` datetime DEFAULT NULL,
+  `payedDay` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `user_product_relation`
 --
 
-INSERT INTO `user_product_relation` (`userProductRelationId`, `userId`, `productName`, `productPicture`, `productId`, `sum`, `price`, `productPayed`) VALUES
-(5, 28, '', '', NULL, 2, 11.00, 0),
-(9, 25, '', '', NULL, 1, 7.99, 1),
-(10, 25, '', '', NULL, 1, 6.99, 1),
-(11, 25, '', '', NULL, 1, 7.99, 1),
-(17, 19, 'Cica', '20250127230916.png', NULL, 1, 23.34, 1),
-(18, 19, 'Nyakörv macskáknak', '20250310191358.jpg', 12, 2, 3.00, 1),
-(19, 19, 'Tej', '20250310191833.jpg', 11, 1, 23.99, 1);
+INSERT INTO `user_product_relation` (`userProductRelationId`, `userId`, `productName`, `productPicture`, `productId`, `sum`, `price`, `productPayed`, `boughtDay`, `payedDay`) VALUES
+(5, 28, '', '', NULL, 2, 11.00, 0, NULL, NULL),
+(9, 25, '', '', NULL, 1, 7.99, 1, NULL, NULL),
+(10, 25, '', '', NULL, 1, 6.99, 1, NULL, NULL),
+(11, 25, '', '', NULL, 1, 7.99, 1, NULL, NULL),
+(17, 19, 'Cica', '20250127230916.png', NULL, 1, 23.34, 1, NULL, NULL),
+(18, 19, 'Nyakörv macskáknak', '20250310191358.jpg', 12, 2, 3.00, 1, NULL, NULL),
+(19, 19, 'Tej', '20250310191833.jpg', 11, 1, 23.99, 1, NULL, NULL),
+(20, 19, 'Nyakörv macskáknak', '20250310191358.jpg', 12, 1, 3.00, 1, NULL, '2025-03-15 21:15:48'),
+(22, 19, 'Tej', '20250310191833.jpg', 11, 1, 23.99, 1, NULL, '2025-03-15 21:18:38'),
+(23, 19, 'Tej', '20250310191833.jpg', 11, 12, 23.99, 1, '2025-03-15 21:20:17', '2025-03-15 21:20:31');
 
 -- --------------------------------------------------------
 
@@ -734,19 +742,19 @@ ALTER TABLE `errorlog`
 -- AUTO_INCREMENT for table `log`
 --
 ALTER TABLE `log`
-  MODIFY `id_log` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id_log` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT for table `pet`
 --
 ALTER TABLE `pet`
-  MODIFY `petId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=76;
+  MODIFY `petId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=80;
 
 --
 -- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
-  MODIFY `productId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `productId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `qr_code`
@@ -758,7 +766,7 @@ ALTER TABLE `qr_code`
 -- AUTO_INCREMENT for table `reservation`
 --
 ALTER TABLE `reservation`
-  MODIFY `reservationId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=113;
+  MODIFY `reservationId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=120;
 
 --
 -- AUTO_INCREMENT for table `review`
@@ -776,7 +784,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `user_product_relation`
 --
 ALTER TABLE `user_product_relation`
-  MODIFY `userProductRelationId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `userProductRelationId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `user_review_relation`
