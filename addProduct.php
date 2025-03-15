@@ -58,6 +58,12 @@ $_SESSION['backPic']='addProduct.php';
 <input type="text" class="inputok" placeholder="<?php echo NAME?>" name="productName" id="productName" ><br>
 <label for="bred"><?php echo PRICE?>(€):</label><br>
 <input type="text" class="inputok" placeholder="<?php echo PRICE?>" name="price" id="price" ><br>
+<select name="productLanguage" class="inputok">
+    <option value="en">English</option>
+    <option value="hu">Magyar</option>
+    <option value="sr">Srpski</option>
+</select>
+
 <label for="bred"><?php echo PRODUCTDESCRIPTION?>:</label><br>
 <textarea type='text' class="inputok" name='productDescription' id='productDescription'><?php echo PRODUCTDESCRIPTION?></textarea><br>
 <img id="productImage"  src="pictures/logInPic.png"

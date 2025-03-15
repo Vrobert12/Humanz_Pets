@@ -6,11 +6,11 @@ import { Picker } from '@react-native-picker/picker';
 import axios from 'axios';
 import {backgroundColor} from "react-native-calendars/src/style";
 
-const API_URL = 'http://192.168.1.8/Humanz2.0/Humanz_Pets/phpForReact/register_pet.php';
-const VETS_API_URL = 'http://192.168.1.8/Humanz2.0/Humanz_Pets/phpForReact/veterinariansReact.php';
+// const API_URL = 'http://192.168.1.8/Humanz2.0/Humanz_Pets/phpForReact/register_pet.php';
+// const VETS_API_URL = 'http://192.168.1.8/Humanz2.0/Humanz_Pets/phpForReact/veterinariansReact.php';
 
-//const API_URL = 'http://192.168.43.125/Humanz_Pets/phpForReact/register_pet.php';
-//const VETS_API_URL = 'http://192.168.43.125/Humanz_Pets/phpForReact/veterinariansReact.php';
+const API_URL = 'http://192.168.43.125/Humanz_Pets/phpForReact/register_pet.php';
+const VETS_API_URL = 'http://192.168.43.125/Humanz_Pets/phpForReact/veterinariansReact.php';
 
 const RegisterPet = ({ navigation }) => {
     const [name, setName] = useState('');

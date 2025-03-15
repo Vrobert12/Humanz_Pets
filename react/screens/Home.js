@@ -3,8 +3,8 @@ import { View, Text, FlatList, Image, StyleSheet, TouchableOpacity } from 'react
 
 export default function Home({ navigation }) {
     const [products, setProducts] = useState([]);
-    //const API_URL = 'http://192.168.43.125/Humanz_Pets/phpForReact/get_products.php';
-    const API_URL = 'http://192.168.1.8/Humanz2.0/Humanz_Pets/phpForReact/get_products.php';
+    const API_URL = 'http://192.168.43.125/Humanz_Pets/phpForReact/get_products.php';
+    //const API_URL = 'http://192.168.1.8/Humanz2.0/Humanz_Pets/phpForReact/get_products.php';
 
     useEffect(() => {
         fetch(API_URL) // Replace with your actual API URL
@@ -16,9 +16,9 @@ export default function Home({ navigation }) {
 
     const renderItem = ({ item }) => (
         <View style={styles.productContainer}>
-            {/*<Image source={{ uri: 'http://192.168.43.125/Humanz_Pets/pictures/products/' + item.productPicture }} style={styles.image} />*/}
+            <Image source={{ uri: 'http://192.168.43.125/Humanz_Pets/pictures/products/' + item.productPicture }} style={styles.image} />
 
-            <Image source={{ uri: 'http://192.168.1.8/Humanz2.0/Humanz_Pets/pictures/products/' + item.productPicture }} style={styles.image} />
+            {/*<Image source={{ uri: 'http://192.168.1.8/Humanz2.0/Humanz_Pets/pictures/products/' + item.productPicture }} style={styles.image} />*/}
             <Text style={styles.name}>{item.productName}</Text>
             <Text style={styles.price}>${item.productCost}</Text>
             <TouchableOpacity

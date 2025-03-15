@@ -15,9 +15,9 @@ const QrCode = () => {
                 throw new Error("User ID not found");
             }
 
-            //const response = await fetch(`http://192.168.43.125/Humanz_Pets/phpForReact/getQrCode.php?user=${userId}`);
+            const response = await fetch(`http://192.168.43.125/Humanz_Pets/phpForReact/getQrCode.php?user=${userId}`);
 
-            const response = await fetch(`http://192.168.1.8/Humanz2.0/Humanz_Pets/phpForReact/getQrCode.php?user=${userId}`);
+            //const response = await fetch(`http://192.168.1.8/Humanz2.0/Humanz_Pets/phpForReact/getQrCode.php?user=${userId}`);
 
             // Check if the response is okay
             if (!response.ok || response.status === 404) {
@@ -32,8 +32,8 @@ const QrCode = () => {
 
             if (data.status === 200) {
                 // Update the QR code path with the full URL
-                //setQrCodePath(`http://192.168.43.125/Humanz_Pets/${data.data.path}`);
-                setQrCodePath(`http://192.168.1.8/Humanz2.0/Humanz_Pets/pictures/${data.data.path}`);
+                setQrCodePath(`http://192.168.43.125/Humanz_Pets/${data.data.path}`);
+                // setQrCodePath(`http://192.168.1.8/Humanz2.0/Humanz_Pets/pictures/${data.data.path}`);
             } else {
                 setQrCodePath(" "); // No QR code found
                 Alert.alert(data.message);

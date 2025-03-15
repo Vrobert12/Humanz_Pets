@@ -17,7 +17,7 @@ import BookAppointment from './screens/BookAppointment';
 import ReservationScreen from './screens/ReservationsScreen';
 import ProductDetails from './screens/ProductDetails';
 import RegisterScreen from "./screens/RegisterScreen";
-import {TouchableOpacity, View, Text} from "react-native";
+import { TouchableOpacity, View, Text } from "react-native";
 
 // Navigation Stacks
 const Tab = createBottomTabNavigator();
@@ -27,16 +27,89 @@ const AuthStack = createStackNavigator();
 
 // Profile Stack with Drawer Navigation
 const ProfileStack = ({ onLogout }) => {
+    const [reviewCount, setReviewCount] = useState(0); // Define reviewCount here
+    const [loading, setLoading] = useState(true); // Track loading state
+
+    // Function to fetch review count
+    const fetchReviewCount = async (userId) => {
+        setLoading(true); // Start loading
+        const count = await getReviewCountFromAPI(userId);  // Replace with actual logic
+        setReviewCount(count);  // Set review count
+        setLoading(false); // Stop loading
+    };
+
     return (
         <Drawer.Navigator>
-            <Drawer.Screen name="Profile" component={Profile} />
-            <Drawer.Screen name="QrCode" component={QrCode} />
-            <Drawer.Screen name="Settings" component={Settings} />
-            <Drawer.Screen name="RegisterPet" component={RegisterPet} />
-            <Drawer.Screen name="RatingsScreen" component={RatingsScreen} />
-            <Drawer.Screen name="Logout">
-                {(props) => <LogoutScreen {...props} onLogout={onLogout} />}
-            </Drawer.Screen>
+            <Drawer.Screen
+                name="Profile"
+                component={Profile}
+                options={{
+                    drawerLabel: () => (
+                        <Text style={{ fontSize: 20,  }}>Profile</Text>
+                    )
+                }}
+            />
+            <Drawer.Screen name="QrCode" component={QrCode}
+                           options={{
+                               drawerLabel: () => (
+                                   <Text style={{ fontSize: 20,  }}>QrCode</Text>
+                               )
+                           }}
+            />
+            <Drawer.Screen name="Settings" component={Settings}
+                           options={{
+                               drawerLabel: () => (
+                                   <Text style={{ fontSize: 20,  }}>Settings</Text>
+                               )
+                           }}
+            />
+
+            <Drawer.Screen name="RegisterPet" component={RegisterPet}
+                           options={{
+                               drawerLabel: () => (
+                                   <Text style={{ fontSize: 20,  }}>RegisterPet</Text>
+                               )
+                           }}
+            />
+
+            <Drawer.Screen
+                name="RatingsScreen"
+                component={() => <RatingsScreen fetchReviewCount={fetchReviewCount} />}
+                options={{
+                    drawerLabel: () => (
+                        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                            <Text style={{ fontSize: 20,  }}>Ratings</Text>
+                            {reviewCount > 0 && (  // Only show rating number and circle if reviewCount > 0
+                                <View
+                                    style={{
+                                        backgroundColor: 'red',
+                                        borderRadius: 30,
+                                        width: 30,
+                                        height: 30,
+                                        justifyContent: 'center',
+                                        alignItems: 'center',
+                                        marginLeft: 10,
+                                    }}
+                                >
+                                    <Text style={{ color: 'white',  fontSize: 20 }}>
+                                        {loading ? '...' : reviewCount}
+                                    </Text>
+                                </View>
+                            )}
+                        </View>
+                    ),
+                }}
+            />
+
+            <Drawer.Screen
+                name="Logout"
+                component={LogoutScreen}
+                options={{
+                    drawerLabel: () => (
+                        <Text style={{ color: 'red',  fontSize: 20 }}>Log Out</Text>
+                    ),
+                }}
+            />
         </Drawer.Navigator>
     );
 };

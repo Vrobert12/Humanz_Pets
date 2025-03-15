@@ -166,7 +166,7 @@ class Functions
     }
 public function payProduct()
 {
-    $stmt="UPDATE user_product_relation SET productPayed=1 WHERE userProductRelationId=:userProductRelationId";
+    $stmt="UPDATE user_product_relation SET productPayed=1,payedDay=NOW() WHERE userProductRelationId=:userProductRelationId";
     $stmt = $this->connection->prepare($stmt);
     $stmt->bindParam(':userProductRelationId', $_POST['cartId']);
     $stmt->execute();
@@ -879,8 +879,8 @@ WHERE reservationId = :reservationId
 
             if ($stmt2->rowCount() > 0) {
 
-                $sql = "INSERT INTO user_product_relation( userId, productName,productPicture,productId,sum, price,productPayed) 
-VALUES (:userId,:productName,:productPicture,:productId,:sum, :price,:productPayed)";
+                $sql = "INSERT INTO user_product_relation( userId, productName,productPicture,productId,sum, price,productPayed,boughtDay) 
+VALUES (:userId,:productName,:productPicture,:productId,:sum, :price,:productPayed,NOW())";
                 $stmt = $this->connection->prepare($sql);
                 $stmt->bindParam(':userId', $userId);
                 $stmt->bindParam(':productName', $productName);
@@ -1135,22 +1135,24 @@ WHERE productId = :productId;
 
     public function addProduct()
     {
-        if (isset($_POST['productName']) && isset($_POST['price']) && isset($_POST['productDescription']) && isset($_SESSION['backPic'])) {
+        if (isset($_POST['productName']) && isset($_POST['price']) && isset($_POST['productDescription']) && isset($_POST['productLanguage'])&& isset($_SESSION['backPic'])) {
             try {
                 $productName = ucfirst(strtolower(trim($this->blurSwearWords($_POST["productName"]))));
                 $price = ucfirst(strtolower(trim($_POST["price"])));
+                $productLanguage = $_POST["productLanguage"];
                 $_SESSION['product']=true;
                 $picture = $this->picture($_SESSION['backPic']);
                 $description = ucfirst(strtolower(trim($this->blurSwearWords($_POST["productDescription"]))));
                 unset($_SESSION['product']);
                 // Insert the pet data into the database
-                $stmt = "INSERT INTO product (productName, productCost, productPicture, description, productRelease)
-                    VALUES (:productName, :price,:productPicture,:productDescription, NOW())";
+                $stmt = "INSERT INTO product (productName, productCost, productPicture, description, productRelease,productLanguage)
+                    VALUES (:productName, :price,:productPicture,:productDescription, NOW(),:productLanguage)";
                 $query = $this->connection->prepare($stmt);
                 $query->bindParam(':productName', $productName, PDO::PARAM_STR);
                 $query->bindParam(':price', $price, PDO::PARAM_STR);
                 $query->bindParam(':productPicture', $picture, PDO::PARAM_STR);
                 $query->bindParam(':productDescription', $description, PDO::PARAM_STR);
+                $query->bindParam(':productLanguage', $productLanguage, PDO::PARAM_STR);
 
 
                 if ($query->execute()) {

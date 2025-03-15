@@ -385,10 +385,10 @@ AND (r.reservationDay IS NOT NULL AND r.reservationDay >= CURDATE() AND r.animal
 
 <!-- Show popup message if session message is set -->
 <?php if (isset($_SESSION['message'])): ?>
-<div class="popup-message" id="popupMessage">
-    <?php echo $_SESSION['message']; ?>
-</div>
-<?php unset($_SESSION['message']); // Clear message after it's displayed ?>
+    <div class="popup-message" id="popupMessage">
+        <?php echo $_SESSION['message']; ?>
+    </div>
+    <?php unset($_SESSION['message']); // Clear message after it's displayed ?>
 <?php endif; ?>
 
 <script>
@@ -414,7 +414,7 @@ if($_SESSION['privilage']=="Veterinarian")
     echo '<a href="book_veterinarian.php" class="btn btn-success mt-4">BACK</a>';
 
 else
-echo '<a href="index.php" class="btn btn-success mt-4"> BACK</a>';
+    echo '<a href="index.php" class="btn btn-success mt-4"> BACK</a>';
 if (isset($_SESSION['message']) && $_SESSION['message'] != "")
     echo "<div class='mainBlock rounded bg-dark text-white' style='text-align: center; margin-top: 100px;'>
           <h1 style='margin: auto;'>
@@ -452,8 +452,8 @@ if($_SESSION['privilage']=="Veterinarian")
                         $sql->bindValue(':petId',$pet['petId']);
                         $sql->execute();
                         $result=$sql->fetch();
-if($_SESSION['privilage']!="Veterinarian")
-                        echo '<h5 class="text-center mb-4">' . PETS_VETERINARIAN . ' ' . $result['veterinarianMail'] . '</h5>';?>
+                        if($_SESSION['privilage']!="Veterinarian")
+                            echo '<h5 class="text-center mb-4">' . PETS_VETERINARIAN . ' ' . $result['veterinarianMail'] . '</h5>';?>
                         <span class="custom-radio"></span>
                         <img alt="Pet Picture" src="pictures/<?= htmlspecialchars($pet['profilePic']) ?>">
                         <p class="pet-details"> <?= htmlspecialchars($pet['petName']) ?> </p>

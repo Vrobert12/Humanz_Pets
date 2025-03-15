@@ -3,7 +3,8 @@ import { View, Text, TextInput, TouchableOpacity, Alert } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import axios from 'axios';
 
-const API_URL = 'http://192.168.1.8/Humanz2.0/Humanz_Pets/phpForReact/registerUser.php';
+// const API_URL = 'http://192.168.1.8/Humanz2.0/Humanz_Pets/phpForReact/registerUser.php';
+const API_URL = 'http://192.168.43.125/Humanz_Pets/phpForReact/registerUser.php';
 
 const RegisterScreen = ({ navigation }) => {
     const [firstname, setFirstname] = useState('');
