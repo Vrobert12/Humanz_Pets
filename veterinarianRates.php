@@ -29,12 +29,10 @@ if ($_SESSION['privilage'] != "Admin") {
     <script>
         const lang = '<?php echo $lang; ?>';
     </script>
-    <script src="LogOut.js"></script>
+    <script src="search.js"></script>
     <script src="indexJS.js"></script>
     <link rel="stylesheet" href="style.css">
     <style>
-
-
         th {
             background-color: lightblue;
         }
@@ -47,22 +45,9 @@ if ($_SESSION['privilage'] != "Admin") {
             padding: 15px;
             font-size: 20px;
         }
-
     </style>
 </head>
 <body style="background: #659df7">
-
-<!-- Show popup message if session message is set -->
-<?php if (isset($_SESSION['message'])): ?>
-    <div class="popup-message" id="popupMessage">
-        <?php echo $_SESSION['message']; ?>
-    </div>
-    <?php unset($_SESSION['message']); // Clear message after it's displayed ?>
-<?php endif; ?>
-
-<script>
-
-</script>
 
 <!-- Show popup message if session message is set -->
 <?php if (isset($_SESSION['message'])): ?>
@@ -86,10 +71,17 @@ if ($_SESSION['privilage'] != "Admin") {
         }
     };
 </script>
-<!--
-https://getbootstrap.com/docs/5.3/components/navbar/
--->
+
 <a class="btn btn-secondary back-button" style="margin-left: 10px; margin-top: 10px" href="index.php"><?php echo BACK ?></a>
+<div class="d-flex flex-wrap justify-content-center">
+    <div class="users">
+        <form id="searchForm" method="post">
+            <input type="text" id="search" name="search" placeholder="User Email" oninput="performSearch('veterinarianRates.php')">
+            <input type="hidden" name="searchAction" value="1"> <!-- Add a search action field to differentiate the request -->
+        </form>
+    </div>
+</div>
+
 <?php
 if (isset($_SESSION['message']) && $_SESSION['message'] != "")
     echo "<div class='mainBlock rounded bg-dark text-white' style='text-align: center; margin-top: 100px;'>
@@ -104,60 +96,29 @@ if (isset($_SESSION['message']) && $_SESSION['message'] != "")
       </div>";
 
 if (isset($_SESSION['email']) && isset($_SESSION['name']) && isset($_SESSION['profilePic'])) {
-    // Set a session variable for returning to tables.php
-    $_SESSION['backPic'] = "book_veterinarian.php";
 
-    if (isset($_POST['searchAction']) && $_POST['searchAction'] == 'search') {
-        $veterinarianLike = "%" . $_POST['searchName'] . "%";
-        users("SELECT v.veterinarianId,v.firstName,v.lastName,v.veterinarianMail,v.profilePic,v.phoneNumber,v.banned,
-        COALESCE(AVG(r.review), 0) AS totalReviewSum FROM veterinarian v inner join 
-           review r ON v.veterinarianId=r.veterinarianId WHERE verify=1 and area LIKE ?", [$veterinarianLike]);
-    } else {
-        users("SELECT 
-    v.veterinarianId,
-    v.firstName,
-    v.lastName,
-    v.veterinarianMail,
-    v.profilePic,
-    v.phoneNumber,
-    v.banned,
-    COALESCE(AVG(r.review), 0) AS totalReviewSum
-FROM veterinarian v
-LEFT JOIN review r ON v.veterinarianId = r.veterinarianId AND v.verify = 1
-GROUP BY v.veterinarianId, v.firstName, v.lastName, v.veterinarianMail, v.profilePic, v.phoneNumber;
-");
-    }
-} else {
-    // Redirect to index.php if session variables are not set
-    header('Location: index.php');
-    exit();
-}
+    if (isset($_POST['search']) && !empty($_POST['search'])) {
+        $searchTerm = "%" . $_POST['search'] . "%";
 
-function users($command, $params = [])
-{
-    global $pdo;
-
-    $_SESSION['reservation'] = 0;
-
-    try {
-        // Prepare the SQL query
-        $stmt = $pdo->prepare($command);
-
-        // Bind parameters dynamically
-        foreach ($params as $index => $value) {
-            $stmt->bindValue($index + 1, $value, PDO::PARAM_STR); // Positional parameters start at index 1
-        }
-
-        // Execute the query
+        // Searching Users
+        $stmt = $pdo->prepare("SELECT * FROM user WHERE userMail LIKE :searchTerm AND privilage='User'");
+        $stmt->bindValue(':searchTerm', $searchTerm, PDO::PARAM_STR);
         $stmt->execute();
+        $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        // Fetch all results
-        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        // Searching Veterinarians
+        $stmt = $pdo->prepare("SELECT v.veterinarianId,v.firstName,v.lastName,v.veterinarianMail,v.profilePic,v.phoneNumber,v.banned,
+            COALESCE(AVG(r.review), 0) AS totalReviewSum FROM veterinarian v INNER JOIN 
+               review r ON v.veterinarianId=r.veterinarianId WHERE verify=1 AND veterinarianMail LIKE :searchTerm GROUP BY v.veterinarianId");
+        $stmt->bindValue(':searchTerm', $searchTerm, PDO::PARAM_STR);
+        $stmt->execute();
+        $veterinarians = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        if (!empty($results)) {
+        // Display Veterinarians
+        if (!empty($veterinarians)) {
             echo '<div class="container">
                     <div class="row justify-content-around">';
-            foreach ($results as $row) {
+            foreach ($veterinarians as $row) {
                 $isBanned = $row['banned'] == 1;
                 echo '<div class="col-xl-4 p-5 border bg-dark" style="margin: auto; margin-top:100px; margin-bottom: 50px; width: fit-content">';
                 echo '<div class="col-xl-4"><img class="profilePic" 
@@ -177,11 +138,51 @@ function users($command, $params = [])
         } else {
             $_SESSION['message'] = "<h2 style='color: white'>No result found.</h2>";
         }
-    } catch (PDOException $e) {
-        echo "Error: " . $e->getMessage();
+    }
+    else {
+        // Fetch All Veterinarians
+        $stmt = $pdo->prepare("SELECT 
+            v.veterinarianId,
+            v.firstName,
+            v.lastName,
+            v.veterinarianMail,
+            v.profilePic,
+            v.phoneNumber,
+            v.banned,
+            COALESCE(AVG(r.review), 0) AS totalReviewSum
+        FROM veterinarian v
+        LEFT JOIN review r ON v.veterinarianId = r.veterinarianId AND v.verify = 1
+        GROUP BY v.veterinarianId, v.firstName, v.lastName, v.veterinarianMail, v.profilePic, v.phoneNumber");
+        $stmt->execute();
+        $veterinarians = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        // Display Veterinarians
+        if (!empty($veterinarians)) {
+            echo '<div id="list" class="d-flex flex-wrap justify-content-center">';
+            echo '<div class="container">
+                    <div class="row justify-content-around">';
+            foreach ($veterinarians as $row) {
+                $isBanned = $row['banned'] == 1;
+                echo '<div class="col-xl-4 p-5 border bg-dark" style="margin: auto; margin-top:100px; margin-bottom: 50px; width: fit-content">';
+                echo '<div class="col-xl-4"><img class="profilePic" 
+                src="pictures/' . htmlspecialchars($row['profilePic']) . '" width="250" height="250" alt="Profile Picture"></div>';
+                echo '<label>ID: ' . htmlspecialchars($row['veterinarianId']) . '</label><br>';
+                echo '<label>Name: ' . htmlspecialchars($row['firstName'] . " " . $row['lastName']) . '</label><br>';
+                echo '<label>Phone: ' . htmlspecialchars($row['phoneNumber']) . '</label><br>';
+                echo '<label>Email: ' . htmlspecialchars($row['veterinarianMail']) . '</label><br>';
+                echo $isBanned ? '<label style="color: red;">Banned</label><br>' : '<label style="color: green;">Active</label><br>';
+
+                $_SESSION['previousPage']="veterinarianRates.php";
+                echo '<label><a class="btn btn-primary" href="ratings.php">Review: <b>5 / ' . htmlspecialchars((float)$row['totalReviewSum']) . '</b></a></label><br><br>';
+                echo '<a class="btn btn-primary" href="book_apointment.php?email=' . $_SESSION['email'] . '&veterinarian=' . htmlspecialchars($row['veterinarianId']) . '">Reserve</a>&nbsp;&nbsp;&nbsp;';
+                echo '</div>';
+            }
+            echo '</div></div>';
+        } else {
+            $_SESSION['message'] = "<h2 style='color: white'>No result found.</h2>";
+        }
     }
 }
-
 ?>
 </body>
 </html>

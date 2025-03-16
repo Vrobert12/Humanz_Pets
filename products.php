@@ -10,14 +10,14 @@ if(isset($_SESSION['get_lang']))
 
 else
     $productLanguage=$_SESSION['userLang'];
-if (isset($_POST['searchAction']) && !empty($_POST['searchProduct'])) {
-    $searchTerm = "%" . $_POST['searchProduct'] . "%";
+if (isset($_POST['searchAction']) && !empty($_POST['search'])) {
+    $searchTerm = "%" . $_POST['search'] . "%";
     $stmt = $pdo->prepare("SELECT productId, productName, productPicture, description, productCost FROM product WHERE productLanguage=:userLanguage AND productName LIKE :searchTerm");
     $stmt->bindValue(':searchTerm', $searchTerm, PDO::PARAM_STR);
     $stmt->bindValue(':userLanguage', $productLanguage, PDO::PARAM_STR);
     $stmt->execute();
     $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    echo '<div id="productsList" class="d-flex flex-wrap justify-content-center">';
+    echo '<div id="list" class="d-flex flex-wrap justify-content-center">';
     foreach ($products as $product) {
         echo '<div class="product">
             <img src="pictures/products/' . htmlspecialchars($product['productPicture']) . '"
@@ -62,30 +62,8 @@ if (isset($_POST['searchAction']) && !empty($_POST['searchProduct'])) {
     <title>Product Page</title>
     <script>
         const lang = '<?php echo $lang; ?>';
-        function performSearch() {
-            const searchTerm = document.getElementById('searchProduct').value;
-
-            if (searchTerm.trim() === "") {
-                location.reload(); // Reloads the page when the search is cleared
-                return;
-            }
-
-            const formData = new FormData();
-            formData.append('searchProduct', searchTerm);
-            formData.append('searchAction', '1');
-
-            fetch('products.php', {
-                method: 'POST',
-                body: formData
-            })
-                .then(response => response.text())
-                .then(data => {
-                    document.getElementById('productsList').innerHTML = data; // Replaces instead of appending
-                })
-                .catch(error => console.error('Error:', error));
-        }
-
     </script>
+    <script src="search.js"></script>
     <script src="sureCheck.js"></script>
     <style>
         body {
@@ -219,7 +197,7 @@ if (isset($_POST['searchAction']) && !empty($_POST['searchProduct'])) {
             gap: 10px; /* Adds space between items */
         }
 
-        #productsList {
+        #list {
             display: flex;
             flex-wrap: wrap;
             justify-content: flex-start; /* Align items to the left */
@@ -247,7 +225,7 @@ if (isset($_POST['searchAction']) && !empty($_POST['searchProduct'])) {
 <div class="d-flex flex-wrap justify-content-center">
     <div class="new-product">
         <form id="searchForm" method="post">
-            <input type="text" id="searchProduct" name="searchProduct" placeholder="Product Name" oninput="performSearch()">
+            <input type="text" id="search" name="search" placeholder="Product Name" oninput="performSearch('products.php')">
             <input type="hidden" name="searchAction" value="1"> <!-- Add a search action field to differentiate the request -->
         </form>
     </div>
@@ -265,7 +243,7 @@ if (isset($_POST['searchAction']) && !empty($_POST['searchProduct'])) {
 <?php endif; ?>
 
 <!-- Products List -->
-<div id="productsList" class="d-flex flex-wrap justify-content-center">
+<div id="list" class="d-flex flex-wrap justify-content-center">
     <?php foreach ($products as $product): ?>
         <div class="product">
             <img src="pictures/products/<?php echo htmlspecialchars($product['productPicture']); ?>"
@@ -273,7 +251,7 @@ if (isset($_POST['searchAction']) && !empty($_POST['searchProduct'])) {
             <h2><?php echo htmlspecialchars($product['productName']); ?></h2>
             <p><?php echo PRICE ?>: €<?php echo number_format($product['productCost'], 2); ?></p>
             <a href="details.php?id=<?php echo $product['productId']; ?>" class="btn btn-primary"><?php echo DETAILS ?></a>
-            <?php if (isset($_SESSION['privilage']) && $_SESSION['privilage'] === 'Admin')
+            <?php if (isset($_SESSION['privilage']) && $_SESSION['privilage'] === 'Admin'){
                 echo ' <form action="updateProduct.php?id='.$product['productId'].'" method="post" enctype="multipart/form-data">
  <input type="hidden" name="productId" value="' . $product['productId'] . '">
  <input type="hidden" name="productName" value="'.$product['productName'].'" class="btn btn-primary">
@@ -286,7 +264,7 @@ if (isset($_POST['searchAction']) && !empty($_POST['searchProduct'])) {
                     <input type="hidden" name="action" value="deleteFromProduct">
                     <input type="hidden" name="productId" value="'.$product['productId'].'">
                     <input type="submit" class="btn btn-danger" value="Delete Product" onclick="confirmDeletingProduct(event)">
-                </form>';
+                </form>';}
             ?>
         </div>
     <?php endforeach; ?>

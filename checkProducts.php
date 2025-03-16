@@ -28,9 +28,10 @@ if($_SESSION['privilage']!='Admin'){
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
     <script>
         const lang = '<?php echo $lang; ?>';
+
     </script>
-    <script src="LogOut.js"></script>
     <script src="indexJS.js"></script>
+    <script src="search.js"></script>
     <link rel="stylesheet" href="style.css">
     <style>
 
@@ -47,11 +48,49 @@ if($_SESSION['privilage']!='Admin'){
             padding: 15px;
             font-size: 20px;
         }
+        .users {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #e9f7ef;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            text-align: center;
+            display: inline-block;
+            width: 220px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+        }
 
+        .users:hover {
+            transform: scale(1.05);
+            background-color: #a8d5ba;
+        }
+
+        .users button {
+            margin-top: 15px;
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .users button:hover {
+            background-color: #218838;
+        }
     </style>
 </head>
 <body style="background: #659df7">
-
+<div class="d-flex flex-wrap justify-content-center">
+    <div class="users">
+        <form id="searchForm" method="post">
+            <input type="text" id="search" name="search" placeholder="User Email" oninput="performSearch('checkProducts.php')">
+            <input type="hidden" name="searchAction" value="1"> <!-- Add a search action field to differentiate the request -->
+        </form>
+    </div>
+</div>
 <!-- Show popup message if session message is set -->
 <?php if (isset($_SESSION['message'])): ?>
     <div class="popup-message" id="popupMessage">
@@ -96,80 +135,93 @@ if (isset($_SESSION['message']) && $_SESSION['message'] != "")
 if(isset($_SESSION['email']) && isset($_SESSION['name']) && isset($_SESSION['profilePic']) && $_SESSION['privilage']=='Admin'){
     $_SESSION['backPic'] = "checkProducts.php";
 
-    if (isset($_POST['searchAction']) && $_POST['searchAction'] == 'search') {
-        $userLike = "%" . $_POST['searchName'] . "%";
-        users("SELECT p.userId, u.*, GROUP_CONCAT(p.userProductRelationId ) AS userProductRelationIds,
-       GROUP_CONCAT(p.productName) AS productNames
-       FROM user u
-       INNER JOIN user_product_relation p ON p.userId = u.userId
-       WHERE u.verify = 1
-       AND u.banned != 1
-       AND p.productPayed = 0
-       AND u.userId LIKE ?
-       GROUP BY u.userId
-       ORDER BY u.userId ASC;", [$userLike]);
+    if (!empty($_POST['search'])) {
+        $params = "%" . $_POST['search'] . "%";
+        $stmt = "SELECT p.userId, u.*, GROUP_CONCAT(p.userProductRelationId) AS userProductRelationIds, 
+             GROUP_CONCAT(p.productName) AS productNames
+             FROM user u
+             INNER JOIN user_product_relation p ON p.userId = u.userId
+             WHERE u.verify = 1
+             AND u.banned != 1
+             AND p.productPayed = 0
+             AND userMail LIKE :email
+             GROUP BY u.userId
+             ORDER BY u.userId ASC";
+        try {
+            // Prepare the SQL query
+            $stmt = $pdo->prepare($stmt);
+            $stmt->execute(array('email' => $params)); // Execute the query with the search parameter
 
+            // Fetch all results
+            $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            echo '<div id="list" class="d-flex flex-wrap justify-content-center">';
+            if (!empty($results)) {
+                echo '<div class="container">
+                <div class="row justify-content-around">';
+                foreach ($results as $row) {
+                    echo '<div class="col-xl-4 p-5 border bg-dark" style="margin: auto; margin-top:100px; margin-bottom: 50px; width: fit-content">';
+                    echo '<div class="col-xl-4"><img class="profilePic" 
+                src="pictures/' . htmlspecialchars($row['profilePic']) . '" width="250" height="250" alt="Profile Picture"></div>';
+                    echo '<label>ID: ' . htmlspecialchars($row['userId']) . '</label><br>';
+                    echo '<label>' . NAME . ': ' . htmlspecialchars($row['firstName'] . " " . $row['lastName']) . '</label><br>';
+                    echo '<label>' . PHONE . ': ' . htmlspecialchars($row['phoneNumber']) . '</label><br>';
+                    echo '<label>' . EMAIL . ': ' . htmlspecialchars($row['userMail']) . '</label><br>';
+                    echo '<a class="btn btn-primary" href="usersProducts.php?user=' . htmlspecialchars($row['userId']) . '">' . RESERVE . '</a>&nbsp;&nbsp;&nbsp;';
+                    echo '</div>';
+                }
+                echo '</div></div>';
+            } else {
+                $_SESSION['message'] = "<h2 style='color: white'>No result found.</h2>";
+            }
+        } catch (PDOException $e) {
+            echo "Error: " . $e->getMessage();
+        }
     } else {
-        users("SELECT p.userId, u.*, GROUP_CONCAT(p.userProductRelationId ) AS userProductRelationIds
-     , GROUP_CONCAT(p.productName) AS productNames
-FROM user u
-INNER JOIN user_product_relation p ON p.userId = u.userId
-WHERE u.verify = 1
-  AND u.banned != 1
-  AND p.productPayed = 0
-GROUP BY u.userId
-ORDER BY u.userId ASC;
-",);
+        $stmt = $pdo->prepare("SELECT p.userId, u.*, GROUP_CONCAT(p.userProductRelationId) AS userProductRelationIds, 
+                           GROUP_CONCAT(p.productName) AS productNames
+                           FROM user u
+                           INNER JOIN user_product_relation p ON p.userId = u.userId
+                           WHERE u.verify = 1
+                           AND u.banned != 1
+                           AND p.productPayed = 0
+                           GROUP BY u.userId
+                           ORDER BY u.userId ASC");
+        try {
+            // Prepare the SQL query and execute it
+            $stmt->execute();
+
+            // Fetch all results
+            $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            echo '<div id="list" class="d-flex flex-wrap justify-content-center">';
+            if (!empty($results)) {
+                echo '<div class="container">
+                <div class="row justify-content-around">';
+                foreach ($results as $row) {
+                    echo '<div class="col-xl-4 p-5 border bg-dark" style="margin: auto; margin-top:100px; margin-bottom: 50px; width: fit-content">';
+                    echo '<div class="col-xl-4"><img class="profilePic" 
+                src="pictures/' . htmlspecialchars($row['profilePic']) . '" width="250" height="250" alt="Profile Picture"></div>';
+                    echo '<label>ID: ' . htmlspecialchars($row['userId']) . '</label><br>';
+                    echo '<label>' . NAME . ': ' . htmlspecialchars($row['firstName'] . " " . $row['lastName']) . '</label><br>';
+                    echo '<label>' . PHONE . ': ' . htmlspecialchars($row['phoneNumber']) . '</label><br>';
+                    echo '<label>' . EMAIL . ': ' . htmlspecialchars($row['userMail']) . '</label><br>';
+                    echo '<a class="btn btn-primary" href="usersProducts.php?user=' . htmlspecialchars($row['userId']) . '">' . RESERVE . '</a>&nbsp;&nbsp;&nbsp;';
+                    echo '</div>';
+                }
+                echo '</div></div></div>';
+            } else {
+                $_SESSION['message'] = "<h2 style='color: white'>No result found.</h2>";
+            }
+        } catch (PDOException $e) {
+            echo "Error: " . $e->getMessage();
+        }
     }
+
 }
+
 else {
     // Redirect to index.php if session variables are not set
     header('Location: index.php');
     exit();
-}
-
-function users($command, $params = [])
-{
-    global $pdo;
-
-    $_SESSION['reservation'] = 0;
-
-    try {
-        // Prepare the SQL query
-        $stmt = $pdo->prepare($command);
-
-        // Bind parameters dynamically
-        foreach ($params as $index => $value) {
-            $stmt->bindValue($index + 1, $value, PDO::PARAM_STR); // Positional parameters start at index 1
-        }
-
-        // Execute the query
-        $stmt->execute();
-
-        // Fetch all results
-        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-        if (!empty($results)) {
-            echo '<div class="container">
-                    <div class="row justify-content-around">';
-            foreach ($results as $row) {
-                echo '<div class="col-xl-4 p-5 border bg-dark" style="margin: auto; margin-top:100px; margin-bottom: 50px; width: fit-content">';
-                echo '<div class="col-xl-4"><img class="profilePic" 
-                src="pictures/' . htmlspecialchars($row['profilePic']) . '" width="250" height="250" alt="Profile Picture"></div>';
-                echo '<label>ID: ' . htmlspecialchars($row['userId']) . '</label><br>';
-                echo '<label>'.NAME.': ' . htmlspecialchars($row['firstName'] . " " . $row['lastName']) . '</label><br>';
-                echo '<label>'.PHONE.': ' . htmlspecialchars($row['phoneNumber']) . '</label><br>';
-                echo '<label>'.EMAIL.': ' . htmlspecialchars($row['userMail']) . '</label><br>';
-                echo '<a class="btn btn-primary" href="usersProducts.php?user=' . htmlspecialchars($row['userId']) . '">'.RESERVE.'</a>&nbsp;&nbsp;&nbsp;';
-                echo '</div>';
-            }
-            echo '</div></div>';
-        } else {
-            $_SESSION['message'] = "<h2 style='color: white'>No result found.</h2>";
-        }
-    } catch (PDOException $e) {
-        echo "Error: " . $e->getMessage();
-    }
 }
 
 ?>

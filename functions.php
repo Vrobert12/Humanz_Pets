@@ -263,6 +263,8 @@ public function payProduct()
         $stmt->bindValue(':profilePic', "logInPic.png");
         if ($stmt->execute()) {
             $_SESSION['message'] = PICSUCCESS;
+            if($_SESSION['userId']==$_POST['userId'])
+                $_SESSION['profilePic']='logInPic.png';
             header('Location:banSite.php');
             exit();
         }
