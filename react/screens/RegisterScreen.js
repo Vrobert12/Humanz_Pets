@@ -3,8 +3,8 @@ import { View, Text, TextInput, TouchableOpacity, Alert } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import axios from 'axios';
 
-// const API_URL = 'http://192.168.1.8/Humanz2.0/Humanz_Pets/phpForReact/registerUser.php';
-const API_URL = 'http://192.168.43.125/Humanz_Pets/phpForReact/registerUser.php';
+const API_URL = 'http://192.168.1.8/Humanz2.0/Humanz_Pets/phpForReact/registerUser.php';
+//const API_URL = 'http://192.168.43.125/Humanz_Pets/phpForReact/registerUser.php';
 
 const RegisterScreen = ({ navigation }) => {
     const [firstname, setFirstname] = useState('');
@@ -25,6 +25,19 @@ const RegisterScreen = ({ navigation }) => {
             return;
         }
 
+        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        const phoneRegex = /^[0-9]{10,15}$/;  // Simple phone number validation (adjust as needed)
+
+        if (!emailRegex.test(email)) {
+            Alert.alert('Error', 'Please enter a valid email address');
+            return;
+        }
+        if (!phoneRegex.test(phone)) {
+            Alert.alert('Error', 'Please enter a valid phone number');
+            return;
+        }
+
+
         try {
             const response = await axios.post(API_URL, {
                 firstname,
@@ -34,15 +47,16 @@ const RegisterScreen = ({ navigation }) => {
                 language,
                 password
             });
-
-            if (response.data.success) {
-                Alert.alert('Success', 'Registration successful!');
+            const jsonResponse = JSON.parse(response.data.match(/\{.*}/s)[0]);
+            console.log(jsonResponse.success); // Should be true
+            if (jsonResponse.success) {
+                Alert.alert('Success', 'Registration successful! A validation link has been sent to you via email!');
                 navigation.replace('Login');
             } else {
                 Alert.alert('Error', response.data.message || 'Registration failed');
             }
         } catch (error) {
-            Alert.alert('Error', 'An error occurred. Please try again later.');
+            Alert.alert('Error', 'An error occurred. Please try again later.', error);
         }
     };
 

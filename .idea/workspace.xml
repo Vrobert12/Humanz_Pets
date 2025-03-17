@@ -4,8 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2367ab9a-341c-4300-a7ed-72f717181f7d" name="Changes" comment="products react v1">
+    <list default="true" id="2367ab9a-341c-4300-a7ed-72f717181f7d" name="Changes" comment="register react v1">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/email-verification.php" beforeDir="false" afterPath="$PROJECT_DIR$/email-verification.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phpForReact/registerUser.php" beforeDir="false" afterPath="$PROJECT_DIR$/phpForReact/registerUser.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/picturespet.jpg" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/react/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/react/App.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/react/screens/BookAppointment.js" beforeDir="false" afterPath="$PROJECT_DIR$/react/screens/BookAppointment.js" afterDir="false" />
@@ -16,6 +18,7 @@
       <change beforePath="$PROJECT_DIR$/react/screens/QrCode.js" beforeDir="false" afterPath="$PROJECT_DIR$/react/screens/QrCode.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/react/screens/RatingsScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/react/screens/RatingsScreen.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/react/screens/RegisterPet.js" beforeDir="false" afterPath="$PROJECT_DIR$/react/screens/RegisterPet.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/react/screens/RegisterScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/react/screens/RegisterScreen.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/react/screens/ReservationsScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/react/screens/ReservationsScreen.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/react/screens/Settings.js" beforeDir="false" afterPath="$PROJECT_DIR$/react/screens/Settings.js" afterDir="false" />
     </list>
@@ -131,7 +134,8 @@
       <workItem from="1741610978398" duration="11238000" />
       <workItem from="1741693690721" duration="10922000" />
       <workItem from="1741780036743" duration="9998000" />
-      <workItem from="1741960110199" duration="9442000" />
+      <workItem from="1741960110199" duration="9576000" />
+      <workItem from="1742212460589" duration="9675000" />
     </task>
     <task id="LOCAL-00001" summary="Responsivity">
       <option name="closed" value="true" />
@@ -317,7 +321,15 @@
       <option name="project" value="LOCAL" />
       <updated>1741792464769</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="register react v1">
+      <option name="closed" value="true" />
+      <created>1741971269923</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1741971269923</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -358,6 +370,7 @@
     <MESSAGE value="Register pet react v3" />
     <MESSAGE value="Ratings react v1 + DB" />
     <MESSAGE value="products react v1" />
-    <option name="LAST_COMMIT_MESSAGE" value="products react v1" />
+    <MESSAGE value="register react v1" />
+    <option name="LAST_COMMIT_MESSAGE" value="register react v1" />
   </component>
 </project>

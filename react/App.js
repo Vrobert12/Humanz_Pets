@@ -103,13 +103,13 @@ const ProfileStack = ({ onLogout }) => {
 
             <Drawer.Screen
                 name="Logout"
-                component={LogoutScreen}
                 options={{
                     drawerLabel: () => (
                         <Text style={{ color: 'red',  fontSize: 20 }}>Log Out</Text>
                     ),
-                }}
-            />
+                }}>
+                {(props) => <LogoutScreen {...props} onLogout={onLogout} />}
+            </Drawer.Screen>
         </Drawer.Navigator>
     );
 };
