@@ -1,19 +1,44 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, Image, StyleSheet, TouchableOpacity, TextInput, Alert } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function ProductDetails({ route }) {
     const { productId } = route.params;
     const [product, setProduct] = useState(null);
+    const [quantity, setQuantity] = useState(1);
 
     useEffect(() => {
         fetch(`http://192.168.1.8/Humanz2.0/Humanz_Pets/phpForReact/get_product_details.php?id=${productId}`)
-        //fetch(`http://192.168.43.125/Humanz_Pets/phpForReact/get_product_details.php?id=${productId}`)
             .then(response => response.json())
             .then(data => setProduct(data))
             .catch(error => console.error('Error fetching product details:', error));
     }, [productId]);
 
-    console.log('products', product);
+    const handleAddToCart = async () => {
+        const userId = await AsyncStorage.getItem('user_id');
+        if (!userId || !product) return;
+
+        const totalPrice = quantity * product.productCost;
+        const currentDate = new Date().toISOString().split('T')[0];
+
+        fetch('http://192.168.1.8/Humanz2.0/Humanz_Pets/phpForReact/add_to_cart.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                userId,
+                productName: product.productName,
+                productPicture: product.productPicture,
+                productId,
+                sum: quantity,
+                price: totalPrice,
+                productPayed: 0,
+                boughtDay: currentDate
+            })
+        })
+            .then(response => response.json())
+            .then(data => Alert.alert('Success', data.message))
+            .catch(error => console.error('Error adding to cart:', error));
+    };
 
     if (!product) {
         return <Text style={styles.loading}>Loading...</Text>;
@@ -21,13 +46,18 @@ export default function ProductDetails({ route }) {
 
     return (
         <View style={styles.container}>
-            {/*<Image source={{ uri: 'http://192.168.43.125/Humanz_Pets/pictures/products/' + product.productPicture }} style={styles.image} />*/}
             <Image source={{ uri: 'http://192.168.1.8/Humanz2.0/Humanz_Pets/pictures/products/' + product.productPicture }} style={styles.image} />
             <Text style={styles.name}>{product.productName}</Text>
             <Text style={styles.price}>${product.productCost}</Text>
             <Text style={styles.description}>{product.description}</Text>
             <Text style={styles.releaseDate}>Released: {product.productRelease}</Text>
-            <TouchableOpacity style={styles.addToCartButton}>
+            <TextInput
+                style={styles.quantityInput}
+                keyboardType='numeric'
+                value={quantity.toString()}
+                onChangeText={(text) => setQuantity(Math.max(1, parseInt(text) || 1))}
+            />
+            <TouchableOpacity style={styles.addToCartButton} onPress={handleAddToCart}>
                 <Text style={styles.addToCartText}>Add to Cart</Text>
             </TouchableOpacity>
         </View>
@@ -64,6 +94,15 @@ const styles = StyleSheet.create({
     releaseDate: {
         fontSize: 14,
         color: 'gray',
+    },
+    quantityInput: {
+        marginTop: 10,
+        borderWidth: 1,
+        borderColor: '#ccc',
+        padding: 10,
+        width: 100,
+        textAlign: 'center',
+        borderRadius: 5,
     },
     addToCartButton: {
         marginTop: 20,

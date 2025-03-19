@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 15, 2025 at 11:28 PM
+-- Generation Time: Mar 19, 2025 at 03:28 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -308,7 +308,9 @@ INSERT INTO `log` (`id_log`, `user_agent`, `ip_address`, `country`, `date_time`,
 (22, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36', '::1', 'Unknown', '2025-03-10 15:02:12', 'Desktop', 0, 'Unknown ISP'),
 (23, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36', '::1', 'Unknown', '2025-03-10 15:04:28', 'Desktop', 0, 'Unknown ISP'),
 (24, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36', '::1', 'Unknown', '2025-03-10 15:06:13', 'Desktop', 0, 'Unknown ISP'),
-(25, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36', '::1', 'Unknown', '2025-03-15 20:12:05', 'Desktop', 0, 'Unknown ISP');
+(25, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36', '::1', 'Unknown', '2025-03-15 20:12:05', 'Desktop', 0, 'Unknown ISP'),
+(26, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36', '::1', 'Unknown', '2025-03-17 14:34:28', 'Desktop', 0, 'Unknown ISP'),
+(27, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36', '::1', 'Unknown', '2025-03-19 12:48:15', 'Desktop', 0, 'Unknown ISP');
 
 -- --------------------------------------------------------
 
@@ -510,7 +512,7 @@ INSERT INTO `user` (`userId`, `session_token`, `firstName`, `lastName`, `phoneNu
 (6, '', 'Nikoletta', 'Varro', '0', 'nikolettavarro12@gmail.com', '$2y$10$ZJtAXGLi1y8Y7VlLzE4Ru.nH.SbV5pbDRtoQTlOv88WgemWiSIrB2', 'logInPic.png', 'User', '0000-00-00 00:00:00', 401081, 0, '2024-04-29 22:00:00', 0, '0000-00-00 00:00:00', 0, '2024-04-23 09:54:10', 'en'),
 (7, '', 'Nikoletta', 'Varro', '0649420637', 'nikolettavarro@gmail.com', '$2y$10$GZ9eslD9.lWIwuBi0by.sunJYqe1s8Jn8K2eX4CefmMN/LOnyRNua', 'logInPic.png', 'User', '0000-00-00 00:00:00', 102107, 0, '2024-04-29 22:00:00', 0, '0000-00-00 00:00:00', 0, '2024-04-23 09:54:10', 'en'),
 (19, '97bb39dfb2148b9f6c8e9ea51d9da32be96fe397f58769663da52bd9fd09ccb6', 'Robert', 'Varro', '0649420637', 'robertvarro12@gmail.com', '$2y$10$DLmuSbN32LHROGmHLo07fOteS915gYkqo7Op5l6WOfg5CyD2DY8Sa', '20250310214321.jpg', 'Admin', '0000-00-00 00:00:00', 229527, 1, '2024-04-29 22:00:00', 0, '0000-00-00 00:00:00', 122127, '2025-02-06 18:09:13', 'hu'),
-(25, 'a7052c4fee0988cacc05e7eee56de92d53900c330a0ae0587bfa28e2ed4a3c74', 'Dominik', 'Hupko', '628277140', 'hupkodominik143@gmail.com', '$2y$10$B1cB9B1pWGshgJPbFbUBleB3yicBi3cILKWBT2DAkDbz5kDoLhtuC', 'logInPic.png', 'Admin', '2024-06-03 12:23:54', 2047970, 1, '2024-06-03 12:33:54', 0, '0000-00-00 00:00:00', 173548, '2025-01-27 15:31:17', 'hu'),
+(25, 'a25d7c3c2c791e023686b22ff28811378210ba8c6f848bc97f0c2f2281da34be', 'Dominik', 'Hupko', '628277140', 'hupkodominik143@gmail.com', '$2y$10$B1cB9B1pWGshgJPbFbUBleB3yicBi3cILKWBT2DAkDbz5kDoLhtuC', 'logInPic.png', 'Admin', '2024-06-03 12:23:54', 2047970, 1, '2024-06-03 12:33:54', 0, '0000-00-00 00:00:00', 173548, '2025-01-27 15:31:17', 'hu'),
 (26, '', 'Sherlock', 'Holmes', '0649420637', 'varrorobert03@gmail.coml', '$2y$10$T5p19yMDoZ0EKiRXocAjJuNmNFK8INcDDWFkyC97i5rB6rODkLO82', 'logInPic.png', 'User', '2024-12-14 15:32:29', 1740492, 1, '2024-12-14 15:42:29', 0, '2024-12-14 15:32:29', NULL, '2024-12-14 15:32:29', 'sr'),
 (27, '', 'Nemen', 'Varro', '0649420637', 'varro7robert03@gmail.com', '$2y$10$7.Vqm7RZ7EaQISuO6xdo3OcNPbEAERoUAJF8hsBBxD8mCAvaH5Bpi', 'logInPic.png', 'User', '2024-12-14 22:01:34', 3299090, 1, '2024-12-14 22:11:34', 0, '2024-12-14 22:01:34', NULL, '2024-12-14 22:01:34', 'en'),
 (28, '', 'Robert', 'Varro', '0649420637', 'varkrorobert03@gmail.com', '$2y$10$WuiMPKYoHYmik23BpzphiuOlUZIL.pVOsGDkuUl.zzW.csVbAaaCG', 'logInPic.png', 'User', '2024-12-21 13:46:39', 1176453, 1, '2024-12-21 13:56:39', 0, '2024-12-21 13:46:39', NULL, '2024-12-21 13:46:39', 'en'),
@@ -541,15 +543,14 @@ CREATE TABLE `user_product_relation` (
 
 INSERT INTO `user_product_relation` (`userProductRelationId`, `userId`, `productName`, `productPicture`, `productId`, `sum`, `price`, `productPayed`, `boughtDay`, `payedDay`) VALUES
 (5, 28, '', '', NULL, 2, 11.00, 0, NULL, NULL),
-(9, 25, '', '', NULL, 1, 7.99, 1, NULL, NULL),
-(10, 25, '', '', NULL, 1, 6.99, 1, NULL, NULL),
-(11, 25, '', '', NULL, 1, 7.99, 1, NULL, NULL),
 (17, 19, 'Cica', '20250127230916.png', NULL, 1, 23.34, 1, NULL, NULL),
 (18, 19, 'Nyakörv macskáknak', '20250310191358.jpg', 12, 2, 3.00, 1, NULL, NULL),
 (19, 19, 'Tej', '20250310191833.jpg', 11, 1, 23.99, 1, NULL, NULL),
 (20, 19, 'Nyakörv macskáknak', '20250310191358.jpg', 12, 1, 3.00, 1, NULL, '2025-03-15 21:15:48'),
 (22, 19, 'Tej', '20250310191833.jpg', 11, 1, 23.99, 1, NULL, '2025-03-15 21:18:38'),
-(23, 19, 'Tej', '20250310191833.jpg', 11, 12, 23.99, 1, '2025-03-15 21:20:17', '2025-03-15 21:20:31');
+(23, 19, 'Tej', '20250310191833.jpg', 11, 12, 23.99, 1, '2025-03-15 21:20:17', '2025-03-15 21:20:31'),
+(29, 25, 'Tej', '20250310191833.jpg', 11, 2, 47.98, 1, '2025-03-19 00:00:00', '2025-03-19 15:26:56'),
+(34, 25, 'Nyakörv macskáknak', '20250310191358.jpg', 12, 1, 3.00, 0, '2025-03-19 00:00:00', NULL);
 
 -- --------------------------------------------------------
 
@@ -597,7 +598,7 @@ CREATE TABLE `veterinarian` (
 INSERT INTO `veterinarian` (`veterinarianId`, `firstName`, `lastName`, `phoneNumber`, `veterinarianDescription`, `veterinarianMail`, `veterinarianPassword`, `profilePic`, `registrationTime`, `verification_code`, `verify`, `verification_time`, `banned`, `banned_time`, `passwordValidation`, `passwordValidationTime`, `workAddressId`, `usedLanguage`) VALUES
 (1, 'Robert', 'Varro', '0649420637', '', 'varrorobejrt03@gmail.com', '$2y$10$kDYqhdUxCiKKb86iW8vGIe6yi.8fmADky4QYmpcOXlV3Fh8hN1jOq', 'logInPic.png', '2024-12-14 13:02:10', NULL, 1, '2024-12-14 13:02:10', 0, '2025-01-28 16:53:53', 1, '2024-12-14 13:02:10', 1, 'en'),
 (3, 'Domi', 'Doktor', '0649420637', '            Dali ti se sviđa ova funkcija, nadam se da je dobro i da cemo da dobiti 10', 'varrorobert03@gmail.com', '$2y$10$u1KvS5Nh7JQBo89d7jM9yeFVAS6rrfptOrHum0v/KLNYPRfs60W/2', '20250131210757.png', '2025-01-04 18:44:36', 3296064, 1, '2025-01-04 18:54:36', 0, '2025-01-28 16:53:53', NULL, '2025-01-04 18:44:36', 0, 'sr'),
-(9, 'Nick', 'Doctor', '0628388150', '', 'nickvalami@gmail.com', '$2y$10$B1cB9B1pWGshgJPbFbUBleB3yicBi3cILKWBT2DAkDbz5kDoLhtuC', 'logInPic.png', '2025-03-11 13:19:31', 9740873, 1, '2025-03-11 13:29:31', 0, '2025-03-11 13:19:31', NULL, '2025-03-11 13:19:31', 0, 'en');
+(9, 'Nick', 'Doctor', '0628388150', '', 'nickvalamik@gmail.com', '$2y$10$B1cB9B1pWGshgJPbFbUBleB3yicBi3cILKWBT2DAkDbz5kDoLhtuC', 'logInPic.png', '2025-03-11 13:19:31', 9740873, 1, '2025-03-11 13:29:31', 0, '2025-03-11 13:19:31', NULL, '2025-03-11 13:19:31', 0, 'en');
 
 -- --------------------------------------------------------
 
@@ -742,7 +743,7 @@ ALTER TABLE `errorlog`
 -- AUTO_INCREMENT for table `log`
 --
 ALTER TABLE `log`
-  MODIFY `id_log` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id_log` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT for table `pet`
@@ -778,13 +779,13 @@ ALTER TABLE `review`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `userId` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
+  MODIFY `userId` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
 
 --
 -- AUTO_INCREMENT for table `user_product_relation`
 --
 ALTER TABLE `user_product_relation`
-  MODIFY `userProductRelationId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `userProductRelationId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT for table `user_review_relation`
