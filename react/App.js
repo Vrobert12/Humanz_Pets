@@ -17,6 +17,8 @@ import BookAppointment from './screens/BookAppointment';
 import ReservationScreen from './screens/ReservationsScreen';
 import ProductDetails from './screens/ProductDetails';
 import RegisterScreen from "./screens/RegisterScreen";
+import PurchasedProducts from "./screens/PurchasedProducts";
+import Pets from "./screens/Pets"
 import { TouchableOpacity, View, Text } from "react-native";
 
 // Navigation Stacks
@@ -63,11 +65,25 @@ const ProfileStack = ({ onLogout }) => {
                                )
                            }}
             />
+            <Drawer.Screen name="Pets" component={Pets}
+                           options={{
+                               drawerLabel: () => (
+                                   <Text style={{ fontSize: 20,  }}>Pets</Text>
+                               )
+                           }}
+            />
 
             <Drawer.Screen name="RegisterPet" component={RegisterPet}
                            options={{
                                drawerLabel: () => (
                                    <Text style={{ fontSize: 20,  }}>RegisterPet</Text>
+                               )
+                           }}
+            />
+            <Drawer.Screen name="Purchase History" component={PurchasedProducts}
+                           options={{
+                               drawerLabel: () => (
+                                   <Text style={{ fontSize: 20,  }}>Purchase History</Text>
                                )
                            }}
             />

@@ -1,9 +1,10 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { View, Text, FlatList, Image, StyleSheet, TouchableOpacity } from 'react-native';
+import {View, Text, FlatList, Image, StyleSheet, TouchableOpacity, TextInput} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useFocusEffect } from '@react-navigation/native';
 
 export default function Home({ navigation }) {
+    const [searchQuery, setSearchQuery] = useState('');
     const [products, setProducts] = useState([]);
     const [cart, setCart] = useState([]);
     const API_URL = 'http://192.168.1.8/Humanz2.0/Humanz_Pets/phpForReact';
@@ -15,6 +16,10 @@ export default function Home({ navigation }) {
             .then(data => setProducts(data))
             .catch(error => console.error('Error fetching products:', error));
     }, []);
+
+    const filteredProducts = products.filter(product =>
+        product.productName.toLowerCase().includes(searchQuery.toLowerCase())
+    );
 
     const fetchCartItems = async () => {
         const userId = await AsyncStorage.getItem('user_id');
@@ -55,16 +60,24 @@ export default function Home({ navigation }) {
     return (
         <View style={styles.container}>
             <Text style={styles.header}>🛍️ Products</Text>
+            <TextInput
+                style={styles.searchBar}
+                placeholder="Search products..."
+                placeholderTextColor="#888"
+                value={searchQuery}
+                onChangeText={setSearchQuery}
+            />
             <FlatList
-                data={products}
-                renderItem={({ item }) => (
+                data={filteredProducts}
+                renderItem={({item}) => (
                     <View style={styles.productContainer}>
-                        <Image source={{ uri: `${API_URL2}/pictures/products/${item.productPicture}` }} style={styles.image} />
+                        <Image source={{uri: `${API_URL2}/pictures/products/${item.productPicture}`}}
+                               style={styles.image}/>
                         <Text style={styles.name}>{item.productName}</Text>
                         <Text style={styles.price}>${item.productCost}</Text>
                         <TouchableOpacity
                             style={styles.detailsButton}
-                            onPress={() => navigation.navigate('ProductDetails', { productId: item.productId })}
+                            onPress={() => navigation.navigate('ProductDetails', {productId: item.productId})}
                         >
                             <Text style={styles.detailsButtonText}>Details</Text>
                         </TouchableOpacity>
@@ -83,21 +96,23 @@ export default function Home({ navigation }) {
 
             <FlatList
                 data={cart}
-                renderItem={({ item }) => (
+                renderItem={({item}) => (
                     <View style={styles.cartItem}>
-                        <Image source={{ uri: `${API_URL2}/pictures/products/${item.productPicture}` }} style={styles.image} />
+                        <Image source={{uri: `${API_URL2}/pictures/products/${item.productPicture}`}}
+                               style={styles.image}/>
                         <View style={styles.cartDetails}>
                             <Text style={styles.name}>{item.productName}</Text>
                             <Text style={styles.price}>${item.price} x {item.sum}</Text>
                         </View>
-                        <TouchableOpacity style={styles.deleteButton} onPress={() => deleteCartItem(item.userProductRelationId)}>
+                        <TouchableOpacity style={styles.deleteButton}
+                                          onPress={() => deleteCartItem(item.userProductRelationId)}>
                             <Text style={styles.deleteButtonText}>Delete</Text>
                         </TouchableOpacity>
                     </View>
                 )}
                 keyExtractor={item => item.userProductRelationId.toString()}
                 style={styles.cartContainer}
-                ListFooterComponent={<View style={{ height: 10 }} />} // Adding some spacing at the bottom
+                ListFooterComponent={<View style={{height: 10}}/>} // Adding some spacing at the bottom
             />
         </View>
     );
@@ -105,9 +120,18 @@ export default function Home({ navigation }) {
 
 const styles = StyleSheet.create({
     listStyle: {
-        height: 1,
+        height: 20,
     },
-
+    searchBar: {
+        height: 40,
+        backgroundColor: '#fff',
+        borderRadius: 10,
+        paddingHorizontal: 10,
+        fontSize: 14,
+        marginBottom: 10,
+        borderWidth: 1,
+        borderColor: '#ccc',
+    },
     container: {
         flex: 1,
         paddingTop: 30,

@@ -40,7 +40,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $updateStmt->bindParam(":id", $user["userId"], PDO::PARAM_INT);
             $updateStmt->execute();
 
-            $petStmt = $conn->prepare("SELECT petId, petName, veterinarId FROM pet WHERE userId = :id");
+            $petStmt = $conn->prepare("SELECT petId, petName, veterinarId, bred, petSpecies, profilePic FROM pet WHERE userId = :id");
             $petStmt->bindParam(":id", $userId, PDO::PARAM_INT);
             $petStmt->execute();
             $pets = $petStmt->fetchAll(PDO::FETCH_ASSOC);
