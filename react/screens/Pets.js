@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, FlatList, Image, TextInput, StyleSheet } from 'react-native';
+import React, {useEffect, useState, useCallback} from 'react';
+import {useFocusEffect} from '@react-navigation/native';
+import {View, Text, FlatList, Image, TextInput, StyleSheet} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Pets = () => {
@@ -7,23 +8,27 @@ const Pets = () => {
     const [filteredPets, setFilteredPets] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
 
-    useEffect(() => {
-        // Function to fetch pets from AsyncStorage
-        const fetchPets = async () => {
-            try {
-                const petsData = await AsyncStorage.getItem('pets');
-                if (petsData !== null) {
-                    const petsList = JSON.parse(petsData);
-                    setPets(petsList);
-                    setFilteredPets(petsList); // Initially show all pets
-                }
-            } catch (error) {
-                console.error('Error fetching pets:', error);
-            }
-        };
 
-        fetchPets();
-    }, []);
+    useFocusEffect(
+        useCallback(() => {
+            fetchPets(); // Reload reservations when screen is focused
+        }, [])
+    );
+
+    // Function to fetch pets from AsyncStorage
+    const fetchPets = async () => {
+        try {
+            const petsData = await AsyncStorage.getItem('pets');
+            if (petsData !== null) {
+                const petsList = JSON.parse(petsData);
+                setPets(petsList);
+                setFilteredPets(petsList); // Initially show all pets
+            }
+        } catch (error) {
+            console.error('Error fetching pets:', error);
+        }
+    };
+
 
     // Function to filter pets based on search query
     const handleSearch = (query) => {
@@ -38,7 +43,7 @@ const Pets = () => {
         }
     };
 
-    const renderPet = ({ item }) => (
+    const renderPet = ({item}) => (
         <View style={styles.petItem}>
             <View style={styles.petInfo}>
                 <Text style={styles.petText}>Name: {item.petName}</Text>
@@ -46,7 +51,7 @@ const Pets = () => {
                 <Text style={styles.petText}>Breed: {item.bred}</Text>
             </View>
             <Image
-                source={{ uri: 'http://192.168.1.8/Humanz2.0/Humanz_Pets/pictures/' + item.profilePic }} // Assuming petImage is a URL or a local path
+                source={{uri: 'http://192.168.1.8/Humanz2.0/Humanz_Pets/pictures/' + item.profilePic}} // Assuming petImage is a URL or a local path
                 style={styles.petImage}
             />
         </View>

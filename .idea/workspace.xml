@@ -4,14 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2367ab9a-341c-4300-a7ed-72f717181f7d" name="Changes" comment="products react v2">
+    <list default="true" id="2367ab9a-341c-4300-a7ed-72f717181f7d" name="Changes" comment="React: Pets, Purchase history and search function + DB">
       <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_3_10_2025_4_18_PM_[Changes]/shelved.patch" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_3_10_2025_4_18_PM__Changes_.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/phpForReact/applogIn.php" beforeDir="false" afterPath="$PROJECT_DIR$/phpForReact/applogIn.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phpForReact/register_pet.php" beforeDir="false" afterPath="$PROJECT_DIR$/phpForReact/register_pet.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pictures/20250311130636.png" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/picturespet.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/react/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/react/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/react/screens/Home.js" beforeDir="false" afterPath="$PROJECT_DIR$/react/screens/Home.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/react/screens/LoginScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/react/screens/LoginScreen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/react/screens/Pets.js" beforeDir="false" afterPath="$PROJECT_DIR$/react/screens/Pets.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/react/screens/RegisterPet.js" beforeDir="false" afterPath="$PROJECT_DIR$/react/screens/RegisterPet.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -128,7 +132,8 @@
       <workItem from="1741960110199" duration="9576000" />
       <workItem from="1742212460589" duration="10018000" />
       <workItem from="1742385634149" duration="7342000" />
-      <workItem from="1742552088744" duration="5491000" />
+      <workItem from="1742552088744" duration="5788000" />
+      <workItem from="1742813573146" duration="11428000" />
     </task>
     <task id="LOCAL-00001" summary="Responsivity">
       <option name="closed" value="true" />
@@ -338,7 +343,15 @@
       <option name="project" value="LOCAL" />
       <updated>1742394652143</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL-00027" summary="React: Pets, Purchase history and search function + DB">
+      <option name="closed" value="true" />
+      <created>1742557839579</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1742557839579</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -356,7 +369,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="random commit" />
     <MESSAGE value="Product fix, design update and language update." />
     <MESSAGE value="new DB" />
     <MESSAGE value="API version 1" />
@@ -381,6 +393,7 @@
     <MESSAGE value="register react v1" />
     <MESSAGE value="register react v2" />
     <MESSAGE value="products react v2" />
-    <option name="LAST_COMMIT_MESSAGE" value="products react v2" />
+    <MESSAGE value="React: Pets, Purchase history and search function + DB" />
+    <option name="LAST_COMMIT_MESSAGE" value="React: Pets, Purchase history and search function + DB" />
   </component>
 </project>

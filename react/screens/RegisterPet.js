@@ -1,16 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { ScrollView, Text, TextInput, Button, Image, TouchableOpacity, Alert, ActivityIndicator } from 'react-native';
+import { ScrollView, Text, TextInput, Image, TouchableOpacity, Alert, ActivityIndicator } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
+import { useRoute } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Picker } from '@react-native-picker/picker';
 import axios from 'axios';
-import {backgroundColor} from "react-native-calendars/src/style";
 
 const API_URL = 'http://192.168.1.8/Humanz2.0/Humanz_Pets/phpForReact/register_pet.php';
 const VETS_API_URL = 'http://192.168.1.8/Humanz2.0/Humanz_Pets/phpForReact/veterinariansReact.php';
-
-//const API_URL = 'http://192.168.43.125/Humanz_Pets/phpForReact/register_pet.php';
-//const VETS_API_URL = 'http://192.168.43.125/Humanz_Pets/phpForReact/veterinariansReact.php';
+const PETS_API_URL = 'http://192.168.1.8/Humanz2.0/Humanz_Pets/phpForReact/applogIn.php';
 
 const RegisterPet = ({ navigation }) => {
     const [name, setName] = useState('');
@@ -19,26 +17,27 @@ const RegisterPet = ({ navigation }) => {
     const [veterinarian, setVeterinarian] = useState('');
     const [veterinarians, setVeterinarians] = useState([]);
     const [image, setImage] = useState(null);
-    const [vetOptions, setVetOptions] = useState([]);
     const [loading, setLoading] = useState(false);
     const [isLoadingVets, setIsLoadingVets] = useState(true);
     const [isPictureSet, PictureSet] = useState(false);
     const [imageButtonText, setImageButtonText] = useState('Select Image');
 
+    // Safely extract setRefresh from route.params or provide a no-op default
 
     const loadVets = async () => {
         try {
             const response = await axios.get(VETS_API_URL);
             if (response.data) {
                 console.log("Fetched Veterinarians:", response.data);
-
                 const options = response.data.map((vet) => ({
                     value: vet.veterinarianId.toString(),
                     label: `${vet.firstName} ${vet.lastName}`,
                 }));
-
-                setVeterinarians(response.data);  // Store the actual array of vets
-                setVetOptions(options);
+                setVeterinarians(response.data);
+                // Set default veterinarian if available
+                if (response.data.length > 0) {
+                    setVeterinarian(response.data[0].veterinarianId.toString());
+                }
             }
         } catch (error) {
             console.error("Error loading veterinarians:", error);
@@ -46,7 +45,6 @@ const RegisterPet = ({ navigation }) => {
             setIsLoadingVets(false);
         }
     };
-
 
     useEffect(() => {
         loadVets();
@@ -67,7 +65,7 @@ const RegisterPet = ({ navigation }) => {
     };
 
     const handleRegister = async () => {
-        if(isPictureSet && breed && name) {
+        if (isPictureSet && breed && name) {
             const userId = await AsyncStorage.getItem('user_id');
             if (!userId) {
                 Alert.alert('Error', 'User not logged in');
@@ -79,7 +77,6 @@ const RegisterPet = ({ navigation }) => {
             }
 
             setLoading(true);
-
             let formData = new FormData();
             formData.append('user_id', userId);
             formData.append('name', name);
@@ -88,13 +85,16 @@ const RegisterPet = ({ navigation }) => {
             formData.append('veterinarian_id', veterinarian);
 
             const currentDate = new Date();
-            const newFileName = `${currentDate.getFullYear()}${(currentDate.getMonth() + 1).toString().padStart(2, '0')}${currentDate.getDate().toString().padStart(2, '0')}${currentDate.getHours().toString().padStart(2, '0')}${currentDate.getMinutes().toString().padStart(2, '0')}${currentDate.getSeconds().toString().padStart(2, '0')}.png`;
+            const newFileName = `${currentDate.getFullYear()}${(currentDate.getMonth() + 1)
+                .toString().padStart(2, '0')}${currentDate.getDate().toString().padStart(2, '0')}${currentDate.getHours().toString().padStart(2, '0')}${currentDate.getMinutes().toString().padStart(2, '0')}${currentDate.getSeconds().toString().padStart(2, '0')}.png`;
 
             if (image) {
+                const uriParts = image.split('.');
+                const fileType = uriParts[uriParts.length - 1];
                 formData.append('image', {
                     uri: image,
                     name: newFileName,
-                    type: 'image/png',
+                    type: `image/${fileType}`,
                 });
             }
 
@@ -103,13 +103,36 @@ const RegisterPet = ({ navigation }) => {
                     headers: {'Content-Type': 'multipart/form-data'},
                 });
                 setLoading(false);
-                Alert.alert('Success', response.data.message);
-                navigation.goBack();
+                if (response.data.success) {
+                    Alert.alert('Success', response.data.message);
+                    navigation.goBack();
+                } else {
+                    Alert.alert('Error', response.data.message);
+                }
             } catch (error) {
                 setLoading(false);
                 Alert.alert('Error', 'An error occurred. Please try again later.');
             }
-        }else{Alert.alert('Error: missing data','Please fill in all the fields and have an image selected!');}
+        } else {
+            Alert.alert('Error: missing data', 'Please fill in all the fields and have an image selected!');
+        }
+        const token = await AsyncStorage.getItem('session_token');
+        const userId = await AsyncStorage.getItem('user_id');
+
+        if (token && userId) {
+            setLoading(true);
+            try {
+                // Fetch updated user data
+                const response = await axios.post(PETS_API_URL, {userId, token});
+                if (response.data.success) {
+                    await AsyncStorage.removeItem('pets');
+                    await AsyncStorage.setItem('pets', JSON.stringify(response.data.pets));
+                }
+            } catch (error) {
+                console.error("Error refreshing user data:", error);
+            }
+            setLoading(false);
+        }
     };
 
     return (
@@ -156,7 +179,7 @@ const RegisterPet = ({ navigation }) => {
             <TouchableOpacity onPress={handleRegister} style={{ backgroundColor: '#007bff', padding: 10, borderRadius: 5, marginTop: 10, marginBottom: 30 }}>
                 <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 16, textAlign: 'center' }}>Register Pet</Text>
             </TouchableOpacity>
-            {loading && <ActivityIndicator size="large" style={{backgroundColor: '#007bf'}}/>}
+            {loading && <ActivityIndicator size="large" style={{ backgroundColor: '#007bf' }} />}
         </ScrollView>
     );
 };

@@ -6,8 +6,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 
 const API_URL = 'http://192.168.1.8/Humanz2.0/Humanz_Pets/phpForReact/applogIn.php';
-//const API_URL = 'http://192.168.43.125/Humanz_Pets/phpForReact/applogIn.php';
-
 
 const LoginScreen = ({ navigation, onLogin }) => {
     const [email, setEmail] = useState('');
@@ -20,8 +18,28 @@ const LoginScreen = ({ navigation, onLogin }) => {
 
     const checkLoginStatus = async () => {
         const token = await AsyncStorage.getItem('session_token');
-        if (token) {
-            onLogin(); // Redirect to main app if token exists
+        const userId = await AsyncStorage.getItem('user_id');
+
+        if (token && userId) {
+            setLoading(true);
+            try {
+                // Fetch updated user data
+                const response = await axios.post(API_URL, { userId, token });
+
+                if (response.data.success) {
+                    await AsyncStorage.setItem('pets', JSON.stringify(response.data.pets));
+                    console.log("User data refreshed.");
+                    onLogin(); // Navigate to the main app
+                } else {
+                    console.log("Session expired, logging out.");
+                    await AsyncStorage.removeItem('session_token');
+                    await AsyncStorage.removeItem('user_id');
+                    await AsyncStorage.removeItem('pets');
+                }
+            } catch (error) {
+                console.error("Error refreshing user data:", error);
+            }
+            setLoading(false);
         }
     };
 
@@ -33,16 +51,15 @@ const LoginScreen = ({ navigation, onLogin }) => {
 
         setLoading(true);
         try {
-            const response = await axios.post(API_URL, {email, password});
+            const response = await axios.post(API_URL, { email, password });
             setLoading(false);
             console.log(response.data);
             if (response.data.success) {
                 await AsyncStorage.setItem('session_token', response.data.token);
                 await AsyncStorage.setItem('user_id', response.data.userid.toString());
-                await AsyncStorage.setItem("pets", JSON.stringify(response.data.pets));
+                await AsyncStorage.setItem('pets', JSON.stringify(response.data.pets));
 
                 Alert.alert('Success', 'Login successful');
-                //navigation.replace('Main');
                 onLogin();
             } else {
                 Alert.alert('Error', response.data.message || 'Invalid credentials');
@@ -91,4 +108,5 @@ const LoginScreen = ({ navigation, onLogin }) => {
         </View>
     );
 }
+
 export default LoginScreen;
