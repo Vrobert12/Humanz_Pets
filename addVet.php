@@ -53,7 +53,7 @@ if (isset($_SESSION['title'])) {
 }
 ?>
 <form method="post" action="functions.php" class="mainForm">
-    <a class="btn btn-secondary" href="logIn.php">Back</a><br><br>
+    <a class="btn btn-secondary" href="logIn.php"><?php echo BACK?></a><br><br>
     <label for="fname"><?php echo NAME?>:</label><br>
     <input type="text" class="inputok" placeholder="<?php echo NAME?>" name="fname" id="fname" ><br>
     <label for="lname"><?php echo LASTNAME?>:</label><br>
@@ -61,19 +61,20 @@ if (isset($_SESSION['title'])) {
 
     <label for="tel"><?php echo PHONE?>:</label><br>
 
-    <input type="text" placeholder="Phone Number" name="tel" class="inputok" id="tel" ><br>
-    <label for="mail">E-mail:</label><br>
-    <input type="email" class="inputok" placeholder="Email" name="mail" id="mail" ><br>
+    <input type="text" placeholder="<?php echo PHONE?>" name="tel" class="inputok" id="tel" ><br>
+    <label for="mail"><?php echo EMAIL?>:</label><br>
+    <input type="email" class="inputok" placeholder="<?php echo EMAIL?>" name="mail" id="mail" ><br>
     <select name="lang">
-        <option hidden="hidden">Select your language</option>
-        <option value="en">English</option>
-        <option value="hu">Magyar</option>
-        <option value="sr">Srpski</option>
+        <option hidden="hidden"><?php echo LG?></option>
+        <option value="en"><?php echo LANGUAGE_en?></option>
+        <option value="hu"><?php echo LANGUAGE_hu?></option>
+        <option value="sr"><?php echo LANGUAGE_sr?></option>
     </select>
     <?php
     $_SESSION['backPic']='addVet.php';
     $_SESSION['token'] = substr(number_format(time() * rand(), 0, '', ''), 0, 6);
-    echo '<input type="submit" class="btn btn-primary" name="action" value="AddVet">';
+    echo '<input type="hidden" class="btn btn-primary" name="action" value="AddVet">';
+    echo '<input type="submit" class="btn btn-primary" name="action" value="'.ADDVET.'">';
 
 
     $message = isset($_SESSION['message']) ? $_SESSION['message'] : '';

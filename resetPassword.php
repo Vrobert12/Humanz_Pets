@@ -111,14 +111,14 @@ echo "Verification successful!";
 
     echo '<input type="hidden" name="mail" value="'.$email.'" class="inputok"><br><br>';
     ?>
-    <label><b>Change Your password.</b></label><br><br>
-    <label for="password">Your new password:</label><br>
+    <label><b><?php echo CHANGEPS?></b></label><br><br>
+    <label for="password"><?php echo NEWPASS?>:</label><br>
     <input type="password" class="inputok" placeholder="********" name="resetPassword"  id="pass"><br>
-    <label for="confirmPassword">Confirm your new password:</label><br>
+    <label for="confirmPassword"><?php echo NEWPASSCONF?>:</label><br>
     <input type="password" class="inputok" placeholder="********" name="confirmPassword"  id="pass2"><br>
     <input type="hidden" name="action" value="resetPass" class="inputok"><br><br>
 
-    <input type="submit"  value="ResetPass" class="inputok"><br><br>
+    <input type="submit"  value="<?php echo PASSSET?>" class="inputok"><br><br>
 
     <?php
 

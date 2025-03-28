@@ -1,4 +1,13 @@
 <?php
+define('PASSSET','Set new password');
+define('NEWPASSCONF','Confirm new password');
+define('NEWPASS','New password');
+define('RATING_TIME','Rating time');
+define('RATING','Rating');
+define('RATINGS','Ratings');
+define('DATA','--Tables--');
+define('DELETE_PRODUCT','Delete product');
+define('SEARCH', 'Search...');
 define('DESCRIPTION_VET_UPDATED','Your description has been updated.');
 define('DESCRIPTION_VET','Your description');
 define('ADD_DESCRIPTION_VET','Add or modify your description');
@@ -32,8 +41,8 @@ define('BAN_BUTTON','Ban');
 define('DELETE_PICTURE', 'Delete Picture');
 define("RESESEVATION_CANCELED_BY_VET",'Reservation Cancelled');
 define('HERE','here');
-define('BAN','This person is banned:');
-define('UNBAN','This person is unbanned:');
+define('BAN','This person is banned');
+define('UNBAN','This person is unbanned');
 define('FILLMES','Fill the message out.');
 define('RESDELFAIL','Failed to delete the reservation. Please try again.');
 define('RESCRSUC','Reservation successfully created.');

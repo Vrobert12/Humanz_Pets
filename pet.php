@@ -35,7 +35,7 @@ $functions->checkAutoLogin();
     <div class="d-flex flex-wrap justify-content-center">
         <div class="users">
             <form id="searchForm" method="post">
-                <input type="text" id="search" name="search" placeholder="Pet Name" oninput="performSearch('pet.php?email=<?php echo $_SESSION['email']; ?>')">
+                <input type="text" id="search" name="search" placeholder="<?php echo SEARCH?>" oninput="performSearch('pet.php?email=<?php echo $_SESSION['email']; ?>')">
                 <input type="hidden" name="searchAction" value="1">
             </form>
 
@@ -147,7 +147,7 @@ $_SESSION['backPic']="pet.php";
             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                 $qrPicture = htmlspecialchars($row['qrCodeName']);
                 echo '<div class="mb-4 text-center">';
-                echo '<img class="profile-image" alt="QR Code" src="' . $qrPicture . '">';
+                echo '<img class="profile-image" alt="QR Code" src="pictures/'. $qrPicture .'">';
                 echo '<p>' . INFO . '</p>';
                 echo ' <form action="generate_pdf.php" method="POST">
         <input type="hidden" name="qrImage" value="'.$qrPicture.'">

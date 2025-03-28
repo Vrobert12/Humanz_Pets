@@ -86,7 +86,7 @@ if($_SESSION['privilage']!='Admin'){
 <div class="d-flex flex-wrap justify-content-center">
     <div class="users">
         <form id="searchForm" method="post">
-            <input type="text" id="search" name="search" placeholder="User Email" oninput="performSearch('checkProducts.php')">
+            <input type="text" id="search" name="search" placeholder="<?php echo EMAIL?>" oninput="performSearch('checkProducts.php')">
             <input type="hidden" name="searchAction" value="1"> <!-- Add a search action field to differentiate the request -->
         </form>
     </div>
@@ -166,7 +166,7 @@ if(isset($_SESSION['email']) && isset($_SESSION['name']) && isset($_SESSION['pro
                     echo '<label>' . NAME . ': ' . htmlspecialchars($row['firstName'] . " " . $row['lastName']) . '</label><br>';
                     echo '<label>' . PHONE . ': ' . htmlspecialchars($row['phoneNumber']) . '</label><br>';
                     echo '<label>' . EMAIL . ': ' . htmlspecialchars($row['userMail']) . '</label><br>';
-                    echo '<a class="btn btn-primary" href="usersProducts.php?user=' . htmlspecialchars($row['userId']) . '">' . RESERVE . '</a>&nbsp;&nbsp;&nbsp;';
+                    echo '<a class="btn btn-primary" href="usersProducts.php?user=' . htmlspecialchars($row['userId']) . '">' . PRODUCT . '</a>&nbsp;&nbsp;&nbsp;';
                     echo '</div>';
                 }
                 echo '</div></div>';
@@ -204,7 +204,7 @@ if(isset($_SESSION['email']) && isset($_SESSION['name']) && isset($_SESSION['pro
                     echo '<label>' . NAME . ': ' . htmlspecialchars($row['firstName'] . " " . $row['lastName']) . '</label><br>';
                     echo '<label>' . PHONE . ': ' . htmlspecialchars($row['phoneNumber']) . '</label><br>';
                     echo '<label>' . EMAIL . ': ' . htmlspecialchars($row['userMail']) . '</label><br>';
-                    echo '<a class="btn btn-primary" href="usersProducts.php?user=' . htmlspecialchars($row['userId']) . '">' . RESERVE . '</a>&nbsp;&nbsp;&nbsp;';
+                    echo '<a class="btn btn-primary" href="usersProducts.php?user=' . htmlspecialchars($row['userId']) . '">' . PRODUCT . '</a>&nbsp;&nbsp;&nbsp;';
                     echo '</div>';
                 }
                 echo '</div></div></div>';

@@ -76,7 +76,7 @@ if ($_SESSION['privilage'] != "Admin") {
 <div class="d-flex flex-wrap justify-content-center">
     <div class="users">
         <form id="searchForm" method="post">
-            <input type="text" id="search" name="search" placeholder="User Email" oninput="performSearch('veterinarianRates.php')">
+            <input type="text" id="search" name="search" placeholder="<?php echo EMAIL ?>" oninput="performSearch('veterinarianRates.php')">
             <input type="hidden" name="searchAction" value="1"> <!-- Add a search action field to differentiate the request -->
         </form>
     </div>
@@ -124,9 +124,9 @@ if (isset($_SESSION['email']) && isset($_SESSION['name']) && isset($_SESSION['pr
                 echo '<div class="col-xl-4"><img class="profilePic" 
                 src="pictures/' . htmlspecialchars($row['profilePic']) . '" width="250" height="250" alt="Profile Picture"></div>';
                 echo '<label>ID: ' . htmlspecialchars($row['veterinarianId']) . '</label><br>';
-                echo '<label>Name: ' . htmlspecialchars($row['firstName'] . " " . $row['lastName']) . '</label><br>';
-                echo '<label>Phone: ' . htmlspecialchars($row['phoneNumber']) . '</label><br>';
-                echo '<label>Email: ' . htmlspecialchars($row['veterinarianMail']) . '</label><br>';
+                echo '<label>'.NAME.': ' . htmlspecialchars($row['firstName'] . " " . $row['lastName']) . '</label><br>';
+                echo '<label>'.PHONE.': ' . htmlspecialchars($row['phoneNumber']) . '</label><br>';
+                echo '<label>'.EMAIL.': ' . htmlspecialchars($row['veterinarianMail']) . '</label><br>';
                 echo $isBanned ? '<label style="color: red;">Banned</label><br>' : '<label style="color: green;">Active</label><br>';
 
                 $_SESSION['previousPage']="veterinarianRates.php";
@@ -167,13 +167,13 @@ if (isset($_SESSION['email']) && isset($_SESSION['name']) && isset($_SESSION['pr
                 echo '<div class="col-xl-4"><img class="profilePic" 
                 src="pictures/' . htmlspecialchars($row['profilePic']) . '" width="250" height="250" alt="Profile Picture"></div>';
                 echo '<label>ID: ' . htmlspecialchars($row['veterinarianId']) . '</label><br>';
-                echo '<label>Name: ' . htmlspecialchars($row['firstName'] . " " . $row['lastName']) . '</label><br>';
-                echo '<label>Phone: ' . htmlspecialchars($row['phoneNumber']) . '</label><br>';
-                echo '<label>Email: ' . htmlspecialchars($row['veterinarianMail']) . '</label><br>';
-                echo $isBanned ? '<label style="color: red;">Banned</label><br>' : '<label style="color: green;">Active</label><br>';
+                echo '<label>'.NAME.': ' . htmlspecialchars($row['firstName'] . " " . $row['lastName']) . '</label><br>';
+                echo '<label>'.PHONE.': ' . htmlspecialchars($row['phoneNumber']) . '</label><br>';
+                echo '<label>'.EMAIL.': ' . htmlspecialchars($row['veterinarianMail']) . '</label><br>';
+                echo $isBanned ? '<label style="color: red;">'.BAN.'</label><br>' : '<label style="color: green;">'.UNBAN.'</label><br>';
 
                 $_SESSION['previousPage']="veterinarianRates.php";
-                echo '<label><a class="btn btn-primary" href="ratings.php">Review: <b>5 / ' . htmlspecialchars((float)$row['totalReviewSum']) . '</b></a></label><br><br>';
+                echo '<label><a class="btn btn-primary" href="ratings.php">'.RATING.': <b>5 / ' . htmlspecialchars((float)$row['totalReviewSum']) . '</b></a></label><br><br>';
                 echo '<a class="btn btn-primary" href="book_apointment.php?email=' . $_SESSION['email'] . '&veterinarian=' . htmlspecialchars($row['veterinarianId']) . '">Reserve</a>&nbsp;&nbsp;&nbsp;';
                 echo '</div>';
             }

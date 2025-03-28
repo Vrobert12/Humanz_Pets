@@ -61,11 +61,11 @@ if (!$userId) {
 
         <!-- Quantity selection and price update -->
         <div>
-            <label for="quantity">Quantity:</label>
+            <label for="quantity"><?php echo SUM_PROD?>:</label>
             <input type="number" id="quantity" class="quantity-selector" value="1" min="1" max="99" onchange="updatePrice()">
         </div>
         <div class="total-price">
-            <p>Total Price: €<span id="total-price"><?php echo number_format($product['productCost'], 2); ?></span></p>
+            <p><?php echo TOTAL_PRICE?>: €<span id="total-price"><?php echo number_format($product['productCost'], 2); ?></span></p>
         </div>
 
         <!-- Form to submit purchase -->

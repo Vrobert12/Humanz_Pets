@@ -1,4 +1,13 @@
 <?php
+define('PASSSET','Új jelszó beállítása');
+define('NEWPASSCONF','Új jelszó megerősítése');
+define('NEWPASS','Új jelszó');
+define('RATING_TIME','Értékelés ideje');
+define('RATING','Értékelés');
+define('RATINGS','Értékelések');
+define('DATA','--Táblázatok--');
+define('DELETE_PRODUCT','Termék törlése');
+define('SEARCH', 'keresés...');
 define('DESCRIPTION_VET_UPDATED','A leírásod módosítva lett.');
 define('DESCRIPTION_VET','A leírásod');
 define('ADD_DESCRIPTION_VET','Ad meg vagy módosítva a leírásod');
@@ -33,8 +42,8 @@ define('BAN_BUTTON','Tiltás');
 define('DELETE_PICTURE', 'Profilkép törlése');
 define("RESESEVATION_CANCELED_BY_VET",'Vizsgálat lemondva');
 define('HERE','itt');
-define('BAN','Személy letiltva:');
-define('UNBAN','Személy tilalma felmentve:');
+define('BAN','Személy letiltva');
+define('UNBAN','Személy tilalma felmentve');
 define('FILLMES','Töltse ki az üzenetet');
 define('RESDELFAIL','Nem sikerült törölni a foglalást. Kérjük, próbálja újra.');
 define('RESDELSUC','Foglalás sikeresen törölve');

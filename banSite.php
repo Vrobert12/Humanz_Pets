@@ -76,7 +76,7 @@ $_SESSION['previousPage'] = "banSite.php";
 <div class="d-flex flex-wrap justify-content-center">
     <div class="users">
         <form id="searchForm" method="post">
-            <input type="text" id="search" name="search" placeholder="User Email" oninput="performSearch('banSite.php')">
+            <input type="text" id="search" name="search" placeholder="<?php echo EMAIL ?>" oninput="performSearch('banSite.php')">
             <input type="hidden" name="searchAction" value="1"> <!-- Add a search action field to differentiate the request -->
         </form>
     </div>
@@ -135,7 +135,7 @@ if (isset($_POST['search']) && !empty($_POST['search'])) {
     $firstVetPrinted = false;
     echo "<div class='container' style='text-align: center; margin: 20px 0;'>";
     echo "<hr style='border: 2px solid white;'>";
-    echo "<h3 style='color: white;'>Users</h3>";
+    echo "<h3 style='color: white;'>".USERS."</h3>";
     echo "<hr style='border: 2px solid white;'>";
     echo "</div>";
     foreach (array_merge($users, $veterinarians) as $index => $row) {
@@ -146,7 +146,7 @@ if (isset($_POST['search']) && !empty($_POST['search'])) {
         if (!$firstVetPrinted && isset($row['veterinarianId'])) {
             echo "<div class='container' style='text-align: center; margin: 20px 0;'>";
             echo "<hr style='border: 2px solid white;'>";
-            echo "<h3 style='color: white;'>Veterinarians</h3>";
+            echo "<h3 style='color: white;'>".VETS."</h3>";
             echo "<hr style='border: 2px solid white;'>";
             echo "</div>";
             $firstVetPrinted = true; // Ensure it only prints once
@@ -168,11 +168,11 @@ if (isset($_POST['search']) && !empty($_POST['search'])) {
         echo '<input type="submit" class="btn btn-danger" value="' . DELETE_PICTURE . '"></form>';
 
         echo "<label>ID: " . htmlspecialchars($row['userId'] ?? $row['veterinarianId']) . "</label><br>";
-        echo "<label><b>Név:</b> " . htmlspecialchars($row['firstName'] . ' ' . $row['lastName']) . "</label><br>";
-        echo "<label><b>Email:</b> " . htmlspecialchars($row['userMail'] ?? $row['veterinarianMail']) . "</label><br>";
-        echo "<label><b>Telefon:</b> " . htmlspecialchars($row['phoneNumber']) . "</label><br>";
+        echo "<label><b>".NAME.":</b> " . htmlspecialchars($row['firstName'] . ' ' . $row['lastName']) . "</label><br>";
+        echo "<label><b>".EMAIL.":</b> " . htmlspecialchars($row['userMail'] ?? $row['veterinarianMail']) . "</label><br>";
+        echo "<label><b>".PHONE.":</b> " . htmlspecialchars($row['phoneNumber']) . "</label><br>";
         echo "<label style='color: " . ($row['banned'] == 1 ? 'red' : 'green') . ";'>";
-        echo ($row['banned'] == 1 ? 'Banned' : 'Active') . "</label><br>";
+        echo ($row['banned'] == 1 ? BAN : UNBAN) . "</label><br>";
 
         echo '<form method="post" action="functions.php">';
 
@@ -214,7 +214,7 @@ else {
     $firstVetPrinted = false;
     echo "<div class='container' style='text-align: center; margin: 20px 0;'>";
     echo "<hr style='border: 2px solid white;'>";
-    echo "<h3 style='color: white;'>Users</h3>";
+    echo "<h3 style='color: white;'>".USERS."</h3>";
     echo "<hr style='border: 2px solid white;'>";
     echo "</div>";
     foreach (array_merge($users, $veterinarians) as $index => $row) {
@@ -225,7 +225,7 @@ else {
         if (!$firstVetPrinted && isset($row['veterinarianId'])) {
             echo "<div class='container' style='text-align: center; margin: 20px 0;'>";
             echo "<hr style='border: 2px solid white;'>";
-            echo "<h3 style='color: white;'>Veterinarians</h3>";
+            echo "<h3 style='color: white;'>".VETS."</h3>";
             echo "<hr style='border: 2px solid white;'>";
             echo "</div>";
             $firstVetPrinted = true; // Ensure it only prints once
@@ -247,11 +247,11 @@ else {
         echo '<input type="submit" class="btn btn-danger" value="' . DELETE_PICTURE . '"></form>';
 
         echo "<label>ID: " . htmlspecialchars($row['userId'] ?? $row['veterinarianId']) . "</label><br>";
-        echo "<label><b>Név:</b> " . htmlspecialchars($row['firstName'] . ' ' . $row['lastName']) . "</label><br>";
-        echo "<label><b>Email:</b> " . htmlspecialchars($row['userMail'] ?? $row['veterinarianMail']) . "</label><br>";
-        echo "<label><b>Telefon:</b> " . htmlspecialchars($row['phoneNumber']) . "</label><br>";
+        echo "<label><b>".NAME.":</b> " . htmlspecialchars($row['firstName'] . ' ' . $row['lastName']) . "</label><br>";
+        echo "<label><b>".EMAIL.":</b> " . htmlspecialchars($row['userMail'] ?? $row['veterinarianMail']) . "</label><br>";
+        echo "<label><b>".PHONE.":</b> " . htmlspecialchars($row['phoneNumber']) . "</label><br>";
         echo "<label style='color: " . ($row['banned'] == 1 ? 'red' : 'green') . ";'>";
-        echo ($row['banned'] == 1 ? 'Banned' : 'Active') . "</label><br>";
+        echo ($row['banned'] == 1 ? BAN : UNBAN) . "</label><br>";
 
         echo '<form method="post" action="functions.php">';
 

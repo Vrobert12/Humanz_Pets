@@ -411,10 +411,10 @@ https://getbootstrap.com/docs/5.3/components/navbar/
 -->
 <?php
 if($_SESSION['privilage']=="Veterinarian")
-    echo '<a href="book_veterinarian.php" class="btn btn-success mt-4">BACK</a>';
+    echo '<a href="book_veterinarian.php" class="btn btn-success mt-4">'.BACK.'</a>';
 
 else
-    echo '<a href="index.php" class="btn btn-success mt-4"> BACK</a>';
+    echo '<a href="index.php" class="btn btn-success mt-4">'.BACK.'</a>';
 if (isset($_SESSION['message']) && $_SESSION['message'] != "")
     echo "<div class='mainBlock rounded bg-dark text-white' style='text-align: center; margin-top: 100px;'>
           <h1 style='margin: auto;'>

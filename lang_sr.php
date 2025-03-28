@@ -1,4 +1,13 @@
 <?php
+define('PASSSET','Postavi novu lozinku');
+define('NEWPASSCONF','Ponavljanje nove lozinke');
+define('NEWPASS','Nova lozinka');
+define('RATING_TIME','Vreme evaluacije');
+define('RATING','Evaluacija');
+define('RATINGS','Evaluacije');
+define('DATA','--Tabele--');
+define('DELETE_PRODUCT','Brisanje proizvoda');
+define('SEARCH', 'pretraga...');
 define('DESCRIPTION_VET_UPDATED','Tvoj opis je modifikovan.');
 define('DESCRIPTION_VET','Tvoj opis');
 define('ADD_DESCRIPTION_VET','Daj ili modifikovanj tvoj opis');
@@ -32,8 +41,8 @@ define('BAN_BUTTON','Zabrani');
 define('DELETE_PICTURE', 'Izbirišite profil sliku');
 define("RESESEVATION_CANCELED_BY_VET",'Pregled Odkazano');
 define('HERE','ovde');
-define('BAN','Osoba je zabranjena:');
-define('UNBAN','Osoba nije zabranjena:');
+define('BAN','Osoba je zabranjena');
+define('UNBAN','Osoba nije zabranjena');
 define('FILLMES','Popunite poruku');
 define('RESDELFAIL','Brisanje rezervacije nije uspelo. Pokušajte ponovo.');
 define('RESDELSUC','Rezervacija je uspešno obrisana.');

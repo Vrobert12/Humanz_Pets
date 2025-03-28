@@ -225,7 +225,7 @@ if (isset($_POST['searchAction']) && !empty($_POST['search'])) {
 <div class="d-flex flex-wrap justify-content-center">
     <div class="new-product">
         <form id="searchForm" method="post">
-            <input type="text" id="search" name="search" placeholder="Product Name" oninput="performSearch('products.php')">
+            <input type="text" id="search" name="search" placeholder="<?php echo SEARCH?>" oninput="performSearch('products.php')">
             <input type="hidden" name="searchAction" value="1"> <!-- Add a search action field to differentiate the request -->
         </form>
     </div>
@@ -263,7 +263,7 @@ if (isset($_POST['searchAction']) && !empty($_POST['search'])) {
             echo '   <br><form action="functions.php" method="post">
                     <input type="hidden" name="action" value="deleteFromProduct">
                     <input type="hidden" name="productId" value="'.$product['productId'].'">
-                    <input type="submit" class="btn btn-danger" value="Delete Product" onclick="confirmDeletingProduct(event)">
+                    <input type="submit" class="btn btn-danger" value="'.DELETE_PRODUCT.'" onclick="confirmDeletingProduct(event)">
                 </form>';}
             ?>
         </div>
@@ -299,7 +299,7 @@ foreach ($cartItems as $price) {
                 <form action="functions.php" method="post">
                     <input type="hidden" name="action" value="deleteFromCart">
                     <input type="hidden" name="cartId" value="<?php echo htmlspecialchars($item['userProductRelationId']); ?>">
-                    <input type="submit" class="btn btn-danger" value="Delete Product">
+                    <input type="submit" class="btn btn-danger" value="<?php echo DELETE_PRODUCT?>">
                 </form>
             </li>
         <?php endforeach; ?>

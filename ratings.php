@@ -29,7 +29,7 @@ if($_SESSION['privilage']!='Admin'){
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/themes/base/jquery-ui.min.css"/>
     <link rel="stylesheet" href="css/style.css">
 </head>
-<body class="bg-light " style="background: #659df7">
+<body style="background: #659df7">
 
 <title>Datatables test</title>
 
@@ -38,29 +38,29 @@ if($_SESSION['privilage']!='Admin'){
     <a class="btn btn-secondary" href="index.php"><?php echo BACK?></a>
     <a class="btn btn-secondary" href="<?php echo $_SESSION['previousPage'];?>"><?php echo BACK_TO_RATINGS?></a>
     <select id="tableSelect" class="form-select" style="width: 200px; display: inline-block;">
-        <option selected hidden="hidden">--Choose Data--</option>
-        <option value="ratings">Ratings</option>
-        <option value="users">Users</option>
-        <option value="products">Products</option>
-        <option value="veterinarians">Veterinarians</option>
+        <option selected hidden="hidden"><?php echo DATA?></option>
+        <option value="ratings"><?php echo RATINGS?></option>
+        <option value="users"><?php echo USERS?></option>
+        <option value="products"><?php echo PRODUCT?></option>
+        <option value="veterinarians"><?php echo VETS?></option>
     </select><br><br>
     <table id="ratings" class="table table-striped table-bordered table-hover display" style="width:100%">
         <thead>
         <tr>
-            <th>No</th>
-            <th>Name</th>
-            <th>Rating</th>
-            <th>Email Address</th>
-            <th>Rating Time</th>
+            <th><?php echo NUMBER?></th>
+            <th><?php echo NAME?></th>
+            <th><?php echo RATING?></th>
+            <th><?php echo EMAIL?></th>
+            <th><?php echo RATING_TIME?></th>
         </tr>
         </thead>
         <tfoot>
         <tr>
-            <th>No</th>
-            <th>Name</th>
-            <th>Rating</th>
-            <th>Email Address</th>
-            <th>Rating Time</th>
+            <th><?php echo NUMBER?></th>
+            <th><?php echo NAME?></th>
+            <th><?php echo RATING?></th>
+            <th><?php echo EMAIL?></th>
+            <th><?php echo RATING_TIME?></th>
         </tr>
         </tfoot>
     </table>

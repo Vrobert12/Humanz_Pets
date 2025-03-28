@@ -56,7 +56,7 @@ $autoload->checkAutoLogin();
     <label for="usedLanguage" class="form-label"><?php echo LG; ?>:</label>
     <div class="input-group">
         <select name="usedLanguage">
-            <option hidden="SELECT_LANG" value="SELECT_LANG"><?php echo "SELECT_LANG"; ?></option>
+            <option hidden="SELECT_LANG" value="SELECT_LANG"><?php echo LG?></option>
             <option value="en"><?php echo LANGUAGE_en; ?></option>
             <option value="hu"><?php echo LANGUAGE_hu; ?></option>
             <option value="sr"><?php echo LANGUAGE_sr; ?></option>

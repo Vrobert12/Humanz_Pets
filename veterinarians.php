@@ -34,28 +34,27 @@ if($_SESSION['privilage']!='Admin'){
 <div class="container mt-5">
     <a class="btn btn-secondary" href="index.php"><?php echo BACK?></a>
     <select id="tableSelect" class="form-select" style="width: 200px; display: inline-block;">
-        <option selected hidden="hidden">--Choose Data--</option>
-        <option value="ratings">Ratings</option>
-        <option value="users">Users</option>
-        <option value="products">Products</option>
-        <option value="veterinarians">Veterinarians</option>
+        <option selected hidden="hidden"><?php echo DATA?></option>
+        <option value="ratings"><?php echo RATINGS?></option>
+        <option value="users"><?php echo USERS?></option>
+        <option value="products"><?php echo PRODUCT?></option>
+        <option value="veterinarians"><?php echo VETS?></option>
     </select><br><br>
     <table id="veterinarians" class="table table-striped table-bordered table-hover display" style="width:100%">
         <thead>
         <tr>
-            <th>No</th>
-            <th>Name</th>
-            <th>Phone Number</th>
-            <th>Email Address</th>
+            <th><?php echo NUMBER?></th>
+            <th><?php echo NAME?></th>
+            <th><?php echo PHONE?></th>
+            <th><?php echo EMAIL?></th>
         </tr>
         </thead>
         <tfoot>
         <tr>
-            <th>No</th>
-            <th>Name</th>
-            <th>Phone Number</th>
-            <th>Email Address</th>
-
+            <th><?php echo NUMBER?></th>
+            <th><?php echo NAME?></th>
+            <th><?php echo PHONE?></th>
+            <th><?php echo EMAIL?></th>
         </tr>
         </tfoot>
     </table>
