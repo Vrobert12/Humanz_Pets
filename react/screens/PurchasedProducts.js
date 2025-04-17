@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, FlatList, Image, StyleSheet } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useTranslation } from 'react-i18next';
 
 export default function PurchasedProducts() {
+    const { t } = useTranslation();
     const [purchasedProducts, setPurchasedProducts] = useState([]);
     const API_URL = 'http://192.168.1.8/Humanz2.0/Humanz_Pets/phpForReact';
     const API_URL2 = 'http://192.168.1.8/Humanz2.0/Humanz_Pets';
@@ -21,7 +23,7 @@ export default function PurchasedProducts() {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.header}>Purchase History</Text>
+            <Text style={styles.header}>{t('purchaseHistory')}</Text>
             <FlatList
                 data={purchasedProducts}
                 renderItem={({ item }) => (
@@ -30,8 +32,8 @@ export default function PurchasedProducts() {
                         <View style={styles.detailsContainer}>
                             <Text style={styles.name}>{item.productName}</Text>
                             <Text style={styles.price}>${item.productCost * item.sum}</Text>
-                            <Text style={styles.quantity}>Quantity: {item.sum}</Text>
-                            <Text style={styles.quantity}>Date: {item.payedDay}</Text>
+                            <Text style={styles.quantity}>{t('SUM_PROD')}: {item.sum}</Text>
+                            <Text style={styles.quantity}>{t('date')}: {item.payedDay}</Text>
                         </View>
                     </View>
                 )}

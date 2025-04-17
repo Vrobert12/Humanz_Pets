@@ -3,13 +3,14 @@ import { View, Text, Alert, ActivityIndicator, Button } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import StarRating from 'react-native-star-rating-widget';
+import { useTranslation } from 'react-i18next';
 
-//const API_URL = 'http://192.168.43.125/Humanz_Pets/phpForReact/check_reviews.php';
-//const SUBMIT_URL = 'http://192.168.43.125/Humanz_Pets/phpForReact/submit_review.php';
 const API_URL = 'http://192.168.1.8/Humanz2.0/Humanz_Pets/phpForReact/check_reviews.php';
 const SUBMIT_URL = 'http://192.168.1.8/Humanz2.0/Humanz_Pets/phpForReact/submit_review.php';
 
-const RatingsScreen = ({ fetchReviewCount }) => { // Receive fetchReviewCount as a prop
+const RatingsScreen = ({ fetchReviewCount }) => {
+    const { t } = useTranslation();
+
     const [reviews, setReviews] = useState([]);
     const [loading, setLoading] = useState(true);
     const [tempRatings, setTempRatings] = useState({});
@@ -29,7 +30,7 @@ const RatingsScreen = ({ fetchReviewCount }) => { // Receive fetchReviewCount as
         try {
             const storedUserId = await AsyncStorage.getItem('user_id');
             if (!storedUserId) {
-                Alert.alert("Error", "User not logged in.");
+                Alert.alert(t('error'), t('userNotLoggedIn'));
             } else {
                 setUserId(storedUserId);
             }
@@ -52,18 +53,18 @@ const RatingsScreen = ({ fetchReviewCount }) => { // Receive fetchReviewCount as
     const handleSubmitRating = async (reviewId) => {
         const rating = tempRatings[reviewId];
         if (rating == null) {
-            Alert.alert("Error", "Please select a rating.");
+            Alert.alert(t('error'), t('pleaseSelectRating'));
             return;
         }
 
         try {
             await axios.post(SUBMIT_URL, { review_id: reviewId, rating: rating });
-            Alert.alert("Success", "Rating submitted!");
-            fetchReviews(userId); // Re-fetch reviews after submission
-            fetchReviewCount(userId); // Update the review count after submission
+            Alert.alert(t('success'), t('ratingSubmitted'));
+            fetchReviews(userId);
+            fetchReviewCount(userId);
         } catch (error) {
             console.error("Error submitting rating:", error);
-            Alert.alert("Error", "Could not submit rating.");
+            Alert.alert(t('error'), t('submitRatingFailed'));
         }
     };
 
@@ -71,14 +72,14 @@ const RatingsScreen = ({ fetchReviewCount }) => { // Receive fetchReviewCount as
 
     return (
         <View style={{ flex: 1, padding: 20 }}>
-            <Text style={{ fontSize: 26, fontWeight: 'bold' }}>Rate Veterinarians</Text>
+            <Text style={{ fontSize: 26, fontWeight: 'bold' }}>{t('rateVeterinarians')}</Text>
             {reviews.length === 0 ? (
-                <Text>No pending reviews.</Text>
+                <Text>{t('noPendingReviews')}</Text>
             ) : (
                 reviews.map((review, index) => (
                     <View key={review.reviewId || index} style={{ marginBottom: 20 }}>
-                        <Text style={{ fontSize: 24 }}>Veterinarian: {review.veterinarian_name}</Text>
-                        <Text style={{ fontSize: 20 }}>Checked time: {review.reviewTime}</Text>
+                        <Text style={{ fontSize: 24 }}>{t('veterinarian')}: {review.veterinarian_name}</Text>
+                        <Text style={{ fontSize: 20 }}>{t('checkedTime')}: {review.reviewTime}</Text>
                         <StarRating
                             rating={tempRatings[review.reviewId] || review.review || 0}
                             onChange={(newRating) => {
@@ -90,7 +91,7 @@ const RatingsScreen = ({ fetchReviewCount }) => { // Receive fetchReviewCount as
                             starSize={60}
                         />
                         <Button
-                            title="Submit Rating"
+                            title={t('submitRating')}
                             onPress={() => handleSubmitRating(review.reviewId)}
                         />
                     </View>
@@ -101,4 +102,3 @@ const RatingsScreen = ({ fetchReviewCount }) => { // Receive fetchReviewCount as
 };
 
 export default RatingsScreen;
-

@@ -4,6 +4,7 @@ import {
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
+import {setLanguage} from "../i18n";
 
 const API_URL = 'http://192.168.1.8/Humanz2.0/Humanz_Pets/phpForReact/applogIn.php';
 
@@ -28,6 +29,12 @@ const LoginScreen = ({ navigation, onLogin }) => {
 
                 if (response.data.success) {
                     await AsyncStorage.setItem('pets', JSON.stringify(response.data.pets));
+                    await AsyncStorage.setItem('lang', response.data.language);
+
+                    if (response.data.language) {
+                        setLanguage(response.data.language); // e.g., "en", "hu", "sr"
+                    }
+
                     console.log("User data refreshed.");
                     onLogin(); // Navigate to the main app
                 } else {
@@ -58,6 +65,9 @@ const LoginScreen = ({ navigation, onLogin }) => {
                 await AsyncStorage.setItem('session_token', response.data.token);
                 await AsyncStorage.setItem('user_id', response.data.userid.toString());
                 await AsyncStorage.setItem('pets', JSON.stringify(response.data.pets));
+                await AsyncStorage.setItem('lang', response.data.language);
+
+                setLanguage(response.data.language); // apply the language immediately
 
                 Alert.alert('Success', 'Login successful');
                 onLogin();

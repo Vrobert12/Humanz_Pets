@@ -4,28 +4,25 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2367ab9a-341c-4300-a7ed-72f717181f7d" name="Changes" comment="react fixes">
+    <list default="true" id="2367ab9a-341c-4300-a7ed-72f717181f7d" name="Changes" comment="language update">
       <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_3_10_2025_4_18_PM_[Changes]/shelved.patch" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_3_10_2025_4_18_PM__Changes_.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/addVet.php" beforeDir="false" afterPath="$PROJECT_DIR$/addVet.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/banSite.php" beforeDir="false" afterPath="$PROJECT_DIR$/banSite.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/book_apointment.php" beforeDir="false" afterPath="$PROJECT_DIR$/book_apointment.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/checkProducts.php" beforeDir="false" afterPath="$PROJECT_DIR$/checkProducts.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/details.php" beforeDir="false" afterPath="$PROJECT_DIR$/details.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lang_en.php" beforeDir="false" afterPath="$PROJECT_DIR$/lang_en.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lang_hu.php" beforeDir="false" afterPath="$PROJECT_DIR$/lang_hu.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lang_sr.php" beforeDir="false" afterPath="$PROJECT_DIR$/lang_sr.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modify.php" beforeDir="false" afterPath="$PROJECT_DIR$/modify.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pet.php" beforeDir="false" afterPath="$PROJECT_DIR$/pet.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phpForReact/applogIn.php" beforeDir="false" afterPath="$PROJECT_DIR$/phpForReact/applogIn.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pictures/20250311130636.png" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/picturespet.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/products.php" beforeDir="false" afterPath="$PROJECT_DIR$/products.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ratings.php" beforeDir="false" afterPath="$PROJECT_DIR$/ratings.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resetPassword.php" beforeDir="false" afterPath="$PROJECT_DIR$/resetPassword.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/users.php" beforeDir="false" afterPath="$PROJECT_DIR$/users.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/veterinarianRates.php" beforeDir="false" afterPath="$PROJECT_DIR$/veterinarianRates.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/veterinarians.php" beforeDir="false" afterPath="$PROJECT_DIR$/veterinarians.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/react/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/react/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/react/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/react/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/react/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/react/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/react/screens/BookAppointment.js" beforeDir="false" afterPath="$PROJECT_DIR$/react/screens/BookAppointment.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/react/screens/Home.js" beforeDir="false" afterPath="$PROJECT_DIR$/react/screens/Home.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/react/screens/LoginScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/react/screens/LoginScreen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/react/screens/Pets.js" beforeDir="false" afterPath="$PROJECT_DIR$/react/screens/Pets.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/react/screens/PurchasedProducts.js" beforeDir="false" afterPath="$PROJECT_DIR$/react/screens/PurchasedProducts.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/react/screens/RatingsScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/react/screens/RatingsScreen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/react/screens/RegisterPet.js" beforeDir="false" afterPath="$PROJECT_DIR$/react/screens/RegisterPet.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/react/screens/ReservationsScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/react/screens/ReservationsScreen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/react/screens/Settings.js" beforeDir="false" afterPath="$PROJECT_DIR$/react/screens/Settings.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -144,7 +141,8 @@
       <workItem from="1742385634149" duration="7342000" />
       <workItem from="1742552088744" duration="5788000" />
       <workItem from="1742813573146" duration="11758000" />
-      <workItem from="1743161123868" duration="6109000" />
+      <workItem from="1743161123868" duration="6204000" />
+      <workItem from="1744887263190" duration="18367000" />
     </task>
     <task id="LOCAL-00001" summary="Responsivity">
       <option name="closed" value="true" />
@@ -370,7 +368,15 @@
       <option name="project" value="LOCAL" />
       <updated>1742828646034</updated>
     </task>
-    <option name="localTasksCounter" value="29" />
+    <task id="LOCAL-00029" summary="language update">
+      <option name="closed" value="true" />
+      <created>1743167347706</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1743167347706</updated>
+    </task>
+    <option name="localTasksCounter" value="30" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -388,7 +394,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="new DB" />
     <MESSAGE value="API version 1" />
     <MESSAGE value="Vet info page on pets v1" />
     <MESSAGE value="Vet info page on pets v2" />
@@ -413,6 +418,7 @@
     <MESSAGE value="products react v2" />
     <MESSAGE value="React: Pets, Purchase history and search function + DB" />
     <MESSAGE value="react fixes" />
-    <option name="LAST_COMMIT_MESSAGE" value="react fixes" />
+    <MESSAGE value="language update" />
+    <option name="LAST_COMMIT_MESSAGE" value="language update" />
   </component>
 </project>

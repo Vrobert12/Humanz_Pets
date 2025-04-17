@@ -2,6 +2,7 @@ import React, { useEffect, useState, useCallback } from 'react';
 import {View, Text, FlatList, Image, StyleSheet, TouchableOpacity, TextInput} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useFocusEffect } from '@react-navigation/native';
+import { useTranslation } from 'react-i18next';
 
 export default function Home({ navigation }) {
     const [searchQuery, setSearchQuery] = useState('');
@@ -9,12 +10,13 @@ export default function Home({ navigation }) {
     const [cart, setCart] = useState([]);
     const API_URL = 'http://192.168.1.8/Humanz2.0/Humanz_Pets/phpForReact';
     const API_URL2 = 'http://192.168.1.8/Humanz2.0/Humanz_Pets';
+    const { t } = useTranslation();
 
     useEffect(() => {
         fetch(`${API_URL}/get_products.php`)
             .then(response => response.json())
             .then(data => setProducts(data))
-            .catch(error => console.error('Error fetching products:', error));
+            .catch(error => console.error(t('ERROR'), error));
     }, []);
 
     const filteredProducts = products.filter(product =>
@@ -26,12 +28,12 @@ export default function Home({ navigation }) {
         fetch(`${API_URL}/get_cart.php?userId=${userId}`)
             .then(response => response.json())
             .then(data => setCart(data))
-            .catch(error => console.error('Error fetching cart:', error));
+            .catch(error => console.error(t('ERROR'), error));
     };
 
     useFocusEffect(
         useCallback(() => {
-            fetchCartItems(); // Refresh cart when screen is focused
+            fetchCartItems();
         }, [])
     );
 
@@ -47,22 +49,21 @@ export default function Home({ navigation }) {
             if (data.success) {
                 fetchCartItems();
             } else {
-                console.error('Failed to delete item:', data.message);
+                console.error(t('ERROR'), data.message);
             }
         } catch (error) {
-            console.error('Error deleting cart item:', error);
+            console.error(t('ERROR'), error);
         }
     };
 
-    // Calculate total price
     const totalPrice = cart.reduce((total, item) => total + (item.price * item.sum), 0).toFixed(2);
 
     return (
         <View style={styles.container}>
-            <Text style={styles.header}>🛍️ Products</Text>
+            <Text style={styles.header}>🛍️ {t('PRODUCT')}</Text>
             <TextInput
                 style={styles.searchBar}
-                placeholder="Search products..."
+                placeholder={t('SEARCH')}
                 placeholderTextColor="#888"
                 value={searchQuery}
                 onChangeText={setSearchQuery}
@@ -79,7 +80,7 @@ export default function Home({ navigation }) {
                             style={styles.detailsButton}
                             onPress={() => navigation.navigate('ProductDetails', {productId: item.productId})}
                         >
-                            <Text style={styles.detailsButtonText}>Details</Text>
+                            <Text style={styles.detailsButtonText}>{t('DETAILS')}</Text>
                         </TouchableOpacity>
                     </View>
                 )}
@@ -90,8 +91,8 @@ export default function Home({ navigation }) {
             />
 
             <View style={styles.cartHeaderContainer}>
-                <Text style={styles.header}>🛒 Your Cart</Text>
-                <Text style={styles.totalPrice}>Total: ${totalPrice}</Text>
+                <Text style={styles.header}>{t('CART')}</Text>
+                <Text style={styles.totalPrice}>{t('TOTAL_PRICE')}: ${totalPrice}</Text>
             </View>
 
             <FlatList
@@ -106,13 +107,13 @@ export default function Home({ navigation }) {
                         </View>
                         <TouchableOpacity style={styles.deleteButton}
                                           onPress={() => deleteCartItem(item.userProductRelationId)}>
-                            <Text style={styles.deleteButtonText}>Delete</Text>
+                            <Text style={styles.deleteButtonText}>{t('DELETE_PRODUCT')}</Text>
                         </TouchableOpacity>
                     </View>
                 )}
                 keyExtractor={item => item.userProductRelationId.toString()}
                 style={styles.cartContainer}
-                ListFooterComponent={<View style={{height: 10}}/>} // Adding some spacing at the bottom
+                ListFooterComponent={<View style={{height: 10}}/>}
             />
         </View>
     );
@@ -195,7 +196,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
     cartContainer: {
-        flex: 1, // Ensure the cart takes available space, but doesn't cover the entire screen
+        flex: 1,
         marginTop: 10,
     },
     cartItem: {
