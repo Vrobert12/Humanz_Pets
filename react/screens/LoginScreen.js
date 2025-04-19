@@ -5,6 +5,7 @@ import {
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import {setLanguage} from "../i18n";
+import { useTranslation } from 'react-i18next';
 
 const API_URL = 'http://192.168.1.8/Humanz2.0/Humanz_Pets/phpForReact/applogIn.php';
 
@@ -12,6 +13,7 @@ const LoginScreen = ({ navigation, onLogin }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
+    const { t } = useTranslation();
 
     useEffect(() => {
         checkLoginStatus();
@@ -34,8 +36,6 @@ const LoginScreen = ({ navigation, onLogin }) => {
                     if (response.data.language) {
                         setLanguage(response.data.language); // e.g., "en", "hu", "sr"
                     }
-
-                    console.log("User data refreshed.");
                     onLogin(); // Navigate to the main app
                 } else {
                     console.log("Session expired, logging out.");
@@ -44,7 +44,7 @@ const LoginScreen = ({ navigation, onLogin }) => {
                     await AsyncStorage.removeItem('pets');
                 }
             } catch (error) {
-                console.error("Error refreshing user data:", error);
+                console.error(t('error'), error);
             }
             setLoading(false);
         }
@@ -52,7 +52,7 @@ const LoginScreen = ({ navigation, onLogin }) => {
 
     const handleLogin = async () => {
         if (!email || !password) {
-            Alert.alert('Error', 'Please fill in both fields');
+            Alert.alert(t('error'), t('fillAllFields'));
             return;
         }
 
@@ -69,31 +69,31 @@ const LoginScreen = ({ navigation, onLogin }) => {
 
                 setLanguage(response.data.language); // apply the language immediately
 
-                Alert.alert('Success', 'Login successful');
+                Alert.alert(t('success'), t('LOGIN_SUCCESS'));
                 onLogin();
             } else {
-                Alert.alert('Error', response.data.message || 'Invalid credentials');
+                Alert.alert(t('error'), t('INVALID_CREDENTIALS'));
             }
         } catch (error) {
             setLoading(false);
-            Alert.alert('Error', 'An error occurred. Please try again later: ' + error);
+            Alert.alert(t('error'),error);
         }
     };
 
     return (
         <View style={{flex: 1, justifyContent: 'center', alignItems: 'center', padding: 20}}>
-            <Text style={{fontSize: 24, marginBottom: 20}}>Login</Text>
+            <Text style={{fontSize: 24, marginBottom: 20}}>{t('LOGIN')}</Text>
 
             <TextInput
                 style={{width: '100%', padding: 10, borderWidth: 1, marginBottom: 10}}
-                placeholder="Email"
+                placeholder={t('EMAIL')}
                 keyboardType="email-address"
                 value={email}
                 onChangeText={setEmail}
             />
             <TextInput
                 style={{width: '100%', padding: 10, borderWidth: 1, marginBottom: 10}}
-                placeholder="Password"
+                placeholder={t('PASSWORD')}
                 secureTextEntry
                 value={password}
                 onChangeText={setPassword}
@@ -103,7 +103,7 @@ const LoginScreen = ({ navigation, onLogin }) => {
                 onPress={handleLogin}
                 style={{backgroundColor: 'blue', padding: 10, borderRadius: 5, width: '100%', alignItems: 'center'}}
             >
-                <Text style={{color: 'white', fontSize: 16}}>Log In</Text>
+                <Text style={{color: 'white', fontSize: 16}}>{t('LOGIN')}</Text>
             </TouchableOpacity>
 
             {loading && <ActivityIndicator size="large" color="blue" style={{marginTop: 10}}/>}
@@ -113,7 +113,7 @@ const LoginScreen = ({ navigation, onLogin }) => {
                 onPress={() => navigation.navigate('Register')}
                 style={{ marginTop: 15 }}
             >
-                <Text style={{ color: 'blue', fontSize: 16 }}>Don't have an account? Register here</Text>
+                <Text style={{ color: 'blue', fontSize: 16 }}>{t('NOACC') + ' ' + t('REGHERE')}</Text>
             </TouchableOpacity>
         </View>
     );

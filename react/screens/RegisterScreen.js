@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, Alert } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import axios from 'axios';
+import { useTranslation } from 'react-i18next';
 
 const API_URL = 'http://192.168.1.8/Humanz2.0/Humanz_Pets/phpForReact/registerUser.php';
 //const API_URL = 'http://192.168.43.125/Humanz_Pets/phpForReact/registerUser.php';
@@ -14,14 +15,15 @@ const RegisterScreen = ({ navigation }) => {
     const [language, setLanguage] = useState('English');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+    const { t } = useTranslation();
 
     const handleRegister = async () => {
         if (!firstname || !lastname || !phone || !email || !password || !confirmPassword) {
-            Alert.alert('Error', 'Please fill in all fields');
+            Alert.alert(t('error'), t('fillAllFields'));
             return;
         }
         if (password !== confirmPassword) {
-            Alert.alert('Error', 'Passwords do not match');
+            Alert.alert(t('error'), t('PASSMATCH'));
             return;
         }
 
@@ -29,11 +31,11 @@ const RegisterScreen = ({ navigation }) => {
         const phoneRegex = /^[0-9]{10,15}$/;  // Simple phone number validation (adjust as needed)
 
         if (!emailRegex.test(email)) {
-            Alert.alert('Error', 'Please enter a valid email address');
+            Alert.alert(t('error'), t('NOEX'));
             return;
         }
         if (!phoneRegex.test(phone)) {
-            Alert.alert('Error', 'Please enter a valid phone number');
+            Alert.alert(t('error'), t('invalidPhone'));
             return;
         }
 
@@ -50,74 +52,77 @@ const RegisterScreen = ({ navigation }) => {
             const jsonResponse = JSON.parse(response.data.match(/\{.*}/s)[0]);
             console.log(jsonResponse.success); // Should be true
             if (jsonResponse.success) {
-                Alert.alert('Success', 'Registration successful! A validation link has been sent to you via email!');
+                Alert.alert(t('success'), t('registrationSuccess'));
                 navigation.replace('Login');
             } else {
                 Alert.alert('Error', response.data.message || 'Registration failed');
             }
         } catch (error) {
-            Alert.alert('Error', 'An error occurred. Please try again later.', error);
+            Alert.alert(t('error'), error);
         }
     };
 
     return (
         <View style={{ flex: 1, justifyContent: 'center', padding: 20 }}>
-            <Text style={{ fontSize: 24, textAlign: 'center', marginBottom: 20 }}>Register</Text>
+            <Text style={{ fontSize: 24, textAlign: 'center', marginBottom: 20 }}>{t('REGISTER')}</Text>
 
             <TextInput
                 style={{ borderWidth: 1, padding: 10, marginBottom: 10 }}
-                placeholder="First Name"
+                placeholder={t('NAME')}
                 value={firstname}
                 onChangeText={setFirstname}
             />
             <TextInput
                 style={{ borderWidth: 1, padding: 10, marginBottom: 10 }}
-                placeholder="Last Name"
+                placeholder={t('LASTNAME')}
                 value={lastname}
                 onChangeText={setLastname}
             />
             <TextInput
                 style={{ borderWidth: 1, padding: 10, marginBottom: 10 }}
-                placeholder="Phone Number"
+                placeholder={t('PHONE')}
                 keyboardType="phone-pad"
                 value={phone}
                 onChangeText={setPhone}
             />
             <TextInput
                 style={{ borderWidth: 1, padding: 10, marginBottom: 10 }}
-                placeholder="Email Address"
+                placeholder={t('EMAIL')}
                 keyboardType="email-address"
                 value={email}
                 onChangeText={setEmail}
             />
 
-            <Picker
-                selectedValue={language}
-                onValueChange={(itemValue) => setLanguage(itemValue)}
-                style={{ marginBottom: 10, borderWidth: 1 }}
-            >
-                <Picker.Item label="English" value="English" />
-                <Picker.Item label="Hungarian" value="Hungarian" />
-                <Picker.Item label="Serbian" value="Serbian" />
-            </Picker>
+            <View style={{ marginBottom: 10 }}>
+                <Text style={{ marginBottom: 5 }}>{t('SELECT_LANGUAGE')}</Text>
+                <Picker
+                    selectedValue={language}
+                    onValueChange={(itemValue) => setLanguage(itemValue)}
+                    style={{ borderWidth: 1 }}
+                >
+                    <Picker.Item label={t('LANGUAGE_en')} value="English" />
+                    <Picker.Item label={t('LANGUAGE_hu')} value="Hungarian" />
+                    <Picker.Item label={t('LANGUAGE_sr')} value="Serbian" />
+                </Picker>
+            </View>
 
             <TextInput
                 style={{ borderWidth: 1, padding: 10, marginBottom: 10 }}
-                placeholder="Password"
+                placeholder={t('PASSWORD')}
                 secureTextEntry
                 value={password}
                 onChangeText={setPassword}
             />
             <TextInput
                 style={{ borderWidth: 1, padding: 10, marginBottom: 10 }}
-                placeholder="Confirm Password"
+                placeholder={t('CONFPASS')}
                 secureTextEntry
                 value={confirmPassword}
                 onChangeText={setConfirmPassword}
             />
 
             <TouchableOpacity onPress={handleRegister} style={{ backgroundColor: 'blue', padding: 10, borderRadius: 5 }}>
-                <Text style={{ color: 'white', textAlign: 'center' }}>Register</Text>
+                <Text style={{ color: 'white', textAlign: 'center' }}>{t('REGISTER')}</Text>
             </TouchableOpacity>
         </View>
     );

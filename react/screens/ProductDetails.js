@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity, TextInput, Alert } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useTranslation } from 'react-i18next';
 
 export default function ProductDetails({ route }) {
     const { productId } = route.params;
     const [product, setProduct] = useState(null);
     const [quantity, setQuantity] = useState(1);
+    const { t } = useTranslation();
 
     useEffect(() => {
         fetch(`http://192.168.1.8/Humanz2.0/Humanz_Pets/phpForReact/get_product_details.php?id=${productId}`)
@@ -36,8 +38,8 @@ export default function ProductDetails({ route }) {
             })
         })
             .then(response => response.json())
-            .then(data => Alert.alert('Success', data.message))
-            .catch(error => console.error('Error adding to cart:', error));
+            .then(data => Alert.alert(t('success'), t('productAddedToCart')))
+            .catch(error => console.error(t('error'), error));
     };
 
     if (!product) {
@@ -50,7 +52,7 @@ export default function ProductDetails({ route }) {
             <Text style={styles.name}>{product.productName}</Text>
             <Text style={styles.price}>${product.productCost}</Text>
             <Text style={styles.description}>{product.description}</Text>
-            <Text style={styles.releaseDate}>Released: {product.productRelease}</Text>
+            <Text style={styles.releaseDate}>{t('released')}: {product.productRelease}</Text>
             <TextInput
                 style={styles.quantityInput}
                 keyboardType='numeric'
@@ -58,7 +60,7 @@ export default function ProductDetails({ route }) {
                 onChangeText={(text) => setQuantity(Math.max(1, parseInt(text) || 1))}
             />
             <TouchableOpacity style={styles.addToCartButton} onPress={handleAddToCart}>
-                <Text style={styles.addToCartText}>Add to Cart</Text>
+                <Text style={styles.addToCartText}>{t('ADDCART')}</Text>
             </TouchableOpacity>
         </View>
     );

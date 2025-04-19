@@ -35,7 +35,7 @@ const RatingsScreen = ({ fetchReviewCount }) => {
                 setUserId(storedUserId);
             }
         } catch (error) {
-            console.error("Error fetching user ID:", error);
+            console.error(t('error'), error);
         }
     };
 
@@ -44,7 +44,7 @@ const RatingsScreen = ({ fetchReviewCount }) => {
             const response = await axios.post(API_URL, { user_id: userId });
             setReviews(response.data.reviews);
         } catch (error) {
-            console.error("Error fetching reviews:", error);
+            console.error(t('error'), error);
         } finally {
             setLoading(false);
         }
@@ -63,7 +63,7 @@ const RatingsScreen = ({ fetchReviewCount }) => {
             fetchReviews(userId);
             fetchReviewCount(userId);
         } catch (error) {
-            console.error("Error submitting rating:", error);
+            console.error(t('error'), error);
             Alert.alert(t('error'), t('submitRatingFailed'));
         }
     };

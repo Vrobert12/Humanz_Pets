@@ -4,23 +4,24 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2367ab9a-341c-4300-a7ed-72f717181f7d" name="Changes" comment="language update">
+    <list default="true" id="2367ab9a-341c-4300-a7ed-72f717181f7d" name="Changes" comment="react language implementation">
       <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_3_10_2025_4_18_PM_[Changes]/shelved.patch" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_3_10_2025_4_18_PM__Changes_.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/phpForReact/applogIn.php" beforeDir="false" afterPath="$PROJECT_DIR$/phpForReact/applogIn.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pictures/20250311130636.png" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/picturespet.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/react/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/react/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/react/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/react/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/react/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/react/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/react/locales/en.json" beforeDir="false" afterPath="$PROJECT_DIR$/react/locales/en.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/react/locales/hu.json" beforeDir="false" afterPath="$PROJECT_DIR$/react/locales/hu.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/react/locales/sr.json" beforeDir="false" afterPath="$PROJECT_DIR$/react/locales/sr.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/react/screens/BookAppointment.js" beforeDir="false" afterPath="$PROJECT_DIR$/react/screens/BookAppointment.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/react/screens/Home.js" beforeDir="false" afterPath="$PROJECT_DIR$/react/screens/Home.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/react/screens/LoginScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/react/screens/LoginScreen.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/react/screens/Pets.js" beforeDir="false" afterPath="$PROJECT_DIR$/react/screens/Pets.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/react/screens/ProductDetails.js" beforeDir="false" afterPath="$PROJECT_DIR$/react/screens/ProductDetails.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/react/screens/Profile.js" beforeDir="false" afterPath="$PROJECT_DIR$/react/screens/Profile.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/react/screens/PurchasedProducts.js" beforeDir="false" afterPath="$PROJECT_DIR$/react/screens/PurchasedProducts.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/react/screens/QrCode.js" beforeDir="false" afterPath="$PROJECT_DIR$/react/screens/QrCode.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/react/screens/RatingsScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/react/screens/RatingsScreen.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/react/screens/RegisterPet.js" beforeDir="false" afterPath="$PROJECT_DIR$/react/screens/RegisterPet.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/react/screens/RegisterScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/react/screens/RegisterScreen.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/react/screens/ReservationsScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/react/screens/ReservationsScreen.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/react/screens/Settings.js" beforeDir="false" afterPath="$PROJECT_DIR$/react/screens/Settings.js" afterDir="false" />
     </list>
@@ -142,7 +143,8 @@
       <workItem from="1742552088744" duration="5788000" />
       <workItem from="1742813573146" duration="11758000" />
       <workItem from="1743161123868" duration="6204000" />
-      <workItem from="1744887263190" duration="18367000" />
+      <workItem from="1744887263190" duration="18507000" />
+      <workItem from="1745077030436" duration="4752000" />
     </task>
     <task id="LOCAL-00001" summary="Responsivity">
       <option name="closed" value="true" />
@@ -376,7 +378,15 @@
       <option name="project" value="LOCAL" />
       <updated>1743167347706</updated>
     </task>
-    <option name="localTasksCounter" value="30" />
+    <task id="LOCAL-00030" summary="react language implementation">
+      <option name="closed" value="true" />
+      <created>1744908319312</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1744908319312</updated>
+    </task>
+    <option name="localTasksCounter" value="31" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -394,7 +404,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="API version 1" />
     <MESSAGE value="Vet info page on pets v1" />
     <MESSAGE value="Vet info page on pets v2" />
     <MESSAGE value="DB" />
@@ -419,6 +428,7 @@
     <MESSAGE value="React: Pets, Purchase history and search function + DB" />
     <MESSAGE value="react fixes" />
     <MESSAGE value="language update" />
-    <option name="LAST_COMMIT_MESSAGE" value="language update" />
+    <MESSAGE value="react language implementation" />
+    <option name="LAST_COMMIT_MESSAGE" value="react language implementation" />
   </component>
 </project>

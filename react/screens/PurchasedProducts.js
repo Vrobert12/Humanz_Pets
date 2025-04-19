@@ -15,7 +15,7 @@ export default function PurchasedProducts() {
             fetch(`${API_URL}/get_purchased_products.php?userId=${userId}`)
                 .then(response => response.json())
                 .then(data => setPurchasedProducts(data))
-                .catch(error => console.error('Error fetching purchased products:', error));
+                .catch(error => console.error(t('error'), error));
         };
 
         fetchPurchasedProducts();

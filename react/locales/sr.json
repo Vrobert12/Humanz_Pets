@@ -1,4 +1,12 @@
 {
+  "INVALID_CREDENTIALS": "Nevažeći podaci za prijavu",
+  "LOGIN_SUCCESS": "Uspešna prijava!",
+  "SELECT_LANGUAGE": "Izaberite željeni jezik",
+  "invalidPhone": "Molimo unesite važeći broj telefona",
+  "registrationSuccess": "Registracija uspešna! Link za potvrdu je poslat na vašu email adresu!",
+  "yes": "Da",
+  "productAddedToCart": "Proizvod je uspešno dodat u korpu!",
+  "released": "Objavljeno",
   "pleaseSelectRating": "Molimo odaberite ocenu.",
   "ratingSubmitted": "Ocena je poslata!",
   "submitRatingFailed": "Nije moguće poslati ocenu.",

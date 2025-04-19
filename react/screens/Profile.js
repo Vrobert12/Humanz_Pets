@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, Image, ActivityIndicator, StyleSheet, TouchableOpacity } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useTranslation } from 'react-i18next';
 
 export default function Profile({ route }) {
     const [userData, setUserData] = useState(null);
     const [loading, setLoading] = useState(true);
     const { onLogout } = route.params || {};
+    const { t } = useTranslation();
 
     useEffect(() => {
         const fetchUserData = async () => {
@@ -24,7 +26,7 @@ export default function Profile({ route }) {
                     setUserData(data.data[0]);
                 }
             } catch (error) {
-                console.error("Error fetching user data:", error);
+                console.error(t('error'), error);
             } finally {
                 setLoading(false);
             }
@@ -61,8 +63,8 @@ export default function Profile({ route }) {
             <Text style={styles.userName}>{String(userData.firstName)} {String(userData.lastName)}</Text>
             <Text style={styles.info}>📧 {String(userData.userMail)}</Text>
             <Text style={styles.info}>📞 {String(userData.phoneNumber)}</Text>
-            <Text style={styles.info}>🌐 Language: {String(userData.usedLanguage)}</Text>
-            <Text style={styles.info}>🔒 Privilege: {String(userData.privilage)}</Text>
+            <Text style={styles.info}>🌐 {t('LG')}: {String(userData.usedLanguage)}</Text>
+            <Text style={styles.info}>🔒 {t('PRIVILEGE')}: {String(userData.privilage)}</Text>
 
 
 

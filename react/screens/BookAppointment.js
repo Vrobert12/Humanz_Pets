@@ -36,7 +36,7 @@ const ReservationForm = ({ navigation }) => {
                 setPetOptions(options);
             }
         } catch (error) {
-            console.error('Error loading pets:', error);
+            console.error(t('error'), error);
         } finally {
             setIsLoadingPets(false);
         }

@@ -21,11 +21,10 @@ const QrCode = () => {
 
             // Check if the response is okay
             if (!response.ok || response.status === 404) {
-                throw new Error(`Failed to fetch QR code: ${response.statusText}`);
+                throw new Error(` ${t('error') + response.statusText}`);
             }
 
             const text = await response.text(); // Log raw response
-            console.log("Raw Response:", text);
 
             const data = JSON.parse(text);
             //console.log('QR Code Path:', data.data.path);
@@ -39,7 +38,7 @@ const QrCode = () => {
                 Alert.alert(data.message);
             }
         } catch (error) {
-            console.error("Error fetching QR code:", error);
+            console.error(t('error'), error);
             setError(error.message); // Set the error state if there's an issue
         } finally {
             setLoading(false); // Set loading to false after the request

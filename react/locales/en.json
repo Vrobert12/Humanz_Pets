@@ -1,4 +1,12 @@
 {
+  "INVALID_CREDENTIALS": "Invalid credentials",
+  "LOGIN_SUCCESS": "Login successful!",
+  "SELECT_LANGUAGE": "Select your preferred language",
+  "invalidPhone": "Please enter a valid phone number",
+  "registrationSuccess": "Registration successful! A validation link has been sent to you via email!",
+  "yes": "Yes",
+  "productAddedToCart": "Product successfully added into the cart!",
+  "released": "Released",
   "pleaseSelectRating": "Please select a rating.",
   "ratingSubmitted": "Rating submitted!",
   "submitRatingFailed": "Could not submit rating.",

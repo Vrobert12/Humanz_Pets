@@ -41,7 +41,7 @@ const ReservationsScreen = () => {
     const deleteReservation = async (reservationId) => {
         try {
             const response = await axios.post(API_URL_DELETE, { reservationId });
-            Alert.alert('', response.data.message);
+            Alert.alert(t('success'), t('RESDELSUC'));
 
             if (response.data.message === 'Reservation deleted successfully') {
                 setReservations(reservations.filter(res => res.reservationId !== reservationId));
@@ -66,7 +66,7 @@ const ReservationsScreen = () => {
                 t('confirmDeleteMessage'),
                 [
                     { text: t('cancel'), style: 'cancel' },
-                    { text: t('ok'), onPress: () => deleteReservation(reservationId) }
+                    { text: t('yes'), onPress: () => deleteReservation(reservationId) }
                 ]
             );
         };

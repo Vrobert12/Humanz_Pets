@@ -1,4 +1,12 @@
 {
+  "INVALID_CREDENTIALS": "Érvénytelen hitelesítő adatok",
+  "LOGIN_SUCCESS": "Sikeres bejelentkezés!",
+  "SELECT_LANGUAGE": "Válassza ki a kívánt nyelvet",
+  "invalidPhone": "Kérjük, adjon meg egy érvényes telefonszámot",
+  "registrationSuccess": "Sikeres regisztráció! Egy megerősítő linket küldtünk az email címedre!",
+  "yes": "Igen",
+  "productAddedToCart": "A termék sikeresen hozzáadva a kosárhoz!",
+  "released": "Kiadva",
   "pleaseSelectRating": "Kérjük, válasszon értékelést.",
   "ratingSubmitted": "Értékelés elküldve!",
   "submitRatingFailed": "Nem sikerült elküldeni az értékelést.",

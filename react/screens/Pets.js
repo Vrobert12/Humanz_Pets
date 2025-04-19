@@ -25,7 +25,7 @@ const Pets = () => {
                 setFilteredPets(petsList);
             }
         } catch (error) {
-            console.error('Error fetching pets:', error);
+            console.error(t('error'), error);
         }
     };
 

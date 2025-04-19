@@ -28,7 +28,7 @@ export default function Settings() {
                     Alert.alert(t('ERROR'), t('USER_NOT_LOGGED_IN'));
                 }
             } catch (error) {
-                console.error(t('ERROR_FETCHING_USER_ID'), error);
+                console.error(t('error'), error);
             }
         };
 
@@ -46,12 +46,12 @@ export default function Settings() {
                 if (data.status === 200) {
                     setUserData(data.data[0]);
                 } else {
-                    Alert.alert(t('ERROR'), t('LOAD_USER_DATA_FAILED'));
+                    Alert.alert(t('ERROR'));
                 }
             })
             .catch((error) => {
-                console.error(t('ERROR_FETCHING_DATA'), error);
-                Alert.alert(t('ERROR'), `${t('FETCH_DATA_FAILED')}: ${error.message}`);
+                console.error(t('error'), error);
+                Alert.alert(t('ERROR'));
             })
             .finally(() => setLoading(false));
     }, [userId]);
@@ -73,24 +73,22 @@ export default function Settings() {
         })
             .then(async (response) => {
                 const text = await response.text();
-                console.log(t('RAW_RESPONSE'), text);
 
                 try {
                     const data = JSON.parse(text);
-                    console.log(t('PARSED_RESPONSE_DATA'), data);
                     if (data.status === 200) {
                         Alert.alert(t('success'), t('USER_DATA_UPDATED'));
                     } else {
                         Alert.alert(t('ERROR'), `${t('UPDATE_FAILED')}: ${data.message}`);
                     }
                 } catch (e) {
-                    console.error(t('JSON_PARSING_ERROR'), e);
-                    Alert.alert(t('ERROR'), t('INVALID_SERVER_RESPONSE'));
+                    console.error(t('ERROR'), e);
+                    Alert.alert(t('ERROR'));
                 }
             })
             .catch((error) => {
-                console.error(t('ERROR_UPDATING_DATA'), error);
-                Alert.alert(t('ERROR'), `${t('UPDATE_REQUEST_FAILED')}: ${error.message}`);
+                console.error(t('ERROR'), error);
+                Alert.alert(t('ERROR'), `${error.message}`);
             })
             .finally(() => setUpdating(false));
     };
