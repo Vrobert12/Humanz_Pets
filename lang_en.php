@@ -1,4 +1,8 @@
 <?php
+define('PAY_ALL_PRODUCTS', 'Pay all products');
+define('PAY_PRODUCT', 'Pay product');
+define('ALL_FIELDS_REQUIRED', 'All fields are required');
+define('CANNOT_SELECT_PAST_DATE', 'You cannot select a past date');
 define('PASSSET','Set new password');
 define('NEWPASSCONF','Confirm new password');
 define('NEWPASS','New password');
@@ -118,7 +122,7 @@ define('LG','Language');
 define('LANGUAGE_sr', 'Serbian');
 define('LANGUAGE_hu', 'Hungarian');
 define('LANGUAGE_en', 'English');
-define('HOME','Home');
+define('HOME','Homepage');
 define('WELCOME_MESSAGE','Welcome to the website!');
 define('ABOUT_US_TITLE', 'About us');
 define('JOBS_TITLE', 'Looking for jobs');

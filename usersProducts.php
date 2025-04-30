@@ -188,7 +188,7 @@ foreach ($cartItems as $price) {
     <form action="functions.php" method="post">
         <input type="hidden" name="action" value="PayAllFromCart">
         <input type="hidden" name="userId" value="<?php echo htmlspecialchars($_GET['user']); ?>">
-        <input type="submit" class="btn btn-primary" value="Pay All Products" onclick="confirmAllProductIsPayed(event)">
+        <input type="submit" class="btn btn-primary" value="<?php echo PAY_ALL_PRODUCTS?>" onclick="confirmAllProductIsPayed(event)">
     </form>
     <ul id="cart-list">
         <?php foreach ($cartItems as $item): ?>
@@ -203,13 +203,13 @@ foreach ($cartItems as $price) {
                 <form action="functions.php" method="post">
                     <input type="hidden" name="action" value="deleteFromCart">
                     <input type="hidden" name="cartId" value="<?php echo htmlspecialchars($item['userProductRelationId']); ?>">
-                    <input type="submit" class="btn btn-danger" value="Delete Product" onclick="confirmDeletingCart(event)">
+                    <input type="submit" class="btn btn-danger" value="<?php echo DELETE_PRODUCT?>" onclick="confirmDeletingCart(event)">
                 </form>
                 <form action="functions.php" method="post">
                     <input type="hidden" name="action" value="PayFromCart">
                     <input type="hidden" name="userId" value="<?php echo htmlspecialchars($item['userId']); ?>">
                     <input type="hidden" name="cartId" value="<?php echo htmlspecialchars($item['userProductRelationId']); ?>">
-                    <input type="submit" class="btn btn-primary" value="Pay Product" onclick="confirmProductIsPayed(event)">
+                    <input type="submit" class="btn btn-primary" value="<?php echo PAY_PRODUCT?>" onclick="confirmProductIsPayed(event)">
                 </form>
 
             </li>

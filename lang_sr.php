@@ -1,4 +1,8 @@
 <?php
+define('PAY_ALL_PRODUCTS', 'Plati sve proizvode');
+define('PAY_PRODUCT', 'Plati proizvod');
+define('ALL_FIELDS_REQUIRED', 'Sva polja su obavezna');
+define('CANNOT_SELECT_PAST_DATE', 'Ne možete izabrati prošli datum');
 define('PASSSET','Postavi novu lozinku');
 define('NEWPASSCONF','Ponavljanje nove lozinke');
 define('NEWPASS','Nova lozinka');

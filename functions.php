@@ -1,8 +1,11 @@
 <?php
 
+
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
+use Detection\MobileDetect;
+
 
 include "config.php";
 require 'phpqrcode/qrlib.php';
@@ -817,7 +820,7 @@ VALUES (:reviewCode,:userId,:veterinarianId)";
                     $_SESSION['message'] = "You already have too many reservations for this pet.";
                 }
             } else {
-                $_SESSION['message'] = "All fields are required.";
+                $_SESSION['message'] = ALL_FIELDS_REQUIRED;
             }
         }
         header('Location:book_apointment.php');
@@ -1082,7 +1085,7 @@ VALUES (:userId,:productName,:productPicture,:productId,:sum, :price,:productPay
                 exit();
             }
         } else {
-            $_SESSION['message'] = "Please fill in all the fields.";
+            $_SESSION['message'] = ALL_FIELDS_REQUIRED;
             header("Location: registerAnimal.php");
             exit();
         }
@@ -1169,7 +1172,7 @@ WHERE productId = :productId;
                 exit();
             }
         } else {
-            $_SESSION['message'] = "Please fill in all the fields.";
+            $_SESSION['message'] = ALL_FIELDS_REQUIRED;
             header("Location: addProduct.php");
             exit();
         }
@@ -1484,7 +1487,7 @@ WHERE productId = :productId;
     public function userModifyData($fname, $lname, $tel, $usedLanguage, $location)
     {
         if (empty($fname) || empty($lname) || empty($tel)) {
-            $_SESSION['message'] = "The fields <b>has to be filled.</b>";
+            $_SESSION['message'] = ALL_FIELDS_REQUIRED;
             header('Location: ' . $location);
             exit();
         }
@@ -2045,58 +2048,22 @@ WHERE u.userId = :userId";
                                 if (isset($_SESSION['registration']))
                                     unset($_SESSION['registration']);
                                 setcookie("last_activity", time(), time() + 10 * 60, "/");
-                                if (!isset($_COOKIE['device_check'])) {
-                                    // Set the device_check cookie for 24 hours
-                                    setcookie("device_check", time(), time() + 24 * 60 * 60, "/");
-
-                                    // Capture the user agent
-                                    $user_agent = $_SERVER['HTTP_USER_AGENT'];
-
-                                    // Capture the IP address
-                                    $ip_address = $_SERVER['REMOTE_ADDR'];
-
-                                    // Get the country (you need to implement this or use a service like ipinfo.io)
-                                    $country = $this->getCountryFromIP($ip_address);  // Use the function from earlier
-
-                                    // Capture the current date and time
-                                    $date_time = date("Y-m-d H:i:s");
-
-                                    // Detect device type
-                                    if (strpos($user_agent, 'Mobile') !== false) {
-                                        $device_type = 'Mobile';
-                                    } elseif (strpos($user_agent, 'Tablet') !== false) {
-                                        $device_type = 'Tablet';
-                                    } else {
-                                        $device_type = 'Desktop';
-                                    }
-
-                                    // Check if the IP is using a proxy
-                                    $proxy = $this->checkForProxy();
-
-                                    // Get ISP information (using ipinfo.io or another service)
-                                    $isp = $this->getISPFromIP($ip_address);  // Use the function from earlier
-
-                                    // Database connection (Assume $this->connection is your DB connection)
-                                    $sql = "INSERT INTO log (user_agent, ip_address, country, date_time, device_type, proxy, isp) 
-            VALUES (:user_agent, :ip_address, :country, :date_time, :device_type, :proxy, :isp)";
-
-                                    $stmt = $this->connection->prepare($sql);
-                                    $stmt->execute([
-                                        ':user_agent' => $user_agent,
-                                        ':ip_address' => $ip_address,
-                                        ':country' => $country,
-                                        ':date_time' => $date_time,
-                                        ':device_type' => $device_type,
-                                        ':proxy' => $proxy,
-                                        ':isp' => $isp
-                                    ]);
-                                } else {
-                                    // Check if the cookie has expired (older than 24 hours)
-                                    if (time() - $_COOKIE['device_check'] > 24 * 60 * 60) {
-                                        // Cookie has expired, reset it
-                                        setcookie("device_check", time(), time() + 24 * 60 * 60, "/");
-                                    }
-                                }
+//                                if (!isset($_COOKIE['device_check'])) {
+//                                    // Set the cookie
+//                                    setcookie("device_check", time(), time() + 24 * 60 * 60, "/");
+//
+//                                    // Also log the data now (first login)
+//                                    $this->logUserDeviceInfo(); // move the DB logging logic here
+//                                } else {
+//                                    // Cookie exists, so we’re on a return visit
+//                                    if (time() - intval($_COOKIE['device_check']) > 24 * 60 * 60) {
+//                                        setcookie("device_check", time(), time() + 24 * 60 * 60, "/");
+//                                        $this->logUserDeviceInfo(); // log again if 24h passed
+//                                    }
+//                                    $this->logUserDeviceInfo();
+//                                }
+                                error_log('asdasdasdasdasd');
+                                $this->logUserDeviceInfo();
 
 
 
@@ -2129,6 +2096,62 @@ WHERE u.userId = :userId";
 
         header('Location: logIn.php');
         exit();
+    }
+
+    private function logUserDeviceInfo() {
+        // Include Mobile Detect (if not autoloaded)
+        //require_once __DIR__ . '/vendor/autoload.php'; // Adjust path if needed
+
+        $detect = new MobileDetect();
+
+        $user_agent = $_SERVER['HTTP_USER_AGENT'] ?? 'Unknown';
+        $ip_address = $_SERVER['HTTP_X_FORWARDED_FOR'] ?? $_SERVER['REMOTE_ADDR'];
+        if ($ip_address === '::1') {
+            $ip_address = '127.0.0.1';
+        }
+        $country = $this->getCountryFromIP($ip_address);
+        $date_time = date("Y-m-d H:i:s");
+
+        // Detect device type with MobileDetect
+        if ($detect->isTablet()) {
+            $device_type = 'Tablet';
+        } elseif ($detect->isMobile()) {
+            $device_type = 'Mobile';
+        } else {
+            $device_type = 'Desktop';
+        }
+
+        $proxy = $this->checkForProxy();
+        $isp = $this->getISPFromIP($ip_address);
+
+        // Optional: log values for debugging
+        error_log("Logging device info: " . json_encode([
+                'user_agent' => $user_agent,
+                'ip_address' => $ip_address,
+                'country' => $country,
+                'date_time' => $date_time,
+                'device_type' => $device_type,
+                'proxy' => $proxy,
+                'isp' => $isp
+            ]));
+
+        // Insert into DB
+        try {
+            $sql = "INSERT INTO log (user_agent, ip_address, country, date_time, device_type, proxy, isp) 
+                VALUES (:user_agent, :ip_address, :country, :date_time, :device_type, :proxy, :isp)";
+            $stmt = $this->connection->prepare($sql);
+            $stmt->execute([
+                ':user_agent' => $user_agent,
+                ':ip_address' => $ip_address,
+                ':country' => $country,
+                ':date_time' => $date_time,
+                ':device_type' => $device_type,
+                ':proxy' => $proxy,
+                ':isp' => $isp
+            ]);
+        } catch (PDOException $e) {
+            error_log("DB Insert Error in logUserDeviceInfo(): " . $e->getMessage());
+        }
     }
 
 

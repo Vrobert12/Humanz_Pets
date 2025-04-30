@@ -71,7 +71,9 @@ https://getbootstrap.com/docs/5.3/components/navbar/
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
     <div class="container-fluid">
         <!-- Logo -->
-        <a class="navbar-brand" href="#">R&D</a>
+        <a class="navbar-brand" href="#">
+            <span id="brand">R&D</span>
+        </a>
         <!-- Toggler for mobile view -->
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
             <span class="navbar-toggler-icon"></span>
@@ -125,10 +127,13 @@ https://getbootstrap.com/docs/5.3/components/navbar/
                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <?php echo LG ?>
                 </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <div class="dropdown-menu"
+                     aria-labelledby="dropdownMenuButton"
+                     style="min-width:auto !important; width:auto !important; --bs-dropdown-min-width:auto !important">
                     <a class="dropdown-item" href="?lang=en"><?php echo LANGUAGE_en ?></a>
                     <a class="dropdown-item" href="?lang=hu"><?php echo LANGUAGE_hu ?></a>
                     <a class="dropdown-item" href="?lang=sr"><?php echo LANGUAGE_sr ?></a>
+                    <a class="dropdown-item" href="?lang=sr">asfff</a>
                 </div>
             </div>
         </div>
@@ -142,14 +147,13 @@ https://getbootstrap.com/docs/5.3/components/navbar/
 
         <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
             <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"/></svg>
-            <span class="fs-4">Sidebar</span>
         </a>
         <hr>
         <ul class="nav nav-pills flex-column mb-auto">
             <li class="nav-item">
                 <a href="#" class="nav-link active" aria-current="page">
                     <svg class="bi me-2" width="16" height="16"><use xlink:href="#home"/></svg>
-                    Home
+                    <?php echo HOME?>
                 </a>
             </li>
             <?php

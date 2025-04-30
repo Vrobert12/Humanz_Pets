@@ -6,6 +6,28 @@ table {
     border-collapse: collapse;
 }
 
+.dropdown-menu[aria-labelledby="dropdownMenuButton"] {
+    min-width: auto !important;
+    width: auto !important;
+    --bs-dropdown-min-width: auto !important;
+}
+
+.dropdown-menu.language-dropdown {
+    --bs-dropdown-min-width: 120px; /* Narrower width */
+    min-width: auto !important;
+    width: max-content; /* Ensures content fits */
+    padding: 0.25rem 0; /* Tighter padding */
+    background-color: #343a40;
+    border: none;
+}
+
+.language-dropdown .dropdown-item {
+    white-space: nowrap; /* Prevents text wrapping */
+    padding: 0.25rem 1rem; /* Tighter item padding */
+    font-size: 0.9rem; /* Slightly smaller text */
+    color: white;
+}
+
 table td {
     padding: 10px;
     border: 1px solid #ddd;
@@ -56,15 +78,15 @@ table img {
     color: #007bff;
 }
 
-/* Dropdown menu in sidebar */
-.dropdown-menu {
-    background-color: #343a40;
-    border: none;
+.navbar-brand #brand{
+    font-size: 24px;
+    color: white; !important;
 }
 
-.dropdown-item {
-    color: white;
+.dropdown{
+    width: 10px;
 }
+
 
 .dropdown-item:hover {
     background-color: #495057;

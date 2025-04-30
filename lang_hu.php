@@ -1,4 +1,8 @@
 <?php
+define('PAY_ALL_PRODUCTS', 'Minden termék kifizetése');
+define('PAY_PRODUCT', 'Termék kifizetése');
+define('ALL_FIELDS_REQUIRED', 'Minden mező kitöltése kötelező');
+define('CANNOT_SELECT_PAST_DATE', 'Nem választhat múltbeli dátumot');
 define('PASSSET','Új jelszó beállítása');
 define('NEWPASSCONF','Új jelszó megerősítése');
 define('NEWPASS','Új jelszó');

@@ -21,6 +21,8 @@ class ComposerStaticInitd14d53cc4f21951ca0ae413b319e7dcb
         ),
         'P' => 
         array (
+            'Psr\\SimpleCache\\' => 16,
+            'Psr\\Cache\\' => 10,
             'PhpOption\\' => 10,
             'PHPMailer\\PHPMailer\\' => 20,
         ),
@@ -35,6 +37,7 @@ class ComposerStaticInitd14d53cc4f21951ca0ae413b319e7dcb
         'D' => 
         array (
             'Dotenv\\' => 7,
+            'Detection\\' => 10,
         ),
     );
 
@@ -50,6 +53,14 @@ class ComposerStaticInitd14d53cc4f21951ca0ae413b319e7dcb
         'Symfony\\Polyfill\\Ctype\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/polyfill-ctype',
+        ),
+        'Psr\\SimpleCache\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/psr/simple-cache/src',
+        ),
+        'Psr\\Cache\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/psr/cache/src',
         ),
         'PhpOption\\' => 
         array (
@@ -70,6 +81,10 @@ class ComposerStaticInitd14d53cc4f21951ca0ae413b319e7dcb
         'Dotenv\\' => 
         array (
             0 => __DIR__ . '/..' . '/vlucas/phpdotenv/src',
+        ),
+        'Detection\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/mobiledetect/mobiledetectlib/src',
         ),
     );
 

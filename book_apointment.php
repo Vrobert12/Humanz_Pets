@@ -242,6 +242,9 @@ AND (r.reservationDay IS NOT NULL AND r.reservationDay >= CURDATE() AND r.animal
         }
     </style>
     <script>
+        const lang = '<?php echo $lang; ?>';
+    </script>
+    <script>
         document.addEventListener("DOMContentLoaded", function () {
             const today = new Date().toISOString().split('T')[0];
             const reservationDate = document.querySelector('[name="day"]');
@@ -287,7 +290,16 @@ AND (r.reservationDay IS NOT NULL AND r.reservationDay >= CURDATE() AND r.animal
                 if (!selectedVeterinarianId || !selectedDate) return;
 
                 if (selectedDate <= today) {
-                    alert("You cannot select a past date.");
+                    if(lang === 'en'){
+                        alert("You cannot select a past date.");
+                    }
+                    if(lang === 'hu'){
+                        alert("Nem választhat múltbeli dátumot.");
+                    }
+                    if(lang === 'sr'){
+                        alert('Ne možete izabrati prošli datum.');
+                    }
+
                     reservationDate.value = '';
                     reservationTimeStart.disabled = true;
                     return;
@@ -304,7 +316,15 @@ AND (r.reservationDay IS NOT NULL AND r.reservationDay >= CURDATE() AND r.animal
                     const data = await response.json();
 
                     if (data.isFullyBooked) {
-                        alert("This date is fully booked. Please select another date.");
+                        if(lang === 'en'){
+                            alert('This date is fully booked. Please select another date.');
+                        }
+                        if(lang === 'hu'){
+                            alert('Ez a dátum teljesen foglalt. Kérlek, válassz egy másik dátumot.');
+                        }
+                        if(lang === 'sr'){
+                            alert('Ovaj datum je potpuno zauzet. Molimo izaberite drugi datum.');
+                        }
                         reservationDate.value = '';
                         reservationTimeStart.disabled = true;
                         return;
@@ -349,7 +369,15 @@ AND (r.reservationDay IS NOT NULL AND r.reservationDay >= CURDATE() AND r.animal
                                     fetchAvailableTimes();
                                 }
                             } else {
-                                alert("No veterinarian assigned to this pet.");
+                                if(lang === 'en'){
+                                    alert('No veterinarian assigned to this pet.');
+                                }
+                                if(lang === 'hu'){
+                                    alert('Ehhez a háziállathoz nincs állatorvos rendelve.');
+                                }
+                                if(lang === 'sr'){
+                                    alert('Nijedan veterinar nije dodeljen ovom ljubimcu.');
+                                }
                             }
                         } catch (error) {
                             console.error("Error fetching veterinarian:", error);
@@ -440,7 +468,6 @@ if($_SESSION['privilage']=="Veterinarian")
         <?php if (!empty($pets))
             echo' <h4 for="pet" class="form-label">'.SELECT_PET.'</h4>';
         ?>
-
         <div class="profile-section">
             <?php foreach ($pets as $pet): ?>
                 <div class="pet-card">
