@@ -1,16 +1,11 @@
 <?php
+global $pdo;
+require_once 'react_config.php';
 
 error_reporting(0);
 ini_set('display_errors', 0);
 header('Content-Type: application/json');
 
-$host = "localhost";
-$dbname = "pets";
-$username = "root";
-$password = "";
-
-$pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $username, $password);
-$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 try {
     //$stmt = $pdo->prepare("SELECT veterinarianId AS veterinarianId, firstName AS firstName, lastName AS lastName FROM veterinarian");

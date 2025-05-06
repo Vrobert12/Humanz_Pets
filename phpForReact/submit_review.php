@@ -1,4 +1,6 @@
 <?php
+global $pdo;
+require_once 'react_config.php';
 
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json");
@@ -8,10 +10,6 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit;
 }
 
-$host = "localhost";
-$dbname = "pets";
-$username = "root";
-$password = "";
 
 $data = json_decode(file_get_contents("php://input"), true);
 $review_id = $data['review_id'] ?? null;
@@ -23,8 +21,6 @@ if (!$review_id || $rating === null) {
 }
 
 try {
-    $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $username, $password);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $stmt = $pdo->prepare("UPDATE review SET review = ? WHERE reviewId = ?");
     $stmt->execute([$rating, $review_id]);
 

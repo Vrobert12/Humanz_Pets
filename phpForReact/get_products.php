@@ -1,14 +1,9 @@
 <?php
+global $pdo;
+require_once 'react_config.php';
 
 header('Content-Type: application/json');
 
-$host = "localhost";
-$dbname = "pets";
-$username = "root";
-$password = "";
-
-$pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $username, $password);
-$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 try {
     $stmt = $pdo->query("SELECT productId, productName, productPicture, productCost FROM product");

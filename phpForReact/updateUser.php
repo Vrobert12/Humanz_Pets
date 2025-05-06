@@ -1,16 +1,12 @@
 <?php
+global $pdo;
+require_once 'react_config.php';
+
 header("Content-Type: application/json");
 
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
-$host = "localhost";
-$dbname = "pets";
-$username = "root";
-$password = "";
-
-$pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $username, $password);
-$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 // Ensure the correct HTTP method
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {

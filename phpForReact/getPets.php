@@ -1,16 +1,11 @@
 <?php
+global $pdo;
+require_once 'react_config.php';
 
 header("Content-type: application/json; charset=UTF-8");
 
-// Database connection
-$host = "localhost";
-$dbname = "pets";
-$username = "root";
-$password = "";
 
 try {
-    $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $username, $password);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     // Check the request method
     $method = strtolower($_SERVER["REQUEST_METHOD"]);

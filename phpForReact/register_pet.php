@@ -1,20 +1,11 @@
 <?php
+global $pdo;
+require_once 'react_config.php';
+
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: POST");
 header("Access-Control-Allow-Headers: Content-Type");
 
-$dsn = "mysql:host=localhost;dbname=pets;charset=utf8mb4";
-$db_user = "root";
-$db_pass = "";
-
-try {
-    $pdo = new PDO($dsn, $db_user, $db_pass, [
-        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-    ]);
-} catch (PDOException $e) {
-    die(json_encode(["success" => false, "message" => "Database connection failed: " . $e->getMessage()]));
-}
 
 $user_id = $_POST['user_id'] ?? null;
 $vet_id = $_POST['veterinarian_id'] ?? null;

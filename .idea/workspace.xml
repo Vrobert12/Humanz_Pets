@@ -4,30 +4,37 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2367ab9a-341c-4300-a7ed-72f717181f7d" name="Changes" comment="react language update">
-      <change beforePath="$PROJECT_DIR$/.idea/codeception.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/codeception.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/phpspec.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/phpspec.xml" afterDir="false" />
+    <list default="true" id="2367ab9a-341c-4300-a7ed-72f717181f7d" name="Changes" comment="react update">
+      <change afterPath="$PROJECT_DIR$/phpForReact/react_config.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_3_10_2025_4_18_PM_[Changes]/shelved.patch" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_3_10_2025_4_18_PM__Changes_.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/book_apointment.php" beforeDir="false" afterPath="$PROJECT_DIR$/book_apointment.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/functions.php" beforeDir="false" afterPath="$PROJECT_DIR$/functions.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lang_en.php" beforeDir="false" afterPath="$PROJECT_DIR$/lang_en.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lang_hu.php" beforeDir="false" afterPath="$PROJECT_DIR$/lang_hu.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lang_sr.php" beforeDir="false" afterPath="$PROJECT_DIR$/lang_sr.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phpForReact/add_to_cart.php" beforeDir="false" afterPath="$PROJECT_DIR$/phpForReact/add_to_cart.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phpForReact/applogIn.php" beforeDir="false" afterPath="$PROJECT_DIR$/phpForReact/applogIn.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phpForReact/bookReact.php" beforeDir="false" afterPath="$PROJECT_DIR$/phpForReact/bookReact.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phpForReact/checkAvailability.php" beforeDir="false" afterPath="$PROJECT_DIR$/phpForReact/checkAvailability.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phpForReact/check_reviews.php" beforeDir="false" afterPath="$PROJECT_DIR$/phpForReact/check_reviews.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phpForReact/deleteReservation.php" beforeDir="false" afterPath="$PROJECT_DIR$/phpForReact/deleteReservation.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phpForReact/delete_cart_item.php" beforeDir="false" afterPath="$PROJECT_DIR$/phpForReact/delete_cart_item.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phpForReact/getPets.php" beforeDir="false" afterPath="$PROJECT_DIR$/phpForReact/getPets.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phpForReact/getQrCode.php" beforeDir="false" afterPath="$PROJECT_DIR$/phpForReact/getQrCode.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phpForReact/getReservations.php" beforeDir="false" afterPath="$PROJECT_DIR$/phpForReact/getReservations.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phpForReact/get_cart.php" beforeDir="false" afterPath="$PROJECT_DIR$/phpForReact/get_cart.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phpForReact/get_product_details.php" beforeDir="false" afterPath="$PROJECT_DIR$/phpForReact/get_product_details.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phpForReact/get_products.php" beforeDir="false" afterPath="$PROJECT_DIR$/phpForReact/get_products.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phpForReact/get_purchased_products.php" beforeDir="false" afterPath="$PROJECT_DIR$/phpForReact/get_purchased_products.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phpForReact/registerUser.php" beforeDir="false" afterPath="$PROJECT_DIR$/phpForReact/registerUser.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phpForReact/register_pet.php" beforeDir="false" afterPath="$PROJECT_DIR$/phpForReact/register_pet.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phpForReact/submit_review.php" beforeDir="false" afterPath="$PROJECT_DIR$/phpForReact/submit_review.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phpForReact/updateUser.php" beforeDir="false" afterPath="$PROJECT_DIR$/phpForReact/updateUser.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phpForReact/veterinariansReact.php" beforeDir="false" afterPath="$PROJECT_DIR$/phpForReact/veterinariansReact.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pictures/20250311130636.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pictures/20250316180855.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/pictures/20250316180855.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pictures/20250316181347.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/pictures/20250316181347.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pictures/products/20250310191833.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/pictures/products/20250310191833.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pictures/products/20250315223710.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/pictures/products/20250315223710.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pictures/products/20250315224019.jpg" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/picturespet.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/usersProducts.php" beforeDir="false" afterPath="$PROJECT_DIR$/usersProducts.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/composer/autoload_psr4.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/composer/autoload_psr4.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/composer/autoload_static.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/composer/autoload_static.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/composer/installed.json" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/composer/installed.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/composer/installed.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/composer/installed.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/composer/platform_check.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/composer/platform_check.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -152,7 +159,8 @@
       <workItem from="1743161123868" duration="6204000" />
       <workItem from="1744887263190" duration="18507000" />
       <workItem from="1745077030436" duration="4869000" />
-      <workItem from="1746010306507" duration="13831000" />
+      <workItem from="1746010306507" duration="13995000" />
+      <workItem from="1746548097217" duration="4244000" />
     </task>
     <task id="LOCAL-00001" summary="Responsivity">
       <option name="closed" value="true" />
@@ -402,7 +410,15 @@
       <option name="project" value="LOCAL" />
       <updated>1745081870647</updated>
     </task>
-    <option name="localTasksCounter" value="32" />
+    <task id="LOCAL-00032" summary="language update">
+      <option name="closed" value="true" />
+      <created>1746024658951</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1746024658951</updated>
+    </task>
+    <option name="localTasksCounter" value="33" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -420,7 +436,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Vet info page on pets v2" />
     <MESSAGE value="DB" />
     <MESSAGE value="Offline vet list, product data check and background color" />
     <MESSAGE value="Pet-checking restrictions and language improvements." />
@@ -442,9 +457,10 @@
     <MESSAGE value="products react v2" />
     <MESSAGE value="React: Pets, Purchase history and search function + DB" />
     <MESSAGE value="react fixes" />
-    <MESSAGE value="language update" />
     <MESSAGE value="react language implementation" />
     <MESSAGE value="react language update" />
-    <option name="LAST_COMMIT_MESSAGE" value="react language update" />
+    <MESSAGE value="language update" />
+    <MESSAGE value="react update" />
+    <option name="LAST_COMMIT_MESSAGE" value="react update" />
   </component>
 </project>

@@ -1,4 +1,6 @@
 <?php
+global $pdo;
+require_once 'react_config.php';
 
 header('Content-Type: application/json');
 
@@ -9,13 +11,6 @@ if (!isset($_GET['id'])) {
 
 $productId = intval($_GET['id']);
 
-$host = "localhost";
-$dbname = "pets";
-$username = "root";
-$password = "";
-
-$pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $username, $password);
-$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 try {
     $stmt = $pdo->prepare("SELECT productId, productName, productPicture, productCost, description, productRelease FROM product WHERE productId = :productId");

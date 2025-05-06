@@ -1,9 +1,6 @@
 <?php
-
-$host = "localhost";
-$dbname = "pets";
-$username = "root";
-$password = "";
+global $pdo;
+require_once 'react_config.php';
 
 header('Content-Type: application/json');
 
@@ -11,8 +8,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['userId'])) {
     $userId = $_GET['userId'];
 
     try {
-        $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $username, $password);
-        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $stmt = $pdo->prepare("SELECT upr.*, p.productName, p.productPicture, p.productCost 
                            FROM user_product_relation upr
                            JOIN product p ON upr.productId = p.productId

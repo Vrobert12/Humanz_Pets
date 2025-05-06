@@ -1,12 +1,8 @@
 <?php
-require_once '../config.php'; // Include database connection
+global $pdo;
+require_once 'react_config.php';
 
 header('Content-Type: application/json');
-
-$host = "localhost";
-$dbname = "pets";
-$username = "root";
-$password = "";
 
 
 $data = json_decode(file_get_contents('php://input'), true);
@@ -26,8 +22,6 @@ $productPayed = $data['productPayed'];
 $boughtDay = $data['boughtDay'];
 
 try {
-    $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $username, $password);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $stmt = $pdo->prepare("INSERT INTO user_product_relation (userId, productName, productPicture, productId, sum, price, productPayed, boughtDay) VALUES (:userId, :productName, :productPicture, :productId, :sum, :price, :productPayed, :boughtDay)");
     $stmt->bindParam(':userId', $userId, PDO::PARAM_INT);
     $stmt->bindParam(':productName', $productName, PDO::PARAM_STR);

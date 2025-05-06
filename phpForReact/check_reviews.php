@@ -1,4 +1,6 @@
 <?php
+global $pdo;
+require_once 'react_config.php';
 
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json");
@@ -8,10 +10,6 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit;
 }
 
-$host = "localhost";
-$dbname = "pets";
-$username = "root";
-$password = "";
 
 $data = json_decode(file_get_contents("php://input"), true);
 $user_id = $data['user_id'] ?? null;
@@ -22,9 +20,6 @@ if (!$user_id) {
 }
 
 try {
-    // Create a PDO connection
-    $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $username, $password);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     // Query to get the reviews and count the pending reviews
     $stmt = $pdo->prepare("SELECT r.reviewId, r.reviewTime, CONCAT(v.firstName, ' ', v.lastName) AS veterinarian_name 

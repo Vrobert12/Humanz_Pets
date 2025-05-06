@@ -1,29 +1,20 @@
 <?php
+global $pdo;
+require_once 'react_config.php';
 
-use Dotenv\Dotenv;
+
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
 
-require '../vendor/autoload.php';
 include "../functions.php";
 $functions=new Functions();
 $lang=$functions->language();
-$dotenv = Dotenv::createImmutable(__DIR__.'/../');
-$dotenv->load();
 
 header("Content-Type: application/json");
 
-$host = "localhost";
-$dbname = "pets";
-$username = "root";
-$password = "";
-
-
 try {
-    $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $username, $password);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     // Read JSON input
     $data = json_decode(file_get_contents("php://input"), true);
