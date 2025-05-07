@@ -5,34 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2367ab9a-341c-4300-a7ed-72f717181f7d" name="Changes" comment="react update">
-      <change afterPath="$PROJECT_DIR$/phpForReact/react_config.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_3_10_2025_4_18_PM_[Changes]/shelved.patch" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_3_10_2025_4_18_PM__Changes_.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/phpForReact/add_to_cart.php" beforeDir="false" afterPath="$PROJECT_DIR$/phpForReact/add_to_cart.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/phpForReact/applogIn.php" beforeDir="false" afterPath="$PROJECT_DIR$/phpForReact/applogIn.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/phpForReact/bookReact.php" beforeDir="false" afterPath="$PROJECT_DIR$/phpForReact/bookReact.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/phpForReact/checkAvailability.php" beforeDir="false" afterPath="$PROJECT_DIR$/phpForReact/checkAvailability.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/phpForReact/check_reviews.php" beforeDir="false" afterPath="$PROJECT_DIR$/phpForReact/check_reviews.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/phpForReact/deleteReservation.php" beforeDir="false" afterPath="$PROJECT_DIR$/phpForReact/deleteReservation.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/phpForReact/delete_cart_item.php" beforeDir="false" afterPath="$PROJECT_DIR$/phpForReact/delete_cart_item.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/phpForReact/getPets.php" beforeDir="false" afterPath="$PROJECT_DIR$/phpForReact/getPets.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/phpForReact/getQrCode.php" beforeDir="false" afterPath="$PROJECT_DIR$/phpForReact/getQrCode.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/phpForReact/getReservations.php" beforeDir="false" afterPath="$PROJECT_DIR$/phpForReact/getReservations.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/phpForReact/get_cart.php" beforeDir="false" afterPath="$PROJECT_DIR$/phpForReact/get_cart.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/phpForReact/get_product_details.php" beforeDir="false" afterPath="$PROJECT_DIR$/phpForReact/get_product_details.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/phpForReact/get_products.php" beforeDir="false" afterPath="$PROJECT_DIR$/phpForReact/get_products.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/phpForReact/get_purchased_products.php" beforeDir="false" afterPath="$PROJECT_DIR$/phpForReact/get_purchased_products.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/phpForReact/registerUser.php" beforeDir="false" afterPath="$PROJECT_DIR$/phpForReact/registerUser.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/phpForReact/register_pet.php" beforeDir="false" afterPath="$PROJECT_DIR$/phpForReact/register_pet.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/phpForReact/submit_review.php" beforeDir="false" afterPath="$PROJECT_DIR$/phpForReact/submit_review.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/phpForReact/updateUser.php" beforeDir="false" afterPath="$PROJECT_DIR$/phpForReact/updateUser.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/phpForReact/veterinariansReact.php" beforeDir="false" afterPath="$PROJECT_DIR$/phpForReact/veterinariansReact.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phpForReact/react_config.php" beforeDir="false" afterPath="$PROJECT_DIR$/phpForReact/react_config.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pictures/20250311130636.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pictures/20250316180855.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/pictures/20250316180855.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pictures/20250316181347.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/pictures/20250316181347.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pictures/products/20250310191833.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/pictures/products/20250310191833.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pictures/products/20250315223710.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/pictures/products/20250315223710.jpg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pictures/products/20250315224019.jpg" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/picturespet.jpg" beforeDir="false" />
     </list>
@@ -160,7 +137,8 @@
       <workItem from="1744887263190" duration="18507000" />
       <workItem from="1745077030436" duration="4869000" />
       <workItem from="1746010306507" duration="13995000" />
-      <workItem from="1746548097217" duration="4244000" />
+      <workItem from="1746548097217" duration="4630000" />
+      <workItem from="1746614644943" duration="656000" />
     </task>
     <task id="LOCAL-00001" summary="Responsivity">
       <option name="closed" value="true" />
@@ -418,7 +396,15 @@
       <option name="project" value="LOCAL" />
       <updated>1746024658951</updated>
     </task>
-    <option name="localTasksCounter" value="33" />
+    <task id="LOCAL-00033" summary="react update">
+      <option name="closed" value="true" />
+      <created>1746561524659</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1746561524659</updated>
+    </task>
+    <option name="localTasksCounter" value="34" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
