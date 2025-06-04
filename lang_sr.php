@@ -1,4 +1,17 @@
 <?php
+define('PAY_ALL_PRODUCTS', 'Plati sve proizvode');
+define('PAY_PRODUCT', 'Plati proizvod');
+define('ALL_FIELDS_REQUIRED', 'Sva polja su obavezna');
+define('CANNOT_SELECT_PAST_DATE', 'Ne možete izabrati prošli datum');
+define('PASSSET','Postavi novu lozinku');
+define('NEWPASSCONF','Ponavljanje nove lozinke');
+define('NEWPASS','Nova lozinka');
+define('RATING_TIME','Vreme evaluacije');
+define('RATING','Evaluacija');
+define('RATINGS','Evaluacije');
+define('DATA','--Tabele--');
+define('DELETE_PRODUCT','Brisanje proizvoda');
+define('SEARCH', 'pretraga...');
 define('NAV_BOOK_VETERINARIAN', 'Termini');
 define('NAV_VET_RATES', 'Ocene');
 define('NAV_BAN_SITE', 'Zabrana');
@@ -36,8 +49,8 @@ define('BAN_BUTTON','Zabrani');
 define('DELETE_PICTURE', 'Izbirišite profil sliku');
 define("RESESEVATION_CANCELED_BY_VET",'Pregled Odkazano');
 define('HERE','ovde');
-define('BAN','Osoba je zabranjena:');
-define('UNBAN','Osoba nije zabranjena:');
+define('BAN','Osoba je zabranjena');
+define('UNBAN','Osoba nije zabranjena');
 define('FILLMES','Popunite poruku');
 define('RESDELFAIL','Brisanje rezervacije nije uspelo. Pokušajte ponovo.');
 define('RESDELSUC','Rezervacija je uspešno obrisana.');

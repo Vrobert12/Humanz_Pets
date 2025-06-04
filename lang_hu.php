@@ -1,4 +1,17 @@
 <?php
+define('PAY_ALL_PRODUCTS', 'Minden termék kifizetése');
+define('PAY_PRODUCT', 'Termék kifizetése');
+define('ALL_FIELDS_REQUIRED', 'Minden mező kitöltése kötelező');
+define('CANNOT_SELECT_PAST_DATE', 'Nem választhat múltbeli dátumot');
+define('PASSSET','Új jelszó beállítása');
+define('NEWPASSCONF','Új jelszó megerősítése');
+define('NEWPASS','Új jelszó');
+define('RATING_TIME','Értékelés ideje');
+define('RATING','Értékelés');
+define('RATINGS','Értékelések');
+define('DATA','--Táblázatok--');
+define('DELETE_PRODUCT','Termék törlése');
+define('SEARCH', 'keresés...');
 define('NAV_BOOK_VETERINARIAN', 'Időpontok');
 define('NAV_VET_RATES', 'Értékelés');
 define('NAV_BAN_SITE', 'Tiltás');
@@ -37,8 +50,8 @@ define('BAN_BUTTON','Tiltás');
 define('DELETE_PICTURE', 'Profilkép törlése');
 define("RESESEVATION_CANCELED_BY_VET",'Vizsgálat lemondva');
 define('HERE','itt');
-define('BAN','Személy letiltva:');
-define('UNBAN','Személy tilalma felmentve:');
+define('BAN','Személy letiltva');
+define('UNBAN','Személy tilalma felmentve');
 define('FILLMES','Töltse ki az üzenetet');
 define('RESDELFAIL','Nem sikerült törölni a foglalást. Kérjük, próbálja újra.');
 define('RESDELSUC','Foglalás sikeresen törölve');
