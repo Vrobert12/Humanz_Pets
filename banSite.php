@@ -73,17 +73,38 @@ $_SESSION['previousPage'] = "banSite.php";
     </style>
 </head>
 <body style="background: #659df7">
-<div class="d-flex flex-wrap justify-content-center">
-    <div class="users">
+<div class="container-fluid">
+    <a class="btn btn-secondary back-button"
+       href="index.php"
+       style="
+         margin: 10px;
+         padding: 16px 40px;
+         font-size: 22px;
+         border-radius: 14px;
+         display: inline-block;
+         touch-action: manipulation;
+         user-select: none;
+         -webkit-tap-highlight-color: transparent;">
+        <?php echo BACK ?>
+    </a>
+</div>
+
+
+    <div class="d-flex flex-wrap justify-content-center mt-5">
+    <div class="users" style="width: 100%; max-width: 900px;">
         <form id="searchForm" method="post">
-            <input type="text" id="search" name="search" placeholder="<?php echo EMAIL ?>" oninput="performSearch('banSite.php')">
-            <input type="hidden" name="searchAction" value="1"> <!-- Add a search action field to differentiate the request -->
+            <input type="text" id="search" name="search" placeholder="<?php echo EMAIL; ?>"
+                   oninput="performSearch('banSite.php')"
+                   style="width: 100%; height: 70px; font-size: 28px; padding: 15px 20px;
+                          border-radius: 15px; border: 2px solid #aaa; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+            <input type="hidden" name="searchAction" value="1">
         </form>
     </div>
 </div>
-<div class="container-fluid">
-    <a class="btn btn-secondary back-button" style="margin-left: 10px; margin-top: 10px" href="index.php"><?php echo BACK ?></a>
-    <?php
+
+
+
+ <?php
     $_SESSION['backPic'] = "banSite.php";
     $connection = $autoload->connect($dsn, $_ENV['DB_USER'], $_ENV['DB_PASSWORD'], $pdoOptions);
     if ($_SESSION['privilage'] != "Admin") {
@@ -135,22 +156,14 @@ if (isset($_POST['search']) && !empty($_POST['search'])) {
     $firstVetPrinted = false;
     echo "<div class='container' style='text-align: center; margin: 20px 0;'>";
     echo "<hr style='border: 2px solid white;'>";
-    echo "<h3 style='color: white;'>".USERS."</h3>";
+    echo "<h3 style='color: white;'>Users</h3>";
     echo "<hr style='border: 2px solid white;'>";
-    echo "</div>";
+    echo "</div>";  echo '<div class="d-flex flex-wrap justify-content-center">';
     foreach (array_merge($users, $veterinarians) as $index => $row) {
         $fullName = htmlspecialchars($row['firstName'] . ' ' . $row['lastName']);
         $isBanned = $row['banned'] == 1;
 
-        // Insert a separator only once, before the first veterinarian
-        if (!$firstVetPrinted && isset($row['veterinarianId'])) {
-            echo "<div class='container' style='text-align: center; margin: 20px 0;'>";
-            echo "<hr style='border: 2px solid white;'>";
-            echo "<h3 style='color: white;'>".VETS."</h3>";
-            echo "<hr style='border: 2px solid white;'>";
-            echo "</div>";
-            $firstVetPrinted = true; // Ensure it only prints once
-        }
+
 
         echo "<div class='col-xl-4 p-3 border bg-dark' style='margin: auto; margin-top:100px; margin-bottom: 50px; width: fit-content;'>";
         echo "<img class='profilePic' src='pictures/" . htmlspecialchars($row['profilePic']) . "' width='250' height='250' alt='Profile Picture'>";
@@ -165,14 +178,21 @@ if (isset($_POST['search']) && !empty($_POST['search'])) {
 
         echo '<input type="hidden" name="action" value="deletePicture">';
         echo '<input type="hidden" name="table" value="user">';
-        echo '<input type="submit" class="btn btn-danger" value="' . DELETE_PICTURE . '"></form>';
+        echo '<input type="submit" style="font-size: 1.5rem; padding: 20px 30px" class="btn btn-danger" value="' . DELETE_PICTURE . '"></form>';
 
         echo "<label>ID: " . htmlspecialchars($row['userId'] ?? $row['veterinarianId']) . "</label><br>";
-        echo "<label><b>".NAME.":</b> " . htmlspecialchars($row['firstName'] . ' ' . $row['lastName']) . "</label><br>";
-        echo "<label><b>".EMAIL.":</b> " . htmlspecialchars($row['userMail'] ?? $row['veterinarianMail']) . "</label><br>";
-        echo "<label><b>".PHONE.":</b> " . htmlspecialchars($row['phoneNumber']) . "</label><br>";
+        echo "<label><b>Név:</b> " . htmlspecialchars($row['firstName'] . ' ' . $row['lastName']) . "</label><br>";
+        echo "<label><b>Email:</b> " . htmlspecialchars($row['userMail'] ?? $row['veterinarianMail']) . "</label><br>";
+        echo "<label><b>Telefon:</b> " . htmlspecialchars($row['phoneNumber']) . "</label><br>";
+
+        // Új sor: típus kiírása
+        if (isset($row['veterinarianId'])) {
+            echo "<label><b>Típus:</b> Állatorvos</label><br>";
+        } else {
+            echo "<label><b>Típus:</b> Felhasználó</label><br>";
+        }
         echo "<label style='color: " . ($row['banned'] == 1 ? 'red' : 'green') . ";'>";
-        echo ($row['banned'] == 1 ? BAN : UNBAN) . "</label><br>";
+        echo ($row['banned'] == 1 ? 'Banned' : 'Active') . "</label><br>";
 
         echo '<form method="post" action="functions.php">';
 
@@ -188,9 +208,9 @@ if (isset($_POST['search']) && !empty($_POST['search'])) {
         echo '<input type="submit" class="btn btn-danger" value="' . ($isBanned ? UNBAN_BUTTON : BAN_BUTTON) . '">';
 
         if (isset($row['userId'])) {
-            echo ' <a class="btn btn-primary back-button" href="modify.php?userId=' . htmlspecialchars($row['userId']) . '">' . MODIFY . ' </a>';
+            echo ' <a class="btn btn-primary back-button" style="font-size: 1.5rem; padding: 20px 30px" href="modify.php?userId=' . htmlspecialchars($row['userId']) . '">' . MODIFY . ' </a>';
         } else {
-            echo ' <a class="btn btn-primary back-button" href="modify.php?veterinarianId=' . htmlspecialchars($row['veterinarianId']) . '">' . MODIFY . ' </a>';
+            echo ' <a class="btn btn-primary back-button" style="font-size: 1.5rem; padding: 20px 30px" href="modify.php?veterinarianId=' . htmlspecialchars($row['veterinarianId']) . '">' . MODIFY . ' </a>';
         }
 
         echo '</form>';
@@ -217,19 +237,11 @@ else {
     echo "<h3 style='color: white;'>".USERS."</h3>";
     echo "<hr style='border: 2px solid white;'>";
     echo "</div>";
+    echo '<div class="d-flex flex-wrap justify-content-center">';
     foreach (array_merge($users, $veterinarians) as $index => $row) {
         $fullName = htmlspecialchars($row['firstName'] . ' ' . $row['lastName']);
         $isBanned = $row['banned'] == 1;
 
-        // Insert a separator only once, before the first veterinarian
-        if (!$firstVetPrinted && isset($row['veterinarianId'])) {
-            echo "<div class='container' style='text-align: center; margin: 20px 0;'>";
-            echo "<hr style='border: 2px solid white;'>";
-            echo "<h3 style='color: white;'>".VETS."</h3>";
-            echo "<hr style='border: 2px solid white;'>";
-            echo "</div>";
-            $firstVetPrinted = true; // Ensure it only prints once
-        }
 
         echo "<div class='col-xl-4 p-3 border bg-dark' style='margin: auto; margin-top:100px; margin-bottom: 50px; width: fit-content;'>";
         echo "<img class='profilePic' src='pictures/" . htmlspecialchars($row['profilePic']) . "' width='250' height='250' alt='Profile Picture'>";
@@ -244,14 +256,21 @@ else {
 
         echo '<input type="hidden" name="action" value="deletePicture">';
         echo '<input type="hidden" name="table" value="user">';
-        echo '<input type="submit" class="btn btn-danger" value="' . DELETE_PICTURE . '"></form>';
+        echo '<input type="submit" class="btn btn-danger" style="font-size: 1.5rem; padding: 20px 30px" value="' . DELETE_PICTURE . '"></form>';
 
         echo "<label>ID: " . htmlspecialchars($row['userId'] ?? $row['veterinarianId']) . "</label><br>";
-        echo "<label><b>".NAME.":</b> " . htmlspecialchars($row['firstName'] . ' ' . $row['lastName']) . "</label><br>";
-        echo "<label><b>".EMAIL.":</b> " . htmlspecialchars($row['userMail'] ?? $row['veterinarianMail']) . "</label><br>";
-        echo "<label><b>".PHONE.":</b> " . htmlspecialchars($row['phoneNumber']) . "</label><br>";
+        echo "<label><b>Név:</b> " . htmlspecialchars($row['firstName'] . ' ' . $row['lastName']) . "</label><br>";
+        echo "<label><b>Email:</b> " . htmlspecialchars($row['userMail'] ?? $row['veterinarianMail']) . "</label><br>";
+        echo "<label><b>Telefon:</b> " . htmlspecialchars($row['phoneNumber']) . "</label><br>";
+
+        // Új sor: típus kiírása
+        if (isset($row['veterinarianId'])) {
+            echo "<label><b>Típus:</b> Állatorvos</label><br>";
+        } else {
+            echo "<label><b>Típus:</b> Felhasználó</label><br>";
+        }
         echo "<label style='color: " . ($row['banned'] == 1 ? 'red' : 'green') . ";'>";
-        echo ($row['banned'] == 1 ? BAN : UNBAN) . "</label><br>";
+        echo ($row['banned'] == 1 ? 'Banned' : 'Active') . "</label><br>";
 
         echo '<form method="post" action="functions.php">';
 
@@ -264,12 +283,12 @@ else {
         }
 
         echo '<input type="hidden" name="ban" value="' . ($isBanned ? 'yes' : 'no') . '">';
-        echo '<input type="submit" class="btn btn-danger" value="' . ($isBanned ? UNBAN_BUTTON : BAN_BUTTON) . '">';
+        echo '<input type="submit"style="font-size: 1.5rem; padding: 20px 30px" class="btn btn-danger" value="' . ($isBanned ? UNBAN_BUTTON : BAN_BUTTON) . '">';
 
         if (isset($row['userId'])) {
-            echo ' <a class="btn btn-primary back-button" href="modify.php?userId=' . htmlspecialchars($row['userId']) . '">' . MODIFY . ' </a>';
+            echo ' <a class="btn btn-primary back-button" style="font-size: 1.5rem; padding: 20px 30px"href="modify.php?userId=' . htmlspecialchars($row['userId']) . '">' . MODIFY . ' </a>';
         } else {
-            echo ' <a class="btn btn-primary back-button" href="modify.php?veterinarianId=' . htmlspecialchars($row['veterinarianId']) . '">' . MODIFY . ' </a>';
+            echo ' <a class="btn btn-primary back-button" style="font-size: 1.5rem; padding: 20px 30px"href="modify.php?veterinarianId=' . htmlspecialchars($row['veterinarianId']) . '">' . MODIFY . ' </a>';
         }
 
         echo '</form>';

@@ -71,9 +71,7 @@ https://getbootstrap.com/docs/5.3/components/navbar/
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
     <div class="container-fluid">
         <!-- Logo -->
-        <a class="navbar-brand" href="#">
-            <span id="brand">R&D</span>
-        </a>
+        <a class="navbar-brand" href="#">R&D</a>
         <!-- Toggler for mobile view -->
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
             <span class="navbar-toggler-icon"></span>
@@ -82,58 +80,80 @@ https://getbootstrap.com/docs/5.3/components/navbar/
         <div class="collapse navbar-collapse" id="collapsibleNavbar">
             <!-- Centered Navigation Links -->
             <ul class="navbar-nav mx-auto">
-
                 <?php
                 if(isset($_SESSION['privilage'])) {
-                    if ($_SESSION['privilage'] == "Veterinarian")
-                    {
-                        echo ' <li class="nav-item">
-                    <a class="nav-link" href="booked_users.php"><i class="bi bi-people-fill fs-3"></i></a>
-                </li>';
-                        echo '<li class="nav-item">
-                    <a class="nav-link" href="petsInfo.php"><i class="fa-solid fa-paw fs-2" style="margin-top: 3px"></i></a>
-                </li>';
-                        echo '<li class="nav-item">
-
-                    <a class="nav-link" href="book_veterinarian.php"><i class="bi bi-book-fill fs-3"></i></a>
-                </li>';
+                    if ($_SESSION['privilage'] == "Veterinarian") {
+                        echo '
+            <li class="nav-item">
+                <a class="nav-link" href="booked_users.php">
+                    <span class="d-none d-sm-inline"><i class="bi bi-people-fill fs-3"></i></span>
+                    <span class="d-inline d-sm-none">Foglalók</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="petsInfo.php">
+                    <span class="d-none d-sm-inline"><i class="fa-solid fa-paw fs-2" style="margin-top: 3px"></i></span>
+                    <span class="d-inline d-sm-none">Állatok</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="book_veterinarian.php">
+                    <span class="d-none d-sm-inline"><i class="bi bi-book-fill fs-3"></i></span>
+                    <span class="d-inline d-sm-none">Időpontok</span>
+                </a>
+            </li>';
                     }
-                       if($_SESSION['privilage'] == "User")
-                           echo '<li class="nav-item">
 
-                    <a class="nav-link" href="book_apointment.php"><i class="bi bi-book-fill fs-3"></i></a>
-                </li>';
+                    if ($_SESSION['privilage'] == "User") {
+                        echo '
+            <li class="nav-item">
+                <a class="nav-link" href="book_apointment.php">
+                    <span class="d-none d-sm-inline"><i class="bi bi-book-fill fs-3"></i></span>
+                    <span class="d-inline d-sm-none">Foglalás</span>
+                </a>
+            </li>';
+                    }
 
-                    if($_SESSION['privilage'] == "Admin"){
-                        echo '<li class="nav-item">
-
-                    <a class="nav-link" href="book_apointment.php"><i class="bi bi-book-fill fs-3"></i></a>
-                </li>';
-                        echo ' <li class="nav-item">
-                    <a class="nav-link" href="veterinarianRates.php"><i class="bi bi-star-fill fs-3"></i></a>
-                </li>';
-                      echo ' <li class="nav-item">
-                    <a class="nav-link" href="banSite.php"><i class="bi bi-ban fs-3"></i></a>
-                </li>';
-                        echo ' <li class="nav-item">
-                    <a class="nav-link" href="checkProducts.php"><i class="bi bi-bag-check-fill fs-3"></i></a>
-                </li>';
+                    if ($_SESSION['privilage'] == "Admin") {
+                        echo '
+            <li class="nav-item">
+                <a class="nav-link" href="book_apointment.php">
+                    <span class="d-none d-sm-inline"><i class="bi bi-book-fill fs-3"></i></span>
+                    <span class="d-inline d-sm-none">'.NAV_BOOK_VETERINARIAN. '</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="veterinarianRates.php">
+                    <span class="d-none d-sm-inline"><i class="bi bi-star-fill fs-3"></i></span>
+                    <span class="d-inline d-sm-none">'.NAV_VET_RATES. '</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="banSite.php">
+                    <span class="d-none d-sm-inline"><i class="bi bi-ban fs-3"></i></span>
+                    <span class="d-inline d-sm-none">'.NAV_BAN_SITE. '</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="checkProducts.php">
+                    <span class="d-none d-sm-inline"><i class="bi bi-bag-check-fill fs-3"></i></span>
+                    <span class="d-inline d-sm-none">'.NAV_CHECK_PRODUCTS. '</span>
+                </a>
+            </li>';
                     }
                 }
-                    ?>
+                ?>
             </ul>
+
             <!-- Language Dropdown (Aligned Right) -->
             <div class="dropdown">
                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <?php echo LG ?>
                 </button>
-                <div class="dropdown-menu"
-                     aria-labelledby="dropdownMenuButton"
-                     style="min-width:auto !important; width:auto !important; --bs-dropdown-min-width:auto !important">
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                     <a class="dropdown-item" href="?lang=en"><?php echo LANGUAGE_en ?></a>
                     <a class="dropdown-item" href="?lang=hu"><?php echo LANGUAGE_hu ?></a>
                     <a class="dropdown-item" href="?lang=sr"><?php echo LANGUAGE_sr ?></a>
-                    <a class="dropdown-item" href="?lang=sr">asfff</a>
                 </div>
             </div>
         </div>
@@ -147,13 +167,14 @@ https://getbootstrap.com/docs/5.3/components/navbar/
 
         <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
             <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"/></svg>
+            <span class="fs-4">Sidebar</span>
         </a>
         <hr>
         <ul class="nav nav-pills flex-column mb-auto">
             <li class="nav-item">
                 <a href="#" class="nav-link active" aria-current="page">
                     <svg class="bi me-2" width="16" height="16"><use xlink:href="#home"/></svg>
-                    <?php echo HOME?>
+                    Home
                 </a>
             </li>
             <?php

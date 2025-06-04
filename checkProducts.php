@@ -31,7 +31,7 @@ if($_SESSION['privilage']!='Admin'){
 
     </script>
     <script src="indexJS.js"></script>
-    <script src="search.js"></script>
+
     <link rel="stylesheet" href="style.css">
     <style>
 
@@ -83,13 +83,16 @@ if($_SESSION['privilage']!='Admin'){
     </style>
 </head>
 <body style="background: #659df7">
+<a class="btn btn-secondary back-button" style="margin-left: 10px; margin-top: 20px;margin-bottom: 20px" href="index.php"><?php echo BACK ?></a>
+
 <div class="d-flex flex-wrap justify-content-center">
-    <div class="users">
-        <form id="searchForm" method="post">
-            <input type="text" id="search" name="search" placeholder="<?php echo EMAIL?>" oninput="performSearch('checkProducts.php')">
-            <input type="hidden" name="searchAction" value="1"> <!-- Add a search action field to differentiate the request -->
+        <!-- form method változtatása POST-ról GET-re -->
+        <form id="searchForm" method="get">
+            <input type="text" id="search" name="search" placeholder="<?php echo EMAIL;?>" oninput="performSearch('checkProducts.php')">
+            <input type="hidden" name="searchAction" value="1">
+            <button type="submit" class="btn btn-primary">Keresés</button>
         </form>
-    </div>
+
 </div>
 <!-- Show popup message if session message is set -->
 <?php if (isset($_SESSION['message'])): ?>
@@ -118,7 +121,6 @@ if($_SESSION['privilage']!='Admin'){
 https://getbootstrap.com/docs/5.3/components/navbar/
 -->
 
-<a class="btn btn-secondary back-button" style="margin-left: 10px; margin-top: 10px" href="index.php"><?php echo BACK ?></a>
 <?php
 if (isset($_SESSION['message']) && $_SESSION['message'] != "")
     echo "<div class='mainBlock rounded bg-dark text-white' style='text-align: center; margin-top: 100px;'>
@@ -132,11 +134,11 @@ if (isset($_SESSION['message']) && $_SESSION['message'] != "")
           </a>
       </div>";
 
-if(isset($_SESSION['email']) && isset($_SESSION['name']) && isset($_SESSION['profilePic']) && $_SESSION['privilage']=='Admin'){
+if(isset($_SESSION['email']) && isset($_SESSION['name']) && isset($_SESSION['profilePic']) && $_SESSION['privilage']=='Admin') {
     $_SESSION['backPic'] = "checkProducts.php";
 
-    if (!empty($_POST['search'])) {
-        $params = "%" . $_POST['search'] . "%";
+    if (!empty($_GET['search'])) {
+        $params = "%" . $_GET['search'] . "%";
         $stmt = "SELECT p.userId, u.*, GROUP_CONCAT(p.userProductRelationId) AS userProductRelationIds, 
              GROUP_CONCAT(p.productName) AS productNames
              FROM user u
@@ -148,28 +150,25 @@ if(isset($_SESSION['email']) && isset($_SESSION['name']) && isset($_SESSION['pro
              GROUP BY u.userId
              ORDER BY u.userId ASC";
         try {
-            // Prepare the SQL query
             $stmt = $pdo->prepare($stmt);
-            $stmt->execute(array('email' => $params)); // Execute the query with the search parameter
-
-            // Fetch all results
+            $stmt->execute(array('email' => $params));
             $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
             echo '<div id="list" class="d-flex flex-wrap justify-content-center">';
             if (!empty($results)) {
-                echo '<div class="container">
-                <div class="row justify-content-around">';
+                echo '<div class="container"><div class="row justify-content-around">';
                 foreach ($results as $row) {
-                    echo '<div class="col-xl-4 p-5 border bg-dark" style="margin: auto; margin-top:100px; margin-bottom: 50px; width: fit-content">';
+                    echo '<div class="col-xl-4 p-5 border bg-dark" style="margin: auto; margin-top:20px; margin-bottom: 50px; width: fit-content">';
                     echo '<div class="col-xl-4"><img class="profilePic" 
                 src="pictures/' . htmlspecialchars($row['profilePic']) . '" width="250" height="250" alt="Profile Picture"></div>';
                     echo '<label>ID: ' . htmlspecialchars($row['userId']) . '</label><br>';
                     echo '<label>' . NAME . ': ' . htmlspecialchars($row['firstName'] . " " . $row['lastName']) . '</label><br>';
                     echo '<label>' . PHONE . ': ' . htmlspecialchars($row['phoneNumber']) . '</label><br>';
                     echo '<label>' . EMAIL . ': ' . htmlspecialchars($row['userMail']) . '</label><br>';
-                    echo '<a class="btn btn-primary" href="usersProducts.php?user=' . htmlspecialchars($row['userId']) . '">' . PRODUCT . '</a>&nbsp;&nbsp;&nbsp;';
+                    echo '<a class="btn btn-primary" href="usersProducts.php?user=' . htmlspecialchars($row['userId']) . '">' . RESERVE . '</a>&nbsp;&nbsp;&nbsp;';
                     echo '</div>';
                 }
-                echo '</div></div>';
+                echo '</div></div></div>';
             } else {
                 $_SESSION['message'] = "<h2 style='color: white'>No result found.</h2>";
             }
@@ -177,34 +176,31 @@ if(isset($_SESSION['email']) && isset($_SESSION['name']) && isset($_SESSION['pro
             echo "Error: " . $e->getMessage();
         }
     } else {
+        // alapértelmezett lista, ha nincs keresés
         $stmt = $pdo->prepare("SELECT p.userId, u.*, GROUP_CONCAT(p.userProductRelationId) AS userProductRelationIds, 
-                           GROUP_CONCAT(p.productName) AS productNames
-                           FROM user u
-                           INNER JOIN user_product_relation p ON p.userId = u.userId
-                           WHERE u.verify = 1
-                           AND u.banned != 1
-                           AND p.productPayed = 0
-                           GROUP BY u.userId
-                           ORDER BY u.userId ASC");
+                       GROUP_CONCAT(p.productName) AS productNames
+                       FROM user u
+                       INNER JOIN user_product_relation p ON p.userId = u.userId
+                       WHERE u.verify = 1
+                       AND u.banned != 1
+                       AND p.productPayed = 0
+                       GROUP BY u.userId
+                       ORDER BY u.userId ASC");
         try {
-            // Prepare the SQL query and execute it
             $stmt->execute();
-
-            // Fetch all results
             $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
             echo '<div id="list" class="d-flex flex-wrap justify-content-center">';
             if (!empty($results)) {
-                echo '<div class="container">
-                <div class="row justify-content-around">';
+                echo '<div class="container"><div class="row justify-content-around">';
                 foreach ($results as $row) {
-                    echo '<div class="col-xl-4 p-5 border bg-dark" style="margin: auto; margin-top:100px; margin-bottom: 50px; width: fit-content">';
+                    echo '<div class="col-xl-4 p-5 border bg-dark" style="margin: auto; margin-top:20px; margin-bottom: 50px; width: fit-content">';
                     echo '<div class="col-xl-4"><img class="profilePic" 
                 src="pictures/' . htmlspecialchars($row['profilePic']) . '" width="250" height="250" alt="Profile Picture"></div>';
                     echo '<label>ID: ' . htmlspecialchars($row['userId']) . '</label><br>';
                     echo '<label>' . NAME . ': ' . htmlspecialchars($row['firstName'] . " " . $row['lastName']) . '</label><br>';
                     echo '<label>' . PHONE . ': ' . htmlspecialchars($row['phoneNumber']) . '</label><br>';
                     echo '<label>' . EMAIL . ': ' . htmlspecialchars($row['userMail']) . '</label><br>';
-                    echo '<a class="btn btn-primary" href="usersProducts.php?user=' . htmlspecialchars($row['userId']) . '">' . PRODUCT . '</a>&nbsp;&nbsp;&nbsp;';
+                    echo '<a class="btn btn-primary" href="usersProducts.php?user=' . htmlspecialchars($row['userId']) . '">' . RESERVE . '</a>&nbsp;&nbsp;&nbsp;';
                     echo '</div>';
                 }
                 echo '</div></div></div>';
@@ -215,7 +211,6 @@ if(isset($_SESSION['email']) && isset($_SESSION['name']) && isset($_SESSION['pro
             echo "Error: " . $e->getMessage();
         }
     }
-
 }
 
 else {

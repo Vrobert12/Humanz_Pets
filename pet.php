@@ -16,7 +16,7 @@ $functions->checkAutoLogin();
     <title>User Data</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="search.js"></script>
+
     <style>
         .profile-image {
             width: 200px;
@@ -34,10 +34,12 @@ $functions->checkAutoLogin();
     <a class="btn btn-secondary mb-4" href="index.php"><?php echo BACK ?></a>
     <div class="d-flex flex-wrap justify-content-center">
         <div class="users">
-            <form id="searchForm" method="post">
-                <input type="text" id="search" name="search" placeholder="<?php echo SEARCH?>" oninput="performSearch('pet.php?email=<?php echo $_SESSION['email']; ?>')">
-                <input type="hidden" name="searchAction" value="1">
+            <form id="searchForm" method="get" action="pet.php">
+                <input type="hidden" name="email" value="<?php echo htmlspecialchars($_SESSION['email']); ?>">
+                <input type="text" id="search" name="search" placeholder="Pet Name" value="<?php echo isset($_GET['search']) ? htmlspecialchars($_GET['search']) : ''; ?>">
+                <button type="submit" class="btn btn-primary">Keresés</button>
             </form>
+
 
         </div>
     </div>
@@ -48,13 +50,9 @@ $functions->checkAutoLogin();
         $connection = $functions->connect($dsn, $_ENV['DB_USER'], $_ENV['DB_PASSWORD'], $pdoOptions);
 
 
-        if (isset($_POST['search']) && !empty($_POST['search'])) {
-            $searchTerm = "%" . $_POST['search'] . "%";
+        if (isset($_GET['search']) && !empty($_GET['search'])) {
+            $searchTerm = "%" . $_GET['search'] . "%";
 
-            // Assuming you already have a database connection available
-            $connection = $functions->connect($dsn, $_ENV['DB_USER'], $_ENV['DB_PASSWORD'], $pdoOptions);
-
-            // Search for pets by name
             $stmt = $connection->prepare("SELECT p.petId, p.petName, p.bred, p.petSpecies, u.userMail, p.profilePic 
                                   FROM user u 
                                   INNER JOIN pet p ON u.userId = p.userId 
@@ -91,7 +89,33 @@ $functions->checkAutoLogin();
                     echo '</div>';
                     echo '</div>';
                 }
+            }else {
+                echo '<p>Nincs találat.</p>';
+            } echo '<div class="col-lg-4 order-lg-1 profile-section">';
+            $sql = "SELECT qrCodeName FROM qr_code WHERE userId= :userId";
+            $stmt = $connection->prepare($sql);
+            $stmt->bindParam(":userId", $userID, PDO::PARAM_INT);
+            if ($stmt->execute()) {
+                echo '<h5 class="text-center"> '.QR.'</h5>';
+                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                    $qrPicture = htmlspecialchars($row['qrCodeName']);
+                    echo '<div class="mb-4 text-center">';
+                    echo '<img class="profile-image" alt="QR Code" src="' . $qrPicture . '">';
+                    echo '<p>' . INFO . '</p>';
+                    echo ' <form action="generate_pdf.php" method="POST">
+        <input type="hidden" name="qrImage" value="'.$qrPicture.'">
+        <button type="submit" class="btn btn-primary">'.GENPDF.'</button>
+    </form>';
+// Button to download the QR code image
+                    echo '<a href="'.$qrPicture.'" download class="btn btn-secondary mt-3">'.DOWNLOAD_QRCODE.'</a>';
+                    echo '</div>';
+
+                    echo '</div>';
+                }
             }
+            echo '</div>';
+
+            echo '</div>';
         }
 else{
     echo '<div id="list" class="d-flex flex-wrap justify-content-center">';
@@ -147,7 +171,7 @@ $_SESSION['backPic']="pet.php";
             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                 $qrPicture = htmlspecialchars($row['qrCodeName']);
                 echo '<div class="mb-4 text-center">';
-                echo '<img class="profile-image" alt="QR Code" src="pictures/'. $qrPicture .'">';
+                echo '<img class="profile-image" alt="QR Code" src="' . $qrPicture . '">';
                 echo '<p>' . INFO . '</p>';
                 echo ' <form action="generate_pdf.php" method="POST">
         <input type="hidden" name="qrImage" value="'.$qrPicture.'">

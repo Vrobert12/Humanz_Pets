@@ -29,7 +29,7 @@ if ($_SESSION['privilage'] != "Admin") {
     <script>
         const lang = '<?php echo $lang; ?>';
     </script>
-    <script src="search.js"></script>
+
     <script src="indexJS.js"></script>
     <link rel="stylesheet" href="style.css">
     <style>
@@ -73,14 +73,15 @@ if ($_SESSION['privilage'] != "Admin") {
 </script>
 
 <a class="btn btn-secondary back-button" style="margin-left: 10px; margin-top: 10px" href="index.php"><?php echo BACK ?></a>
-<div class="d-flex flex-wrap justify-content-center">
-    <div class="users">
-        <form id="searchForm" method="post">
-            <input type="text" id="search" name="search" placeholder="<?php echo EMAIL ?>" oninput="performSearch('veterinarianRates.php')">
-            <input type="hidden" name="searchAction" value="1"> <!-- Add a search action field to differentiate the request -->
-        </form>
-    </div>
+<div class="d-flex justify-content-center" style="margin-top: 20px; margin-bottom: 30px;">
+    <form id="searchForm" method="get" action="veterinarianRates.php" class="d-flex" style="gap:10px; align-items:center;">
+        <input type="text" id="search" name="search" placeholder="<?php echo EMAIL;?>"
+               value="<?php echo isset($_GET['search']) ? htmlspecialchars($_GET['search']) : ''; ?>"
+               class="form-control" style="max-width: 250px; font-size: 14px;">
+        <button type="submit" class="btn btn-primary" style="font-size: 14px; padding: 6px 12px;">Keresés</button>
+    </form>
 </div>
+
 
 <?php
 if (isset($_SESSION['message']) && $_SESSION['message'] != "")
@@ -97,19 +98,21 @@ if (isset($_SESSION['message']) && $_SESSION['message'] != "")
 
 if (isset($_SESSION['email']) && isset($_SESSION['name']) && isset($_SESSION['profilePic'])) {
 
-    if (isset($_POST['search']) && !empty($_POST['search'])) {
-        $searchTerm = "%" . $_POST['search'] . "%";
+    if (isset($_GET['search']) && !empty($_GET['search'])) {
+        $searchTerm = "%" . trim($_GET['search']) . "%";
 
-        // Searching Users
-        $stmt = $pdo->prepare("SELECT * FROM user WHERE userMail LIKE :searchTerm AND privilage='User'");
+        // Keresés a user táblában
+        $stmt = $pdo->prepare("SELECT * FROM veterinarian WHERE veterinarianMail LIKE :searchTerm");
         $stmt->bindValue(':searchTerm', $searchTerm, PDO::PARAM_STR);
         $stmt->execute();
         $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        // Searching Veterinarians
+        // Keresés az állatorvosok között
         $stmt = $pdo->prepare("SELECT v.veterinarianId,v.firstName,v.lastName,v.veterinarianMail,v.profilePic,v.phoneNumber,v.banned,
-            COALESCE(AVG(r.review), 0) AS totalReviewSum FROM veterinarian v INNER JOIN 
-               review r ON v.veterinarianId=r.veterinarianId WHERE verify=1 AND veterinarianMail LIKE :searchTerm GROUP BY v.veterinarianId");
+        COALESCE(AVG(r.review), 0) AS totalReviewSum FROM veterinarian v 
+        LEFT JOIN review r ON v.veterinarianId = r.veterinarianId
+        WHERE v.verify=1 AND v.veterinarianMail LIKE :searchTerm 
+        GROUP BY v.veterinarianId");
         $stmt->bindValue(':searchTerm', $searchTerm, PDO::PARAM_STR);
         $stmt->execute();
         $veterinarians = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -120,13 +123,13 @@ if (isset($_SESSION['email']) && isset($_SESSION['name']) && isset($_SESSION['pr
                     <div class="row justify-content-around">';
             foreach ($veterinarians as $row) {
                 $isBanned = $row['banned'] == 1;
-                echo '<div class="col-xl-4 p-5 border bg-dark" style="margin: auto; margin-top:100px; margin-bottom: 50px; width: fit-content">';
+                echo '<div class="col-xl-4 p-5 border bg-dark" style="margin: auto; margin-top:00px; margin-bottom: 50px; width: fit-content">';
                 echo '<div class="col-xl-4"><img class="profilePic" 
                 src="pictures/' . htmlspecialchars($row['profilePic']) . '" width="250" height="250" alt="Profile Picture"></div>';
                 echo '<label>ID: ' . htmlspecialchars($row['veterinarianId']) . '</label><br>';
-                echo '<label>'.NAME.': ' . htmlspecialchars($row['firstName'] . " " . $row['lastName']) . '</label><br>';
-                echo '<label>'.PHONE.': ' . htmlspecialchars($row['phoneNumber']) . '</label><br>';
-                echo '<label>'.EMAIL.': ' . htmlspecialchars($row['veterinarianMail']) . '</label><br>';
+                echo '<label>Name: ' . htmlspecialchars($row['firstName'] . " " . $row['lastName']) . '</label><br>';
+                echo '<label>Phone: ' . htmlspecialchars($row['phoneNumber']) . '</label><br>';
+                echo '<label>Email: ' . htmlspecialchars($row['veterinarianMail']) . '</label><br>';
                 echo $isBanned ? '<label style="color: red;">Banned</label><br>' : '<label style="color: green;">Active</label><br>';
 
                 $_SESSION['previousPage']="veterinarianRates.php";
@@ -140,19 +143,11 @@ if (isset($_SESSION['email']) && isset($_SESSION['name']) && isset($_SESSION['pr
         }
     }
     else {
-        // Fetch All Veterinarians
-        $stmt = $pdo->prepare("SELECT 
-            v.veterinarianId,
-            v.firstName,
-            v.lastName,
-            v.veterinarianMail,
-            v.profilePic,
-            v.phoneNumber,
-            v.banned,
-            COALESCE(AVG(r.review), 0) AS totalReviewSum
-        FROM veterinarian v
-        LEFT JOIN review r ON v.veterinarianId = r.veterinarianId AND v.verify = 1
-        GROUP BY v.veterinarianId, v.firstName, v.lastName, v.veterinarianMail, v.profilePic, v.phoneNumber");
+        $stmt = $pdo->prepare("SELECT v.veterinarianId,v.firstName,v.lastName,v.veterinarianMail,v.profilePic,v.phoneNumber,v.banned,
+        COALESCE(AVG(r.review), 0) AS totalReviewSum FROM veterinarian v 
+        LEFT JOIN review r ON v.veterinarianId = r.veterinarianId
+        WHERE v.verify=1
+        GROUP BY v.veterinarianId");
         $stmt->execute();
         $veterinarians = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -163,17 +158,17 @@ if (isset($_SESSION['email']) && isset($_SESSION['name']) && isset($_SESSION['pr
                     <div class="row justify-content-around">';
             foreach ($veterinarians as $row) {
                 $isBanned = $row['banned'] == 1;
-                echo '<div class="col-xl-4 p-5 border bg-dark" style="margin: auto; margin-top:100px; margin-bottom: 50px; width: fit-content">';
+                echo '<div class="col-xl-4 p-5 border bg-dark" style="margin: auto; margin-top:0px; margin-bottom: 50px; width: fit-content">';
                 echo '<div class="col-xl-4"><img class="profilePic" 
                 src="pictures/' . htmlspecialchars($row['profilePic']) . '" width="250" height="250" alt="Profile Picture"></div>';
                 echo '<label>ID: ' . htmlspecialchars($row['veterinarianId']) . '</label><br>';
-                echo '<label>'.NAME.': ' . htmlspecialchars($row['firstName'] . " " . $row['lastName']) . '</label><br>';
-                echo '<label>'.PHONE.': ' . htmlspecialchars($row['phoneNumber']) . '</label><br>';
-                echo '<label>'.EMAIL.': ' . htmlspecialchars($row['veterinarianMail']) . '</label><br>';
-                echo $isBanned ? '<label style="color: red;">'.BAN.'</label><br>' : '<label style="color: green;">'.UNBAN.'</label><br>';
+                echo '<label>Name: ' . htmlspecialchars($row['firstName'] . " " . $row['lastName']) . '</label><br>';
+                echo '<label>Phone: ' . htmlspecialchars($row['phoneNumber']) . '</label><br>';
+                echo '<label>Email: ' . htmlspecialchars($row['veterinarianMail']) . '</label><br>';
+                echo $isBanned ? '<label style="color: red;">Banned</label><br>' : '<label style="color: green;">Active</label><br>';
 
                 $_SESSION['previousPage']="veterinarianRates.php";
-                echo '<label><a class="btn btn-primary" href="ratings.php">'.RATING.': <b>5 / ' . htmlspecialchars((float)$row['totalReviewSum']) . '</b></a></label><br><br>';
+                echo '<label><a class="btn btn-primary" href="ratings.php">Review: <b>5 / ' . htmlspecialchars((float)$row['totalReviewSum']) . '</b></a></label><br><br>';
                 echo '<a class="btn btn-primary" href="book_apointment.php?email=' . $_SESSION['email'] . '&veterinarian=' . htmlspecialchars($row['veterinarianId']) . '">Reserve</a>&nbsp;&nbsp;&nbsp;';
                 echo '</div>';
             }
