@@ -1,5 +1,8 @@
 <?php
 include 'config.php';
+include 'functions.php';
+$autoload = new Functions();
+$pdo = $autoload->connect($GLOBALS['dsn'], $_ENV['DB_USER'], $_ENV['DB_PASSWORD'], $GLOBALS['pdoOptions']);
 
 header("Content-type: application/json; charset=UTF-8");
 
@@ -13,15 +16,7 @@ if (strtolower($_SERVER["REQUEST_METHOD"]) !== "post") {
     exit;
 }
 
-// Database connection
-$host = "localhost";
-$dbname = "pets";
-$username = "root";
-$password = "";
-
 try {
-    $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $username, $password);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     // Get the raw JSON input
     $input = file_get_contents('php://input');

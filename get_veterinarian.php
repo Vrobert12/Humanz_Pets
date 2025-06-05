@@ -1,7 +1,12 @@
 <?php
-
 require 'vendor/autoload.php';
 include "functions.php";
+
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
+header("Access-Control-Allow-Headers: Content-Type");
+header('Content-Type: application/json');
+
 
 $functions = new Functions();
 $pdo = $functions->connect($GLOBALS['dsn'], $_ENV['DB_USER'], $_ENV['DB_PASSWORD'], $GLOBALS['pdoOptions']);
@@ -20,4 +25,3 @@ if (isset($_GET['petId'])) {
 
     echo json_encode($result ?: []);
 }
-

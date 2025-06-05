@@ -8,6 +8,16 @@
       "ext-json": "*",
       "ext-pdo": "*",
       "ext-gd": "*",
-        "mobiledetect/mobiledetectlib": "^4.8"
+        "mobiledetect/mobiledetectlib": "^4.8",
+        "zircote/swagger-php": "^5.1",
+        "symfony/console": "^7.3",
+        "symfony/yaml": "^7.3",
+        "symfony/http-kernel": "^7.3",
+        "symfony/finder": "^7.3",
+        "doctrine/annotations": "^2.0",
+        "symfony/dependency-injection": "^7.3"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^11.5"
     }
 }

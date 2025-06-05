@@ -1,9 +1,7 @@
 <?php
 global $pdo;
 require_once 'react_config.php';
-
 header("Content-Type: application/json");
-
 
 // Read incoming JSON data
 $data = json_decode(file_get_contents("php://input"), true);
