@@ -4,262 +4,35 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2367ab9a-341c-4300-a7ed-72f717181f7d" name="Changes" comment="small fix">
-      <change beforePath="$PROJECT_DIR$/.idea/codeception.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/codeception.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/phpspec.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/phpspec.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_3_10_2025_4_18_PM_[Changes]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_3_10_2025_4_18_PM__Changes_.xml" beforeDir="false" />
+    <list default="true" id="2367ab9a-341c-4300-a7ed-72f717181f7d" name="Changes" comment="3 hardcodes fixed and Swagger implementation">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/add_Post.php" beforeDir="false" afterPath="$PROJECT_DIR$/add_Post.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/checkAvailability.php" beforeDir="false" afterPath="$PROJECT_DIR$/checkAvailability.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/getPets2.php" beforeDir="false" afterPath="$PROJECT_DIR$/getPets2.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/get_veterinarian.php" beforeDir="false" afterPath="$PROJECT_DIR$/get_veterinarian.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/phpForReact/applogIn.php" beforeDir="false" afterPath="$PROJECT_DIR$/phpForReact/applogIn.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phpForReact/add_to_cart.php" beforeDir="false" afterPath="$PROJECT_DIR$/phpForReact/add_to_cart.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phpForReact/bookReact.php" beforeDir="false" afterPath="$PROJECT_DIR$/phpForReact/bookReact.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phpForReact/checkAvailability.php" beforeDir="false" afterPath="$PROJECT_DIR$/phpForReact/checkAvailability.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phpForReact/check_reviews.php" beforeDir="false" afterPath="$PROJECT_DIR$/phpForReact/check_reviews.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phpForReact/deleteReservation.php" beforeDir="false" afterPath="$PROJECT_DIR$/phpForReact/deleteReservation.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phpForReact/delete_cart_item.php" beforeDir="false" afterPath="$PROJECT_DIR$/phpForReact/delete_cart_item.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phpForReact/getPets.php" beforeDir="false" afterPath="$PROJECT_DIR$/phpForReact/getPets.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phpForReact/getReservations.php" beforeDir="false" afterPath="$PROJECT_DIR$/phpForReact/getReservations.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phpForReact/get_cart.php" beforeDir="false" afterPath="$PROJECT_DIR$/phpForReact/get_cart.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phpForReact/get_product_details.php" beforeDir="false" afterPath="$PROJECT_DIR$/phpForReact/get_product_details.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/phpForReact/get_products.php" beforeDir="false" afterPath="$PROJECT_DIR$/phpForReact/get_products.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phpForReact/get_purchased_products.php" beforeDir="false" afterPath="$PROJECT_DIR$/phpForReact/get_purchased_products.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phpForReact/submit_review.php" beforeDir="false" afterPath="$PROJECT_DIR$/phpForReact/submit_review.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phpForReact/updateUser.php" beforeDir="false" afterPath="$PROJECT_DIR$/phpForReact/updateUser.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pictures/20250311130636.png" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/pictures/products/20250315224019.jpg" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/picturespet.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/autoload.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/autoload.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/composer/autoload_classmap.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/composer/autoload_classmap.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/composer/autoload_files.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/composer/autoload_files.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/composer/autoload_psr4.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/composer/autoload_psr4.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/composer/autoload_real.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/composer/autoload_real.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/composer/autoload_static.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/composer/autoload_static.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/composer/installed.json" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/composer/installed.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/composer/installed.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/composer/installed.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/composer/platform_check.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/composer/platform_check.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/fpdf/fpdf/LICENSE" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/fpdf/fpdf/LICENSE" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/fpdf/fpdf/src/Fpdf/Fpdf.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/fpdf/fpdf/src/Fpdf/Fpdf.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/fpdf/fpdf/src/Fpdf/font/courier.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/fpdf/fpdf/src/Fpdf/font/courier.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/fpdf/fpdf/src/Fpdf/font/courierb.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/fpdf/fpdf/src/Fpdf/font/courierb.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/fpdf/fpdf/src/Fpdf/font/courierbi.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/fpdf/fpdf/src/Fpdf/font/courierbi.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/fpdf/fpdf/src/Fpdf/font/courieri.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/fpdf/fpdf/src/Fpdf/font/courieri.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/fpdf/fpdf/src/Fpdf/font/helvetica.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/fpdf/fpdf/src/Fpdf/font/helvetica.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/fpdf/fpdf/src/Fpdf/font/helveticab.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/fpdf/fpdf/src/Fpdf/font/helveticab.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/fpdf/fpdf/src/Fpdf/font/helveticabi.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/fpdf/fpdf/src/Fpdf/font/helveticabi.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/fpdf/fpdf/src/Fpdf/font/helveticai.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/fpdf/fpdf/src/Fpdf/font/helveticai.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/fpdf/fpdf/src/Fpdf/font/symbol.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/fpdf/fpdf/src/Fpdf/font/symbol.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/fpdf/fpdf/src/Fpdf/font/times.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/fpdf/fpdf/src/Fpdf/font/times.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/fpdf/fpdf/src/Fpdf/font/timesb.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/fpdf/fpdf/src/Fpdf/font/timesb.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/fpdf/fpdf/src/Fpdf/font/timesbi.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/fpdf/fpdf/src/Fpdf/font/timesbi.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/fpdf/fpdf/src/Fpdf/font/timesi.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/fpdf/fpdf/src/Fpdf/font/timesi.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/fpdf/fpdf/src/Fpdf/font/unifont/ttfonts.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/fpdf/fpdf/src/Fpdf/font/unifont/ttfonts.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/fpdf/fpdf/src/Fpdf/font/zapfdingbats.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/fpdf/fpdf/src/Fpdf/font/zapfdingbats.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/fpdf/fpdf/src/Fpdf/fpdf.css" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/fpdf/fpdf/src/Fpdf/fpdf.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/fpdf/fpdf/src/Fpdf/makefont/makefont.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/fpdf/fpdf/src/Fpdf/makefont/makefont.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/fpdf/fpdf/src/Fpdf/makefont/ttfparser.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/fpdf/fpdf/src/Fpdf/makefont/ttfparser.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/phpmailer/phpmailer/.editorconfig" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/phpmailer/phpmailer/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/phpmailer/phpmailer/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/phpmailer/phpmailer/VERSION" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/phpmailer/phpmailer/VERSION" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/phpmailer/phpmailer/language/phpmailer.lang-pt.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/phpmailer/phpmailer/language/phpmailer.lang-pt.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/phpmailer/phpmailer/src/PHPMailer.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/phpmailer/phpmailer/src/PHPMailer.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/phpmailer/phpmailer/src/POP3.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/phpmailer/phpmailer/src/POP3.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/phpmailer/phpmailer/src/SMTP.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/phpmailer/phpmailer/src/SMTP.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/symfony/polyfill-mbstring/Mbstring.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/symfony/polyfill-mbstring/Mbstring.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/symfony/polyfill-mbstring/bootstrap80.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/symfony/polyfill-mbstring/bootstrap80.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/symfony/polyfill-mbstring/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/symfony/polyfill-mbstring/composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/symfony/polyfill-php80/PhpToken.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/symfony/polyfill-php80/PhpToken.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/.eslintignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/.eslintrc.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/.github/dependabot.yml" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/.github/dependabot.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/.github/workflows/deploy.yml" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/.github/workflows/deploy.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/.github/workflows/release-notes.yml" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/.github/workflows/release-notes.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/bootstrap-icons.svg" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/bootstrap-icons.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/build/font/css.hbs" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/build/font/css.hbs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/build/font/scss.hbs" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/build/font/scss.hbs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/assets/js/color-modes.js" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/assets/js/color-modes.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/assets/js/search.js" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/assets/js/search.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/_index.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/_index.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/airplane-engines-fill.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/airplane-engines-fill.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/airplane-engines.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/airplane-engines.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/airplane-fill.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/airplane-fill.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/airplane.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/airplane.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/align-center.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/align-center.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/arrow-down-circle-fill.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/arrow-down-circle-fill.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/arrow-down-circle.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/arrow-down-circle.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/arrow-down-left-circle-fill.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/arrow-down-left-circle-fill.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/arrow-down-left-circle.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/arrow-down-left-circle.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/arrow-down-left-square-fill.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/arrow-down-left-square-fill.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/arrow-down-left-square.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/arrow-down-left-square.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/arrow-down-right-circle-fill.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/arrow-down-right-circle-fill.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/arrow-down-right-circle.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/arrow-down-right-circle.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/arrow-down-right-square-fill.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/arrow-down-right-square-fill.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/arrow-down-right-square.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/arrow-down-right-square.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/arrow-down-square-fill.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/arrow-down-square-fill.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/arrow-down-square.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/arrow-down-square.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/arrow-left-circle-fill.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/arrow-left-circle-fill.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/arrow-left-circle.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/arrow-left-circle.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/arrow-left-square-fill.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/arrow-left-square-fill.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/arrow-left-square.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/arrow-left-square.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/arrow-right-circle-fill.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/arrow-right-circle-fill.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/arrow-right-circle.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/arrow-right-circle.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/arrow-right-square-fill.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/arrow-right-square-fill.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/arrow-right-square.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/arrow-right-square.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/arrow-up-circle-fill.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/arrow-up-circle-fill.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/arrow-up-circle.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/arrow-up-circle.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/arrow-up-left-circle-fill.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/arrow-up-left-circle-fill.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/arrow-up-left-circle.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/arrow-up-left-circle.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/arrow-up-left-square-fill.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/arrow-up-left-square-fill.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/arrow-up-left-square.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/arrow-up-left-square.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/arrow-up-right-circle-fill.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/arrow-up-right-circle-fill.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/arrow-up-right-circle.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/arrow-up-right-circle.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/arrow-up-right-square-fill.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/arrow-up-right-square-fill.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/arrow-up-right-square.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/arrow-up-right-square.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/arrow-up-square-fill.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/arrow-up-square-fill.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/arrow-up-square.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/arrow-up-square.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/asterisk.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/asterisk.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/balloon-fill.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/balloon-fill.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/balloon-heart-fill.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/balloon-heart-fill.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/balloon-heart.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/balloon-heart.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/balloon.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/balloon.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/ban-fill.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/ban-fill.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/ban.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/ban.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/bandaid-fill.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/bandaid-fill.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/bandaid.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/bandaid.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/bookmark-check-fill.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/bookmark-check-fill.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/bookmark-check.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/bookmark-check.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/bookmark-dash-fill.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/bookmark-dash-fill.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/bookmark-dash.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/bookmark-dash.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/bookmark-fill.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/bookmark-fill.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/bookmark-heart-fill.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/bookmark-heart-fill.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/bookmark-heart.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/bookmark-heart.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/bookmark-plus-fill.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/bookmark-plus-fill.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/bookmark-plus.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/bookmark-plus.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/bookmark-star-fill.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/bookmark-star-fill.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/bookmark-star.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/bookmark-star.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/bookmark-x-fill.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/bookmark-x-fill.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/bookmark-x.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/bookmark-x.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/bookmark.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/bookmark.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/bookmarks-fill.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/bookmarks-fill.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/bookmarks.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/bookmarks.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/boombox-fill.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/boombox-fill.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/boombox.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/boombox.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/border-center.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/border-center.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/box2-fill.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/box2-fill.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/box2-heart-fill.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/box2-heart-fill.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/box2-heart.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/box2-heart.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/box2.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/box2.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/boxes.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/boxes.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/cake-fill.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/cake-fill.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/cake.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/cake.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/cake2-fill.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/cake2-fill.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/cake2.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/cake2.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/chevron-left.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/chevron-left.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/chevron-right.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/chevron-right.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/cookie.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/cookie.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/dash-lg.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/dash-lg.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/dash.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/dash.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/dot.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/dot.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/ear-fill.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/ear-fill.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/ear.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/ear.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/eyedropper.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/eyedropper.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/fan.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/fan.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/feather.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/feather.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/feather2.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/feather2.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/globe-asia-australia.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/globe-asia-australia.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/hand-thumbs-up-fill.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/hand-thumbs-up-fill.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/hand-thumbs-up.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/hand-thumbs-up.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/hypnotize.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/hypnotize.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/magic.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/magic.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/magnet-fill.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/magnet-fill.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/magnet.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/magnet.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/moisture.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/moisture.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/mortarboard-fill.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/mortarboard-fill.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/mortarboard.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/mortarboard.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/paint-bucket.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/paint-bucket.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/palette-fill.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/palette-fill.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/palette.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/palette.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/palette2.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/palette2.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/pass-fill.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/pass-fill.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/pass.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/pass.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/patch-question-fill.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/patch-question-fill.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/patch-question.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/patch-question.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/plugin.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/plugin.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/plus-lg.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/plus-lg.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/plus-slash-minus.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/plus-slash-minus.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/plus.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/plus.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/postage-fill.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/postage-fill.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/postage-heart-fill.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/postage-heart-fill.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/postage-heart.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/postage-heart.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/postage.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/postage.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/postcard-fill.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/postcard-fill.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/postcard-heart-fill.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/postcard-heart-fill.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/postcard-heart.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/postcard-heart.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/postcard.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/postcard.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/question-circle-fill.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/question-circle-fill.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/question-circle.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/question-circle.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/question-diamond-fill.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/question-diamond-fill.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/question-diamond.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/question-diamond.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/question-lg.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/question-lg.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/question-octagon-fill.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/question-octagon-fill.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/question-octagon.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/question-octagon.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/question-square-fill.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/question-square-fill.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/question-square.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/question-square.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/question.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/question.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/radioactive.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/radioactive.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/rainbow.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/rainbow.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/search-heart-fill.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/search-heart-fill.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/search-heart.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/search-heart.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/search.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/search.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/slash-lg.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/slash-lg.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/slash.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/slash.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/text-center.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/text-center.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/ticket-detailed-fill.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/ticket-detailed-fill.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/ticket-detailed.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/ticket-detailed.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/ticket-fill.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/ticket-fill.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/ticket-perforated-fill.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/ticket-perforated-fill.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/ticket-perforated.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/ticket-perforated.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/ticket.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/ticket.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/x-lg.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/x-lg.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/x.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/x.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/yin-yang.md" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/content/icons/yin-yang.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/layouts/partials/analytics.html" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/layouts/partials/analytics.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/layouts/partials/navbar.html" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/layouts/partials/navbar.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/static/assets/img/bootstrap-icons-social.png" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/static/assets/img/bootstrap-icons-social.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/static/assets/img/favicons/android-chrome-192x192.png" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/static/assets/img/favicons/android-chrome-192x192.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/static/assets/img/favicons/android-chrome-512x512.png" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/static/assets/img/favicons/android-chrome-512x512.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/static/assets/img/favicons/apple-touch-icon.png" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/static/assets/img/favicons/apple-touch-icon.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/static/assets/img/icons-hero@2x.png" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/docs/static/assets/img/icons-hero@2x.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/font/bootstrap-icons.css" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/font/bootstrap-icons.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/font/bootstrap-icons.json" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/font/bootstrap-icons.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/font/bootstrap-icons.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/font/bootstrap-icons.min.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/font/bootstrap-icons.scss" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/font/bootstrap-icons.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/font/fonts/bootstrap-icons.woff" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/font/fonts/bootstrap-icons.woff" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/font/fonts/bootstrap-icons.woff2" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/font/fonts/bootstrap-icons.woff2" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/hugo.yml" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/hugo.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/icons/calendar3-event-fill.svg" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/icons/calendar3-event-fill.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/icons/calendar3-range-fill.svg" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/icons/calendar3-range-fill.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/icons/calendar3-week-fill.svg" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/icons/calendar3-week-fill.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/icons/lock-fill.svg" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/icons/lock-fill.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/icons/lock.svg" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/icons/lock.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/icons/meta.svg" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/icons/meta.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/icons/unlock-fill.svg" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/icons/unlock-fill.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/icons/unlock.svg" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/icons/unlock.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/twbs/bootstrap-icons/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/vlucas/phpdotenv/src/Dotenv.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/vlucas/phpdotenv/src/Dotenv.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/vlucas/phpdotenv/src/Loader/Loader.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/vlucas/phpdotenv/src/Loader/Loader.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/vlucas/phpdotenv/src/Loader/LoaderInterface.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/vlucas/phpdotenv/src/Loader/LoaderInterface.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/vlucas/phpdotenv/src/Loader/Resolver.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/vlucas/phpdotenv/src/Loader/Resolver.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/vlucas/phpdotenv/src/Parser/EntryParser.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/vlucas/phpdotenv/src/Parser/EntryParser.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/vlucas/phpdotenv/src/Parser/Lines.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/vlucas/phpdotenv/src/Parser/Lines.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/vlucas/phpdotenv/src/Parser/Parser.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/vlucas/phpdotenv/src/Parser/Parser.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/vlucas/phpdotenv/src/Repository/Adapter/ArrayAdapter.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/vlucas/phpdotenv/src/Repository/Adapter/ArrayAdapter.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/vlucas/phpdotenv/src/Repository/Adapter/ImmutableWriter.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/vlucas/phpdotenv/src/Repository/Adapter/ImmutableWriter.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/vlucas/phpdotenv/src/Repository/Adapter/ReplacingWriter.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/vlucas/phpdotenv/src/Repository/Adapter/ReplacingWriter.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/vlucas/phpdotenv/src/Store/File/Reader.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/vlucas/phpdotenv/src/Store/File/Reader.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/vlucas/phpdotenv/src/Util/Regex.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/vlucas/phpdotenv/src/Util/Regex.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/vlucas/phpdotenv/src/Util/Str.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/vlucas/phpdotenv/src/Util/Str.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/vlucas/phpdotenv/src/Validator.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/vlucas/phpdotenv/src/Validator.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ComposerConfigs">
+    <option name="configs">
+      <option value="$PROJECT_DIR$/swagger/swagger-ui-master/composer.json" />
+    </option>
   </component>
   <component name="ComposerSettings" synchronizationState="SYNCHRONIZE">
     <pharConfigPath>$PROJECT_DIR$/composer.json</pharConfigPath>
@@ -432,7 +205,8 @@
       <workItem from="1746010306507" duration="13995000" />
       <workItem from="1746548097217" duration="4630000" />
       <workItem from="1746614644943" duration="949000" />
-      <workItem from="1749123692708" duration="14339000" />
+      <workItem from="1749123692708" duration="14794000" />
+      <workItem from="1749305381514" duration="12435000" />
     </task>
     <task id="LOCAL-00001" summary="Responsivity">
       <option name="closed" value="true" />
@@ -706,7 +480,15 @@
       <option name="project" value="LOCAL" />
       <updated>1746615830086</updated>
     </task>
-    <option name="localTasksCounter" value="35" />
+    <task id="LOCAL-00035" summary="3 hardcodes fixed and Swagger implementation">
+      <option name="closed" value="true" />
+      <created>1749148732731</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1749148732731</updated>
+    </task>
+    <option name="localTasksCounter" value="36" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -724,7 +506,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Offline vet list, product data check and background color" />
     <MESSAGE value="Pet-checking restrictions and language improvements." />
     <MESSAGE value="Small error" />
     <MESSAGE value="Expanding translation" />
@@ -749,6 +530,7 @@
     <MESSAGE value="language update" />
     <MESSAGE value="react update" />
     <MESSAGE value="small fix" />
-    <option name="LAST_COMMIT_MESSAGE" value="small fix" />
+    <MESSAGE value="3 hardcodes fixed and Swagger implementation" />
+    <option name="LAST_COMMIT_MESSAGE" value="3 hardcodes fixed and Swagger implementation" />
   </component>
 </project>
