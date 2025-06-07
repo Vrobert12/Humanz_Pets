@@ -1,0 +1,811 @@
+openapi: 3.0.0
+info:
+  title: Humanz Pets API
+  version: 1.0.0
+  description: API documentation for the Humanz Pets system
+
+servers:
+  - url: http://localhost/Humanz2.0/Humanz_Pets/phpForReact
+    description: React API
+  - url: http://localhost/Humanz2.0/Humanz_Pets
+    description: Web API
+
+paths:
+  /updateUser:
+    post:
+      summary: Update user information - REACT
+      description: Update user profile data by user ID. Requires firstName, lastName, phoneNumber, and usedLanguage fields.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - id
+                - firstName
+                - lastName
+                - phoneNumber
+                - usedLanguage
+              properties:
+                id:
+                  type: integer
+                  example: 123
+                  description: User's unique identifier
+                firstName:
+                  type: string
+                  example: John
+                lastName:
+                  type: string
+                  example: Doe
+                phoneNumber:
+                  type: string
+                  example: "+1234567890"
+                usedLanguage:
+                  type: string
+                  example: "en"
+                  description: Language code the user prefers (e.g., 'en', 'hu', 'sr')
+      responses:
+        '200':
+          description: User updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: User updated successfully
+        '400':
+          description: Bad request - missing required fields or invalid input
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 400
+                  message:
+                    type: string
+                    example: Invalid request body, missing required fields
+        '405':
+          description: Method Not Allowed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 405
+                  message:
+                    type: string
+                    example: Method Not Allowed
+        '500':
+          description: Internal server error or database failure
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 500
+                  message:
+                    type: string
+                    example:
+                      Database error: <details>
+  /submit_review:
+    post:
+      summary: Submit a review rating - REACT
+      description: Update the review score for a given review ID. Rating must be between 1 and 5 (including decimals).
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - review_id
+                - rating
+              properties:
+                review_id:
+                  type: integer
+                  example: 123
+                  description: The ID of the review to update
+                rating:
+                  type: number
+                  format: float
+                  minimum: 1.0
+                  maximum: 5.0
+                  example: 4.5
+                  description: The rating value between 1 and 5 (can be fractional)
+      responses:
+        '200':
+          description: Review updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: string
+                    example: Review updated successfully.
+        '400':
+          description: Invalid input or validation error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Rating must be a number between 1 and 5.
+        '405':
+          description: Method Not Allowed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Invalid request method. Use POST.
+        '500':
+          description: Server error or database failure
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example:
+                      Database error: <details>
+  /getReservations:
+    post:
+      summary: Get reservations for a user
+      description: Returns a list of reservations including pet name, veterinarian email, date, time, and period for a given user ID.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - user_id
+              properties:
+                user_id:
+                  type: integer
+                  description: The ID of the user whose reservations are being requested
+      responses:
+        '200':
+          description: List of reservations returned successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  reservations:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        reservationId:
+                          type: integer
+                        petName:
+                          type: string
+                        vetEmail:
+                          type: string
+                          format: email
+                        reservationDay:
+                          type: string
+                          format: date
+                        reservationTime:
+                          type: string
+                          description: Start time of the reservation
+                        period:
+                          type: string
+                          description: Duration or end time of the reservation
+        '400':
+          description: Missing or invalid user_id in request body
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: User ID is required.
+        '405':
+          description: Method not allowed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Method Not Allowed
+  /get_purchased_products.php:
+    get:
+      summary: Get a users purchased products - REACT
+      description: Returns all products that a user has previously purchased.
+      parameters:
+        - in: query
+          name: userId
+          required: true
+          schema:
+            type: integer
+          description: The ID of the user whose purchased products are requested
+      responses:
+        '200':
+          description: List of purchased products retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    userProductRelationId:
+                      type: integer
+                    userId:
+                      type: integer
+                    productId:
+                      type: integer
+                    productPayed:
+                      type: integer
+                      description: Indicates if product is paid (1) or not (0)
+                    quantity:
+                      type: integer
+                    purchaseDate:
+                      type: string
+                      format: date-time
+                    productName:
+                      type: string
+                    productPicture:
+                      type: string
+                    productCost:
+                      type: number
+                      format: float
+        '400':
+          description: Missing or invalid userId parameter
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Invalid request
+        '500':
+          description: Database error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example:
+                      Database error: [ message ]
+
+  /get_product_details.php:
+    get:
+      summary: Get detailed product information by ID - REACT
+      description: Returns detailed information about a specific product by its ID.
+      parameters:
+        - in: query
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: The ID of the product to retrieve
+      responses:
+        '200':
+          description: Product details retrieved successfully
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - type: object
+                    properties:
+                      productId:
+                        type: integer
+                      productName:
+                        type: string
+                      productPicture:
+                        type: string
+                      productCost:
+                        type: number
+                        format: float
+                      description:
+                        type: string
+                      productRelease:
+                        type: string
+                        format: date
+                  - type: object
+                    properties:
+                      error:
+                        type: string
+                        example: Product not found
+        '400':
+          description: Missing or invalid product ID
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Product ID is required
+        '500':
+          description: Database error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+
+  /get_cart.php:
+    get:
+      summary: Get unpaid cart items for a user - REACT
+      description: Returns all products in the cart for a specific user that have not yet been paid.
+      parameters:
+        - in: query
+          name: userId
+          required: true
+          schema:
+            type: integer
+          description: The ID of the user whose unpaid cart items to fetch
+      responses:
+        '200':
+          description: List of unpaid cart items
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    userProductRelationId:
+                      type: integer
+                    userId:
+                      type: integer
+                    productName:
+                      type: string
+                    productPicture:
+                      type: string
+                    productId:
+                      type: integer
+                    sum:
+                      type: integer
+                    price:
+                      type: number
+                      format: float
+                    productPayed:
+                      type: integer
+                    boughtDay:
+                      type: string
+        '400':
+          description: Missing or invalid userId parameter
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        '500':
+          description: Database error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+
+  /deleteReservation.php:
+    post:
+      summary: Delete a reservation by ID - REACT
+      description: >
+        Deletes a reservation if it is more than 1 hour away from the current time.
+        Returns an error message if the reservation is within 1 hour or doesn't exist.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - reservationId
+              properties:
+                reservationId:
+                  type: integer
+                  description: ID of the reservation to delete
+      responses:
+        '200':
+          description: Result message
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '405':
+          description: Method Not Allowed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+
+  /delete_cart_item.php:
+    post:
+      summary: Delete item from user's cart - REACT
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [ id ]
+              properties:
+                id:
+                  type: integer
+      responses:
+        '200':
+          description: Deletion result
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+  /checkAvailability.php:
+    post:
+      summary: Check available start times for appointments - REACT
+      description: Returns a list of available appointment start times for a given date by filtering out times already reserved.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - date
+              properties:
+                date:
+                  type: string
+                  format: date
+                  description: The date for which to check availability (YYYY-MM-DD)
+      responses:
+        '200':
+          description: List of available start times
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  availableStartTimes:
+                    type: array
+                    items:
+                      type: string
+                      description: Time in HH:MM format
+        '400':
+          description: Date not provided
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '405':
+          description: Method not allowed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+
+  /check_reviews.php:
+    post:
+      summary: Get pending veterinarian reviews for a user - REACT
+      description: Returns a list of pending reviews (i.e., reviews with NULL content) and the total count for a specific user.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - user_id
+              properties:
+                user_id:
+                  type: integer
+                  description: ID of the user
+      responses:
+        '200':
+          description: List of pending reviews and total count
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  reviews:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        reviewId:
+                          type: integer
+                        reviewTime:
+                          type: string
+                        veterinarian_name:
+                          type: string
+                  ReviewCount:
+                    type: integer
+        '400':
+          description: Invalid or missing parameters
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        '500':
+          description: Server/database error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+
+  /bookReact.php:
+    post:
+      summary: Book a veterinarian appointment - REACT
+      description: Books an appointment for a pet with a veterinarian after checking for overlaps.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - pet_id
+                - date
+                - start
+                - end
+                - veterinarianId
+              properties:
+                pet_id:
+                  type: integer
+                date:
+                  type: string
+                  format: date
+                start:
+                  type: string
+                  description: Reservation start time (HH:MM format)
+                end:
+                  type: string
+                  description: Reservation end time (HH:MM format)
+                veterinarianId:
+                  type: integer
+      responses:
+        '200':
+          description: Reservation response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Reservation successful!
+        '400':
+          description: Missing or invalid parameters
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '405':
+          description: Method Not Allowed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+
+    get:
+      summary: Get pets without upcoming reservations - REACT
+      description: Returns pets that do not have a reservation today or tomorrow.
+      responses:
+        '200':
+          description: List of available pets
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    petId:
+                      type: integer
+                    petName:
+                      type: string
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+
+  /add_to_cart.php:
+    post:
+      summary: Add product to cart - REACT
+      description: Stores the selected product in the user's cart (user_product_relation table).
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - userId
+                - productName
+                - productPicture
+                - productId
+                - sum
+                - price
+                - productPayed
+                - boughtDay
+              properties:
+                userId:
+                  type: integer
+                productName:
+                  type: string
+                productPicture:
+                  type: string
+                productId:
+                  type: integer
+                sum:
+                  type: integer
+                price:
+                  type: string
+                productPayed:
+                  type: integer
+                boughtDay:
+                  type: string
+      responses:
+        '200':
+          description: Product added to cart successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Product added to cart successfully
+        '400':
+          description: Missing required parameters
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Missing required parameters
+        '500':
+          description: Database error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+
+  /get_products.php:
+    get:
+      summary: Get all products - REACT
+      description: Returns a list of products including their ID, name, picture URL, and cost.
+      responses:
+        '200':
+          description: List of products
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    productId:
+                      type: integer
+                    productName:
+                      type: string
+                    productPicture:
+                      type: string
+                    productCost:
+                      type: number
+                      format: float
+        '500':
+          description: Database error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+
+  /get_veterinarian.php:
+    get:
+      summary: Get veterinarian ID by pet ID - WEB
+      description: Returns the veterinarian ID assigned to a specific pet.
+      parameters:
+        - in: query
+          name: petId
+          required: true
+          schema:
+            type: integer
+          description: ID of the pet
+      responses:
+        '200':
+          description: Veterinarian ID found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  veterinarianId:
+                    type: integer
+        '400':
+          description: Invalid request
+        '500':
+          description: Database error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string

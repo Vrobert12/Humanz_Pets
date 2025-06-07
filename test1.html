@@ -1,0 +1,41 @@
+<html>
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.css"/>
+</head>
+<body>
+<h3>Rating System</h3>
+<div id="rateYo"></div>
+<button id="submitRating">Submit Rating</button>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        console.log("Page Loaded");
+
+        if (typeof jQuery === "undefined") {
+            document.body.innerHTML += "<p style='color:red;'>jQuery failed to load.</p>";
+            return;
+        }
+
+        if (!$.fn.rateYo) {
+            document.body.innerHTML += "<p style='color:red;'>RateYo failed to load.</p>";
+            return;
+        }
+
+        console.log("Initializing RateYo");
+
+        $("#rateYo").rateYo({
+            starWidth: "30px",
+            fullStar: false
+        });
+
+        document.getElementById("submitRating").addEventListener("click", function() {
+            let rating = $("#rateYo").rateYo("option", "rating");
+            console.log("User rating:", rating);
+            window.ReactNativeWebView.postMessage(rating);
+        });
+    });
+</script>
+</body>
+</html>
