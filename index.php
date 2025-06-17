@@ -34,8 +34,8 @@ $autoload->checkAutoLogin();
     <script>
         const lang = '<?php echo $lang; ?>';
     </script>
-    <script src="sureCheck.js"></script>
-    <script src="indexJS.js"></script>
+    <script src="js/sureCheck.js"></script>
+    <script src="js/indexJS.js"></script>
     <link rel="stylesheet" href="style.css" type="text/css">
 
 

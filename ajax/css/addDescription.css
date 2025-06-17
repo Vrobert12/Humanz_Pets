@@ -1,0 +1,13 @@
+.warning {
+    color: red;
+}
+.inputok {
+    border-radius: 10px;
+    font-size: 20px;
+    padding: 10px;
+    margin: 10px;
+    text-align: center;
+}
+.inputok.error {
+    border-color: red;
+}

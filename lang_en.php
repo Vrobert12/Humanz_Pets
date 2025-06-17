@@ -1,4 +1,22 @@
 <?php
+define('NO_VET_FOUND', 'No veterinarian found with that email.');
+define('NO_PASSWORD', 'The account did not set up a password!');
+define('BANNED', 'You have been banned from our website!');
+define('VERIFY_ACCOUNT', 'Verify account, we sent a mail to you!');
+define('WRONG_PASSWORD', 'Wrong password!');
+define('EMAIL_OR_PASSWORD_NOT_SET', 'Email or password not set!');
+define('SELECT_YOUR_VET', 'Select your veterinarian for');
+define('NEED_TO_CHOOSE_VET', 'You have to choose a veterinarian for your animal,<br> before you can go further');
+define('LIST_OF_VETS', 'List of our veterinarians');
+define('CHOOSE_VET_BTN', 'Choose Veterinarian');
+define('NAME_PET','Pet name');
+define('NOT_PICTURE', 'File is not a picture!');
+define('FILE_TOO_BIG', 'File is too big!');
+define('UPLOAD_ERROR', 'Upload error!');
+define('FILE_EXISTS', 'File with this name already exists!');
+define('FILE_MOVED_ERROR', 'Failed to move uploaded file.');
+define('UPLOAD_ATTACK', 'Possible file upload attack!');
+define('PIC300KB', 'File is too big! Is has to be smaller than 300KB!');
 define('PAY_ALL_PRODUCTS', 'Pay all products');
 define('PAY_PRODUCT', 'Pay product');
 define('ALL_FIELDS_REQUIRED', 'All fields are required');

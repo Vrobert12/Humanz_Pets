@@ -32,23 +32,8 @@ if($_SESSION['privilage']!='Veterinarian'){
     <script src="LogOut.js"></script>
     <script src="indexJS.js"></script>
     <link rel="stylesheet" href="style.css">
-    <style>
-
-
-        th {
-            background-color: lightblue;
-        }
-
-        label {
-            color: white;
-        }
-
-        td, th {
-            padding: 15px;
-            font-size: 20px;
-        }
-
-    </style>
+    <link rel="stylesheet" href="css/book_veterinarian.css">
+   
 </head>
 <body style="background: #659df7">
 

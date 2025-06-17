@@ -1,6 +1,7 @@
 <?php
 session_start();
 include "functions.php";
+$animalerror=$_SESSION['message'];
 $autoload=new Functions();
 $lang=$autoload->language();
 $autoload->checkAutoLogin('registerAnimal.php');
@@ -86,7 +87,10 @@ $_SESSION['backPic'] = 'registerAnimal.php';
 <input type="hidden" name="action" value="registerAnimal"><br>
 
 <?php
-if (isset($_SESSION['message'])) {
+
+if (isset($animalerror))
+    echo $animalerror;
+elseif (isset($_SESSION['message'])) {
     echo $_SESSION['message'];
     unset($_SESSION['message']);
 }

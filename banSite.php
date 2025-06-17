@@ -21,56 +21,8 @@ $_SESSION['previousPage'] = "banSite.php";
     <script src="search.js"></script>
     <script>
         const lang = '<?php echo $lang; ?>';
-
     </script>
-    <style>
-        label, a {
-            font-size: 24px;
-        }
-
-        @media (max-width: 1000px) {
-            label, a {
-                font-size: 48px;
-            }
-        }
-        .users {
-            margin-top: 20px;
-            padding: 15px;
-            background-color: #e9f7ef;
-            border: 1px solid #ddd;
-            border-radius: 10px;
-            text-align: center;
-            display: inline-block;
-            width: 220px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            transition: transform 0.2s;
-        }
-
-        .users:hover {
-            transform: scale(1.05);
-            background-color: #a8d5ba;
-        }
-
-        .users button {
-            margin-top: 15px;
-            padding: 10px 20px;
-            background-color: #28a745;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            font-size: 16px;
-            cursor: pointer;
-        }
-
-        .users button:hover {
-            background-color: #218838;
-        }
-        #list {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: flex-start; /* Align items to the left */
-        }
-    </style>
+     <link rel="stylesheet" href="css/banSite.css">
 </head>
 <body style="background: #659df7">
 <div class="container-fluid">
@@ -181,15 +133,15 @@ if (isset($_POST['search']) && !empty($_POST['search'])) {
         echo '<input type="submit" style="font-size: 1.5rem; padding: 20px 30px" class="btn btn-danger" value="' . DELETE_PICTURE . '"></form>';
 
         echo "<label>ID: " . htmlspecialchars($row['userId'] ?? $row['veterinarianId']) . "</label><br>";
-        echo "<label><b>Név:</b> " . htmlspecialchars($row['firstName'] . ' ' . $row['lastName']) . "</label><br>";
-        echo "<label><b>Email:</b> " . htmlspecialchars($row['userMail'] ?? $row['veterinarianMail']) . "</label><br>";
-        echo "<label><b>Telefon:</b> " . htmlspecialchars($row['phoneNumber']) . "</label><br>";
+        echo "<label><b>".NAME.":</b> " . htmlspecialchars($row['firstName'] . ' ' . $row['lastName']) . "</label><br>";
+        echo "<label><b>".EMAIL.":</b> " . htmlspecialchars($row['userMail'] ?? $row['veterinarianMail']) . "</label><br>";
+        echo "<label><b>".PHONE.":</b> " . htmlspecialchars($row['phoneNumber']) . "</label><br>";
 
         // Új sor: típus kiírása
         if (isset($row['veterinarianId'])) {
-            echo "<label><b>Típus:</b> Állatorvos</label><br>";
+            echo "<label><b>".PRIVILEGE.":</b> ".VETS."</label><br>";
         } else {
-            echo "<label><b>Típus:</b> Felhasználó</label><br>";
+            echo "<label><b>".PRIVILEGE.":</b> ".USERS."</label><br>";
         }
         echo "<label style='color: " . ($row['banned'] == 1 ? 'red' : 'green') . ";'>";
         echo ($row['banned'] == 1 ? 'Banned' : 'Active') . "</label><br>";
@@ -259,15 +211,15 @@ else {
         echo '<input type="submit" class="btn btn-danger" style="font-size: 1.5rem; padding: 20px 30px" value="' . DELETE_PICTURE . '"></form>';
 
         echo "<label>ID: " . htmlspecialchars($row['userId'] ?? $row['veterinarianId']) . "</label><br>";
-        echo "<label><b>Név:</b> " . htmlspecialchars($row['firstName'] . ' ' . $row['lastName']) . "</label><br>";
-        echo "<label><b>Email:</b> " . htmlspecialchars($row['userMail'] ?? $row['veterinarianMail']) . "</label><br>";
-        echo "<label><b>Telefon:</b> " . htmlspecialchars($row['phoneNumber']) . "</label><br>";
+      echo "<label><b>".NAME.":</b> " . htmlspecialchars($row['firstName'] . ' ' . $row['lastName']) . "</label><br>";
+        echo "<label><b>".EMAIL.":</b> " . htmlspecialchars($row['userMail'] ?? $row['veterinarianMail']) . "</label><br>";
+        echo "<label><b>".PHONE.":</b> " . htmlspecialchars($row['phoneNumber']) . "</label><br>";
 
         // Új sor: típus kiírása
-        if (isset($row['veterinarianId'])) {
-            echo "<label><b>Típus:</b> Állatorvos</label><br>";
+         if (isset($row['veterinarianId'])) {
+            echo "<label><b>".PRIVILEGE.":</b> ".VETS."</label><br>";
         } else {
-            echo "<label><b>Típus:</b> Felhasználó</label><br>";
+            echo "<label><b>".PRIVILEGE.":</b> ".USERS."</label><br>";
         }
         echo "<label style='color: " . ($row['banned'] == 1 ? 'red' : 'green') . ";'>";
         echo ($row['banned'] == 1 ? 'Banned' : 'Active') . "</label><br>";

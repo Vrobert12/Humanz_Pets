@@ -30,7 +30,7 @@ if (isset($_GET['verify_email']) && isset($_SESSION['mailReset'])) {
             $email=$_GET['verify_email'];
             $_SESSION['email'] = $email;
             $_SESSION['test'] = 1;
-            $_SESSION['registrationLink'] = '<a href="http://localhost/Humanz2.0/Humanz_Pets/email-verification.php?
+            $_SESSION['registrationLink'] = '<a href="https://humanz.stud.vts.su.ac.rs/email-verification.php?
                     verification_code=' . $verificationCode.'&verify_email='.$email.'">here</a>';
             $_SESSION['message'] = VALIDEXP;
             header('Location: mail.php');
@@ -92,7 +92,7 @@ if (isset($_GET['verify_email']) && isset($_GET['verification_code'])) {
                 $query->execute();
 
                 $_SESSION['message'] = CODENOVALID;
-                $_SESSION['registrationLink'] = '<a href="http://localhost/Humanz2.0/Humanz_Pets/email-verification.php?
+                $_SESSION['registrationLink'] = '<a href="https://humanz.stud.vts.su.ac.rs/email-verification.php?
                     verification_code=' . $verification_code.'&verify_email='.$email.'">here</a>';
 
                 sleep(2);
@@ -127,7 +127,7 @@ if (isset($_GET['verify_email']) && isset($_GET['verification_code'])) {
                     sleep(2);
                     $_SESSION['message'] = CODENOVALID;
                     $mail = $_SESSION['email'];
-                    $_SESSION['registrationLink'] = '<a href="http://localhost/Humanz2.0/Humanz_Pets/email-verification.php?
+                    $_SESSION['registrationLink'] = '<a href="https://humanz.stud.vts.su.ac.rs/email-verification.php?
                     verification_code=' . $verification_code.'&verify_email='.$email.'">here</a>';
 
                     $logType = "E-mail validation";

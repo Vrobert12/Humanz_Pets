@@ -1,0 +1,7 @@
+RewriteEngine On    # Turn on the rewriting engine
+
+# Rule to rewrite URLs in the format /getPets/tableName or /getPets/tableName/idValue
+RewriteRule ^getPets/([a-z_-]+)/?([0-9]*)$ getPets.php?table=$1&id=$2 [NC,L]
+
+# Rule to set an environment variable for handling HTTP Authorization headers
+RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]

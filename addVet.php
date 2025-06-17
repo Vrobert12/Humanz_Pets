@@ -14,23 +14,10 @@ $_SESSION['backPic']='addVet.php';
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <title>Registration</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/addDescription.css">
     <script src="indexJS.js"></script>
     <?php include "config.php"; ?>
-    <style>
-        .warning {
-            color: red;
-        }
-        .inputok {
-            border-radius: 10px;
-            font-size: 20px;
-            padding: 10px;
-            margin: 10px;
-            text-align: center;
-        }
-        .inputok.error {
-            border-color: red;
-        }
-    </style>
+  
     <script src="validate.js"></script>
 </head>
 <body style="background: #659df7">
@@ -74,7 +61,7 @@ if (isset($_SESSION['title'])) {
     $_SESSION['backPic']='addVet.php';
     $_SESSION['token'] = substr(number_format(time() * rand(), 0, '', ''), 0, 6);
     echo '<input type="hidden" class="btn btn-primary" name="action" value="AddVet">';
-    echo '<input type="submit" class="btn btn-primary" name="action" value="'.ADDVET.'">';
+    echo '<input type="submit" class="btn btn-primary" value="'.ADDVET.'">';
 
 
     $message = isset($_SESSION['message']) ? $_SESSION['message'] : '';

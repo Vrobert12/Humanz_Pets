@@ -4,6 +4,9 @@ $autoload = new Functions();
 $lang = $autoload->language();
 $autoload->checkAutoLogin();
 
+if($_SESSION['backPic']=="registerAnimal.php" || $_SESSION['backPic']=="pet.php")
+$_SESSION['backPic']='index.php';
+
 ?>
 <!DOCTYPE html>
 <html lang="en">

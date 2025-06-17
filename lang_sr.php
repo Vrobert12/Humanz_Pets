@@ -1,4 +1,22 @@
 <?php
+define('NO_VET_FOUND', 'Nijedan veterinar nije pronađen za tu email adresu!');
+define('NO_PASSWORD', 'Nalog nema podešenu lozinku!');
+define('BANNED', 'Zabranjen vam je pristup našem sajtu!');
+define('VERIFY_ACCOUNT', 'Potvrdite nalog, poslali smo vam e-mail!');
+define('WRONG_PASSWORD', 'Pogrešna lozinka!');
+define('EMAIL_OR_PASSWORD_NOT_SET', 'Email ili lozinka nisu uneti!');
+define('SELECT_YOUR_VET', 'Izaberite veterinara za');
+define('NEED_TO_CHOOSE_VET', 'Morate izabrati veterinara za svoju životinju,<br> pre nego što nastavite');
+define('LIST_OF_VETS', 'Lista naših veterinara');
+define('CHOOSE_VET_BTN', 'Izaberite veterinara');
+define('NAME_PET','Ljubimac');
+define('NOT_PICTURE', 'Fajl nije slika!');
+define('FILE_TOO_BIG', 'Fajl je prevelik!');
+define('UPLOAD_ERROR', 'Greška pri otpremanju!');
+define('FILE_EXISTS', 'Fajl sa ovim imenom već postoji!');
+define('FILE_MOVED_ERROR', 'Premještanje fajla nije uspjelo!');
+define('UPLOAD_ATTACK', 'Mogući pokušaj napada otpremanjem!');
+define('PIC300KB', 'Slika je prevelika! Slika ne može biti veća od 300KB-a.');
 define('PAY_ALL_PRODUCTS', 'Plati sve proizvode');
 define('PAY_PRODUCT', 'Plati proizvod');
 define('ALL_FIELDS_REQUIRED', 'Sva polja su obavezna');

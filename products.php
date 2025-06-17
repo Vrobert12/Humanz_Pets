@@ -5,11 +5,11 @@ $functions = new Functions();
 $lang = $functions->language();
 $functions->checkAutoLogin();
 $pdo = $functions->connect($dsn, $_ENV['DB_USER'], $_ENV['DB_PASSWORD'], $pdoOptions);
-if(isset($_SESSION['get_lang']))
-    $productLanguage=$_SESSION['get_lang'];
+if (isset($_SESSION['get_lang']))
+    $productLanguage = $_SESSION['get_lang'];
 
 else
-    $productLanguage=$_SESSION['userLang'];
+    $productLanguage = $_SESSION['userLang'];
 if (isset($_POST['searchAction']) && !empty($_POST['search'])) {
     $searchTerm = "%" . $_POST['search'] . "%";
     $stmt = $pdo->prepare("SELECT productId, productName, productPicture, description, productCost FROM product WHERE productLanguage=:userLanguage AND productName LIKE :searchTerm");
@@ -27,10 +27,11 @@ if (isset($_POST['searchAction']) && !empty($_POST['search'])) {
             <a href="details.php?id=' . $product['productId'] . '" class="btn btn-primary">' . DETAILS . '</a>';
 
         if (isset($_SESSION['privilage']) && $_SESSION['privilage'] === 'Admin') {
-            echo '<form action="updateProduct.php?id=' . $product['productId'] . '" method="post" enctype="multipart/form-data">
+            echo '<form action="updateProduct.php" method="post" enctype="multipart/form-data">
                     <button type="submit" class="btn btn-warning">' . MODIFY . '</button>
                   </form>';
             echo '<form action="functions.php" method="post">
+ <input type="hidden" name="productId" value="' . $product['productId'] . '">
                     <input type="hidden" name="action" value="deleteFromProduct">
                     <input type="hidden" name="productId" value="' . $product['productId'] . '">
                     <input type="submit" class="btn btn-danger" value="Delete Product">
@@ -225,8 +226,10 @@ if (isset($_POST['searchAction']) && !empty($_POST['search'])) {
 <div class="d-flex flex-wrap justify-content-center">
     <div class="new-product">
         <form id="searchForm" method="post">
-            <input type="text" id="search" name="search" placeholder="<?php echo SEARCH?>" oninput="performSearch('products.php')">
-            <input type="hidden" name="searchAction" value="1"> <!-- Add a search action field to differentiate the request -->
+            <input type="text" id="search" name="search" placeholder="<?php echo SEARCH ?>"
+                   oninput="performSearch('products.php')">
+            <input type="hidden" name="searchAction" value="1">
+            <!-- Add a search action field to differentiate the request -->
         </form>
     </div>
 </div>
@@ -250,21 +253,23 @@ if (isset($_POST['searchAction']) && !empty($_POST['search'])) {
                  alt="<?php echo htmlspecialchars($product['productName']); ?>">
             <h2><?php echo htmlspecialchars($product['productName']); ?></h2>
             <p><?php echo PRICE ?>: €<?php echo number_format($product['productCost'], 2); ?></p>
-            <a href="details.php?id=<?php echo $product['productId']; ?>" class="btn btn-primary"><?php echo DETAILS ?></a>
-            <?php if (isset($_SESSION['privilage']) && $_SESSION['privilage'] === 'Admin'){
-                echo ' <form action="updateProduct.php?id='.$product['productId'].'" method="post" enctype="multipart/form-data">
+            <a href="details.php?id=<?php echo $product['productId']; ?>"
+               class="btn btn-primary"><?php echo DETAILS ?></a>
+            <?php if (isset($_SESSION['privilage']) && $_SESSION['privilage'] === 'Admin') {
+                echo ' <form action="updateProduct.php" method="post" enctype="multipart/form-data">
  <input type="hidden" name="productId" value="' . $product['productId'] . '">
- <input type="hidden" name="productName" value="'.$product['productName'].'" class="btn btn-primary">
-  <input type="hidden" name="productCost" value="'.$product['productCost'].'" class="btn btn-primary">
-    <input type="hidden" name="productDescription" value="'.$product['description'].'" class="btn btn-primary">
-   <input type="hidden" name="productPicture" value="'.$product['productPicture'].'" class="btn btn-primary">
-               <br> <button type="submit" class="btn btn-warning">'.MODIFY.'</button>
+ <input type="hidden" name="productName" value="' . $product['productName'] . '" class="btn btn-primary">
+  <input type="hidden" name="productCost" value="' . $product['productCost'] . '" class="btn btn-primary">
+    <input type="hidden" name="productDescription" value="' . $product['description'] . '" class="btn btn-primary">
+   <input type="hidden" name="productPicture" value="' . $product['productPicture'] . '" class="btn btn-primary">
+               <br> <button type="submit" class="btn btn-warning">' . MODIFY . '</button>
             </form>';
-            echo '   <br><form action="functions.php" method="post">
+                echo '   <br><form action="functions.php" method="post">
                     <input type="hidden" name="action" value="deleteFromProduct">
-                    <input type="hidden" name="productId" value="'.$product['productId'].'">
-                    <input type="submit" class="btn btn-danger" value="'.DELETE_PRODUCT.'" onclick="confirmDeletingProduct(event)">
-                </form>';}
+                    <input type="hidden" name="productId" value="' . $product['productId'] . '">
+                    <input type="submit" class="btn btn-danger" value="' . DELETE_PRODUCT . '" onclick="confirmDeletingProduct(event)">
+                </form>';
+            }
             ?>
         </div>
     <?php endforeach; ?>
@@ -298,8 +303,9 @@ foreach ($cartItems as $price) {
                 </div>
                 <form action="functions.php" method="post">
                     <input type="hidden" name="action" value="deleteFromCart">
-                    <input type="hidden" name="cartId" value="<?php echo htmlspecialchars($item['userProductRelationId']); ?>">
-                    <input type="submit" class="btn btn-danger" value="<?php echo DELETE_PRODUCT?>">
+                    <input type="hidden" name="cartId"
+                           value="<?php echo htmlspecialchars($item['userProductRelationId']); ?>">
+                    <input type="submit" class="btn btn-danger" value="<?php echo DELETE_PRODUCT ?>">
                 </form>
             </li>
         <?php endforeach; ?>

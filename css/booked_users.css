@@ -1,0 +1,33 @@
+body {
+    background: #659df7;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.pet-card {
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.pet-img {
+    max-width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 12px;
+}
+
+.popup-message {
+    background-color: #d1e7dd;
+    border: 1px solid #badbcc;
+    padding: 10px 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}

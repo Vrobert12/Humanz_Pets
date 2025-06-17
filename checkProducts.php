@@ -33,54 +33,8 @@ if($_SESSION['privilage']!='Admin'){
     <script src="indexJS.js"></script>
 
     <link rel="stylesheet" href="style.css">
-    <style>
-
-
-        th {
-            background-color: lightblue;
-        }
-
-        label {
-            color: white;
-        }
-
-        td, th {
-            padding: 15px;
-            font-size: 20px;
-        }
-        .users {
-            margin-top: 20px;
-            padding: 15px;
-            background-color: #e9f7ef;
-            border: 1px solid #ddd;
-            border-radius: 10px;
-            text-align: center;
-            display: inline-block;
-            width: 220px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            transition: transform 0.2s;
-        }
-
-        .users:hover {
-            transform: scale(1.05);
-            background-color: #a8d5ba;
-        }
-
-        .users button {
-            margin-top: 15px;
-            padding: 10px 20px;
-            background-color: #28a745;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            font-size: 16px;
-            cursor: pointer;
-        }
-
-        .users button:hover {
-            background-color: #218838;
-        }
-    </style>
+     <link rel="stylesheet" href="css/checkProducts.css">
+  
 </head>
 <body style="background: #659df7">
 <a class="btn btn-secondary back-button" style="margin-left: 10px; margin-top: 20px;margin-bottom: 20px" href="index.php"><?php echo BACK ?></a>

@@ -1,29 +1,91 @@
 <?php
 session_start();
 include "functions.php";
-$autoload=new Functions();
-$lang=$autoload->language();
-$autoload->checkAutoLogin('selectVeterinarian.php');
+
+$functions = new Functions();
+
+try {
+    $connection = $functions->connect($dsn, $_ENV['DB_USER'], $_ENV['DB_PASSWORD'], $pdoOptions);
+} catch (PDOException $e) {
+    die("Database connection failed: " . $e->getMessage());
+}
+
+// Bejelentkezés ellenőrzése
+$lang = $functions->language();
+$functions->checkAutoLogin('selectVeterinarian.php');
 
 $_SESSION['backPic'] = "selectVeterinarian.php";
-$functions = new Functions();
-$connection = $functions->connect($dsn, $_ENV['DB_USER'], $_ENV['DB_PASSWORD'], $pdoOptions);
 
+// --- AJAX kérés feldolgozása ---
+if (isset($_GET['ajax']) && $_GET['ajax'] == 1) {
+    // Veterináriusok lekérdezése (szűrés email alapján)
+    $sql = "SELECT * FROM veterinarian";
+    $params = [];
+
+    if (!empty($_GET['searchVetEmail'])) {
+        $sql .= " WHERE veterinarianMail LIKE :email";
+        $params[':email'] = '%' . $_GET['searchVetEmail'] . '%';
+    }
+
+    $stmt = $connection->prepare($sql);
+    foreach ($params as $key => $val) {
+        $stmt->bindValue($key, $val, PDO::PARAM_STR);
+    }
+    $stmt->execute();
+    $vets = $stmt->fetchAll();
+
+    if (!$vets) {
+        echo '<div class="alert alert-warning text-center">'.NO_VET_FOUND.'</div>';
+    } else {
+        foreach ($vets as $row) {
+            echo '<form method="post" action="functions.php" class="mb-4 p-3 bg-light rounded shadow-sm" enctype="multipart/form-data" style="max-width: 800px; margin:auto;">';
+
+            // Felső rész: profilkép és adatok egy sorban
+            echo '<div class="row align-items-center text-center">';
+            echo '<div class="col-md-6">';
+            echo "<img src='pictures/{$row['profilePic']}' alt='Profile Picture' class='img-fluid rounded-circle' style='width: 250px; height: 250px;'>";
+            echo '</div>';
+            echo '<div class="col-md-6 text-start">';
+            echo "<h5>{$row['firstName']} {$row['lastName']}</h5>";
+            echo "<p><strong>".EMAIL.":</strong> {$row['veterinarianMail']}</p>";
+            echo "<p><strong>".PHONE.":</strong> {$row['phoneNumber']}</p>";
+            echo '</div>';
+            echo '</div>';
+
+            // Alsó rész: gomb külön sorban, középre igazítva
+            echo '<div class="row mt-3">';
+            echo '<div class="col text-center">';
+            echo "<input type='hidden' name='action' value='veterinarianChose'>";
+            echo "<input type='hidden' name='veterinarianId' value='{$row['veterinarianId']}'>";
+            echo "<input type='submit' class='btn btn-primary' value='".CHOOSE_VET_BTN."'>";
+            echo '</div>';
+            echo '</div>';
+
+            echo '</form>';
+        }
+
+    }
+    exit();
+}
+
+// --- Normál oldal betöltése ---
+
+// Kiválasztandó háziállatok lekérdezése (ahol még nincs állatorvos hozzárendelve)
 $sql = "SELECT p.petId, p.petName, p.bred, p.petSpecies, u.userMail, p.profilePic
         FROM user u
-        INNER JOIN pet p ON u.userId = p.userId 
+        INNER JOIN pet p ON u.userId = p.userId
         WHERE u.userId = :userId AND veterinarId IS NULL";
 
 $stmt = $connection->prepare($sql);
 $stmt->bindParam(':userId', $_SESSION['userId'], PDO::PARAM_INT);
 $stmt->execute();
-$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$pets = $stmt->fetchAll();
 
-if (count($result) == 0) {
+if (count($pets) == 0) {
+    // Ha nincs ilyen háziállat, irány vissza az indexre
     header('Location: index.php');
     exit();
 }
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -50,87 +112,74 @@ if (count($result) == 0) {
             border-color: red;
         }
     </style>
-
 </head>
 <body style="background: #659df7">
+<script src="searchVetInPetReg.js"></script>
 
-<?php
+<?php if (isset($_SESSION['title'])): ?>
+    <h2 style="color: #2a7e2a"><?= htmlspecialchars($_SESSION['title']) ?></h2>
+<?php endif; ?>
 
-if (isset($_SESSION['title'])) {
-    echo "<h2 style='color: #2a7e2a'>" . $_SESSION['title'] . "</h2>";
-}
-$_SESSION['backPic']='selectVeterinarian.php';
-echo "<form action='updateAnimal.php'class='mainForm' method='get'>";
-$_SESSION['backPage']='pet.php';
-if(isset($_SESSION['message'])) {
-    echo "<p class='warning'>" .$_SESSION['message']."</p>";
-    unset($_SESSION['message']);
-}
-$userID = $_SESSION['userId'];
-$functions = new Functions();
+<?php $_SESSION['backPage'] = 'pet.php'; ?>
 
-$sql = "SELECT p.petId,p.petName, p.bred, p.petSpecies, u.userMail, p.profilePic FROM user u
-    inner join pet p on u.userId =p.userId where u.userId= :userId and veterinarId is NULL";
+<div class="mainForm">
 
-$stmt = $connection->prepare($sql);
-$stmt->bindParam(":userId", $userID, PDO::PARAM_INT);
-$stmt->execute();
+    <?php foreach ($pets as $pet): ?>
+    <form action="updateAnimal.php" method="get" style="margin-bottom: 20px; max-width: 600px; margin-left: auto; margin-right: auto;">
+        <input type="hidden" name="petName" value="<?= htmlspecialchars($pet['petName']) ?>">
+        <input type="hidden" name="bred" value="<?= htmlspecialchars($pet['bred']) ?>">
+        <input type="hidden" name="petSpecies" value="<?= htmlspecialchars($pet['petSpecies']) ?>">
+        <input type="hidden" name="petPicture" value="<?= htmlspecialchars($pet['profilePic']) ?>">
+        <h1 style="color: #2a7e2a; text-align:center;"><?php echo SELECT_YOUR_VET;?> for <?= htmlspecialchars($pet['petName']) ?></h1>
+        <table class="profile-table" style="margin: auto;">
+            <tr>
+                <td rowspan="4" style="padding: 20px; text-align: center;">
+                    <img alt="Profile Picture" width="200" height="200" src="pictures/<?= htmlspecialchars($pet['profilePic']) ?>">
+                </td>
+            </tr>
+            <tr><td><?php echo NAME;?>: <?= htmlspecialchars($pet['petName']) ?></td></tr>
+            <tr><td><?php echo BREED;?>: <?= htmlspecialchars($pet['bred']) ?></td></tr>
+            <tr><td><?php echo SPECIES;?>: <?= htmlspecialchars($pet['petSpecies']) ?></td></tr>
+            <?php if (isset($_SESSION['message'])): ?>
+                <tr>
+                    <td colspan="2" class="warning" style="text-align:center;">
+                        <?php echo $_SESSION['message']; ?>
+                    </td>
+                </tr>
+                <?php unset($_SESSION['message']); ?>
+            <?php endif; ?>
+        </table>
+        <div style="display: flex; gap: 20px; max-width: 600px; margin: 15px auto 0 auto;">
+            <form action="updateAnimal.php" method="get" style="flex: 1; margin: 0;">
+                <input type="submit"style=" max-width: 270px;" class="btn btn-success w-100" value="<?php echo UPDATE_PET;?>">
+            </form>
 
-    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-
-        echo "<input type='hidden' name='petName' value='" . $row['petName'] . "'>
-<input type='hidden' name='bred' value='" . $row['bred'] . "'>
-<input type='hidden' name='petSpecies' value='" . $row['petSpecies'] . "'>
-<input type='hidden' name='petPicture' value='" . $row['profilePic'] . "'>
-<h1 style='color: #2a7e2a'>Select your veterinar for " . $row['petName'] . "</h1>";
-        echo "<table class='profile-table'>";
-        $_SESSION['petId'] = $row['petId'];
-        echo "<tr><td rowspan='4' style='padding: 20px; text-align: center;'>
-            <img alt='Profile Picture' width='200' height='200' src='pictures/" . $row['profilePic'] . "'>
-        </td></tr>";
-        echo "<tr><td>".NAME.": " . $row['petName'] . "</td></tr>";
-        echo "<tr><td>".BREED.": " . $row['bred'] . "</td></tr>";
-        echo "<tr><td>".SPECIES.": " . $row['petSpecies'] . "</td></tr>";
-$_SESSION['petPicture']=$row['profilePic'];
-        echo "<td colspan='2'> <input type='submit' class='btn btn-success' value='".UPDATE_PET."'></td></tr></form>";
-
-        echo "<tr><td colspan='2'><form action='registerAnimal.php' method='post'>
- <input type='hidden' name='action' value='deletePet'>
-
-            <input type='submit' class='btn btn-danger' value='".DELETE_PET."'></td></tr></form>";
-        echo "</table>";
-
-    }
+            <form action="registerAnimal.php" method="post" style="flex: 1; margin: 0;">
+                <input type="hidden" name="action" value="deletePet">
+                <input type="submit" style=" max-width: 350px;" class="btn btn-danger w-100" value="<?php echo DELETE_PET;?>">
+            </form>
+        </div>
 
 
-echo "<h1 style='color: #2a7e2a'>List of our veterinarians </h1>";
-$sql="SELECT * FROM veterinarian";
-$stmt = $connection->prepare($sql);
-$stmt->execute();
-if($stmt->rowCount() > 0){
-    echo '<form method="post" action="functions.php" class="mainForm" enctype="multipart/form-data">';
-    echo "<table class='profile-table'>";
-    foreach($stmt->fetchAll() as $row){
-        echo "<tr><td rowspan='6' style='padding: 20px; text-align: center;'>
-            <img alt='Profile Picture' width='200' height='200' src='pictures/".$row['profilePic']."'>
-        </td></tr>";
-        echo "<tr><td>".$row['firstName']."</td></tr>";
-        echo "<tr><td>".$row['lastName']."</td></tr>";
-        echo "<tr><td>".$row['veterinarianMail']."</td></tr>";
-        echo "<tr><td>".$row['phoneNumber']."</td></tr>";
-        echo "<tr><td><input type=submit class='btn btn-primary' value='Chose Veterinarian'></td></tr>";
-        echo "<input type=hidden  name='action' value='veterinarianChose'>";
-        $_SESSION['veterinarianId']=$row['veterinarianId'];
-
-    }
-    echo "</table>";
-}
+        <?php
+        $_SESSION['petId'] = $pet['petId'];
+        $_SESSION['petPicture'] = $pet['profilePic'];
+        endforeach;
+        ?>
 
 
+        <h1 style="color: #2a7e2a; text-align:center;"><?php echo LIST_OF_VETS;?></h1>
 
+        <form id="searchForm" method="get" class="mb-4" onsubmit="return false;" style="max-width: 400px; margin: auto;">
+            <input type="text" id="searchVetEmail" name="searchVetEmail"
+           placeholder="<?php echo EMAIL;?>"
+           class="form-control shadow-lg border-2 border-success"
+           style="font-size: 20px; padding: 15px; border-radius: 15px;">
+        </form>
 
-?>
-</form>
+        <div id="vetList" class="d-flex flex-column align-items-center" style="gap: 15px; max-width: 900px; margin: auto;">
+            <!-- Az állatorvosok listája ide töltődik AJAX-szal -->
+        </div>
 
 </body>
 </html>

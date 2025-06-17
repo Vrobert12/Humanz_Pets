@@ -1,0 +1,46 @@
+label, a {
+    font-size: 24px;
+}
+
+@media (max-width: 1000px) {
+    label, a {
+        font-size: 48px;
+    }
+}
+.users {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #e9f7ef;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    text-align: center;
+    display: inline-block;
+    width: 220px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+}
+
+.users:hover {
+    transform: scale(1.05);
+    background-color: #a8d5ba;
+}
+
+.users button {
+    margin-top: 15px;
+    padding: 10px 20px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.users button:hover {
+    background-color: #218838;
+}
+#list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start; /* Align items to the left */
+}

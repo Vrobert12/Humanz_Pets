@@ -22,7 +22,7 @@ elseif ((!isset($_GET['verify_email']) || !isset($_GET['verification_code']))) {
 if(isset($_GET['verification_code'])) {
     $email = trim($_GET['verify_email']);
     $token = trim($_GET['verification_code']);
-$_SESSION['backPic']="http://localhost/Humanz_Pets/resetPassword.php?mail=" . $email . "&token=" . $token;
+$_SESSION['backPic']="https://humanz.stud.vts.su.ac.rs/resetPassword.php?mail=" . $email . "&token=" . $token;
 // Fetch verification code for the given email
     $stmt = "SELECT verification_code FROM veterinarian WHERE veterinarianMail = :email";
     $stmt = $connection->prepare($stmt);
@@ -50,7 +50,7 @@ if(isset($_GET['verification_code'])) {
     $passwordValidation = trim($_GET['verification_code']);
 
 // Set the back picture URL in session
-    $_SESSION['backPic'] = "http://localhost/Humanz_Pets/resetPassword.php?mail=" . $email . "&passwordValidation=" . $passwordValidation;
+    $_SESSION['backPic'] = "https://humanz.stud.vts.su.ac.rs/resetPassword.php?mail=" . $email . "&passwordValidation=" . $passwordValidation;
 
 // Check for validation details in the `user` table
     $stmt = "SELECT passwordValidation FROM user WHERE userMail = :email and passwordValidation = :passwordValidation";
@@ -71,11 +71,7 @@ if(isset($_GET['verification_code'])) {
     }
 
 // If still not found, return an error
-    if (!$result) {
-        header('Location:index.php');
-        exit();
-    }
-
+   
 
 // Verify session email matches the provided email
     if (isset($_SESSION['email']) && $_SESSION['email'] != $email) {

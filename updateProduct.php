@@ -31,8 +31,7 @@ include "functions.php";
 $autoload=new Functions();
 $lang=$autoload->language();
 $autoload->checkAutoLogin();
-
-$_SESSION['backPic'] = "addProduct.php";
+$_SESSION['backPic'] = 'updateProduct.php';
 ?>
 
 <?php
@@ -50,24 +49,31 @@ if (isset($_SESSION['token']) && isset($_GET['token'])) {
 if (isset($_SESSION['title'])) {
     echo "<h2 style='color: #2a7e2a'>" . $_SESSION['title'] . "</h2>";
 }
-$_SESSION['backPic'] = 'addProduct.php';
+$_SESSION['backPic'] = 'updateProduct.php';
+if(!isset($_SESSION['productId']) || !isset($_SESSION['productName']) || !isset($_SESSION['productCost']) || !isset($_SESSION['productDescription']) || !isset($_SESSION['updateProductPicture'])) {
+$_SESSION['productId'] = $_POST['productId'];
+$_SESSION['productName']=$_POST['productName'];
+$_SESSION['productCost']=$_POST['productCost'];
+$_SESSION['productDescription']=$_POST['productDescription'];
+$_SESSION['updateProductPicture']=$_POST['productPicture'];
+}
+
 ?>
 
 <a class="btn btn-secondary" href="products.php"><?php echo BACK?></a><br><br>
 <label for="productName"><?php echo NAME?>:</label><br>
-<input type="text" class="inputok" placeholder="<?php echo NAME?>" name="productName" id="productName" value="<?php echo $_POST['productName']?>"><br>
+<input type="text" class="inputok" placeholder="<?php echo NAME?>" name="productName" id="productName" value="<?php echo $_SESSION['productName']?>"><br>
 
 <label for="price"><?php echo PRICE?>(€):</label><br>
-<input type="text" class="inputok" placeholder="<?php echo PRICE?>" name="price" id="price" value="<?php echo $_POST['productCost'];?>"><br>
+<input type="text" class="inputok" placeholder="<?php echo PRICE?>" name="price" id="price" value="<?php echo $_SESSION['productCost'];?>"><br>
 
 <label for="productDescription"><?php echo PRODUCTDESCRIPTION?>:</label><br>
 <textarea class="inputok" placeholder="<?php echo PRODUCTDESCRIPTION?>"
           name="productDescription" id="productDescription">
-    <?php echo htmlspecialchars($_POST['productDescription'] ?? ''); ?></textarea><br>
+    <?php echo htmlspecialchars($_SESSION['productDescription'] ?? ''); ?></textarea><br>
 
 <!-- Image Preview -->
-<?php $_SESSION['updateProductPicture']=$_POST['productPicture']?>
-<img id="productImage" src="pictures/products/<?php echo $_POST['productPicture'];?>"
+<img id="productImage" src="pictures/products/<?php echo $_SESSION['updateProductPicture'];?>"
      alt="Product Image" width="150" height="150" onclick="document.getElementById('pictureInput').click();"
      style="cursor: pointer; opacity: 0.7; transition: opacity 0.3s;"
      onmouseover="this.style.opacity=1;" onmouseout="this.style.opacity=0.7;">
@@ -76,10 +82,10 @@ $_SESSION['backPic'] = 'addProduct.php';
 <input type="file" name="picture" id="pictureInput" style="display: none;" accept="image/*" onchange="updateImagePreview(event)"><br>
 
 <!-- Submit Button -->
-<input type="submit" class="btn btn-primary" name="submit" id="submitButton" value="<?php echo ADD?>">
+<input type="submit" class="btn btn-primary" name="submit" id="submitButton" value="<?php echo UPDATE?>">
 
 <!-- Hidden Fields -->
-<input type="hidden" class="inputok" name="productId" value="<?php echo $_GET['id'];?>">
+<input type="hidden" class="inputok" name="productId" value="<?php echo $_SESSION['productId'];?>">
 <input type="hidden" name="action" value="updateProduct"><br>
 
 <?php

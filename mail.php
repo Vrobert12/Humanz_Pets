@@ -27,18 +27,30 @@ try {
     $mail->CharSet = 'UTF-8';
     if(isset($_SESSION['ownerMail']))
     {
-        echo $_SESSION['usedLanguage'];
+          echo $_SESSION['usedLanguage'];
         $autoload=new Functions();
         $lang=$_SESSION['usedLanguage'];
         $mail->setFrom($_SESSION["email"], 'R&D Veterinary');
         $mail->addAddress(  $_SESSION['ownerMail'] ,$_SESSION['ownerMail'] );
         $mail->addReplyTo($_SESSION["email"], 'Reply');
+        if($lang=='hu'){
+            $message='<h2>Kérjük értékelje állatorvosunkat</h2> Kérjük értékelje állatorvosunkat az alábbi linken, ami 72 óráig érvényes.
+ Nagy segítség számunkra, hogy megtudjuk, hogyan kommunikálnak dolgozóink a gazdákkal:<br>';
+            $here="itt";
+        }
+        if($lang=='sr') {
+            $message = '<h2>Molimo ocenite našeg veterinara</h2> Molimo vas da ocenite našeg veterinara
+ odlaskom na ovaj link, što važi 72 sata. To puno pomaže da saznamo kako naši radnici komuniciraju sa vlasnicima:<br>';
+            $here="ovde";
+        }
+        if($lang=='en'){
+            $message='<h2>Please rate our Veterinarian</h2> Please rate our veterinarian by going to this link, that is active for 72 hours.
+It help a lot to now our workers are communicationg with the owners:<br>';
+            $here="here";
+    }
         $mail->Subject = "R&D";
-        $mail->AltBody = REVIEV_MESSAGE . " <a href='" . $_SESSION['reviewLink']. "'>".HERE."</a>";
-        $mail->Body = REVIEV_MESSAGE . " <a href='" . $_SESSION['reviewLink'] . "'>".HERE."</a>";
-
-
-        unset($_SESSION['ownerMail']);
+        $mail->AltBody =  $message . " <a href='" . $_SESSION['reviewLink']. "'>".$here."</a>";
+        $mail->Body =  $message . " <a href='" . $_SESSION['reviewLink'] . "'>".$here."</a>";
         unset($_SESSION['usedLanguage']);
         unset($_SESSION['reviewLink']);
         header('Location:booked_users.php');

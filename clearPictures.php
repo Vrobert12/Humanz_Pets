@@ -26,11 +26,11 @@ function deleteUnreferencedProfilePictrures($directory, $columnName, $tables) {
     }
 
     // Get all files in the directory
-    $files = array_diff(scandir($directory), array('..', '.'));
+    $files = array_diff(scandir(__DIR__.$directory), array('..', '.'));
 
     // Loop through all files in the directory and check if they are referenced in the database
     foreach ($files as $file) {
-        $filePath = $directory . DIRECTORY_SEPARATOR . $file;
+        $filePath = __DIR__ . $directory . DIRECTORY_SEPARATOR . $file;
 
         // Ensure it's a file and not a directory before checking
         if (is_file($filePath) && !in_array($file, $referencedFiles)) {
@@ -41,9 +41,9 @@ function deleteUnreferencedProfilePictrures($directory, $columnName, $tables) {
 }
 
 // Directories for profilePic and qrCodeName
-$profilePicDirectory = 'pictures';
-$productsDirectory = 'pictures/products';
-$qrCodeDirectory = 'pictures/QRcodes';
+$profilePicDirectory = '/pictures';
+$productsDirectory = '/pictures/products';
+$qrCodeDirectory = '/pictures/QRcodes';
 
 // Tables to check for referenced files
 $tablesForProfilePic = ['user', 'veterinarian','pet'];
@@ -63,7 +63,7 @@ function deleteUnreferencedFiles($directory, $columnName, $table) {
     $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     // Get all files in the directory
-    $files = array_diff(scandir($directory), array('..', '.'));
+    $files = array_diff(scandir(__DIR__.$directory), array('..', '.'));
 
     // Get all referenced QR code files from the database
     $referencedFiles = array_map(function ($file) {
@@ -72,7 +72,7 @@ function deleteUnreferencedFiles($directory, $columnName, $table) {
 
     // Loop through all files in the directory and check if they are referenced in the database
     foreach ($files as $file) {
-        $filePath = $directory . DIRECTORY_SEPARATOR . $file;
+        $filePath = __DIR__ . $directory . DIRECTORY_SEPARATOR . $file;
 
         // Check if the file is not referenced in the database
         if (!in_array($file, $referencedFiles)) {
