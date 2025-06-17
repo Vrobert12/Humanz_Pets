@@ -6,8 +6,8 @@ import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useTranslation } from 'react-i18next';
 
-const API_URL = 'http://192.168.1.8/Humanz2.0/Humanz_Pets/phpForReact/bookReact.php';
-const API_URL_CHECK_AVAILABILITY = 'http://192.168.1.8/Humanz2.0/Humanz_Pets/phpForReact/checkAvailability.php';
+const API_URL = 'https://humanz.stud.vts.su.ac.rs/phpForReact/bookReact.php';
+const API_URL_CHECK_AVAILABILITY = 'https://humanz.stud.vts.su.ac.rs/phpForReact/checkAvailability.php';
 
 const ReservationForm = ({ navigation }) => {
     const { t } = useTranslation();
@@ -83,16 +83,16 @@ const ReservationForm = ({ navigation }) => {
             setLoading(true);
 
             try {
-                let formData = new FormData();
-                formData.append('pet_id', petId);
-                formData.append('date', reservationDate);
-                formData.append('start', reservationStart);
-                formData.append('end', reservationEnd);
-                formData.append('veterinarianId', vetId);
-
-                const response = await axios.post(API_URL, formData, {
-                    headers: { 'Content-Type': 'multipart/form-data' },
+                const response = await axios.post(API_URL, {
+                    pet_id: petId,
+                    date: reservationDate,
+                    start: reservationStart,
+                    end: reservationEnd,
+                    veterinarianId: vetId,
+                }, {
+                    headers: { 'Content-Type': 'application/json' }
                 });
+
 
                 setLoading(false);
 

@@ -25,8 +25,28 @@ if (!$userId) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo htmlspecialchars($product['productName']); ?> Details</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/details.css" rel="stylesheet">
-  
+    <style>
+        body {
+            background-color: #659df7;
+        }
+        .product-card {
+            background-color: #fff;
+            border-radius: 16px;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            max-width: 900px;
+            margin: 40px auto;
+        }
+        .product-img {
+            max-width: 100%;
+            border-radius: 12px;
+        }
+        .total-price {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #0d6efd;
+        }
+    </style>
 </head>
 <body>
 

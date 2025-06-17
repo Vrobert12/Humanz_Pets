@@ -1,4 +1,5 @@
 {
+  "registerPetSuc": "Kisállat sikeresen regisztrálva!",
   "INVALID_CREDENTIALS": "Érvénytelen hitelesítő adatok",
   "LOGIN_SUCCESS": "Sikeres bejelentkezés!",
   "SELECT_LANGUAGE": "Válassza ki a kívánt nyelvet",

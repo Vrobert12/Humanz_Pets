@@ -1,22 +1,10 @@
 <?php
-define('NO_VET_FOUND', 'Nem található állatorvos ezzel az email címmel!');
-define('NO_PASSWORD', 'A fiókhoz nincs jelszó beállítva!');
-define('BANNED', 'Ki lettél tiltva az oldalunkról!');
-define('VERIFY_ACCOUNT', 'Erősítsd meg a fiókot, küldtünk egy e-mailt!');
-define('WRONG_PASSWORD', 'Hibás jelszó!');
-define('EMAIL_OR_PASSWORD_NOT_SET', 'Az e-mail vagy jelszó nincs megadva!');
-define('SELECT_YOUR_VET', 'Válassz állatorvost a következőhöz:');
-define('NEED_TO_CHOOSE_VET', 'Állatorvost kell választanod az állatodhoz,<br> mielőtt továbbléphetsz');
-define('LIST_OF_VETS', 'Állatorvosaink listája');
-define('CHOOSE_VET_BTN', 'Állatorvos kiválasztása');
-define('NAME_PET','Házikedvenc');
-define('NOT_PICTURE', 'A fájl nem kép!');
-define('FILE_TOO_BIG', 'A fájl túl nagy!');
-define('UPLOAD_ERROR', 'Feltöltési hiba!');
-define('FILE_EXISTS', 'Már létezik ilyen nevű fájl!');
-define('FILE_MOVED_ERROR', 'Nem sikerült a fájl áthelyezése!');
-define('UPLOAD_ATTACK', 'Lehetséges feltöltési támadás!');
-define('PIC300KB', 'A kép túl nagy! A kép nem lehet nagyobb 300KB-nál');
+define('NORES','Egyenlőre nincsennek időpontok');
+define('EMAILREG','Email már regiszrtálva van');
+define('ADDEDVET','Állatorovos létrehozva');
+define('DELRES','Törlés oka');
+define('CHECK','Leadás');
+define('DELETE','Törlés');
 define('PAY_ALL_PRODUCTS', 'Minden termék kifizetése');
 define('PAY_PRODUCT', 'Termék kifizetése');
 define('ALL_FIELDS_REQUIRED', 'Minden mező kitöltése kötelező');

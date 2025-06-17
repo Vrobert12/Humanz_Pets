@@ -167,15 +167,15 @@ class Functions
         header('Location:usersProducts.php?user='.$_POST['userId']);
         exit();
     }
-    public function payProduct()
-    {
-        $stmt="UPDATE user_product_relation SET productPayed=1,payedDay=NOW() WHERE userProductRelationId=:userProductRelationId";
-        $stmt = $this->connection->prepare($stmt);
-        $stmt->bindParam(':userProductRelationId', $_POST['cartId']);
-        $stmt->execute();
-        header('Location:usersProducts.php?user='.$_POST['userId']);
-        exit();
-    }
+public function payProduct()
+{
+    $stmt="UPDATE user_product_relation SET productPayed=1,payedDay=NOW() WHERE userProductRelationId=:userProductRelationId";
+    $stmt = $this->connection->prepare($stmt);
+    $stmt->bindParam(':userProductRelationId', $_POST['cartId']);
+    $stmt->execute();
+    header('Location:usersProducts.php?user='.$_POST['userId']);
+    exit();
+}
     public function blurSwearWords($text) {
         $swearWords = [
             // **Hungarian**
@@ -238,19 +238,19 @@ class Functions
 
 
     public function insertDescription()
-    {
-        if(isset($_POST['vetDescription'])) {
-            $vetDescription = $this->blurSwearWords($_POST['vetDescription']);
-            $sql = 'UPDATE veterinarian set veterinarianDescription=:description WHERE veterinarianId = :veterinarianID';
-            $stmt = $this->connection->prepare($sql);
-            $stmt->bindParam(':description', $vetDescription);
-            $stmt->bindParam(':veterinarianID', $_SESSION['userId']);
-            $stmt->execute();
-            $_SESSION['message'] = DESCRIPTION_VET_UPDATED;
-            header('Location:addDescription.php');
-            exit();
-        }
+{
+    if(isset($_POST['vetDescription'])) {
+        $vetDescription = $this->blurSwearWords($_POST['vetDescription']);
+        $sql = 'UPDATE veterinarian set veterinarianDescription=:description WHERE veterinarianId = :veterinarianID';
+        $stmt = $this->connection->prepare($sql);
+        $stmt->bindParam(':description', $vetDescription);
+        $stmt->bindParam(':veterinarianID', $_SESSION['userId']);
+        $stmt->execute();
+        $_SESSION['message'] = DESCRIPTION_VET_UPDATED;
+        header('Location:addDescription.php');
+        exit();
     }
+}
     public function deletePicture()
     {
         if ($_POST['table'] == 'veterinarian') {
@@ -469,9 +469,9 @@ class Functions
         $stmt2 = $this->connection->prepare($sql2);
         $stmt2->bindParam(':reservationId', $_POST['reservationId']);
         $stmt2->execute();
-        $result2 = $stmt2->fetch(PDO::FETCH_ASSOC);
+        $result2 = $stmt2->fetchAll(PDO::FETCH_ASSOC);
         $date = date("Y-m-d");
-        if ($result2['reservationDay'] <= $date) {
+        if ($result2['reservationDay'] >= $date) {
 
 
             $_SESSION['message'] = FB;
@@ -512,7 +512,7 @@ VALUES (:reviewCode,:userId,:veterinarianId)";
             $stmt->execute();
             $_SESSION['usedLanguage'] = $usedLanguage;
             $_SESSION['ownerMail'] = $_POST['ownerMail'];
-            $_SESSION['reviewLink'] = 'https://humanz.stud.vts.su.ac.rs/reviewVeterinarian.php?reviewCode=' . $reviewCode;
+            $_SESSION['reviewLink'] = 'http://localhost/Humanz_Pets/reviewVeterinarian.php?reviewCode=' . $reviewCode;
             header('Location:mail.php');
             exit();
         } else {
@@ -542,7 +542,7 @@ VALUES (:reviewCode,:userId,:veterinarianId)";
             $this->updateVerificationDetails($mail, $verification_code, $verification_time, $table);
 
             $_SESSION['mailReset'] = $mail;
-            $_SESSION['mailResetLink'] = 'https://humanz.stud.vts.su.ac.rs/resetPassword.php?verification_code='
+            $_SESSION['mailResetLink'] = 'http://localhost/Humanz_Pets/resetPassword.php?verification_code='
                 . $verification_code . '&verify_email=' . $mail;
             header('Location: mail.php');
             exit();
@@ -976,7 +976,7 @@ VALUES (:userId,:productName,:productPicture,:productId,:sum, :price,:productPay
                 $stmt->bindParam(':usedLanguage', $language, PDO::PARAM_STR);
 
                 if ($stmt->execute()) {
-                    $_SESSION['workerLink'] = 'https://humanz.stud.vts.su.ac.rs/resetPassword.php?verify_email=' . $mail . '&verification_code=' . $verification_code;
+                    $_SESSION['workerLink'] = 'http://localhost/Humanz_Pets/resetPassword.php?verify_email=' . $mail . '&verification_code=' . $verification_code;
                     $_SESSION['message'] = ADDEDVET;
                     $_SESSION['text'] = "<h2>Registration</h2>";
                     $_SESSION['verification_code'] = $verification_code;
@@ -994,6 +994,7 @@ VALUES (:userId,:productName,:productPicture,:productId,:sum, :price,:productPay
             }
         }
     }
+
 
     public function registerAnimal()
     {
@@ -1094,21 +1095,21 @@ VALUES (:userId,:productName,:productPicture,:productId,:sum, :price,:productPay
 
     public function updateProduct()
     {
-        if (!empty($_POST["productId"]) && !empty($_POST["productName"]) && !empty($_POST["productDescription"]) && !empty($_POST["price"])) {
-            try {
-                $productId = ucfirst(strtolower(trim($_POST["productId"])));
-                $productName = ucfirst(strtolower(trim($this->blurSwearWords($_POST["productName"]))));
-                $price = ucfirst(strtolower(trim($_POST["price"])));
-                $_SESSION['product'] = true;
-                $picture = $this->picture($_SESSION['backPic']);
-                if ($picture == 4) {
-                    $picture = $_SESSION['updateProductPicture'];
-                }
-                unset($_SESSION['product']);
-                $description = ucfirst(strtolower(trim($this->blurSwearWords($_POST["productDescription"]))));
 
-                // Insert the pet data into the database
-                $stmt = "UPDATE product 
+        try {
+            $productId = ucfirst(strtolower(trim($_POST["productId"])));
+            $productName = ucfirst(strtolower(trim($this->blurSwearWords($_POST["productName"]))));
+            $price = ucfirst(strtolower(trim($_POST["price"])));
+$_SESSION['product']=true;
+            $picture = $this->picture($_SESSION['backPic']);
+            if ($picture == 4) {
+                $picture = $_SESSION['updateProductPicture'];
+            }
+            unset($_SESSION['product']);
+            $description = ucfirst(strtolower(trim($this->blurSwearWords($_POST["productDescription"]))));
+
+            // Insert the pet data into the database
+            $stmt = "UPDATE product 
 SET productName = :productName, 
     productCost = :price, 
     productPicture = :productPicture, 
@@ -1116,31 +1117,23 @@ SET productName = :productName,
     productRelease = NOW() 
 WHERE productId = :productId;
 ";
-                $query = $this->connection->prepare($stmt);
-                $query->bindParam(':productId', $productId, PDO::PARAM_STR);
-                $query->bindParam(':productName', $productName, PDO::PARAM_STR);
-                $query->bindParam(':price', $price, PDO::PARAM_STR);
-                $query->bindParam(':productPicture', $picture, PDO::PARAM_STR);
-                $query->bindParam(':productDescription', $description, PDO::PARAM_STR);
+            $query = $this->connection->prepare($stmt);
+            $query->bindParam(':productId', $productId, PDO::PARAM_STR);
+            $query->bindParam(':productName', $productName, PDO::PARAM_STR);
+            $query->bindParam(':price', $price, PDO::PARAM_STR);
+            $query->bindParam(':productPicture', $picture, PDO::PARAM_STR);
+            $query->bindParam(':productDescription', $description, PDO::PARAM_STR);
 
 
-                if ($query->execute()) {
-                    unset($_SESSION['productName']);
-                    unset($_SESSION['productDescription']);
-                    unset($_SESSION['price']);
-                    header("Location: products.php");
-                    exit();
-                } else {
-                    throw new Exception("Failed to register the pet.");
-                }
-            } catch (Exception $e) {
-                $_SESSION['message'] = "Error: " . $e->getMessage();
-                header("Location: updateProduct.php");
+            if ($query->execute()) {
+                header("Location: products.php");
                 exit();
+            } else {
+                throw new Exception("Failed to register the pet.");
             }
-        } else {
-            $_SESSION['message'] = "Fill every data!";
-            header("Location: updateProduct.php");
+        } catch (Exception $e) {
+            $_SESSION['message'] = "Error: " . $e->getMessage();
+            header("Location: addProduct.php");
             exit();
         }
     }
@@ -1383,7 +1376,7 @@ WHERE productId = :productId;
                                 $_SESSION['message'] = "If you think the<b>E-mail</b> address is registered try again.";
                                 $_SESSION['verification_code'] = $verification_code;
                                 $_SESSION['email'] = $mail;
-                                $_SESSION['registrationLink'] = 'https://humanz.stud.vts.su.ac.rs/email-verification.php?verification_code=' . $verification_code;
+                                $_SESSION['registrationLink'] = 'http://localhost/Humanz_Pets/email-verification.php?verification_code=' . $verification_code;
                                 header('Location: mail.php');
                                 exit();
                             }
@@ -1430,7 +1423,7 @@ WHERE productId = :productId;
                 $verification_code = substr(number_format(time() * rand(), 0, '',
                     ''), 0, 7);
                 $banned = 0;
-                $privilage = "User";
+                $privilage = "Guest";
                 if ($_POST['rank'])
                     $privilage = "Worker";
                 $banned_time = null;
@@ -1470,7 +1463,7 @@ WHERE productId = :productId;
                     $_SESSION['message'] = "We sent an email to you!";
                     $_SESSION['text'] = "<h2>Registration</h2>";
                     $_SESSION['email'] = $mail;
-                    $_SESSION['registrationLink'] = 'https://humanz.stud.vts.su.ac.rs/email-verification.php?verification_code=' . $verification_code . '&verify_email=' . $mail;
+                    $_SESSION['registrationLink'] = 'http://localhost/Humanz_Pets/email-verification.php?verification_code=' . $verification_code . '&verify_email=' . $mail;
                     header('Location: mail.php');
                     exit(); // Exit script after redirection
                 } else {
@@ -1745,9 +1738,9 @@ WHERE u.userId = :userId";
 
         if (isset($_FILES['picture'])) {
             if(isset($_SESSION['product']))
-                $target_dir = "pictures/products/";
+            $target_dir = "pictures/products/";
             else
-                $target_dir = "pictures/";  // Local directory for storing uploaded files
+            $target_dir = "pictures/";  // Local directory for storing uploaded files
             $target_file = $target_dir . basename($_FILES["picture"]["name"]);
             $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
 
@@ -1768,7 +1761,7 @@ WHERE u.userId = :userId";
                     $file_error = $_FILES['picture']["error"];
 
                     if (!exif_imagetype($file_temp)) {
-                        $_SESSION['message'] = NOT_PICTURE;
+                        $_SESSION['message'] = "File is not a picture!";
                         $logType = "Picture";
                         $logText = "The file is not in correct format";
                         $logMessage = $_SESSION['message'];
@@ -1779,7 +1772,7 @@ WHERE u.userId = :userId";
                     }
                     $file_size = $file_size / 1024;
                     if ($file_size > 300) {
-                        $_SESSION['message'] = PIC300KB;
+                        $_SESSION['message'] = "File is too big! Is has to be smaller than 300KB!";
                         $logType = "Picture";
                         $logText = "The file is bigger than 300KB";
                         $logMessage = $_SESSION['message'];
@@ -1849,7 +1842,7 @@ WHERE u.userId = :userId";
                         $query->execute();
 
                         return $new_file_name;
-                    } elseif ($target == 'registerAnimal.php' || $target == "addProduct.php"|| $target == "updateProduct.php") {
+                    } elseif ($target == 'registerAnimal.php' || $target == "addProduct.php") {
                         return $new_file_name;
                     } else {
                         $mail = 'Unknown';
@@ -1858,7 +1851,7 @@ WHERE u.userId = :userId";
                         $logMessage = "You can't upload a picture from another page!";
 
                         $this->errorLogInsert($mail, $logText, $logType, $logMessage);
-                        $_SESSION['message'] = UPLOAD_ERROR;
+                        $_SESSION['message'] = "You can't upload a picture from another page!";
                         header('Location: ' . $_SESSION['backPic']);
                         exit();
                     }
@@ -2082,7 +2075,7 @@ WHERE u.userId = :userId";
                             $_SESSION['message'] = "Verify Account, we sent a mail to you!";
                             $_SESSION['text'] = "<h2>Registration</h2>";
                             $_SESSION['email'] = $mail;
-                            $_SESSION['registrationLink'] = 'https://humanz.stud.vts.su.ac.rs/email-verification.php?verification_code=' . $result['verification_code'] . '&verify_email=' . $mail;
+                            $_SESSION['registrationLink'] = 'http://localhost/Humanz_Pets/email-verification.php?verification_code=' . $result['verification_code'] . '&verify_email=' . $mail;
                             $_SESSION['reSend'] = true;
                             header('Location: mail.php');
 
@@ -2235,7 +2228,7 @@ WHERE u.userId = :userId";
                     $stmt->execute();
                     $result = $stmt->fetch(PDO::FETCH_ASSOC);
                     if ($result == 0) {
-                        $_SESSION['regis'] = '<br>You need to register an animal, without it you <b>can not</b> use the account.<br><br><a href="functions.php?action=logOut">Log out</a>';
+                        $_SESSION['message'] = '<br>You need to register an animal, without it you <b>can not</b> use the account.<br><br><a href="functions.php?action=logOut">Log out</a>';
                         if ($currentPage != 'registerAnimal.php') {
                             header('Location: registerAnimal.php');
                             exit();
@@ -2248,7 +2241,7 @@ WHERE u.userId = :userId";
                         $stmt->bindValue(":mail", $mail);
                         $stmt->execute();
                         $result = $stmt->fetch(PDO::FETCH_ASSOC);
-                        if ($result == 0 && $_SESSION['privilage'] != 'Admin' && $currentPage != "updateAnimal.php") {
+                        if ($result == 0 && $_SESSION['privilage'] != 'Admin') {
                             $_SESSION['message'] = '<br>You have to <b>chose a veterinarian</b> to use this account further!<br><br><a href="functions.php?action=logOut">Log out</a>';
                             if ($currentPage != 'selectVeterinarian.php' && $currentPage != 'registerAnimal.php') {
                                 header('Location: selectVeterinarian.php');
@@ -2266,7 +2259,7 @@ WHERE u.userId = :userId";
                         $_SESSION['message'] = '<br>You have to <b>choose a veterinarian</b> to use this account further!<br><br><a href="functions.php?action=logOut">Log out</a>';
                         header('Location: selectVeterinarian.php');
                         exit();
-                    } elseif (!empty($result) && $currentPage == "selectVeterinarian.php" && $currentPage != "updateAnimal.php")
+                    } elseif (!empty($result) && $currentPage == "selectVeterinarian.php")
                         $_SESSION['message'] = '<br>You have to <b>choose a veterinarian</b> to use this account further!<br><br><a href="functions.php?action=logOut">Log out</a>';
 
                 }
@@ -2303,13 +2296,13 @@ WHERE u.userId = :userId";
                 $_SESSION['phone'] = $_COOKIE['phone'];
                 $_SESSION['privilage'] = $_COOKIE['privilage'];
                 $_SESSION['userLang'] = $_COOKIE['userLang'];
-                $backPage = $_SESSION['backPic'];
+
                 $mail = $_SESSION['email'];
                 $sql = "select petId from pet where userId=:userId and veterinarId is NULL";
                 $stmt = $this->connection->prepare($sql);
                 $stmt->bindParam(":userId", $_SESSION["userId"]);
                 $stmt->execute();
-                if ($stmt->rowCount() == 1 && $backPage != "updateAnimal.php") {
+                if ($stmt->rowCount() == 1) {
                     $_SESSION['message'] = 'You have to choose a veterinarian for your animal,<br> before you can go further<br><br><a href="functions.php?action=logOut">Log out</a> ';
                     if ($currentPage != 'selectVeterinarian.php') {
                         header("Location:selectVeterinarian.php");
@@ -2417,7 +2410,7 @@ WHERE u.userId = :userId";
     {
         $sql = "UPDATE pet SET veterinarId=:veterinarianId WHERE petId=:petId";
         $stmt = $this->connection->prepare($sql);
-        $stmt->bindValue(':veterinarianId', $_POST['veterinarianId']);
+        $stmt->bindValue(':veterinarianId', $_SESSION['veterinarianId']);
         $stmt->bindValue(':petId', $_SESSION['petId']);
         $stmt->execute();
         header('Location: index.php');

@@ -6,10 +6,11 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Picker } from '@react-native-picker/picker';
 import axios from 'axios';
 import { useTranslation } from 'react-i18next';
+import * as FileSystem from 'expo-file-system';
 
-const API_URL = 'http://192.168.1.8/Humanz2.0/Humanz_Pets/phpForReact/register_pet.php';
-const VETS_API_URL = 'http://192.168.1.8/Humanz2.0/Humanz_Pets/phpForReact/veterinariansReact.php';
-const PETS_API_URL = 'http://192.168.1.8/Humanz2.0/Humanz_Pets/phpForReact/applogIn.php';
+const API_URL = 'https://humanz.stud.vts.su.ac.rs/phpForReact/register_pet.php';
+const VETS_API_URL = 'https://humanz.stud.vts.su.ac.rs/phpForReact/veterinariansReact.php';
+const PETS_API_URL = 'https://humanz.stud.vts.su.ac.rs/phpForReact/applogIn.php';
 
 const RegisterPet = ({ navigation }) => {
     const { t } = useTranslation();
@@ -60,45 +61,47 @@ const RegisterPet = ({ navigation }) => {
     };
 
     const handleRegister = async () => {
-        if (isPictureSet && breed && name) {
+        if (isPictureSet && breed && name && species && veterinarian) {
             const userId = await AsyncStorage.getItem('user_id');
             if (!userId) {
                 Alert.alert(t('error'), t('userNotLoggedIn'));
                 return;
             }
+
             if (!name || !breed || !species || !veterinarian) {
                 Alert.alert(t('error'), t('fillAllFields'));
                 return;
             }
 
             setLoading(true);
-            let formData = new FormData();
-            formData.append('user_id', userId);
-            formData.append('name', name);
-            formData.append('breed', breed);
-            formData.append('species', species);
-            formData.append('veterinarian_id', veterinarian);
 
-            const currentDate = new Date();
-            const newFileName = `${currentDate.getFullYear()}${(currentDate.getMonth() + 1).toString().padStart(2, '0')}${currentDate.getDate().toString().padStart(2, '0')}${currentDate.getHours().toString().padStart(2, '0')}${currentDate.getMinutes().toString().padStart(2, '0')}${currentDate.getSeconds().toString().padStart(2, '0')}.png`;
-
+            let base64Image = null;
             if (image) {
-                const uriParts = image.split('.');
-                const fileType = uriParts[uriParts.length - 1];
-                formData.append('image', {
-                    uri: image,
-                    name: newFileName,
-                    type: `image/${fileType}`,
-                });
+                // Read image as base64 string
+                base64Image = await FileSystem.readAsStringAsync(image, { encoding: 'base64' });
+            } else {
+                Alert.alert(t('missingData'), t('fillFieldsAndImage'));
+                setLoading(false);
+                return;
             }
 
+            const payload = {
+                user_id: userId,
+                name,
+                breed,
+                species,
+                veterinarian_id: veterinarian,
+                image_base64: base64Image,
+            };
+
             try {
-                const response = await axios.post(API_URL, formData, {
-                    headers: { 'Content-Type': 'multipart/form-data' },
+                const response = await axios.post(API_URL, payload, {
+                    headers: { 'Content-Type': 'application/json' },
                 });
+
                 setLoading(false);
                 if (response.data.success) {
-                    Alert.alert(t('success'), response.data.message);
+                    Alert.alert(t('success'), t('registerPetSuc'));
                     navigation.goBack();
                 } else {
                     Alert.alert(t('error'), response.data.message);
@@ -109,23 +112,6 @@ const RegisterPet = ({ navigation }) => {
             }
         } else {
             Alert.alert(t('missingData'), t('fillFieldsAndImage'));
-        }
-
-        const token = await AsyncStorage.getItem('session_token');
-        const userId = await AsyncStorage.getItem('user_id');
-
-        if (token && userId) {
-            setLoading(true);
-            try {
-                const response = await axios.post(PETS_API_URL, { userId, token });
-                if (response.data.success) {
-                    await AsyncStorage.removeItem('pets');
-                    await AsyncStorage.setItem('pets', JSON.stringify(response.data.pets));
-                }
-            } catch (error) {
-                console.error(t('refreshError'), error);
-            }
-            setLoading(false);
         }
     };
 

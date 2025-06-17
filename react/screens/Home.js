@@ -8,8 +8,8 @@ export default function Home({ navigation }) {
     const [searchQuery, setSearchQuery] = useState('');
     const [products, setProducts] = useState([]);
     const [cart, setCart] = useState([]);
-    const API_URL = 'http://192.168.1.8/Humanz2.0/Humanz_Pets/phpForReact';
-    const API_URL2 = 'http://192.168.1.8/Humanz2.0/Humanz_Pets';
+    const API_URL = 'https://humanz.stud.vts.su.ac.rs/phpForReact';
+    const API_URL2 = 'https://humanz.stud.vts.su.ac.rs';
     const { t } = useTranslation();
 
     useEffect(() => {
@@ -25,7 +25,11 @@ export default function Home({ navigation }) {
 
     const fetchCartItems = async () => {
         const userId = await AsyncStorage.getItem('user_id');
-        fetch(`${API_URL}/get_cart.php?userId=${userId}`)
+        fetch(`${API_URL}/get_cart.php`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ userId })
+        })
             .then(response => response.json())
             .then(data => setCart(data))
             .catch(error => console.error(t('ERROR'), error));
@@ -40,7 +44,7 @@ export default function Home({ navigation }) {
     const deleteCartItem = async (userProductRelationId) => {
         try {
             const response = await fetch(`${API_URL}/delete_cart_item.php`, {
-                method: 'POST',
+                method: 'DELETE',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ id: userProductRelationId })
             });

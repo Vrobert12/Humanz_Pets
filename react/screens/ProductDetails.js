@@ -10,11 +10,26 @@ export default function ProductDetails({ route }) {
     const { t } = useTranslation();
 
     useEffect(() => {
-        fetch(`http://192.168.1.8/Humanz2.0/Humanz_Pets/phpForReact/get_product_details.php?id=${productId}`)
-            .then(response => response.json())
-            .then(data => setProduct(data))
-            .catch(error => console.error('Error fetching product details:', error));
+        const fetchProductDetails = async () => {
+            try {
+                const response = await fetch('https://humanz.stud.vts.su.ac.rs/phpForReact/get_product_details.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ productId })
+                });
+
+                const data = await response.json();
+                setProduct(data);
+            } catch (error) {
+                console.error('Error fetching product details:', error);
+            }
+        };
+
+        if (productId) {
+            fetchProductDetails();
+        }
     }, [productId]);
+
 
     const handleAddToCart = async () => {
         const userId = await AsyncStorage.getItem('user_id');
@@ -23,7 +38,7 @@ export default function ProductDetails({ route }) {
         const totalPrice = quantity * product.productCost;
         const currentDate = new Date().toISOString().split('T')[0];
 
-        fetch('http://192.168.1.8/Humanz2.0/Humanz_Pets/phpForReact/add_to_cart.php', {
+        fetch('https://humanz.stud.vts.su.ac.rs/phpForReact/add_to_cart.php', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -48,7 +63,7 @@ export default function ProductDetails({ route }) {
 
     return (
         <View style={styles.container}>
-            <Image source={{ uri: 'http://192.168.1.8/Humanz2.0/Humanz_Pets/pictures/products/' + product.productPicture }} style={styles.image} />
+            <Image source={{ uri: 'https://humanz.stud.vts.su.ac.rs/pictures/products/' + product.productPicture }} style={styles.image} />
             <Text style={styles.name}>{product.productName}</Text>
             <Text style={styles.price}>${product.productCost}</Text>
             <Text style={styles.description}>{product.description}</Text>

@@ -8,7 +8,7 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 // Load .env file
-$dotenv = Dotenv::createImmutable(__DIR__.'/..');
+$dotenv = Dotenv::createImmutable('/..'.__DIR__);
 $dotenv->load();
 
 // Set timezone
