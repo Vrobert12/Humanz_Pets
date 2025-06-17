@@ -34,8 +34,8 @@ $autoload->checkAutoLogin();
     <script>
         const lang = '<?php echo $lang; ?>';
     </script>
-    <script src="js/sureCheck.js"></script>
-    <script src="js/indexJS.js"></script>
+    <script src="sureCheck.js"></script>
+    <script src="indexJS.js"></script>
     <link rel="stylesheet" href="style.css" type="text/css">
 
 
@@ -204,15 +204,15 @@ https://getbootstrap.com/docs/5.3/components/navbar/
             </a>
         </li>';
                 }
-            if ($_SESSION['privilage'] == "Veterinarian")
-            {
-                echo'  <li>
+                if ($_SESSION['privilage'] == "Veterinarian")
+                {
+                    echo'  <li>
             <a href="addDescription.php" class="nav-link text-white">
                 <svg class="bi me-2" width="16" height="16"><use xlink:href="#grid"/></svg>
                 '.DESCRIPTION_VET.'
             </a>
         </li>';
-            }
+                }
                 if ($_SESSION['privilage'] == 'Admin') {
                     echo'  <li>
             <a href="veterinarians.php" class="nav-link text-white">
@@ -342,7 +342,7 @@ https://getbootstrap.com/docs/5.3/components/navbar/
                     <span class="visually-hidden">Home</span>
                 </a>
             </li>';
-                   }
+                }
                 echo '</ul>';
                 $_SESSION['action'] = "kijelentkezes";
                 echo '<a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false" style="color: white;">';
@@ -352,11 +352,12 @@ https://getbootstrap.com/docs/5.3/components/navbar/
 
                 // Dropdown menu
                 echo '<ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">';
-                echo '<li><a class="dropdown-item" href="modify.php"><i class="fas fa-gear"></i>&nbspSettings</a></li>';
-                echo '<li><a class="dropdown-item" href="userData.php?email='.$_SESSION['email'].'"><i class="fas fa-circle-info"></i>&nbspProfile</a></li>';
+                echo '<li><a class="dropdown-item" href="modify.php"><i class="fas fa-gear"></i>&nbsp;'.SETTINGS.'</a></li>';
+                echo '<li><a class="dropdown-item" href="userData.php?email='.$_SESSION['email'].'"><i class="fas fa-circle-info"></i>&nbsp;'.ACCOUNT.'</a></li>';
+                echo'<li><a href="resetPassword.php?mail='.$_SESSION['email'].'" class="dropdown-item"><i class="bi bi-key"></i>&nbsp;'.CHANGEPS.'</a></li>';
                 echo '<li><hr class="dropdown-divider"></li>';
                 echo '<li><a class="dropdown-item" href="functions.php?action=logOut" onclick="confirmLogout(event)">';
-                echo '<i class="bi bi-door-open fa-2x justify-content-end"></i> Log out</a></li>';
+                echo '<i class="bi bi-door-open fa-2x justify-content-end"></i>'.LOGOUT.'</a></li>';
                 echo '</ul>';
 
                 // Hidden form for file upload
@@ -369,7 +370,7 @@ https://getbootstrap.com/docs/5.3/components/navbar/
 
             }
             else{
-                    echo' <ul class="nav nav-pills nav-flush flex-column text-center"><li>
+                echo' <ul class="nav nav-pills nav-flush flex-column text-center"><li>
             <a href="listVets.php" class="nav-link text-white">
                 <i class="bi bi-file-medical" style="font-size: 24px;"></i>
                     <span class="visually-hidden">Home</span>
