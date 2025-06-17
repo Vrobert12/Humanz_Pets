@@ -22,21 +22,20 @@ const LoginScreen = ({ navigation, onLogin }) => {
     const checkLoginStatus = async () => {
         const token = await AsyncStorage.getItem('session_token');
         const userId = await AsyncStorage.getItem('user_id');
-
         if (token && userId) {
             setLoading(true);
             try {
                 // Fetch updated user data
                 const response = await axios.post(API_URL, { userId, token });
-
                 if (response.data.success) {
-                    await AsyncStorage.setItem('pets', JSON.stringify(response.data.pets));
-                    await AsyncStorage.setItem('lang', response.data.language);
+                        await AsyncStorage.setItem('pets', JSON.stringify(response.data.pets));
+                        await AsyncStorage.setItem('lang', response.data.language);
 
-                    if (response.data.language) {
-                        setLanguage(response.data.language); // e.g., "en", "hu", "sr"
-                    }
-                    onLogin(); // Navigate to the main app
+                        if (response.data.language) {
+                            setLanguage(response.data.language); // e.g., "en", "hu", "sr"
+                        }
+                        onLogin();
+                    // Navigate to the main app
                 } else {
                     console.log("Session expired, logging out.");
                     await AsyncStorage.removeItem('session_token');
@@ -71,9 +70,10 @@ const LoginScreen = ({ navigation, onLogin }) => {
 
                 Alert.alert(t('success'), t('LOGIN_SUCCESS'));
                 onLogin();
-            } else {
-                Alert.alert(t('error'), t('INVALID_CREDENTIALS'));
+            } else if(response.data.message === "banned") {
+                Alert.alert(t('error'), t('BAN'));
             }
+            else{Alert.alert(t('error'), t('INVALID_CREDENTIALS'));}
         } catch (error) {
             setLoading(false);
             Alert.alert(t('error'),error);
