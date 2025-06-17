@@ -4,25 +4,61 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2367ab9a-341c-4300-a7ed-72f717181f7d" name="Changes" comment="3 hardcodes fixed and Swagger implementation">
+    <list default="true" id="2367ab9a-341c-4300-a7ed-72f717181f7d" name="Changes" comment="Swagger expansion">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/phpForReact/add_to_cart.php" beforeDir="false" afterPath="$PROJECT_DIR$/phpForReact/add_to_cart.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ajax/getUsers.php" beforeDir="false" afterPath="$PROJECT_DIR$/ajax/getUsers.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/booked_users.php" beforeDir="false" afterPath="$PROJECT_DIR$/booked_users.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/details.php" beforeDir="false" afterPath="$PROJECT_DIR$/details.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/functions.php" beforeDir="false" afterPath="$PROJECT_DIR$/functions.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/includes/config.php" beforeDir="false" afterPath="$PROJECT_DIR$/includes/config.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/includes/functions.php" beforeDir="false" afterPath="$PROJECT_DIR$/includes/functions.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lang_en.php" beforeDir="false" afterPath="$PROJECT_DIR$/lang_en.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lang_hu.php" beforeDir="false" afterPath="$PROJECT_DIR$/lang_hu.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lang_sr.php" beforeDir="false" afterPath="$PROJECT_DIR$/lang_sr.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/phpForReact/bookReact.php" beforeDir="false" afterPath="$PROJECT_DIR$/phpForReact/bookReact.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/phpForReact/checkAvailability.php" beforeDir="false" afterPath="$PROJECT_DIR$/phpForReact/checkAvailability.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/phpForReact/check_reviews.php" beforeDir="false" afterPath="$PROJECT_DIR$/phpForReact/check_reviews.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/phpForReact/deleteReservation.php" beforeDir="false" afterPath="$PROJECT_DIR$/phpForReact/deleteReservation.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/phpForReact/delete_cart_item.php" beforeDir="false" afterPath="$PROJECT_DIR$/phpForReact/delete_cart_item.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/phpForReact/getPets.php" beforeDir="false" afterPath="$PROJECT_DIR$/phpForReact/getPets.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/phpForReact/getReservations.php" beforeDir="false" afterPath="$PROJECT_DIR$/phpForReact/getReservations.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/phpForReact/get_cart.php" beforeDir="false" afterPath="$PROJECT_DIR$/phpForReact/get_cart.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/phpForReact/get_product_details.php" beforeDir="false" afterPath="$PROJECT_DIR$/phpForReact/get_product_details.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/phpForReact/get_products.php" beforeDir="false" afterPath="$PROJECT_DIR$/phpForReact/get_products.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/phpForReact/get_purchased_products.php" beforeDir="false" afterPath="$PROJECT_DIR$/phpForReact/get_purchased_products.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phpForReact/registerUser.php" beforeDir="false" afterPath="$PROJECT_DIR$/phpForReact/registerUser.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/phpForReact/register_pet.php" beforeDir="false" afterPath="$PROJECT_DIR$/phpForReact/register_pet.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/phpForReact/submit_review.php" beforeDir="false" afterPath="$PROJECT_DIR$/phpForReact/submit_review.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/phpForReact/updateUser.php" beforeDir="false" afterPath="$PROJECT_DIR$/phpForReact/updateUser.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pictures/20250311130636.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pictures/products/20250315224019.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/picturespet.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pictures/20250310230511.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pictures/20250311145638.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pictures/20250311213952.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pictures/20250316180855.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pictures/20250316181106.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pictures/20250316181347.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pictures/QRcodes/qrcode_67d0879ab270f.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pictures/QRcodes/qrcode_67d092058de6f.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pictures/QRcodes/qrcode_67d5fe79db72b.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pictures/QRcodes/qrcode_67d5fe81d2265.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pictures/QRcodes/qrcode_67d5fe8b8ca2d.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pictures/QRcodes/qrcode_67d5fe9a36446.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pictures/QRcodes/qrcode_67d708febfead.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pictures/QRcodes/qrcode_67d709fa3df65.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pictures/QRcodes/qrcode_684037e4e5954.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pictures/products/20250312132707.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pictures/products/20250315223710.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/react/locales/en.json" beforeDir="false" afterPath="$PROJECT_DIR$/react/locales/en.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/react/locales/hu.json" beforeDir="false" afterPath="$PROJECT_DIR$/react/locales/hu.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/react/locales/sr.json" beforeDir="false" afterPath="$PROJECT_DIR$/react/locales/sr.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/react/screens/BookAppointment.js" beforeDir="false" afterPath="$PROJECT_DIR$/react/screens/BookAppointment.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/react/screens/Home.js" beforeDir="false" afterPath="$PROJECT_DIR$/react/screens/Home.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/react/screens/LoginScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/react/screens/LoginScreen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/react/screens/Pets.js" beforeDir="false" afterPath="$PROJECT_DIR$/react/screens/Pets.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/react/screens/ProductDetails.js" beforeDir="false" afterPath="$PROJECT_DIR$/react/screens/ProductDetails.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/react/screens/Profile.js" beforeDir="false" afterPath="$PROJECT_DIR$/react/screens/Profile.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/react/screens/PurchasedProducts.js" beforeDir="false" afterPath="$PROJECT_DIR$/react/screens/PurchasedProducts.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/react/screens/QrCode.js" beforeDir="false" afterPath="$PROJECT_DIR$/react/screens/QrCode.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/react/screens/RatingsScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/react/screens/RatingsScreen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/react/screens/RegisterPet.js" beforeDir="false" afterPath="$PROJECT_DIR$/react/screens/RegisterPet.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/react/screens/RegisterScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/react/screens/RegisterScreen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/react/screens/ReservationsScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/react/screens/ReservationsScreen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/react/screens/Settings.js" beforeDir="false" afterPath="$PROJECT_DIR$/react/screens/Settings.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/swagger/swagger-ui-master/dist/openapi.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/swagger/swagger-ui-master/dist/openapi.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -206,7 +242,18 @@
       <workItem from="1746548097217" duration="4630000" />
       <workItem from="1746614644943" duration="949000" />
       <workItem from="1749123692708" duration="14794000" />
-      <workItem from="1749305381514" duration="12435000" />
+      <workItem from="1749305381514" duration="12876000" />
+      <workItem from="1749461547237" duration="156000" />
+      <workItem from="1749471207058" duration="14000" />
+      <workItem from="1749472344394" duration="244000" />
+      <workItem from="1749569517967" duration="8517000" />
+      <workItem from="1749741105764" duration="4470000" />
+      <workItem from="1749821770129" duration="6205000" />
+      <workItem from="1749908836836" duration="13396000" />
+      <workItem from="1750069227847" duration="42000" />
+      <workItem from="1750072249717" duration="32000" />
+      <workItem from="1750094252795" duration="4858000" />
+      <workItem from="1750170390548" duration="10741000" />
     </task>
     <task id="LOCAL-00001" summary="Responsivity">
       <option name="closed" value="true" />
@@ -488,7 +535,15 @@
       <option name="project" value="LOCAL" />
       <updated>1749148732731</updated>
     </task>
-    <option name="localTasksCounter" value="36" />
+    <task id="LOCAL-00036" summary="Swagger expansion">
+      <option name="closed" value="true" />
+      <created>1749319183613</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1749319183613</updated>
+    </task>
+    <option name="localTasksCounter" value="37" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -506,7 +561,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Pet-checking restrictions and language improvements." />
     <MESSAGE value="Small error" />
     <MESSAGE value="Expanding translation" />
     <MESSAGE value="React login and logout" />
@@ -531,6 +585,7 @@
     <MESSAGE value="react update" />
     <MESSAGE value="small fix" />
     <MESSAGE value="3 hardcodes fixed and Swagger implementation" />
-    <option name="LAST_COMMIT_MESSAGE" value="3 hardcodes fixed and Swagger implementation" />
+    <MESSAGE value="Swagger expansion" />
+    <option name="LAST_COMMIT_MESSAGE" value="Swagger expansion" />
   </component>
 </project>

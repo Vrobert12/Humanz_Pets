@@ -1,4 +1,10 @@
 <?php
+define('NORES','Nemate nikakve rezervacije');
+define('EMAILREG','Email je već registrovan');
+define('ADDEDVET','Veterinar dodat');
+define('DELRES','Razlog za brisanje');
+define('CHECK','Provera');
+define('DELETE','Izbriši');
 define('PAY_ALL_PRODUCTS', 'Plati sve proizvode');
 define('PAY_PRODUCT', 'Plati proizvod');
 define('ALL_FIELDS_REQUIRED', 'Sva polja su obavezna');

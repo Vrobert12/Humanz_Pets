@@ -1,4 +1,10 @@
 <?php
+define('NORES','There are no upcoming reservations');
+define('EMAILREG','Email already registered');
+define('ADDEDVET','Veterinarian added');
+define('DELRES','Deletion reason');
+define('CHECK','Check');
+define('DELETE','Delete');
 define('PAY_ALL_PRODUCTS', 'Pay all products');
 define('PAY_PRODUCT', 'Pay product');
 define('ALL_FIELDS_REQUIRED', 'All fields are required');

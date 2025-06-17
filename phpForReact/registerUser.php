@@ -117,7 +117,7 @@ try {
 
             $mail->CharSet = 'UTF-8';
 
-            $registration_link = '<a href="http://localhost/Humanz2.0/Humanz_Pets/email-verification.php?
+            $registration_link = '<a href="https://humanz.stud.vts.su.ac.rs/email-verification.php?
                     verification_code=' . $verification_code . '&verify_email=' . $email . '">'.$here.'</a>';
 
             $mail->setFrom("robertvarro12@gmail.com", 'R&D Veterinary');

@@ -1,5 +1,4 @@
 <?php
-
 $GLOBALS['pdo'] = connectDatabase($dsn, $pdoOptions);
 
 /**
@@ -13,7 +12,7 @@ function connectDatabase(string $dsn, array $pdoOptions): PDO
 {
 
     try {
-        $pdo = new PDO($dsn, PARAMS['USER'], PARAMS['PASSWORD'], $pdoOptions);
+        $pdo = new PDO($dsn, $_ENV['DB_USER'], $_ENV['DB_PASSWORD'], $pdoOptions);
     } catch (\PDOException $e) {
         var_dump($e->getCode());
         throw new \PDOException($e->getMessage());

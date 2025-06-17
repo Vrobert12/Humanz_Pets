@@ -1,4 +1,5 @@
 {
+  "registerPetSuc": "ljubimac uspešno registrovan!",
   "INVALID_CREDENTIALS": "Nevažeći podaci za prijavu",
   "LOGIN_SUCCESS": "Uspešna prijava!",
   "SELECT_LANGUAGE": "Izaberite željeni jezik",

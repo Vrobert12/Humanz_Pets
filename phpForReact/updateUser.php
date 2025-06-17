@@ -18,7 +18,7 @@ error_reporting(E_ALL);
 
 
 // Ensure the correct HTTP method
-if ($_SERVER["REQUEST_METHOD"] !== "POST") {
+if ($_SERVER["REQUEST_METHOD"] !== "PATCH") {
     echo json_encode(["status" => 405, "message" => "Method Not Allowed"]);
     exit();
 }

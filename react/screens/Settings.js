@@ -38,7 +38,7 @@ export default function Settings() {
     useEffect(() => {
         if (!userId) return;
 
-        const apiUrl = `http://192.168.1.8/Humanz2.0/Humanz_Pets/phpForReact/getPets/user/${userId}`;
+        const apiUrl = `https://humanz.stud.vts.su.ac.rs/phpForReact/getPets/user/${userId}`;
 
         fetch(apiUrl)
             .then((response) => response.json())
@@ -62,10 +62,10 @@ export default function Settings() {
         setUpdating(true);
         const updatedUserData = { ...userData, id: userId };
 
-        const apiUrl = `http://192.168.1.8/Humanz2.0/Humanz_Pets/phpForReact/updateUser.php`;
+        const apiUrl = `https://humanz.stud.vts.su.ac.rs/phpForReact/updateUser.php`;
 
         fetch(apiUrl, {
-            method: "POST",
+            method: "PATCH",
             headers: {
                 "Content-Type": "application/json"
             },

@@ -10,7 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit;
 }
 
-if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+if ($_SERVER['REQUEST_METHOD'] !== 'PATCH') {
     http_response_code(405); // Method Not Allowed
     echo json_encode(["error" => "Invalid request method. Use POST."]);
     exit;

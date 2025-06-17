@@ -5,8 +5,8 @@ import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useTranslation } from 'react-i18next';
 
-const API_URL_GET = 'http://192.168.1.8/Humanz2.0/Humanz_Pets/phpForReact/getReservations.php';
-const API_URL_DELETE = 'http://192.168.1.8/Humanz2.0/Humanz_Pets/phpForReact/deleteReservation.php';
+const API_URL_GET = 'https://humanz.stud.vts.su.ac.rs/phpForReact/getReservations.php';
+const API_URL_DELETE = 'https://humanz.stud.vts.su.ac.rs/phpForReact/deleteReservation.php';
 
 const ReservationsScreen = () => {
     const { t } = useTranslation();
@@ -40,7 +40,10 @@ const ReservationsScreen = () => {
 
     const deleteReservation = async (reservationId) => {
         try {
-            const response = await axios.post(API_URL_DELETE, { reservationId });
+            const response = await axios.delete(API_URL_DELETE, {
+                data: { reservationId }
+            });
+
             Alert.alert(t('success'), t('RESDELSUC'));
 
             if (response.data.message === 'Reservation deleted successfully') {
@@ -52,6 +55,7 @@ const ReservationsScreen = () => {
             Alert.alert(t('error'), t('deleteReservationError'));
         }
     };
+
 
     const isReservationInFuture = (reservationDay) => {
         const currentDate = new Date();

@@ -5,8 +5,8 @@ import axios from 'axios';
 import StarRating from 'react-native-star-rating-widget';
 import { useTranslation } from 'react-i18next';
 
-const API_URL = 'http://192.168.1.8/Humanz2.0/Humanz_Pets/phpForReact/check_reviews.php';
-const SUBMIT_URL = 'http://192.168.1.8/Humanz2.0/Humanz_Pets/phpForReact/submit_review.php';
+const API_URL = 'https://humanz.stud.vts.su.ac.rs/phpForReact/check_reviews.php';
+const SUBMIT_URL = 'https://humanz.stud.vts.su.ac.rs/phpForReact/submit_review.php';
 
 const RatingsScreen = ({ fetchReviewCount }) => {
     const { t } = useTranslation();
@@ -58,7 +58,7 @@ const RatingsScreen = ({ fetchReviewCount }) => {
         }
 
         try {
-            await axios.post(SUBMIT_URL, { review_id: reviewId, rating: rating });
+            await axios.patch(SUBMIT_URL, { review_id: reviewId, rating: rating });
             Alert.alert(t('success'), t('ratingSubmitted'));
             fetchReviews(userId);
             fetchReviewCount(userId);

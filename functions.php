@@ -931,7 +931,7 @@ VALUES (:userId,:productName,:productPicture,:productId,:sum, :price,:productPay
                 $stmt->execute();
 
                 if ($stmt->rowCount() > 0) {
-                    $_SESSION['message'] = "mail already exists";
+                    $_SESSION['message'] = EMAILREG;
                     header('Location: addVet.php');
                     exit();
                 }
@@ -941,7 +941,7 @@ VALUES (:userId,:productName,:productPicture,:productId,:sum, :price,:productPay
                 $stmt->execute();
 
                 if ($stmt->rowCount() > 0) {
-                    $_SESSION['message'] = "mail already exists";
+                    $_SESSION['message'] = EMAILREG;
                     header('Location: addVet.php');
                     exit();
                 }
@@ -977,7 +977,7 @@ VALUES (:userId,:productName,:productPicture,:productId,:sum, :price,:productPay
 
                 if ($stmt->execute()) {
                     $_SESSION['workerLink'] = 'http://localhost/Humanz_Pets/resetPassword.php?verify_email=' . $mail . '&verification_code=' . $verification_code;
-                    $_SESSION['message'] = "Worker added Successfully!";
+                    $_SESSION['message'] = ADDEDVET;
                     $_SESSION['text'] = "<h2>Registration</h2>";
                     $_SESSION['verification_code'] = $verification_code;
                     $_SESSION['veterinarianEmail'] = $mail;

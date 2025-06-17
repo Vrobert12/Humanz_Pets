@@ -16,12 +16,12 @@ require_once 'react_config.php';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $data = json_decode(file_get_contents('php://input'), true);
 
-    $pet_id = $_POST['pet_id'] ?? null;
-    $date = $_POST['date'] ?? null;
+    $pet_id = $data['pet_id'] ?? null;
+    $date = $data['date'] ?? null;
     $todays_date = date("Y-m-d");
-    $start = $_POST['start'] ?? null;
-    $end = $_POST['end'] ?? null;
-    $veterinarianId = $_POST['veterinarianId'] ?? null;
+    $start = $data['start'] ?? null;
+    $end = $data['end'] ?? null;
+    $veterinarianId = $data['veterinarianId'] ?? null;
 
     if ($pet_id && $date && $start && $end && $veterinarianId) {
 

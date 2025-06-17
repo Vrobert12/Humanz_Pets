@@ -23,6 +23,7 @@ const Pets = () => {
                 const petsList = JSON.parse(petsData);
                 setPets(petsList);
                 setFilteredPets(petsList);
+                console.log(petsData);
             }
         } catch (error) {
             console.error(t('error'), error);
@@ -49,7 +50,7 @@ const Pets = () => {
                 <Text style={styles.petText}>{t('breed')}: {item.bred}</Text>
             </View>
             <Image
-                source={{ uri: 'http://192.168.1.8/Humanz2.0/Humanz_Pets/pictures/' + item.profilePic }}
+                source={{ uri: 'https://humanz.stud.vts.su.ac.rs/pictures/' + item.profilePic }}
                 style={styles.petImage}
             />
         </View>

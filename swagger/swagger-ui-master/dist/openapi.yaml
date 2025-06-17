@@ -5,9 +5,9 @@ info:
   description: API documentation for the Humanz Pets system
 
 servers:
-  - url: http://localhost/Humanz2.0/Humanz_Pets/phpForReact
+  - url: https://humanz.stud.vts.su.ac.rs/phpForReact
     description: React API
-  - url: http://localhost/Humanz2.0/Humanz_Pets
+  - url: https://humanz.stud.vts.su.ac.rs
     description: Web API
 
 paths:

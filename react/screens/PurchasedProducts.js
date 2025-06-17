@@ -6,13 +6,20 @@ import { useTranslation } from 'react-i18next';
 export default function PurchasedProducts() {
     const { t } = useTranslation();
     const [purchasedProducts, setPurchasedProducts] = useState([]);
-    const API_URL = 'http://192.168.1.8/Humanz2.0/Humanz_Pets/phpForReact';
-    const API_URL2 = 'http://192.168.1.8/Humanz2.0/Humanz_Pets';
+    const API_URL = 'https://humanz.stud.vts.su.ac.rs/phpForReact';
+    const API_URL2 = 'https://humanz.stud.vts.su.ac.rs';
 
     useEffect(() => {
         const fetchPurchasedProducts = async () => {
             const userId = await AsyncStorage.getItem('user_id');
-            fetch(`${API_URL}/get_purchased_products.php?userId=${userId}`)
+
+            fetch(`${API_URL}/get_purchased_products.php`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ userId: userId }),
+            })
                 .then(response => response.json())
                 .then(data => setPurchasedProducts(data))
                 .catch(error => console.error(t('error'), error));
@@ -20,6 +27,7 @@ export default function PurchasedProducts() {
 
         fetchPurchasedProducts();
     }, []);
+
 
     return (
         <View style={styles.container}>

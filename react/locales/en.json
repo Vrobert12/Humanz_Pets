@@ -1,4 +1,5 @@
 {
+  "registerPetSuc": "Pet registered successfully!",
   "INVALID_CREDENTIALS": "Invalid credentials",
   "LOGIN_SUCCESS": "Login successful!",
   "SELECT_LANGUAGE": "Select your preferred language",

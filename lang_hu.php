@@ -1,4 +1,10 @@
 <?php
+define('NORES','Egyenlőre nincsennek időpontok');
+define('EMAILREG','Email már regiszrtálva van');
+define('ADDEDVET','Állatorovos létrehozva');
+define('DELRES','Törlés oka');
+define('CHECK','Leadás');
+define('DELETE','Törlés');
 define('PAY_ALL_PRODUCTS', 'Minden termék kifizetése');
 define('PAY_PRODUCT', 'Termék kifizetése');
 define('ALL_FIELDS_REQUIRED', 'Minden mező kitöltése kötelező');

@@ -1,15 +1,21 @@
 <?php
-date_default_timezone_set('Europe/Belgrade');
+require_once __DIR__ . '/../vendor/autoload.php';
 
-const PARAMS = [
-    "HOST" => 'localhost',
-    "USER" => 'root',
-    "PASSWORD" => '',
-    "DB" => 'pets',
-    "CHARSET" => 'utf8mb4'
-];
+use Dotenv\Dotenv;
 
-$dsn = "mysql:host=" . PARAMS['HOST'] . ";dbname=" . PARAMS['DB'] . ";charset=" . PARAMS['CHARSET'];
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+// Load .env file
+$dotenv = Dotenv::createImmutable('/..'.__DIR__);
+$dotenv->load();
+
+// Set timezone
+date_default_timezone_set($_ENV['TIMEZONE']);
+
+// Database connection parameters
+$dsn = "mysql:host=" . $_ENV['DB_HOST'] . ";dbname=" . $_ENV['DB_NAME'] . ";charset=" . $_ENV['DB_CHARSET'];
 
 $pdoOptions = [
     PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
