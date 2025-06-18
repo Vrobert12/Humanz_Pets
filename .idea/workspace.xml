@@ -4,28 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2367ab9a-341c-4300-a7ed-72f717181f7d" name="Changes" comment="Postman collection">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pets_Collection.postman_collection.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/phpForReact/applogIn.php" beforeDir="false" afterPath="$PROJECT_DIR$/phpForReact/applogIn.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pictures/20250310230511.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pictures/20250311145638.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pictures/20250311213952.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pictures/20250316180855.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pictures/20250316181106.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pictures/20250316181347.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pictures/QRcodes/qrcode_67d0879ab270f.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pictures/QRcodes/qrcode_67d092058de6f.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pictures/QRcodes/qrcode_67d5fe79db72b.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pictures/QRcodes/qrcode_67d5fe81d2265.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pictures/QRcodes/qrcode_67d5fe8b8ca2d.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pictures/QRcodes/qrcode_67d5fe9a36446.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pictures/QRcodes/qrcode_67d708febfead.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pictures/QRcodes/qrcode_67d709fa3df65.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pictures/QRcodes/qrcode_684037e4e5954.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pictures/products/20250312132707.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pictures/products/20250315223710.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/react/screens/LoginScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/react/screens/LoginScreen.js" afterDir="false" />
+    <list default="true" id="2367ab9a-341c-4300-a7ed-72f717181f7d" name="Changes" comment="Swagger expansion">
+      <change beforePath="$PROJECT_DIR$/functions.php" beforeDir="false" afterPath="$PROJECT_DIR$/functions.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/index.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,7 +35,7 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="UPDATE_TYPE" value="REBASE" />
   </component>
-  <component name="PhpWorkspaceProjectConfiguration" interpreter_name="C:\xampp\php\php.exe">
+  <component name="PhpWorkspaceProjectConfiguration" interpreter_name="PHP">
     <include_path>
       <path value="$PROJECT_DIR$/vendor/composer" />
       <path value="$PROJECT_DIR$/vendor/fpdf/fpdf" />
@@ -220,7 +201,8 @@
       <workItem from="1750069227847" duration="42000" />
       <workItem from="1750072249717" duration="32000" />
       <workItem from="1750094252795" duration="4858000" />
-      <workItem from="1750170390548" duration="21985000" />
+      <workItem from="1750170390548" duration="10741000" />
+      <workItem from="1750235470431" duration="52000" />
     </task>
     <task id="LOCAL-00001" summary="Responsivity">
       <option name="closed" value="true" />
@@ -510,15 +492,7 @@
       <option name="project" value="LOCAL" />
       <updated>1749319183613</updated>
     </task>
-    <task id="LOCAL-00037" summary="Postman collection">
-      <option name="closed" value="true" />
-      <created>1750182179167</created>
-      <option name="number" value="00037" />
-      <option name="presentableId" value="LOCAL-00037" />
-      <option name="project" value="LOCAL" />
-      <updated>1750182179167</updated>
-    </task>
-    <option name="localTasksCounter" value="38" />
+    <option name="localTasksCounter" value="37" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -536,6 +510,7 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
+    <MESSAGE value="Small error" />
     <MESSAGE value="Expanding translation" />
     <MESSAGE value="React login and logout" />
     <MESSAGE value="DB 2" />
@@ -560,7 +535,6 @@
     <MESSAGE value="small fix" />
     <MESSAGE value="3 hardcodes fixed and Swagger implementation" />
     <MESSAGE value="Swagger expansion" />
-    <MESSAGE value="Postman collection" />
-    <option name="LAST_COMMIT_MESSAGE" value="Postman collection" />
+    <option name="LAST_COMMIT_MESSAGE" value="Swagger expansion" />
   </component>
 </project>

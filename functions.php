@@ -2000,7 +2000,7 @@ WHERE u.userId = :userId";
                         $logMessage = "You can't upload a picture from another page!";
 
                         $this->errorLogInsert($mail, $logText, $logType, $logMessage);
-                        $_SESSION['message'] = UPLOAD_ERROR;
+                        $_SESSION['message'] = UPLOAD_ERRORz;
                         header('Location: ' . $_SESSION['backPic']);
                         exit();
                     }

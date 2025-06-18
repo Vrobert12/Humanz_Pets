@@ -34,8 +34,8 @@ $autoload->checkAutoLogin();
     <script>
         const lang = '<?php echo $lang; ?>';
     </script>
-    <script src="sureCheck.js"></script>
-    <script src="indexJS.js"></script>
+    <script src="js/sureCheck.js"></script>
+    <script src="js/indexJS.js"></script>
     <link rel="stylesheet" href="style.css" type="text/css">
 
 
@@ -180,25 +180,21 @@ https://getbootstrap.com/docs/5.3/components/navbar/
             if(isset($_SESSION['email'])){
                 if ($_SESSION['privilage'] != 'Veterinarian') {
                     echo '<li>
-        <a href="pet.php?email=' . $_SESSION['email'] . '" class="nav-link text-white">
-            <svg class="bi me-2" width="16" height="16">
-                <use xlink:href="pet.php?email=' . urlencode($_SESSION['email']) . '" />
-            </svg>
-            '.MYPETS.'
-        </a>
-    </li>';
+            <a href="pet.php?email=' . urlencode($_SESSION['email']) . '" class="nav-link text-white d-flex align-items-center">
+                <span class="me-2" style="width: 16px; height: 16px; display: inline-block;"></span>
+                ' . MYPETS . '
+            </a>
+        </li>';
 
                     echo '<li>
-        <a href="registerAnimal.php" class="nav-link text-white">
-            <svg class="bi me-2" width="16" height="16">
-                <use xlink:href="registerAnimal.php" />
-            </svg>
-            '.ADDPET.'
-        </a>
-    </li>';
+            <a href="registerAnimal.php" class="nav-link text-white d-flex align-items-center">
+                <span class="me-2" style="width: 16px; height: 16px; display: inline-block;"></span>
+                ' . ADDPET . '
+            </a>
+        </li>';
 
                     echo'  <li>
-            <a href="products.php" class="nav-link text-white">
+            <a href="products.php" class="nav-link text-white"width="16" height="16">
                 <svg class="bi me-2" width="16" height="16"><use xlink:href="#grid"/></svg>
               '.PRODUCT.'
             </a>
