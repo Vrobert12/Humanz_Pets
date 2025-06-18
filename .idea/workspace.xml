@@ -5,8 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2367ab9a-341c-4300-a7ed-72f717181f7d" name="Changes" comment="Swagger expansion">
-      <change beforePath="$PROJECT_DIR$/functions.php" beforeDir="false" afterPath="$PROJECT_DIR$/functions.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Pets_Collection.postman_collection.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pictures/20250311145638.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pictures/QRcodes/qrcode_67d708febfead.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pictures/QRcodes/qrcode_684037e4e5954.png" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
