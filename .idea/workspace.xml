@@ -4,8 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2367ab9a-341c-4300-a7ed-72f717181f7d" name="Changes" comment="Swagger expansion">
+    <list default="true" id="2367ab9a-341c-4300-a7ed-72f717181f7d" name="Changes" comment="Document">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Pets_Collection.postman_collection.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/functions.php" beforeDir="false" afterPath="$PROJECT_DIR$/functions.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pictures/20250311145638.png" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/pictures/QRcodes/qrcode_67d708febfead.png" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/pictures/QRcodes/qrcode_684037e4e5954.png" beforeDir="false" />
@@ -37,7 +39,7 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="UPDATE_TYPE" value="REBASE" />
   </component>
-  <component name="PhpWorkspaceProjectConfiguration" interpreter_name="PHP">
+  <component name="PhpWorkspaceProjectConfiguration" interpreter_name="C:\xampp\php\php.exe">
     <include_path>
       <path value="$PROJECT_DIR$/vendor/composer" />
       <path value="$PROJECT_DIR$/vendor/fpdf/fpdf" />
@@ -205,6 +207,8 @@
       <workItem from="1750094252795" duration="4858000" />
       <workItem from="1750170390548" duration="10741000" />
       <workItem from="1750235470431" duration="52000" />
+      <workItem from="1750241287916" duration="299000" />
+      <workItem from="1750261743868" duration="1219000" />
     </task>
     <task id="LOCAL-00001" summary="Responsivity">
       <option name="closed" value="true" />
@@ -494,7 +498,15 @@
       <option name="project" value="LOCAL" />
       <updated>1749319183613</updated>
     </task>
-    <option name="localTasksCounter" value="37" />
+    <task id="LOCAL-00037" summary="Document">
+      <option name="closed" value="true" />
+      <created>1750238542255</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1750238542255</updated>
+    </task>
+    <option name="localTasksCounter" value="38" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -512,7 +524,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Small error" />
     <MESSAGE value="Expanding translation" />
     <MESSAGE value="React login and logout" />
     <MESSAGE value="DB 2" />
@@ -537,6 +548,7 @@
     <MESSAGE value="small fix" />
     <MESSAGE value="3 hardcodes fixed and Swagger implementation" />
     <MESSAGE value="Swagger expansion" />
-    <option name="LAST_COMMIT_MESSAGE" value="Swagger expansion" />
+    <MESSAGE value="Document" />
+    <option name="LAST_COMMIT_MESSAGE" value="Document" />
   </component>
 </project>

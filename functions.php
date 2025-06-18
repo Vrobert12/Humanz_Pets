@@ -1073,7 +1073,7 @@ VALUES (:userId,:productName,:productPicture,:productId,:sum, :price,:productPay
 
                 if ($stmt->execute()) {
                     $_SESSION['workerLink'] = 'https://humanz.stud.vts.su.ac.rs/resetPassword.php?verify_email=' . $mail . '&verification_code=' . $verification_code;
-                    $_SESSION['message'] = ADDEDVET;
+                    $_SESSION['message'] = "Success";
                     $_SESSION['text'] = "<h2>Registration</h2>";
                     $_SESSION['verification_code'] = $verification_code;
                     $_SESSION['veterinarianEmail'] = $mail;
